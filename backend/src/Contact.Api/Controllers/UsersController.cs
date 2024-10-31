@@ -33,7 +33,7 @@ public class UsersController : ControllerBase
     }
     [HttpPost("create")]
     [ActivityLog("Creating new User")]
-    [AuthorizePermission("Admin.Create")]
+    [AuthorizePermission("Admin.CreatePolicy")]
     public async Task<IActionResult> Create(CreateUser createUser)
     {
         //var user = _mapper.Map<User>(createUser);
