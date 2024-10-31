@@ -9,7 +9,7 @@
   display: inline-block;
   line-height: 32px;
   line-height: 3.2rem;
-  padding: 0 16px;
+  padding: 0 16px 6px 0;
   font-size: 14px;
   font-size: 1.4rem;
   font-weight: 400;
@@ -22,7 +22,7 @@
 
 .nga-btn-home {
   background-color: black;
-  padding: 0px 34px 0;
+  padding: 0px 34px 6px;
   font-size: 16px;
   font-size: 1.6rem;
   font-weight: 600;

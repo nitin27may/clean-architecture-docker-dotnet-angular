@@ -15,7 +15,7 @@ export class LoginService {
 
     login(username: string, password: string) {
         return this.http
-            .post<any>(environment.apiEndpoint + '/account/authenticate', {
+            .post<any>(environment.apiEndpoint + '/users/authenticate', {
               email: username,
                 username: username,
                 password: password,
@@ -23,17 +23,17 @@ export class LoginService {
             .pipe(
                 map((user) => {
                     // login successful if there"s a jwt token in the response
-                    if (user && user.data && user.data.jwToken) {
+                    if (user &&  user.token) {
                         // store user details and jwt token in local storage to keep user logged in between page refreshes
                         if (typeof window !== 'undefined') {
                             localStorage.setItem(
                                 'currentUser',
-                                JSON.stringify(user.data)
+                                JSON.stringify(user)
                             );
                         }
                     }
 
-                    return user.data;
+                    return user;
                 })
             );
     }

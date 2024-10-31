@@ -13,42 +13,42 @@ export class ContactService {
     constructor(private http: HttpClient) {}
 
     getAll() {
-        return this.http.get<any[]>(environment.apiEndpoint + '/v1/contact').pipe(
-            map((res: any) => res.data),
+        return this.http.get<any[]>(environment.apiEndpoint + '/ContactPerson').pipe(
+            map((res: any) => res),
             catchError(this.handleErrorObservable)
         );
     }
 
     getById(_id: string) {
-        return this.http.get(environment.apiEndpoint + '/v1/contact/' + _id).pipe(
-            map((res: any) => res.data),
+        return this.http.get(environment.apiEndpoint + '/ContactPerson/' + _id).pipe(
+            map((res: any) => res),
             catchError(this.handleErrorObservable)
         );
     }
 
     create(contact: any) {
         return this.http
-            .post(environment.apiEndpoint + '/v1/contact', contact)
+            .post(environment.apiEndpoint + '/ContactPerson', contact)
             .pipe(
-                map((res: any) => res.data),
+                map((res: any) => res),
                 catchError(this.handleErrorObservable)
             );
     }
 
     update(contact: any) {
         return this.http
-            .put(environment.apiEndpoint + '/v1/contact/' + contact.id, contact)
+            .put(environment.apiEndpoint + '/ContactPerson/' + contact.id, contact)
             .pipe(
-                map((res: any) => res.data),
+                map((res: any) => res),
                 catchError(this.handleErrorObservable)
             );
     }
 
     delete(_id: string) {
         return this.http
-            .delete(environment.apiEndpoint + '/v1/contact/' + _id)
+            .delete(environment.apiEndpoint + '/ContactPerson/' + _id)
             .pipe(
-                map((res: any) => res.data),
+                map((res: any) => res),
                 catchError(this.handleErrorObservable)
             );
     }
