@@ -11,5 +11,4 @@ public interface IGenericRepository<T> where T : BaseEntity
     Task<T> FindByID(Guid id);
     Task<IEnumerable<T>> Find(string query, object? parameters = null);
     Task<IEnumerable<T>> FindAll();
-    Task<IEnumerable<T>> FindAll(Guid societyId);
 }

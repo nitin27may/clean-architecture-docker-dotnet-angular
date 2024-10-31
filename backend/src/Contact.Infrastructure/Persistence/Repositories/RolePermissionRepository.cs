@@ -11,8 +11,6 @@ public class RolePermissionRepository : GenericRepository<RolePermission>, IRole
     {
     }
 
-
-    // add Society Id to get the Role and Permissons
     public async Task<IEnumerable<RolePermissionMapping>> GetRolePermissionMappingsAsync()
     {
         var dbPara = new DynamicParameters();

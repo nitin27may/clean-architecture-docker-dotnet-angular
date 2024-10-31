@@ -30,8 +30,10 @@ public class ContactPersonController : ControllerBase
     [HttpPut("{id}")]
     [ActivityLog("Updating Contact")]
     [AuthorizePermission("Contacts.Update")]
-    public async Task<IActionResult> Update(UpdateContactPerson updateContactPerson)
+    public async Task<IActionResult> Update(Guid id,UpdateContactPerson updateContactPerson)
     {
+        var contactPerson = await _contactPersonService.FindByID(id);
+        if (contactPerson == null) return NotFound();
         var updatedContactPerson = await _contactPersonService.Update(updateContactPerson);
         return Ok(updatedContactPerson);
     }

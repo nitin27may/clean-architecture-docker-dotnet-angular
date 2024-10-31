@@ -22,12 +22,6 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         return await _dapperHelper.GetAll<T>(query, null);
     }
 
-    public async Task<IEnumerable<T>> FindAll(Guid societyId)
-    {
-        var query = $"SELECT * FROM {_tableName} WHERE SocietyId = @SocietyId";
-        return await _dapperHelper.GetAll<T>(query, new { SocietyId = societyId });
-    }
-
     public async Task<T> FindByID(Guid id)
     {
         var query = $"SELECT * FROM {_tableName} WHERE Id = @Id";
@@ -84,7 +78,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     private string GenerateUpdateQuery()
     {
         var properties = typeof(T).GetProperties()
-            .Where(p => p.Name != "Id" && p.Name != "CreatedOn" && p.Name != "CreatedBy" && p.Name != "SocietyId")
+            .Where(p => p.Name != "Id" && p.Name != "CreatedOn" && p.Name != "CreatedBy")
             .Select(p => $"{p.Name} = @{p.Name}");
 
         var setClause = string.Join(", ", properties);

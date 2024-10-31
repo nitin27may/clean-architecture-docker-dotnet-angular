@@ -1,0 +1,15 @@
+meta {
+  name: Delete Contacts
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{base_url}}/ContactPerson/8076b4c8-98e3-43c2-abab-cffb73ffba03
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
