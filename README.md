@@ -1,14 +1,32 @@
-# Full Stack (dotnet, angular and postgres) boilerplate with Docker
-### About (Dotnet - Angular - PostgresSQL)
-This project is intended to provide a starting point for building full-stack web applicatioin. The stack is made of Dotnet(7) WebApi, Angular (18.1.0), PostgresSQL. The focus of this project to show case the possible way to run a real application (Dotnet, Angular and PostgresSQL) using docker for development enviornment and produciton mode.
+# Full Stack Boilerplate with Docker: .NET, Angular, and MS SQL Server
+## Project Overview
+This repository serves as a comprehensive boilerplate for building a full-stack web application using .NET 8 Web API, Angular 18, and MS SQL Server with Docker. It includes built-in features like user registration, authentication with JWT, CRUD operations, and is optimized for both development and production environments.
+<hr>
 
-This is a simple web application. It has working user registration, login page and there is a complete example of CRUD which contains example for Angular Routing and dotnet rest api samples. Also, rest services are secure using JWT. 
+## Clean Architecture Series
 
-Below is the architecture of the application while it is running.
+To understand this project in-depth, refer to our detailed series of articles on Clean Architecture. This series explains the architectural decisions, setup processes, and best practices used throughout this project.
 
-![](documents/architecture.png)
-## To Quick Run
-Clone repo, navigate to root folder and run ` docker compose up`
+1. [Clean Architecture: Introduction to the Project Structure]() - High-level structure and role of each layer.
+2. [Clean Architecture: Implementing AutoMapper for DTO Mapping and Audit Logging]() - Utilizing AutoMapper to handle data mapping and audit tracking.
+3. [Clean Architecture: Validating Inputs with FluentValidation]() - Ensuring robust input validation using FluentValidation.
+4. [Clean Architecture: Dependency Injection Setup Across Layers]() - Setting up DI across multiple layers for modularity.
+5. [Clean Architecture: Implementing Activity Logging with Custom Attributes]() - Tracking user actions with custom activity logs.
+6. [Clean Architecture: Handling Authorization and Role-Based Access Control (RBAC)]() - Implementing authorization policies and role-based access.
+7. [Clean Architecture: The Unit of Work Pattern and Transaction Management Using Dapper]() - Managing database transactions and consistency.
+8. [Clean Architecture: Using Dapper for Data Access with the Repository Pattern]() - Leveraging Dapper for efficient data access.
+9. [Clean Architecture: Best Practices for Creating and Using DTOs in the API]() - Building and using DTOs effectively.
+10. [Clean Architecture: Seeding Initial Data Using Docker Compose and SQL Scripts]() - Initial data seeding setup with Docker Compose.
+11. [Dockerizing the .NET Core API and MS SQL Server]() - Containerizing the application for smooth deployment.
+12. [Error Handling and Exception Management in the API]() - Enhancing resilience with custom error handling.
+
+## Architecture
+The project is structured with Clean Architecture principles, separating the solution into distinct layers to ensure scalability, maintainability, and testability. This includes a modular design with API, Application, Domain, and Infrastructure layers.
+
+![](documents/CleanArchitecture.png)
+
+## Quick Start
+To quickly start the application, clone the repository and run Docker Compose:
 
 ```
   git clone https://github.com/nitin27may/angular-dotnet-core-docker.git angular-dotnet
@@ -16,27 +34,30 @@ Clone repo, navigate to root folder and run ` docker compose up`
   docker compose up
 ```
 
-**Please note,** I have used Sendgrid, so it will require a sendgrid key to run, as it is sending an email confirmation on register, if you do not need, you can remove that code while registeing (in AccountService Class)
+**Note** I have used SMTP send function, please update the account details
 
 ## Project Folders 
 The apps written in the following JavaScript frameworks/libraries:
 
 | folder          | Description                                                                                  |
 | --------------- | -------------------------------------------------------------------------------------------- |
-| **frontend** | [frontend app using **Angular**](https://github.com/nitin27may/angular-dotnet-core-docker/tree/master/frontend)         |
-| **WebApi** | [Rest Api using **dotnet**](https://github.com/nitin27may/angular-dotnet-core-docker/tree/master/WebApi) |
+| **Frontend (Angular)** | [Angular 18-based front-end application with JWT security.](https://github.com/nitin27may/angular-dotnet-core-docker/tree/master/frontend)         |
+| **Api (.Net)** | [.NET 8 REST API with Clean Architectuire.](https://github.com/nitin27may/angular-dotnet-core-docker/tree/master/WebApi) |
 
 ### Built With
 #### Angular (18.1.0)
 
 The fronend of this project is developed in Angular. As we are using Server Side Rendering (SSR) we have used Nodejs alpine image in place of other lightweight docker image like nginx to run Angular app.
 
-It contains sample for below:
+It contains sample for below (Both UI and API implmentation ):
 
  1. User Registration
  2. Login
- 3. Profile
- 4. A complete CRUD example for Contact
+ 3. Forgot Password
+ 4. Change Password
+ 5. Role based API access 
+ 6. Profile
+ 7. A complete CRUD example for Contact
 
 Also, it has sample code for Auth guard, services, http interceptors, resolver and JWT implementation
 
@@ -53,8 +74,11 @@ It contains sample for:
 1. Middleware implemetation for logs
 2. JWT implementation for Authorization
 3. API routing
-4. User registration & login APIs
-5. Complete CRUD example for Contact
+4. User registration, login, forgot password, reset password
+5. Role based api permission
+6. Audit Log
+7. Fulent Validation
+8. Complete CRUD example for Contact
 
 
 **[Dockerfile for production](/Api/Dockerfile)**
@@ -70,23 +94,13 @@ It contains sample for:
   Install latest [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
 
-#### Entity Framework Migration
+#### Data Seed
 
- We have added a dockerfile for entity framework migration and updating database. 
+ We have added a seed file with data, which will be loaded on docker compose, it has 3 users with different role:
+ 
+ | Username              |  Passsword  |  Role    |
+ |-----------------------|-------------|----------|
+ |nitin27may@gmail.ccom  | Password    | Admin    |
+ |nitin27may@gmail.ccom  | Password    | Editor   |
+ |nitin27may@gmail.ccom  | Password    | Reader   |
 
-**[Dockerfile for Migration](/Api/Migration.Dockerfile)**
-
-
-#### Development mode:
-  You can start the application in debug mode (database, api and frontend) using docker compose:
-
-  ```
-   git clone https://github.com/nitin27may/angular-dotnet-core-docker.git angular-dotnet
-  cd angular-dotnet 
-  
-  docker compose -f 'docker-compose.debug.yml' up
-  ```
-
-  It will run fronend `http://localhost:4200` and api on `http://localhost:8080`. you can also access PGAdmin  on port 5050 with username pssword provided in docker compose, username: nitin27may@gmail.com, password: root.
-
-  Also, it will automatically refresh (hot reload) your UI for code and api code changes.
