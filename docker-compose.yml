@@ -3,16 +3,17 @@
 version: '3.4'
 
 services:
-  contactapi:
-    image: contactapi
+  api:
     build:
       context: ./backend/src
-      dockerfile: Dockerfile
+      dockerfile: Debug.Dockerfile
+      args:
+        - configuration=Debug
     ports:
-      - 5217:8000
+      - 5000:5000
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - AppSettings__ConnectionStrings__DefaultConnection=Server=${SQL_SERVER};Database=${SQL_DATABASE};User ID=${SQL_USER};Password=${SQL_PASSWORD};Trusted_Connection=False;Encrypt=True;
+      - ASPNETCORE__ENVIRONMENT=${ENVIRONMENT}
+      - AppSettings__ConnectionStrings__DefaultConnection=Server=${SQL_SERVER};Database=${SQL_DATABASE};User ID=${SQL_USER};Password=${SQL_PASSWORD};Trusted_Connection=False;Encrypt=False;
       - AppSettings__Secret=${JWT_SECRET}
       - AppSettings__Issuer=${JWT_ISSUER}
       - AppSettings__Audience=${JWT_AUDIENCE}
@@ -23,6 +24,9 @@ services:
       - SmtpSettings__Password=${SMTP_PASSWORD}
       - SmtpSettings__FromEmail=${SMTP_FROM_EMAIL}
       - SmtpSettings__EnableSsl=${SMTP_ENABLE_SSL}
+    volumes:
+      - ./backend/src:/app
+      - ~/.vsdbg:/remote_debugger:rw
     depends_on:
       - mssql
     networks:
@@ -44,7 +48,7 @@ services:
       - /bin/bash
       - -c
       - |
-        /opt/mssql/bin/sqlservr & sleep 60;
+        /opt/mssql/bin/sqlservr & sleep 15s;
         /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${SQL_PASSWORD} -d master -i /scripts/seed-data.sql; wait
     networks:
       - mssql_network
