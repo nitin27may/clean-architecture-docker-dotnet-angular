@@ -1,0 +1,24 @@
+version: '3.8'
+
+
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver_express
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Express   # Specifies the edition to run as Express
+      - MSSQL_SA_PASSWORD=YourPassword123   # Set the SA (System Administrator) password
+    ports:
+      - "1433:1433"  # Expose SQL Server port 1433
+    volumes:
+      - mssql_data:/var/opt/mssql  # Persist database data outside of the container
+    networks:
+      - mssql_network
+
+volumes:
+  mssql_data: # Named volume to persist data
+
+networks:
+  mssql_network:
+    driver: bridge
