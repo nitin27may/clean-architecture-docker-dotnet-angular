@@ -23,8 +23,8 @@ export const ErrorInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next:
       } else if (error.status === 404) {
         errorMessage = 'The requested resource was not found.';
         toastService.warning(errorMessage, 'Bad Request');
-      } else if (error.status === 403) {
-        errorMessage = `You don't have permission to access this resource.`;
+      } else if (error.status === 403) {//c4943131-a642-4352-9725-e44ba5972b4b  cef15d6f-25e4-422b-a7d6-405aaa2de2d5
+        errorMessage = `You don't have permission to access this resource.`;//c4943131-a642-4352-9725-e44ba5972b4b  7493f274-5007-4e17-9840-88c9a096422f
         toastService.warning(errorMessage, 'Check Permissions');
       }else if (error.status === 500) {
         errorMessage = 'A server-side error occurred.';

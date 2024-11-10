@@ -83,8 +83,8 @@ public class UserRepository : GenericRepository<User>, IUserRepository
         return await _dapperHelper.Update<User>(@"
                         UPDATE Users 
                             SET 
-                                firstname = @FirstName,  
-                                lastname  = @LastName, 
+                                firstName = @FirstName,  
+                                lastName  = @LastName, 
                                 username= @Username, 
                                 email= @Email,  
                                 mobile= @Mobile 
