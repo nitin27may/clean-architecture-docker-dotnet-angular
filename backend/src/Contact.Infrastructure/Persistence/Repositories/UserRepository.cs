@@ -68,14 +68,16 @@ public class UserRepository : GenericRepository<User>, IUserRepository
         return await _dapperHelper.Get<User>("SELECT * FROM Users WHERE username = @UserName", dbPara);
     }
 
-    public async Task<User> Update(User item)
+
+    public new async Task<User> Update(User item, IDbTransaction? transaction = null)
     {
         var dbPara = new DynamicParameters();
+        dbPara.Add("Id", item.Id);
         dbPara.Add("FirstName", item.FirstName, DbType.String);
         dbPara.Add("LastName", item.LastName, DbType.String);
         dbPara.Add("Username", item.Username, DbType.String);
         dbPara.Add("Email", item.Email, DbType.String);
-        dbPara.Add("Mobile", item.Mobile, DbType.String);
+        dbPara.Add("Mobile", item.Mobile);
         dbPara.Add("UpdatedBy", item.UpdatedBy, DbType.Guid);
         dbPara.Add("UpdatedOn", item.UpdatedOn, DbType.DateTimeOffset);
         return await _dapperHelper.Update<User>(@"
@@ -86,6 +88,21 @@ public class UserRepository : GenericRepository<User>, IUserRepository
                                 username= @Username, 
                                 email= @Email,  
                                 mobile= @Mobile 
+                             WHERE id = @Id",
+                            dbPara);
+    }
+
+    public async Task<User> UpdatePassword(User item, IDbTransaction? transaction = null)
+    {
+        var dbPara = new DynamicParameters();
+        dbPara.Add("Id", item.Id);
+        dbPara.Add("Password", item.Password);
+        dbPara.Add("UpdatedBy", item.UpdatedBy, DbType.Guid);
+        dbPara.Add("UpdatedOn", item.UpdatedOn, DbType.DateTimeOffset);
+        return await _dapperHelper.Update<User>(@"
+                        UPDATE Users 
+                            SET 
+                                Password = @Password  
                              WHERE id = @Id",
                             dbPara);
     }

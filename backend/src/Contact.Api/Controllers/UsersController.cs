@@ -51,7 +51,24 @@ public class UsersController : ControllerBase
     [Authorize]
     public async Task<IActionResult> GetCurrentUser()
     {
-        var result = await _userService.FindAll();
+        var userIdClaim = User.FindFirst("Id")?.Value;
+        if (userIdClaim == null)
+        {
+            return Unauthorized(new { message = "User ID not found in token" });
+        }
+
+        var userId = Guid.Parse(userIdClaim);
+        var result = await _userService.FindByID(userId);
+        return Ok(result);
+    }
+
+    [HttpPut("{id}")]
+    [Authorize]
+    public async Task<IActionResult> UpdateUser(Guid id, UpdateUser updateUser)
+    {
+        var user = await _userService.FindByID(id);
+        if (user == null) return NotFound();
+        var result = await _userService.Update(updateUser);
         return Ok(result);
     }
 
@@ -80,7 +97,7 @@ public class UsersController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost("change-password")]
+    [HttpPut("change-password")]
     [Authorize]
     public async Task<IActionResult> ChangePassword(ChangePassword changePassword)
     {

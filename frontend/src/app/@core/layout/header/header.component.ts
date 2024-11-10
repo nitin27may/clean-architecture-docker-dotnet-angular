@@ -23,7 +23,8 @@ private loginService: LoginService
 
   }
   ngOnInit(){
-    this.user = this.userService.getCurrentUser();
-    //this.user = {firstName: "John", lastName: "Doe"};
+    this.userService.getCurrentUser().subscribe((user: any) => {
+      this.user = user;
+    } );
   }
 }

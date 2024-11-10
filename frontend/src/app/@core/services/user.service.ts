@@ -17,20 +17,20 @@ export class UserService {
     );
   }
 
-  getById(_id: string) {
-    return this.http.get<User>(environment.apiEndpoint + "/user/" + _id).pipe(
+  getCurrentUser() {
+    return this.http.get(environment.apiEndpoint + "/users").pipe(
       map((user: any) => {
-        return user.data;
+        return user;
       })
     );
   }
-  getCurrentUser(): User {
-    const localStorage = this.document.defaultView?.localStorage;
-    if (localStorage && localStorage.getItem("currentUser")) {
-      const user = JSON.parse(localStorage.getItem("currentUser"));
-      return user;
-    }
-  }
+  // getCurrentUser(): User {
+  //   const localStorage = this.document.defaultView?.localStorage;
+  //   if (localStorage && localStorage.getItem("currentUser")) {
+  //     const user = JSON.parse(localStorage.getItem("currentUser"));
+  //     return user;
+  //   }
+  // }
 
   create(user: User) {
     user.email = user.username;
@@ -38,7 +38,7 @@ export class UserService {
   }
 
   update(user: User) {
-    return this.http.put<User>(environment.apiEndpoint + "/user/" + user._id, user).pipe(
+    return this.http.put<User>(environment.apiEndpoint + "/users/" + user.id, user).pipe(
       map((user: any) => {
         return user.data;
       })
@@ -53,8 +53,8 @@ export class UserService {
     );
   }
 
-  changePassword(id: string, password: any) {
-    return this.http.put(environment.apiEndpoint + "/user/changepassword/" + id, { password: password }).pipe(map((res: any) => res.data));
+  changePassword(passwordDetails: any) {
+    return this.http.put(environment.apiEndpoint + "/users/change-password" ,passwordDetails).pipe(map((res: any) => res.data));
   }
 
   delete(_id: string) {

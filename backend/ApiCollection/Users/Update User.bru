@@ -1,0 +1,26 @@
+meta {
+  name: Update User
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{base_url}}/users
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+body:json {
+  {
+    "id": "26402b6c-ebdd-44c3-9188-659a134819cb",
+    "firstName": "Nitin1",
+    "lastName": "Singh",
+    "username": "nitin27may@gmail.com",
+    "mobile": 9833364,
+    "email": "nitin27may@gmail.com"
+  }
+}

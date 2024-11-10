@@ -18,7 +18,7 @@ public class UserMappingProfile : BaseMappingProfile
                    .AfterMap((src, dest) => SetAuditFields(src, dest)); // Set audit fields on creation
         CreateMap<UpdateUser, User>()
             .AfterMap((src, dest) => SetAuditFields(src, dest, false)); // Set audit fields on update
-
+        CreateMap<User, UserResponse>();
         CreateMap<ChangePassword, UpdatePassword>()
           .AfterMap((src, dest) => SetAuditFields(src, dest, false)); // Set audit fields on update
     }

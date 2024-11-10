@@ -60,7 +60,7 @@ public class UserService : IUserService
                 UserId = createdUser.Id,
                 RoleId = role.Id,
                 CreatedOn = DateTime.Now,
-                CreatedBy = createdUser.Id 
+                CreatedBy = createdUser.Id
             };
             await _userRoleRepository.Add(userRole, transaction);
             await _unitOfWork.CommitAsync();
@@ -107,27 +107,30 @@ public class UserService : IUserService
         }
     }
 
-   
+
 
     public async Task<bool> Delete(Guid id)
     {
         return await _userRepository.Delete(id);
     }
 
-    public async Task<IEnumerable<User>> FindAll()
+    public async Task<IEnumerable<UserResponse>> FindAll()
     {
-        return await _userRepository.FindAll();
+        var users = await _userRepository.FindAll();
+        return _mapper.Map<IEnumerable<UserResponse>>(users);
     }
 
-    public async Task<User> FindByID(Guid id)
+    public async Task<UserResponse> FindByID(Guid id)
     {
-        return await _userRepository.FindByID(id);
+        var user = await _userRepository.FindByID(id);
+        return _mapper.Map<UserResponse>(user);
     }
 
-    public async Task<User> Update(UpdateUser updateUser)
+    public async Task<UserResponse> Update(UpdateUser updateUser)
     {
         var user = _mapper.Map<User>(updateUser);
-        return await _userRepository.Update(user);
+        var result = await _userRepository.Update(user);
+        return _mapper.Map<UserResponse>(result);
     }
 
     public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest authenticateRequest)
@@ -220,7 +223,7 @@ public class UserService : IUserService
     public async Task<bool> ChangePassword(ChangePassword changePassword)
     {
         var updatePassword = _mapper.Map<UpdatePassword>(changePassword);
-        var user = await _userRepository.FindByID(updatePassword.Id); // pass logged in user id here
+        var user = await _userRepository.FindByID(updatePassword.UpdatedBy.GetValueOrDefault()); // pass logged in user id here
 
         if (user == null)
         {
@@ -242,9 +245,9 @@ public class UserService : IUserService
         var hashedPassword = passwordHasher.HashPassword(user.Email, updatePassword.NewPassword);
         user.Password = hashedPassword;
         user.UpdatedOn = DateTime.UtcNow;
-        user.UpdatedBy = updatePassword.Id;
+        user.UpdatedBy = updatePassword.UpdatedBy.GetValueOrDefault();
 
-        await _userRepository.Update(user);
+        await _userRepository.UpdatePassword(user);
 
         _logger.LogInformation("Password successfully changed for user with email {email}.", user.Email);
         return true;
@@ -257,7 +260,7 @@ public class UserService : IUserService
         {
             _logger.LogWarning("User with email {email} not found.", email);
             return false; // User not found
-        } 
+        }
         var resetLink = await GenerateLink(user);
         var emailSubject = "Password Reset Request";
         var emailBody = $"Click the link to reset your password: {resetLink}";
@@ -269,7 +272,7 @@ public class UserService : IUserService
         return true;
     }
 
-   
+
     public async Task<bool> ResetPassword(ResetPassword resetPasswordRequest)
     {
         // Step 1: Validate the reset token // token send as part of email

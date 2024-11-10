@@ -1,19 +1,21 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { provideClientHydration } from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { provideToastr } from 'ngx-toastr';
-import { routes } from './app.routes';
+import { AppRoutingModule, routes } from './app.routes';
 import { provideErrorTailorConfig } from "./@core/components/validation";
-import { JwtInterceptor } from "./@core/interceptors";
+import { ErrorInterceptor, JwtInterceptor } from "./@core/interceptors";
+import { error } from "console";
 
 export const appConfig: ApplicationConfig = {
     providers: [
+        importProvidersFrom(BrowserModule, AppRoutingModule),
         provideHttpClient(),
         provideZoneChangeDetection({ eventCoalescing: true }),
-        provideHttpClient(withInterceptors([JwtInterceptor])),
+        provideHttpClient(withInterceptors([JwtInterceptor, ErrorInterceptor])),
         provideRouter(routes),
         provideClientHydration(),
         provideAnimations(), // required animations providers

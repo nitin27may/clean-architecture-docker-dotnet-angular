@@ -1,46 +1,40 @@
-﻿import {
-    HTTP_INTERCEPTORS,
-    HttpErrorResponse,
-    HttpEvent,
-    HttpHandler,
-    HttpInterceptor,
-    HttpRequest,
-} from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+﻿import { HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { HttpErrorResponse, HttpRequest, HttpHandlerFn } from '@angular/common/http';
+import { catchError, throwError } from 'rxjs';
+import { Router } from '@angular/router';
+import { ToastrService } from "ngx-toastr";
 
-@Injectable()
-export class ErrorInterceptor implements HttpInterceptor {
-    constructor() {}
-    intercept(
-        request: HttpRequest<any>,
-        next: HttpHandler
-    ): Observable<HttpEvent<any>> {
-        // extract error message from http body if an error occurs
-        return next.handle(request).pipe(
-            catchError((errorResponse) => {
-                if (errorResponse instanceof HttpErrorResponse) {
-                    switch (errorResponse.status) {
-                        case 401: // login
-                            // redirect to login page
-                            break;
-                        case 400: // forbidden
-                            // show server bad request message
-                            // this.toastrService.error(errorResponse.error?.message);
-                            break;
-                    }
-                } else {
-                }
+export const ErrorInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: HttpHandlerFn) => {
+  const toastService = inject(ToastrService);
+  const router = inject(Router);
 
-                return throwError(errorResponse.error);
-            })
-        );
+  return next(req).pipe(
+    catchError((error: HttpErrorResponse) => {
+      let errorMessage = 'An unknown error occurred!';
+
+      if (error.status === 400) {
+        errorMessage = error?.error?.message ? error.error.message : 'Bad Request.';
+        toastService.error(errorMessage, 'Bad Request');
+      } else if (error.status === 401) {
+        errorMessage = 'Please check your credentials and try again.';
+        toastService.error(errorMessage, 'Unauthorized');
+        router.navigate(['/login']);
+      } else if (error.status === 404) {
+        errorMessage = 'The requested resource was not found.';
+        toastService.warning(errorMessage, 'Bad Request');
+      } else if (error.status === 403) {
+        errorMessage = `You don't have permission to access this resource.`;
+        toastService.warning(errorMessage, 'Check Permissions');
+      }else if (error.status === 500) {
+        errorMessage = 'A server-side error occurred.';
+        toastService.error(errorMessage, 'Error');
+      }
+
+      return throwError(() => { new Error(errorMessage);
+
     }
-}
-
-export const ErrorInterceptorProvider = {
-    provide: HTTP_INTERCEPTORS,
-    useClass: ErrorInterceptor,
-    multi: true,
+    );
+    })
+  );
 };
