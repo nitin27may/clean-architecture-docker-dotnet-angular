@@ -3,6 +3,6 @@ export const environment = {
     apiEndpoint: '/api',
     angular: 'Angular 18',
     bootstrap: 'Bootstrap 5',
-    expressjs: '.NET 8',
-    mongoDb : 'MS SQL 2022',
+    dotnet: '.NET 8',
+    mssql : 'MS SQL 2022',
 };

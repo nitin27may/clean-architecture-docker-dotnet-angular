@@ -18,8 +18,8 @@ export class HomeComponent {
     name = 'Contacts';
     angular = environment.angular;
     bootstrap = environment.bootstrap;
-    expressjs = environment.expressjs;
-    mongoDb = environment.mongoDb;
+    dotnet = environment.dotnet;
+    mssql = environment.mssql;
 
     constructor(@Inject(PLATFORM_ID) private platformId: object) {}
 }
