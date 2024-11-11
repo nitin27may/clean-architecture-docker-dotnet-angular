@@ -1,8 +1,9 @@
-# Full Stack Boilerplate with Docker: .NET, Angular, and MS SQL Server
+# Clean Architecture Full-Stack Starter: .NET, Angular, and MS SQL Server
 ## Project Overview
 This repository serves as a comprehensive boilerplate for building a full-stack web application using .NET 8 Web API, Angular 18, and MS SQL Server with Docker. It includes built-in features like user registration, authentication with JWT, CRUD operations, and is optimized for both development and production environments.
 <hr>
-
+## To update in About
+"A full-stack boilerplate with Angular 18 (frontend), .NET 8 (API), and MS SQL Server, following Clean Architecture principles. Fully containerized with Docker for efficient development and deployment, and styled with Bootstrap 5."
 ## Clean Architecture Series
 
 To understand this project in-depth, refer to our detailed series of articles on Clean Architecture. This series explains the architectural decisions, setup processes, and best practices used throughout this project.
