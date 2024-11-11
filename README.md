@@ -98,9 +98,9 @@ It contains sample for:
 
  We have added a seed file with data, which will be loaded on docker compose, it has 3 users with different role:
  
- | Username             |  Passsword  |  Role    |
- |----------------------|-------------|----------|
- |nitin27may@gmail.com  | Password    | Admin    |
- |nitin27may@gmail.com  | Password    | Editor   |
- |nitin27may@gmail.com  | Password    | Reader   |
+ | Username             |  Passsword    |  Role    |
+ |----------------------|---------------|----------|
+ |nitin27may@gmail.com  | P@ssword#321  | Admin    |
+ |editor@gmail.com      | P@ssword#321  | Editor   |
+ |reader@gmail.com      | P@ssword#321  | Reader   |
 

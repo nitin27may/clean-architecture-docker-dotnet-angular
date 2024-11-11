@@ -509,17 +509,17 @@ BEGIN
 	INSERT [dbo].[Users]
 		([Id], [FirstName], [LastName], [UserName], [Email], [Mobile], [Password], [CreatedOn], [Createdby], [UpdatedOn], [UpdatedBy])
 	VALUES
-		(N'424ffb80-05bf-43f8-8814-2772a5de2543', N'Sachin', N'Singh', N'sachin@gmail.com', N'sachin@gmail.com', 9833364, N'ALnU8pEE9vhd9aKuJhpwJAemOjsEK4UkKUx5yCslRx01L2x0Ay060hPy9kezIXMMAw==', CAST(N'2024-09-05T14:48:17.0399044+00:00' AS DateTimeOffset), N'00000000-0000-0000-0000-000000000000', NULL, NULL)
+		(N'424ffb80-05bf-43f8-8814-2772a5de2543', N'Sachin', N'Singh', N'sachin@gmail.com', N'sachin@gmail.com', 9833364, N'AQAAAAIAAYagAAAAEC1iNqNI7oqJKNcpJ+kYreWvBzjMxE/FWhfoDXzP5CoV60u6JHm5PwHIb3w7K7lWxw==', CAST(N'2024-09-05T14:48:17.0399044+00:00' AS DateTimeOffset), N'00000000-0000-0000-0000-000000000000', NULL, NULL)
 
 	INSERT [dbo].[Users]
 		([Id], [FirstName], [LastName], [UserName], [Email], [Mobile], [Password], [CreatedOn], [Createdby], [UpdatedOn], [UpdatedBy])
 	VALUES
-		(N'26402b6c-ebdd-44c3-9188-659a134819cb', N'Nitin', N'Singh', N'nitin27may@gmail.com', N'nitin27may@gmail.com', 9833364, N'AQAAAAIAAYagAAAAEBGyghNjLuwzx7tLZiPYiFJumBQ3N5hhB3s50SLKH0gmIfvzrZnUzuSJJtKf5NPa9g==', CAST(N'2024-08-24T02:56:23.6635113+00:00' AS DateTimeOffset), NULL, CAST(N'2024-09-04T15:36:10.1171041+00:00' AS DateTimeOffset), NULL)
+		(N'26402b6c-ebdd-44c3-9188-659a134819cb', N'Nitin', N'Singh', N'nitin27may@gmail.com', N'nitin27may@gmail.com', 9833364, N'AQAAAAIAAYagAAAAEC1iNqNI7oqJKNcpJ+kYreWvBzjMxE/FWhfoDXzP5CoV60u6JHm5PwHIb3w7K7lWxw==', CAST(N'2024-08-24T02:56:23.6635113+00:00' AS DateTimeOffset), NULL, CAST(N'2024-09-04T15:36:10.1171041+00:00' AS DateTimeOffset), NULL)
 
 	INSERT [dbo].[Users]
 		([Id], [FirstName], [LastName], [UserName], [Email], [Mobile], [Password], [CreatedOn], [Createdby], [UpdatedOn], [UpdatedBy])
 	VALUES
-		(N'3aa35df1-2578-4ed3-a93b-8b8eb955499e', N'Vikram', N'Singh', N'vikram@gmail.com', N'vikram@gmail.com', 9833364, N'AQAAAAIAAYagAAAAEBGyghNjLuwzx7tLZiPYiFJumBQ3N5hhB3s50SLKH0gmIfvzrZnUzuSJJtKf5NPa9g==', CAST(N'2024-08-28T20:29:02.2362893+00:00' AS DateTimeOffset), N'00000000-0000-0000-0000-000000000000', NULL, NULL)
+		(N'3aa35df1-2578-4ed3-a93b-8b8eb955499e', N'Vikram', N'Singh', N'vikram@gmail.com', N'vikram@gmail.com', 9833364, N'AQAAAAIAAYagAAAAEC1iNqNI7oqJKNcpJ+kYreWvBzjMxE/FWhfoDXzP5CoV60u6JHm5PwHIb3w7K7lWxw==', CAST(N'2024-08-28T20:29:02.2362893+00:00' AS DateTimeOffset), N'00000000-0000-0000-0000-000000000000', NULL, NULL)
 
 END;
 GO
