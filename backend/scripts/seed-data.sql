@@ -347,55 +347,55 @@ BEGIN
 		INSERT [dbo].[RolePermissions]
 		([Id], [RoleId], [PermissionId],  [CreatedOn], [CreatedBy], [UpdatedOn], [UpdatedBy])
 	VALUES
-		(N'77b5e37b-40d7-4f37-a66b-7c4649d7733f', N'd95d2348-1d79-4b93-96d4-e48e87fcb4b5', N'7fbbc09d-b2e2-46fe-92d5-cec881f16708',  CAST(N'2024-08-24T02:56:23.6635113+00:00' AS DateTimeOffset), N'26402b6c-ebdd-44c3-9188-659a134819cb', NULL, NULL)
+		(N'77b5e37b-40d7-4f37-a66b-7c4649d7733f', N'd95d2348-1d79-4b93-96d4-e48e87fcb4b5', N'c94c23ad-59d4-4f80-91ee-39316140db17',  CAST(N'2024-08-24T02:56:23.6635113+00:00' AS DateTimeOffset), N'26402b6c-ebdd-44c3-9188-659a134819cb', NULL, NULL)
 	INSERT [dbo].[RolePermissions]
 		([Id], [RoleId], [PermissionId],  [CreatedOn], [CreatedBy], [UpdatedOn], [UpdatedBy])
 	VALUES
-		(N'77b5e37b-40d7-4f37-b66a-7c4649d7733f', N'd95d2348-1d79-4b93-96d4-e48e87fcb4b5', N'1611852e-1dc5-4f26-9204-746edcab50db',  CAST(N'2024-08-24T02:56:23.6635113+00:00' AS DateTimeOffset), N'26402b6c-ebdd-44c3-9188-659a134819cb', NULL, NULL)
-		INSERT [dbo].[RolePermissions]
+		(N'77b5e37b-40d7-4f37-b66a-7c4649d7733f', N'd95d2348-1d79-4b93-96d4-e48e87fcb4b5', N'82755e66-b743-46e2-b612-efd2db6bcd75',  CAST(N'2024-08-24T02:56:23.6635113+00:00' AS DateTimeOffset), N'26402b6c-ebdd-44c3-9188-659a134819cb', NULL, NULL)
+	INSERT [dbo].[RolePermissions]
 		([Id], [RoleId], [PermissionId],  [CreatedOn], [CreatedBy], [UpdatedOn], [UpdatedBy])
 	VALUES
-		(N'77b5e37b-40d7-4f37-c66a-7c4649d7733f', N'd95d2348-1d79-4b93-96d4-e48e87fcb4b5', N'e84cb3ca-6a28-4eb6-91ca-447fa2cd91d4',  CAST(N'2024-08-24T02:56:23.6635113+00:00' AS DateTimeOffset), N'26402b6c-ebdd-44c3-9188-659a134819cb', NULL, NULL)	
+		(N'77b5e37b-40d7-4f37-c66a-7c4649d7733f', N'd95d2348-1d79-4b93-96d4-e48e87fcb4b5', N'82755e66-b743-46e2-b612-efd2db6bce75',  CAST(N'2024-08-24T02:56:23.6635113+00:00' AS DateTimeOffset), N'26402b6c-ebdd-44c3-9188-659a134819cb', NULL, NULL)	
 
 
 ---- Editor
 	INSERT [dbo].[RolePermissions]
 		([Id], [RoleId], [PermissionId],  [CreatedOn], [CreatedBy], [UpdatedOn], [UpdatedBy])
 	VALUES
-		(N'77730bc6-60f4-42df-913d-6d558f1871ce', N'104102f5-e0ec-4739-8fda-f05552b677c3', N'a6657401-0d2b-4bf9-9314-26be98878822', CAST(N'2024-08-24T02:56:23.6635113+00:00' AS DateTimeOffset), N'26402b6c-ebdd-44c3-9188-659a134819cb', NULL, NULL)
+		(N'77730bc6-60f4-42df-913d-6d558f1871ca', N'104102f5-e0ec-4739-8fda-f05552b677c3', N'a6657401-0d2b-4bf9-9314-26be98878822', CAST(N'2024-08-24T02:56:23.6635113+00:00' AS DateTimeOffset), N'26402b6c-ebdd-44c3-9188-659a134819cb', NULL, NULL)
 
 	INSERT [dbo].[RolePermissions]
 		([Id], [RoleId], [PermissionId],  [CreatedOn], [CreatedBy], [UpdatedOn], [UpdatedBy])
 	VALUES
-		(N'77b5e37b-40d7-4f37-a66a-7c4649d7733d', N'104102f5-e0ec-4739-8fda-f05552b677c3', N'd35daa4e-fd02-4934-98d2-5b06e9b694b8',  CAST(N'2024-08-24T02:56:23.6635113+00:00' AS DateTimeOffset), N'26402b6c-ebdd-44c3-9188-659a134819cb', NULL, NULL)
+		(N'77b5e37b-40d7-4f37-a66e-7c4649d7733d', N'104102f5-e0ec-4739-8fda-f05552b677c3', N'd35daa4e-fd02-4934-98d2-5b06e9b694b8',  CAST(N'2024-08-24T02:56:23.6635113+00:00' AS DateTimeOffset), N'26402b6c-ebdd-44c3-9188-659a134819cb', NULL, NULL)
 	INSERT [dbo].[RolePermissions]
 		([Id], [RoleId], [PermissionId],  [CreatedOn], [CreatedBy], [UpdatedOn], [UpdatedBy])
 	VALUES
-		(N'77b5e37b-40d7-4f37-a66a-7c4649d7733f', N'104102f5-e0ec-4739-8fda-f05552b677c3', N'82755e66-b743-46e2-b612-efd2db6bcc75',  CAST(N'2024-08-24T02:56:23.6635113+00:00' AS DateTimeOffset), N'26402b6c-ebdd-44c3-9188-659a134819cb', NULL, NULL)
+		(N'77b5e37b-40d7-4f37-a66a-7c4649d7733e', N'104102f5-e0ec-4739-8fda-f05552b677c3', N'82755e66-b743-46e2-b612-efd2db6bcc75',  CAST(N'2024-08-24T02:56:23.6635113+00:00' AS DateTimeOffset), N'26402b6c-ebdd-44c3-9188-659a134819cb', NULL, NULL)
 	INSERT [dbo].[RolePermissions]
 		([Id], [RoleId], [PermissionId],  [CreatedOn], [CreatedBy], [UpdatedOn], [UpdatedBy])
 	VALUES
-		(N'77b5e37b-40d7-4f37-d66a-7c4649d7733f', N'104102f5-e0ec-4739-8fda-f05552b677c3', N'c94c23ad-59d4-4f80-91ee-39316140cb17',  CAST(N'2024-08-24T02:56:23.6635113+00:00' AS DateTimeOffset), N'26402b6c-ebdd-44c3-9188-659a134819cb', NULL, NULL)
+		(N'77b5e37b-40d7-4f37-d66a-7c4649d7733c', N'104102f5-e0ec-4739-8fda-f05552b677c3', N'c94c23ad-59d4-4f80-91ee-39316140cb17',  CAST(N'2024-08-24T02:56:23.6635113+00:00' AS DateTimeOffset), N'26402b6c-ebdd-44c3-9188-659a134819cb', NULL, NULL)
 		
 	INSERT [dbo].[RolePermissions]
 		([Id], [RoleId], [PermissionId],  [CreatedOn], [CreatedBy], [UpdatedOn], [UpdatedBy])
 	VALUES
-		(N'77b5e37b-40d7-4f37-e66a-7c4649d7733f', N'104102f5-e0ec-4739-8fda-f05552b677c3', N'1611852e-1dc5-4f26-9204-746edcab50db',  CAST(N'2024-08-24T02:56:23.6635113+00:00' AS DateTimeOffset), N'26402b6c-ebdd-44c3-9188-659a134819cb', NULL, NULL)
+		(N'77b5e37b-40d7-4f37-e66a-7c4649d7733b', N'104102f5-e0ec-4739-8fda-f05552b677c3', N'82755e66-b743-46e2-b612-efd2db6bcd75',  CAST(N'2024-08-24T02:56:23.6635113+00:00' AS DateTimeOffset), N'26402b6c-ebdd-44c3-9188-659a134819cb', NULL, NULL)
 	INSERT [dbo].[RolePermissions]
 		([Id], [RoleId], [PermissionId],  [CreatedOn], [CreatedBy], [UpdatedOn], [UpdatedBy])
 	VALUES
-		(N'77b5e37b-40d7-4f37-f66a-7c4649d7733f', N'104102f5-e0ec-4739-8fda-f05552b677c3', N'e84cb3ca-6a28-4eb6-91ca-447fa2cd91d4',  CAST(N'2024-08-24T02:56:23.6635113+00:00' AS DateTimeOffset), N'26402b6c-ebdd-44c3-9188-659a134819cb', NULL, NULL)	
+		(N'77b5e37b-40d7-4f37-f66a-7c4649d7733a', N'104102f5-e0ec-4739-8fda-f05552b677c3', N'c94c23ad-59d4-4f80-91ee-39316140db17',  CAST(N'2024-08-24T02:56:23.6635113+00:00' AS DateTimeOffset), N'26402b6c-ebdd-44c3-9188-659a134819cb', NULL, NULL)	
 
 ---- Reader
 	INSERT [dbo].[RolePermissions]
 		([Id], [RoleId], [PermissionId],  [CreatedOn], [CreatedBy], [UpdatedOn], [UpdatedBy])
 	VALUES
-		(N'77730bc6-60f4-42df-913d-6d558f1871ce', N'3a07551f-7473-44a6-a664-e6c7c834902b', N'a6657401-0d2b-4bf9-9314-26be98878822', CAST(N'2024-08-24T02:56:23.6635113+00:00' AS DateTimeOffset), N'26402b6c-ebdd-44c3-9188-659a134819cb', NULL, NULL)
+		(N'77730bc6-60f4-42df-913d-6d558f1871cb', N'3a07551f-7473-44a6-a664-e6c7c834902b', N'a6657401-0d2b-4bf9-9314-26be98878822', CAST(N'2024-08-24T02:56:23.6635113+00:00' AS DateTimeOffset), N'26402b6c-ebdd-44c3-9188-659a134819cb', NULL, NULL)
 	
 	INSERT [dbo].[RolePermissions]
 		([Id], [RoleId], [PermissionId],  [CreatedOn], [CreatedBy], [UpdatedOn], [UpdatedBy])
 	VALUES
-		(N'77b5e37b-40d7-4f37-a66e-7c4649d7733f', N'3a07551f-7473-44a6-a664-e6c7c834902b', N'1611852e-1dc5-4f26-9204-746edcab50db',  CAST(N'2024-08-24T02:56:23.6635113+00:00' AS DateTimeOffset), N'26402b6c-ebdd-44c3-9188-659a134819cb', NULL, NULL)
+		(N'77b5e37b-40d7-4f37-a66e-7c4649d7733f', N'3a07551f-7473-44a6-a664-e6c7c834902b', N'82755e66-b743-46e2-b612-efd2db6bcd75',  CAST(N'2024-08-24T02:56:23.6635113+00:00' AS DateTimeOffset), N'26402b6c-ebdd-44c3-9188-659a134819cb', NULL, NULL)
 
 END;
 GO
