@@ -1,5 +1,5 @@
 # Use the .NET SDK image for development
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS dev
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS dev
 
 EXPOSE 5000
 
