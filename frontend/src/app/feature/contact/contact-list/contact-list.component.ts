@@ -1,4 +1,4 @@
-import { AsyncPipe, DecimalPipe } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -7,11 +7,8 @@ import { ContactService } from '../contact.service';
 
 @Component({
     selector: 'app-contact-list',
-    standalone: true,
     imports: [
         RouterModule,
-        DecimalPipe,
-        AsyncPipe,
         FormsModule,
         ReactiveFormsModule,
         NgbHighlight,
@@ -19,7 +16,7 @@ import { ContactService } from '../contact.service';
     ],
     templateUrl: './contact-list.component.html',
     styleUrl: './contact-list.component.css',
-    providers: [DecimalPipe, ContactService],
+    providers: [DecimalPipe, ContactService]
 })
 export class ContactListComponent implements OnInit {
     contacts: any[];
