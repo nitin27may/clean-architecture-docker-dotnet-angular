@@ -8,13 +8,12 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - 4000:80
-    volumes:
-      - ./frontend:/app
+      - 8080:8080
     depends_on:
       - api
     networks:
       - mssql_network
+
   api:
     build:
       context: ./backend/src
@@ -64,6 +63,20 @@ services:
         /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${SQL_PASSWORD} -d master -i /scripts/seed-data.sql; wait
     networks:
       - mssql_network
+  
+  nginx: #name of the fourth service
+    build: loadbalancer # specify the directory of the Dockerfile
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80" #specify ports forewarding
+    depends_on:
+      - frontend
+      - api
+    networks:
+      - mssql_network
+
+
 volumes:
   mssql_data: # Named volume to persist data
 

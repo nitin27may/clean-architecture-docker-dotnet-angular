@@ -203,7 +203,7 @@ public class UserService : IUserService
 
     public Guid GetUserId(ClaimsPrincipal user)
     {
-        return Guid.Parse(user.FindFirst("id")?.Value);
+        return Guid.Parse(user.FindFirst("Id")?.Value);
     }
 
 
