@@ -20,6 +20,8 @@ Stay tuned and watch this repository for the latest updates!
 
 To understand this project in-depth, refer to our detailed series of articles on Clean Architecture. This series explains the architectural decisions, setup processes, and best practices used throughout this project.
 
+# Work in Progress
+
 1. [Clean Architecture: Introduction to the Project Structure]() - High-level structure and role of each layer.
 2. [Clean Architecture: Implementing AutoMapper for DTO Mapping and Audit Logging]() - Utilizing AutoMapper to handle data mapping and audit tracking.
 3. [Clean Architecture: Validating Inputs with FluentValidation]() - Ensuring robust input validation using FluentValidation.
