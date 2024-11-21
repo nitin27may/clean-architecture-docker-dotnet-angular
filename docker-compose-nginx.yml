@@ -7,8 +7,8 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    ports:
-      - 8080:8080
+    # ports:
+    #   - 8080:8080
     depends_on:
       - api
     networks:
@@ -20,8 +20,8 @@ services:
       dockerfile: Debug.Dockerfile
       args:
         - configuration=Debug
-    ports:
-      - 5000:5000
+    # ports:
+    #   - 5000:5000
     environment:
       - ASPNETCORE__ENVIRONMENT=${ENVIRONMENT}
       - AppSettings__ConnectionStrings__DefaultConnection=Server=${SQL_SERVER};Database=${SQL_DATABASE};User ID=${SQL_USER};Password=${SQL_PASSWORD};Trusted_Connection=False;Encrypt=False;
