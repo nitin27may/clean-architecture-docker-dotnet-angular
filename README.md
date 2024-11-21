@@ -7,6 +7,14 @@ A startup project template built with **Angular 19** and **ASP.NET Core 9** (cro
 This template is designed for ease of use, customization, and scalability. It adheres to best practices and conventions of both Angular and ASP.NET Core, leveraging modern technologies and tools to ensure an efficient and streamlined workflow.
 <hr>
 
+## **Note**
+This project is under active development, and we are regularly adding new features, enhancements, and documentation updates. 
+
+- The README will soon include more detailed descriptions and usage guides.
+- A series of in-depth articles explaining the architecture, design, and implementation details is also in progress.
+
+Stay tuned and watch this repository for the latest updates!
+<hr>
 ## Clean Architecture Series (Work in Progress )
 
 To understand this project in-depth, refer to our detailed series of articles on Clean Architecture. This series explains the architectural decisions, setup processes, and best practices used throughout this project.
