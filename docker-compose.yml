@@ -1,6 +1,3 @@
-# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP.NET Core service.
-
-version: '3.4'
 
 services:
   frontend:
@@ -15,6 +12,7 @@ services:
       - api
     networks:
       - mssql_network
+ 
   api:
     build:
       context: ./backend/src
@@ -64,6 +62,7 @@ services:
         /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${SQL_PASSWORD} -d master -i /scripts/seed-data.sql; wait
     networks:
       - mssql_network
+
 volumes:
   mssql_data: # Named volume to persist data
 

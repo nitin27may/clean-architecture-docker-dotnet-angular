@@ -1,7 +1,4 @@
 # Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP.NET Core service.
-
-version: '3.4'
-
 services:
   api:
     build:
@@ -25,7 +22,3 @@ services:
       - mssql_network
 volumes:
   mssql_data: # Named volume to persist data
-
-networks:
-  mssql_network:
-    external: true
