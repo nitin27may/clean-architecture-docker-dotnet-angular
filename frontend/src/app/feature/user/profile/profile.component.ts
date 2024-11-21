@@ -14,12 +14,11 @@ import { ValidationService } from '../../../@core/services/validation.service';
 
 @Component({
     selector: 'app-profile',
-    standalone: true,
     // encapsulation: ViewEncapsulation.None,
     // changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [NgbNavModule, ReactiveFormsModule],
     templateUrl: './profile.component.html',
-    styleUrls: ['./profile.component.scss'],
+    styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
     active = 1;
@@ -39,9 +38,10 @@ export class ProfileComponent implements OnInit {
 
     createProfileForm(): UntypedFormGroup {
         return (this.profileForm = this.formBuilder.group({
-            _id: [''],
+            id: [''],
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],
+            userName: ['', Validators.required],
             email: ['', Validators.required],
             mobile: ['', [Validators.required, Validators.minLength(10)]],
         }));
@@ -49,7 +49,7 @@ export class ProfileComponent implements OnInit {
     createPasswordForm() {
         return (this.passwordForm = this.formBuilder.group(
             {
-                username: ['', Validators.required],
+              currentPassword: ['', Validators.required],
                 password: ['', [Validators.required, Validators.minLength(6)]],
                 confirmPassword: ['', Validators.required],
             },
@@ -80,13 +80,17 @@ export class ProfileComponent implements OnInit {
 
     resetPasswordForm() {
         this.passwordForm.reset();
-        this.passwordForm.get('username').patchValue(this.user.username);
+       // this.passwordForm.get('userName').patchValue(this.user.userName);
     }
     updatePassword() {
         this.userService
             .changePassword(
-                this.user._id,
-                this.passwordForm.get('password').value
+              {
+                "currentPassword": this.passwordForm.get('currentPassword').value,
+                "newPassword":this.passwordForm.get('password').value
+              }
+
+
             )
             .subscribe(
                 (data) => {
@@ -98,8 +102,12 @@ export class ProfileComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.user = this.userService.getCurrentUser();
-        this.profileForm.patchValue(this.user);
-        this.passwordForm.get('username').patchValue(this.user.username);
+        this.userService.getCurrentUser().subscribe((user) => {
+           this.user = user;
+          console.log(user);
+          this.profileForm.patchValue(this.user);
+         // this.passwordForm.get('userName').patchValue(this.user.userName);
+          });
+
     }
 }

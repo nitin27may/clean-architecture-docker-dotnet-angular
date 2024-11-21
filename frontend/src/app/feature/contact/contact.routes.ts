@@ -22,12 +22,14 @@ export default [
             },
             {
                 path: 'edit/:contactId',
+               renderMode: 'static',
                 canActivate: [AuthGuard],
                 component: ContactFormComponent,
                 resolve: { contactDetails: ContactDetailsResolver },
             },
             {
                 path: 'details/:contactId',
+               renderMode: 'static',
                 component: ContactDetailsComponent,
                 canActivate: [AuthGuard],
                 resolve: { contactDetails: ContactDetailsResolver },

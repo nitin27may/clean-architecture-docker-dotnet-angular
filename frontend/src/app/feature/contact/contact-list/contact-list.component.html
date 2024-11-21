@@ -1,4 +1,4 @@
-<div class="container px-4 py-5">
+<div class="container px-4 py-5" style="min-height: 1200px">
     <div class="row align-items-center">
         <div
             class="col-xl-12 col-lg-12 col-md-12 col-sm-12 justify-content-center"
@@ -32,12 +32,16 @@
                                 <th scope="col">Last Name</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Mobile</th>
+                                <th scope="col">City</th>
+                                <th scope="col">Postal Code</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @for (
-                                contact of contacts ; track contact.email) {
-                                <tr style="cursor: pointer" (click)="onSelect(contact)">
+                            @for (contact of contacts; track contact.email) {
+                                <tr
+                                    style="cursor: pointer"
+                                    (click)="onSelect(contact)"
+                                >
                                     <td>
                                         <ngb-highlight
                                             [result]="contact.firstName"
@@ -61,6 +65,18 @@
                                             [result]="contact.mobile"
                                             [term]="filter.value"
                                         />
+                                      </td>
+                                      <td>
+                                        <ngb-highlight
+                                            [result]="contact.city"
+                                            [term]="filter.value"
+                                        />
+                                      </td>
+                                      <td>
+                                        <ngb-highlight
+                                            [result]="contact.postalCode"
+                                            [term]="filter.value"
+                                        />
                                     </td>
                                 </tr>
                             } @empty {
@@ -73,18 +89,24 @@
                         </tbody>
                     </table>
                     <div class="d-flex justify-content-between p-2">
-                      <ngb-pagination
-                        [collectionSize]="collectionSize"
-                        [(page)]="page"
-                        [pageSize]="pageSize"
-                        (pageChange)="refreshContacts()"
-                      >
-                      </ngb-pagination>
-                      <select class="form-select" style="width: auto; height: 40px;" [(ngModel)]="pageSize" (ngModelChange)="refreshContacts()">
-                        <option [ngValue]="2">2 items per page</option>
-                        <option [ngValue]="4">4 items per page</option>
-                        <option [ngValue]="6">6 items per page</option>
-                      </select>
+                        <ngb-pagination
+                            [collectionSize]="collectionSize"
+                            [(page)]="page"
+                            [pageSize]="pageSize"
+                            (pageChange)="refreshContacts()"
+                        >
+                        </ngb-pagination>
+                        <select
+                            class="form-select"
+                            style="width: auto; height: 40px"
+                            [(ngModel)]="pageSize"
+                            (ngModelChange)="refreshContacts()"
+                        >
+                            <option [ngValue]="2">2 items per page</option>
+                            <option [ngValue]="4">4 items per page</option>
+                            <option [ngValue]="6">6 items per page</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>

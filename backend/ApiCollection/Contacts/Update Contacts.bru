@@ -1,0 +1,29 @@
+meta {
+  name: Update Contacts
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{base_url}}/ContactPerson/340a2588-1f74-4a0b-8e4b-137ce0329c50
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+body:json {
+    {
+      "id": "340a2588-1f74-4a0b-8e4b-137ce0329c50",
+      "firstName": "Nitin",
+      "lastName": "Singh",
+      "dateOfBirth": "1986-08-21T00:00:00",
+      "countryCode": 91,
+      "mobile": 6475305663,
+      "email": "nitin27may@gmail.com",
+      "city": "Whitby",
+      "postalCode": "L1N9G9"
+    }
+}

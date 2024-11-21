@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
     ReactiveFormsModule,
@@ -13,16 +14,15 @@ import { LoginService } from './login.service';
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrl: './login.component.css',
-    imports: [RouterModule, ReactiveFormsModule],
-    standalone: true,
-    providers: [LoginService],
+    imports: [RouterModule, ReactiveFormsModule, CommonModule],
+    providers: [LoginService]
 })
 export class LoginComponent implements OnInit {
     model: any = {};
     loading = false;
     returnUrl: string;
     loginForm: UntypedFormGroup;
-
+    isPasswordVisible: boolean = false;
     constructor(
         private formBuilder: UntypedFormBuilder,
         private route: ActivatedRoute,
@@ -37,8 +37,19 @@ export class LoginComponent implements OnInit {
 
         // get return url from route parameters or default to "/"
         this.returnUrl = this.route.snapshot.queryParams[`returnUrl`] || '/';
-    }
 
+        // Retrieve the username from localStorage if it exists
+        if (typeof window !== 'undefined') {
+            const savedUsername = localStorage.getItem('rememberedUsername');
+            if (savedUsername) {
+                this.loginForm.controls['userName'].setValue(savedUsername);
+                this.loginForm.controls['rememberMe'].setValue(true);
+            }
+        }
+    }
+    togglePasswordVisibility(): void {
+        this.isPasswordVisible = !this.isPasswordVisible;
+    }
     createForm(): void {
         this.loginForm = this.formBuilder.group({
             userName: ['', Validators.required],
@@ -58,10 +69,19 @@ export class LoginComponent implements OnInit {
                 .subscribe(
                     (data) => {
                         this.loading = false;
+                        // Save or remove the username based on the "Remember Me" checkbox
+                        if (loginForm.controls.rememberMe.value) {
+                            localStorage.setItem(
+                                'rememberedUsername',
+                                loginForm.controls.userName.value
+                            );
+                        } else {
+                            localStorage.removeItem('rememberedUsername');
+                        }
                         this.router.navigate([this.returnUrl]);
                     },
                     (error) => {
-                        this.toastrService.error(error);
+                       // this.toastrService.error(error);
                         this.loading = false;
                     }
                 );

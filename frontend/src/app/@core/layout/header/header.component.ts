@@ -6,12 +6,11 @@ import { CommonModule } from "@angular/common";
 import { LoginService } from "../../../feature/user/login/login.service";
 
 @Component({
-  selector: 'app-header',
-  standalone: true,
-  imports: [RouterModule, NgbDropdownModule, CommonModule],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.css',
-  providers: [ LoginService]
+    selector: 'app-header',
+    imports: [RouterModule, NgbDropdownModule, CommonModule],
+    templateUrl: './header.component.html',
+    styleUrl: './header.component.css',
+    providers: [LoginService]
 })
 export class HeaderComponent implements OnInit{
   user: any;
@@ -23,7 +22,8 @@ private loginService: LoginService
 
   }
   ngOnInit(){
-    this.user = this.userService.getCurrentUser();
-    //this.user = {firstName: "John", lastName: "Doe"};
+    this.userService.getCurrentUser().subscribe((user: any) => {
+      this.user = user;
+    } );
   }
 }

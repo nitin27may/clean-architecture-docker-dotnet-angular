@@ -341,3 +341,7 @@ healthchecksdb
 
 WebApi/appsettings.Development.json
 VSIXCore/
+frontend/node_modules/
+frontend/dist/
+.env
+.DS_Store

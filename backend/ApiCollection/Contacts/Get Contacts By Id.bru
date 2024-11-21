@@ -1,0 +1,15 @@
+meta {
+  name: Get Contacts By Id
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{base_url}}/ContactPerson/340a2588-1f74-4a0b-8e4b-137ce0329c50
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}

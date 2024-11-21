@@ -32,13 +32,22 @@
                                 </div>
                                 <div class="col-sm-12 col-md-12">
                                     <label>Password</label>
+                                    <div class="input-group mb-3">
                                     <input
                                         class="form-control"
-                                        placeholder="******"
-                                        type="password"
+                                        placeholder="Enter your password"
+                                        type="{{ isPasswordVisible ? 'text' : 'password' }}"
                                         name="password"
                                         formControlName="password"
                                     />
+                                    <button
+                                    class="btn btn-outline-secondary"
+                                    type="button"
+                                    (click)="togglePasswordVisibility()"
+                                  >
+                                    <i [ngClass]="isPasswordVisible ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                                  </button>
+                                </div>
                                 </div>
                                 <div class="col-sm-12 col-md-12">
                                     <!-- form-group// -->

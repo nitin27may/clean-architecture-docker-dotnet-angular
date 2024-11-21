@@ -1,0 +1,23 @@
+meta {
+  name: Autenticate
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/Users/authenticate
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username": "nitin27may@gmail.com",
+    "password": "P@ssword#321"
+  }
+}
+
+script:post-response {
+  let data = res.getBody();
+  bru.setEnvVar("authToken",data.token);
+}

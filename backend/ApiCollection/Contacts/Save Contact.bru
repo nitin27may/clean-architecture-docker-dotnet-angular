@@ -1,0 +1,28 @@
+meta {
+  name: Save Contact
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/ContactPerson
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+body:json {
+  {
+    "firstName": "Nitin",
+    "lastName": "Singh",
+    "dateOfBirth": "2024-09-05T14:16:59.182Z",
+    "mobile": 9833366734,
+    "email": "nitin27may234@gmail.com",
+    "countryCode": 91,
+    "postalCode": "L1N9G9",
+    "city": "Whitby"
+  }
+}
