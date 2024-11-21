@@ -1,12 +1,17 @@
 # Clean Architecture Full-Stack Starter: .NET, Angular, and MS SQL Server
 ## Project Overview
-This repository serves as a comprehensive boilerplate for building a full-stack web application using .NET 9 Web API, Angular 19, and MS SQL Server with Docker. It includes built-in features like user registration, authentication with JWT, CRUD operations, and is optimized for both development and production environments.
+This repository serves as a comprehensive boilerplate for building a full-stack web application using **.NET 9 Web API**, **Angular 19**, and **MS SQL Server** with Docker. It includes built-in features like user registration, authentication with JWT, CRUD operations, and is optimized for both development and production environments.
+
+A startup project template built with **Angular 19** and **ASP.NET Core 9** (cross-platform), featuring a complete implementation of login, user management, and role-based access control. It also includes essential functionalities for rapid application development.
+
+This template is designed for ease of use, customization, and scalability. It adheres to best practices and conventions of both Angular and ASP.NET Core, leveraging modern technologies and tools to ensure an efficient and streamlined workflow.
 <hr>
-## Clean Architecture Series
+
+## Clean Architecture Series (Work in Progress )
 
 To understand this project in-depth, refer to our detailed series of articles on Clean Architecture. This series explains the architectural decisions, setup processes, and best practices used throughout this project.
 
-# Work in Progress
+## (will publish below detail articles)
 
 1. [Clean Architecture: Introduction to the Project Structure]() - High-level structure and role of each layer.
 2. [Clean Architecture: Implementing AutoMapper for DTO Mapping and Audit Logging]() - Utilizing AutoMapper to handle data mapping and audit tracking.
@@ -20,6 +25,32 @@ To understand this project in-depth, refer to our detailed series of articles on
 10. [Clean Architecture: Seeding Initial Data Using Docker Compose and SQL Scripts]() - Initial data seeding setup with Docker Compose.
 11. [Dockerizing the .NET Core API and MS SQL Server]() - Containerizing the application for smooth deployment.
 12. [Error Handling and Exception Management in the API]() - Enhancing resilience with custom error handling.
+
+## Features
+A complete backend and frontend project structure to build on, with login, user and permission-based role management already integrated
+### Core Architecture
+- [x] Clean Architecture Design
+- [x] Modular Project Structure
+
+### Backend: .NET
+- [x] .NET 9
+- [x] Dapper Support
+- [x] Authentication/Authorization based on OIDC/OAuth2 and ASP.NET Core Identity
+- [x] Middleware for Exception Handling
+- [x] Role Based API access, Support for Feature and Operation Mapping
+- [x] Activity Log (as User's Activity)
+- [x] Swagger/OpenAPI Documentation
+
+### Frontend: Angular
+- [x] Angular 19
+- [x] Bootstrap Integration
+
+### Dockerized Setup
+- [x] Docker-Compose for Multi-Container Orchestration with NGINX as Load Balancer
+- [ ] Health Checks
+- [ ] Docker Debug mode with hot reload for the API and UI
+- [ ] Docker Production version
+
 
 ## Architecture
 The project is structured with Clean Architecture principles, separating the solution into distinct layers to ensure scalability, maintainability, and testability. This includes a modular design with API, Application, Domain, and Infrastructure layers.
@@ -67,7 +98,7 @@ Also, it has sample code for Auth guard, services, http interceptors, resolver a
 **[Dockerfile for Production](/frontend/Dockerfile)**
 **[Dockerfile for Development](/frontend/debug.dockerfile)**
 
-#### Dotnet (8.0.0)
+#### Dotnet (9.0.0)
 
 Rest APis of this project is devloped using dotnet
 
