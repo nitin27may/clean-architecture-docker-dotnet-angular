@@ -7,5 +7,9 @@ meta {
 get {
   url: {{base_url}}/users
   body: none
-  auth: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
 }
