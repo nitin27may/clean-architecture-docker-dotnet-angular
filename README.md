@@ -1,12 +1,12 @@
 # Clean Architecture Full-Stack Starter: .NET, Angular, and MS SQL Server
 ## Project Overview
-This repository serves as a comprehensive boilerplate for building a full-stack web application using .NET 8 Web API, Angular 18, and MS SQL Server with Docker. It includes built-in features like user registration, authentication with JWT, CRUD operations, and is optimized for both development and production environments.
+This repository serves as a comprehensive boilerplate for building a full-stack web application using .NET 9 Web API, Angular 19, and MS SQL Server with Docker. It includes built-in features like user registration, authentication with JWT, CRUD operations, and is optimized for both development and production environments.
 <hr>
-## To update in About
-"A full-stack boilerplate with Angular 18 (frontend), .NET 8 (API), and MS SQL Server, following Clean Architecture principles. Fully containerized with Docker for efficient development and deployment, and styled with Bootstrap 5."
 ## Clean Architecture Series
 
 To understand this project in-depth, refer to our detailed series of articles on Clean Architecture. This series explains the architectural decisions, setup processes, and best practices used throughout this project.
+
+# Work in Progress
 
 1. [Clean Architecture: Introduction to the Project Structure]() - High-level structure and role of each layer.
 2. [Clean Architecture: Implementing AutoMapper for DTO Mapping and Audit Logging]() - Utilizing AutoMapper to handle data mapping and audit tracking.
@@ -30,9 +30,10 @@ The project is structured with Clean Architecture principles, separating the sol
 To quickly start the application, clone the repository and run Docker Compose:
 
 ```
-  git clone https://github.com/nitin27may/angular-dotnet-core-docker.git angular-dotnet
+  git clone https://github.com/nitin27may/clean-architecture-docker-dotnet-angular.git angular-dotnet
   cd angular-dotnet 
-  docker compose up
+  //rename .env.example to .env 
+  docker-compose -f docker-compose.yml -f docker-compose.override.yml up
 ```
 
 **Note** I have used SMTP send function, please update the account details
@@ -42,11 +43,11 @@ The apps written in the following JavaScript frameworks/libraries:
 
 | folder          | Description                                                                                  |
 | --------------- | -------------------------------------------------------------------------------------------- |
-| **Frontend (Angular)** | [Angular 18-based front-end application with JWT security.](https://github.com/nitin27may/angular-dotnet-core-docker/tree/master/frontend)         |
-| **Api (.Net)** | [.NET 8 REST API with Clean Architectuire.](https://github.com/nitin27may/angular-dotnet-core-docker/tree/master/WebApi) |
+| **Frontend (Angular)** | [Angular 18-based front-end application with JWT security.](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/tree/master/frontend)         |
+| **Api (.Net)** | [.NET 8 REST API with Clean Architectuire.](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/tree/master/WebApi) |
 
 ### Built With
-#### Angular (18.1.0)
+#### Angular (19.0.0)
 
 The fronend of this project is developed in Angular. As we are using Server Side Rendering (SSR) we have used Nodejs alpine image in place of other lightweight docker image like nginx to run Angular app.
 
