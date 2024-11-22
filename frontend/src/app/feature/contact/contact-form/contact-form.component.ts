@@ -49,10 +49,12 @@ export class ContactFormComponent implements OnInit {
                     Validators.maxLength(35),
                 ],
             ],
+            dateOfBirth:[],
             email: [
                 '',
                 [Validators.required, this.validationService.emailValidator],
             ],
+            countryCode: ['', [Validators.required]],
             mobile: ['', [Validators.required]],
             city: ['', [Validators.required]],
             postalCode: ['', [Validators.required]],
