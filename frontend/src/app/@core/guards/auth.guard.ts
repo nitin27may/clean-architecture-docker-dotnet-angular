@@ -26,7 +26,7 @@ export class AuthGuard {
                 } else {
                   const payload = JSON.parse(atob(token.split('.')[1])); // Decode the payload
                   const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
-                  if (payload.exp > currentTime){
+                  if (payload.exp < currentTime){
                     return this.InvalidSession(state);
                   } else {
                     return true;
