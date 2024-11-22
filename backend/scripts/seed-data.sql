@@ -193,7 +193,7 @@ BEGIN
 	INSERT [dbo].[Operations]
 		([Id], [Name], [Description], [CreatedOn], [CreatedBy], [UpdatedOn], [UpdatedBy])
 	VALUES
-		(N'09be3f29-6429-4089-a2a9-a17efe46cd7b', N'Write', N'Write', CAST(N'2024-08-24T02:56:23.6635113+00:00' AS DateTimeOffset), N'26402b6c-ebdd-44c3-9188-659a134819cb', NULL, NULL)
+		(N'09be3f29-6429-4089-a2a9-a17efe46cd7b', N'Create', N'Create', CAST(N'2024-08-24T02:56:23.6635113+00:00' AS DateTimeOffset), N'26402b6c-ebdd-44c3-9188-659a134819cb', NULL, NULL)
 
 END;
 GO
