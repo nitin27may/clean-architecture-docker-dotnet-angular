@@ -72,6 +72,7 @@ builder.Services.AddAuthorization(options =>
         });
     }
 });
+
 builder.Services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
 
 
@@ -94,5 +95,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
 
 app.Run();

@@ -3,11 +3,16 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: Debug.Dockerfile
+    command: ["npm", "run", "start:debug"]
     ports:
-      - 4000:80
+      - 4200:4200
+      - 49153:49153
     volumes:
       - ./frontend:/app
+      - /app/node_modules
+    stdin_open: true
+    tty: true
     depends_on:
       - api
     networks:
@@ -16,14 +21,15 @@ services:
   api:
     build:
       context: ./backend/src
-      dockerfile: Dockerfile
-      args:
-        - BUILD_CONFIGURATION=Release
+      dockerfile: Debug.Dockerfile
+    command: ["dotnet", "watch", "--project", "Contact.Api/Contact.Api.csproj", "run", "--urls", "http://0.0.0.0:5000"] 
     ports:
-      - 8000:8000
+      - 5000:5000
+
+      
     environment:
-      - DOTNET_SKIP_POLICY_LOADING=false
       - ASPNETCORE__ENVIRONMENT=${ENVIRONMENT}
+      - DOTNET_SKIP_POLICY_LOADING=false
       - AppSettings__ConnectionStrings__DefaultConnection=Server=${SQL_SERVER};Database=${SQL_DATABASE};User ID=${SQL_USER};Password=${SQL_PASSWORD};Trusted_Connection=False;Encrypt=False;
       - AppSettings__Secret=${JWT_SECRET}
       - AppSettings__Issuer=${JWT_ISSUER}
@@ -39,8 +45,7 @@ services:
       - ./backend/src:/app
       - ~/.vsdbg:/remote_debugger:rw
     depends_on:
-      mssql:
-        condition: service_healthy
+      - mssql
     networks:
       - mssql_network
       
@@ -62,11 +67,6 @@ services:
       - |
         /opt/mssql/bin/sqlservr & sleep 15s;
         /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${SQL_PASSWORD} -d master -i /scripts/seed-data.sql; wait
-    healthcheck:
-      test: ["CMD-SHELL", "sqlcmd -S localhost -U sa -P $SQL_PASSWORD -Q 'SELECT 1'"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
     networks:
       - mssql_network
 

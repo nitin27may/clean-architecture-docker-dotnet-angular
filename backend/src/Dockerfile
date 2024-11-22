@@ -9,12 +9,11 @@ RUN groupadd -g 2000 dotnet \
     && useradd -m -u 2000 -g 2000 dotnet
 USER dotnet
 
-EXPOSE 8081
-
 
 # This stage is used to build the service project
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
+ARG DOTNET_SKIP_POLICY_LOADING=true
 WORKDIR /src
 COPY ["Contact.Api/Contact.Api.csproj", "Contact.Api/"]
 COPY ["Contact.Application/Contact.Application.csproj", "Contact.Application/"]
@@ -27,6 +26,8 @@ COPY . .
 WORKDIR "/src/Contact.Api"
 RUN dotnet build "./Contact.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
+RUN ls /app/build
+
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
@@ -35,5 +36,6 @@ RUN dotnet publish "./Contact.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publis
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
+# COPY --from=publish /app/publish/Contact.Api.dll .
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Contact.Api.dll"]

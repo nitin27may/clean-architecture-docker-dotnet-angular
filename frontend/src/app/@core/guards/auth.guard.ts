@@ -15,13 +15,33 @@ export class AuthGuard {
         if (typeof window !== 'undefined') {
             if (localStorage.getItem('currentUser')) {
                 // logged in so return true
-                return true;
+                const userObject = JSON.parse(localStorage.getItem('currentUser'));
+
+                // Extract the token
+                const token = userObject.token;
+
+                if (!token) {
+                  console.error('Token is missing');
+                  return this.InvalidSession(state);
+                } else {
+                  const payload = JSON.parse(atob(token.split('.')[1])); // Decode the payload
+                  const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
+                  if (payload.exp > currentTime){
+                    return this.InvalidSession(state);
+                  } else {
+                    return true;
+                }
             }
         }
         // not logged in so redirect to login page with the return url
-        this.router.navigate(['/login'], {
-            queryParams: { returnUrl: state.url },
-        });
-        return false;
+        return this.InvalidSession(state);
     }
+  }
+
+  private InvalidSession(state: RouterStateSnapshot) {
+    this.router.navigate(['/login'], {
+      queryParams: { returnUrl: state.url },
+    });
+    return false;
+  }
 }

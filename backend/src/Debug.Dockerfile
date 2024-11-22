@@ -13,4 +13,4 @@ COPY . .
 RUN dotnet restore
 
 # Run the app in watch mode so that it rebuilds automatically when code changes
-CMD ["dotnet", "watch", "--project", "Contact.Api/Contact.Api.csproj", "run", "--urls", "http://0.0.0.0:5000"]
+
