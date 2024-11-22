@@ -123,8 +123,8 @@ It contains sample for:
 8. Complete CRUD example for Contact
 
 
-**[Dockerfile for production](/Api/Dockerfile)**
-**[Dockerfile for development](/Api/debug.dockerfile)**
+**[Dockerfile for production](/backend/src/Dockerfile)**
+**[Dockerfile for development](/backend/src/Debug.Dockerfile)**
 
 
 ## Getting started
