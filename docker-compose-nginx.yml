@@ -17,9 +17,9 @@ services:
   api:
     build:
       context: ./backend/src
-      dockerfile: Debug.Dockerfile
+      dockerfile: Dockerfile
       args:
-        - configuration=Debug
+        - configuration=Release
     # ports:
     #   - 5000:5000
     environment:

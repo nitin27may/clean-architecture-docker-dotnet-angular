@@ -5,9 +5,10 @@ services:
       context: ./backend/src
       dockerfile: Debug.Dockerfile
     ports:
-      - 5000:5000
+      - 8000:8000
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
+      - DOTNET_SKIP_POLICY_LOADING=false
     volumes: []
     networks:
       - mssql_network
