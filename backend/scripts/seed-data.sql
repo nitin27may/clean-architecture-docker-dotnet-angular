@@ -509,7 +509,7 @@ BEGIN
 	INSERT [dbo].[Users]
 		([Id], [FirstName], [LastName], [UserName], [Email], [Mobile], [Password], [CreatedOn], [Createdby], [UpdatedOn], [UpdatedBy])
 	VALUES
-		(N'424ffb80-05bf-43f8-8814-2772a5de2543', N'Sachin', N'Singh', N'sachin@gmail.com', N'sachin@gmail.com', 9833364, N'AQAAAAIAAYagAAAAEC1iNqNI7oqJKNcpJ+kYreWvBzjMxE/FWhfoDXzP5CoV60u6JHm5PwHIb3w7K7lWxw==', CAST(N'2024-09-05T14:48:17.0399044+00:00' AS DateTimeOffset), N'00000000-0000-0000-0000-000000000000', NULL, NULL)
+		(N'424ffb80-05bf-43f8-8814-2772a5de2543', N'Sachin', N'Singh', N'reader@gmail.com', N'reader@gmail.com', 9833364, N'AQAAAAIAAYagAAAAEC1iNqNI7oqJKNcpJ+kYreWvBzjMxE/FWhfoDXzP5CoV60u6JHm5PwHIb3w7K7lWxw==', CAST(N'2024-09-05T14:48:17.0399044+00:00' AS DateTimeOffset), N'00000000-0000-0000-0000-000000000000', NULL, NULL)
 
 	INSERT [dbo].[Users]
 		([Id], [FirstName], [LastName], [UserName], [Email], [Mobile], [Password], [CreatedOn], [Createdby], [UpdatedOn], [UpdatedBy])
@@ -519,7 +519,7 @@ BEGIN
 	INSERT [dbo].[Users]
 		([Id], [FirstName], [LastName], [UserName], [Email], [Mobile], [Password], [CreatedOn], [Createdby], [UpdatedOn], [UpdatedBy])
 	VALUES
-		(N'3aa35df1-2578-4ed3-a93b-8b8eb955499e', N'Vikram', N'Singh', N'vikram@gmail.com', N'vikram@gmail.com', 9833364, N'AQAAAAIAAYagAAAAEC1iNqNI7oqJKNcpJ+kYreWvBzjMxE/FWhfoDXzP5CoV60u6JHm5PwHIb3w7K7lWxw==', CAST(N'2024-08-28T20:29:02.2362893+00:00' AS DateTimeOffset), N'00000000-0000-0000-0000-000000000000', NULL, NULL)
+		(N'3aa35df1-2578-4ed3-a93b-8b8eb955499e', N'Vikram', N'Singh', N'editor@gmail.com', N'editor@gmail.com', 9833364, N'AQAAAAIAAYagAAAAEC1iNqNI7oqJKNcpJ+kYreWvBzjMxE/FWhfoDXzP5CoV60u6JHm5PwHIb3w7K7lWxw==', CAST(N'2024-08-28T20:29:02.2362893+00:00' AS DateTimeOffset), N'00000000-0000-0000-0000-000000000000', NULL, NULL)
 
 END;
 GO
