@@ -150,3 +150,12 @@ It contains sample for:
  |editor@gmail.com      | P@ssword#321  | Editor   |
  |reader@gmail.com      | P@ssword#321  | Reader   |
 
+## Feature Request
+We welcome suggestions and ideas to improve Clean Architecture Docker .NET Angular! If you have a feature you'd like to see, request from [this link](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/issues/new?assignees=&labels=&projects=&template=feature_request.md&title= ).
+
+## License
+This project is licensed under the MIT License. See the [LICENSE file](LICENSE) for details.
+
+## Contact
+For support or questions, please contact Nitin Singh at nitin27may@gmail.com.
+
