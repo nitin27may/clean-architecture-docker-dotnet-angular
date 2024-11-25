@@ -1,26 +1,23 @@
-
 services:
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    ports:
-      - 4000:80
-    volumes:
-      - ./frontend:/app
+    # ports:
+    #   - 8080:8080
     depends_on:
       - api
     networks:
       - mssql_network
- 
+
   api:
     build:
       context: ./backend/src
-      dockerfile: Debug.Dockerfile
+      dockerfile: Dockerfile
       args:
-        - configuration=Debug
-    ports:
-      - 5000:5000
+        - configuration=Release
+    # ports:
+    #   - 8000:8000
     environment:
       - ASPNETCORE__ENVIRONMENT=${ENVIRONMENT}
       - AppSettings__ConnectionStrings__DefaultConnection=Server=${SQL_SERVER};Database=${SQL_DATABASE};User ID=${SQL_USER};Password=${SQL_PASSWORD};Trusted_Connection=False;Encrypt=False;
@@ -34,9 +31,6 @@ services:
       - SmtpSettings__Password=${SMTP_PASSWORD}
       - SmtpSettings__FromEmail=${SMTP_FROM_EMAIL}
       - SmtpSettings__EnableSsl=${SMTP_ENABLE_SSL}
-    volumes:
-      - ./backend/src:/app
-      - ~/.vsdbg:/remote_debugger:rw
     depends_on:
       - mssql
     networks:
@@ -62,6 +56,19 @@ services:
         /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${SQL_PASSWORD} -d master -i /scripts/seed-data.sql; wait
     networks:
       - mssql_network
+  
+  nginx: #name of the fourth service
+    build: loadbalancer # specify the directory of the Dockerfile
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80" #specify ports forewarding
+    depends_on:
+      - frontend
+      - api
+    networks:
+      - mssql_network
+
 
 volumes:
   mssql_data: # Named volume to persist data

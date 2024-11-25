@@ -4,6 +4,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { NgbHighlight, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ContactService } from '../contact.service';
+import { PhoneNumberFormatPipe } from "../../../@core/pipes/phoneNumberFormat.pipe";
 
 @Component({
     selector: 'app-contact-list',
@@ -13,6 +14,7 @@ import { ContactService } from '../contact.service';
         ReactiveFormsModule,
         NgbHighlight,
         NgbPaginationModule,
+        PhoneNumberFormatPipe
     ],
     templateUrl: './contact-list.component.html',
     styleUrl: './contact-list.component.css',

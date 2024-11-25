@@ -42,6 +42,33 @@
                                 />
                             </div>
                             <div class="col-sm-6 col-md-6">
+                              <label for="lastName" class="form-label"
+                                  >Date Of Birth</label
+                              >
+                              <input
+                                  type="date"
+                                  class="form-control"
+                                  formControlName="dateOfBirth"
+                              />
+
+                              <!-- <div class="input-group">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="dateOfBirth"
+                                    id="datePicker"
+                                    class="form-control"
+                                    placeholder="yyyy-mm-dd"
+
+                                    ngbDatepicker
+                                    #dp="ngbDatepicker"
+                                />
+                                <button class="btn btn-outline-secondary" (click)="dp.toggle()" type="button">
+                                  <i class="bi bi-calendar"></i>
+                                </button>
+                              </div> -->
+                          </div>
+                            <div class="col-sm-6 col-md-6">
                                 <label for="email" class="form-label"
                                     >Email
                                 </label>
@@ -55,11 +82,25 @@
                                 <label for="mobile" class="form-label"
                                     >Mobile #</label
                                 >
+                                <div class="input-group">
+                                  <select
+                                  class="form-select"
+
+                                  formControlName="countryCode"
+                                  aria-label="Country code"
+                                  style="max-width: 100px;"
+                              >
+                                  <option value="1">+1</option>
+                                  <option value="44">+44</option>
+                                  <option value="91">+91</option>
+                                  <option value="61">+61</option>
+                              </select>
                                 <input
                                     type="text"
                                     class="form-control"
                                     formControlName="mobile"
                                 />
+                                </div>
                             </div>
                             <div class="col-sm-6 col-md-6">
                                 <label for="city" class="form-label"

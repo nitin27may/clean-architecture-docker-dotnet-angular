@@ -57,22 +57,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         //    },
         //};
     });
-builder.Services.AddAuthorization(options =>
-{
-    // Dynamically add policies based on permissions
-    var permissionService = builder.Services.BuildServiceProvider().GetRequiredService<IPermissionService>();
-    var permissionMappings = permissionService.GetAllPageOperationMappingsAsync().Result;
 
-    foreach (var mapping in permissionMappings)
-    {
-        var policyName = $"{mapping.PageName}.{mapping.OperationName}Policy";
-        options.AddPolicy(policyName, policy =>
-        {
-            policy.Requirements.Add(new PermissionRequirement(policyName));
-        });
-    }
-});
-builder.Services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
+builder.Services.AddSingleton<IAuthorizationPolicyProvider, CustomAuthorizationPolicyProvider>();
+builder.Services.AddScoped<IAuthorizationHandler, PermissionHandler>();
+
 
 
 builder.Services.AddControllers();

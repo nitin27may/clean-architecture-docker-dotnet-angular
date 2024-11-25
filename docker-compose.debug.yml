@@ -1,29 +1,35 @@
-# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP.NET Core service.
-
-version: '3.4'
 
 services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
-    # ports:
-    #   - 8080:8080
+      dockerfile: Debug.Dockerfile
+    command: ["npm", "run", "start:debug"]
+    ports:
+      - 4200:4200
+      - 49153:49153
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    stdin_open: true
+    tty: true
     depends_on:
       - api
     networks:
       - mssql_network
-
+ 
   api:
     build:
       context: ./backend/src
       dockerfile: Debug.Dockerfile
-      args:
-        - configuration=Debug
-    # ports:
-    #   - 5000:5000
+    command: ["dotnet", "watch", "--project", "Contact.Api/Contact.Api.csproj", "run", "--urls", "http://0.0.0.0:5000"] 
+    ports:
+      - 5000:5000
+
+      
     environment:
       - ASPNETCORE__ENVIRONMENT=${ENVIRONMENT}
+      - DOTNET_SKIP_POLICY_LOADING=false
       - AppSettings__ConnectionStrings__DefaultConnection=Server=${SQL_SERVER};Database=${SQL_DATABASE};User ID=${SQL_USER};Password=${SQL_PASSWORD};Trusted_Connection=False;Encrypt=False;
       - AppSettings__Secret=${JWT_SECRET}
       - AppSettings__Issuer=${JWT_ISSUER}
@@ -63,19 +69,6 @@ services:
         /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${SQL_PASSWORD} -d master -i /scripts/seed-data.sql; wait
     networks:
       - mssql_network
-  
-  nginx: #name of the fourth service
-    build: loadbalancer # specify the directory of the Dockerfile
-    container_name: nginx
-    restart: always
-    ports:
-      - "80:80" #specify ports forewarding
-    depends_on:
-      - frontend
-      - api
-    networks:
-      - mssql_network
-
 
 volumes:
   mssql_data: # Named volume to persist data

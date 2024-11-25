@@ -14,7 +14,6 @@ export default [
         children: [
             {
                 path: '',
-
                 component: HomeComponent,
             },
             {

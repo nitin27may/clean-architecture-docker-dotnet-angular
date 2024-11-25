@@ -108,7 +108,6 @@ public class UserService : IUserService
     }
 
 
-
     public async Task<bool> Delete(Guid id)
     {
         return await _userRepository.Delete(id);
@@ -271,7 +270,6 @@ public class UserService : IUserService
         _logger.LogInformation("Password reset email sent to {email}.", user.Email);
         return true;
     }
-
 
     public async Task<bool> ResetPassword(ResetPassword resetPasswordRequest)
     {

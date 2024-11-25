@@ -8,13 +8,14 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { NgbCalendar, NgbDatepickerModule, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { ValidationService } from '../../../@core/services/validation.service';
 import { ContactService } from '../contact.service';
 import { errorTailorImports } from "../../../@core/components/validation";
 
 @Component({
     selector: 'app-contact-form',
-    imports: [ReactiveFormsModule, RouterModule, CommonModule, errorTailorImports],
+    imports: [ReactiveFormsModule, RouterModule, CommonModule, errorTailorImports, NgbDatepickerModule],
     templateUrl: './contact-form.component.html',
     styleUrl: './contact-form.component.css',
     providers: [ContactService]
@@ -49,10 +50,12 @@ export class ContactFormComponent implements OnInit {
                     Validators.maxLength(35),
                 ],
             ],
+            dateOfBirth:[],
             email: [
                 '',
                 [Validators.required, this.validationService.emailValidator],
             ],
+            countryCode: ['', [Validators.required]],
             mobile: ['', [Validators.required]],
             city: ['', [Validators.required]],
             postalCode: ['', [Validators.required]],
@@ -113,6 +116,11 @@ export class ContactFormComponent implements OnInit {
         const contactDetails = this.activatedRoute.snapshot.data.contactDetails;
         if (contactDetails) {
             this.contactForm.patchValue(contactDetails);
+            this.contactForm.controls.dateOfBirth.setValue(this.formatDate(contactDetails.dateOfBirth));
         }
+    }
+    private formatDate(jsonDate: string): string {
+      const date = new Date(jsonDate);
+      return date.toISOString().split('T')[0]; // yyyy-MM-dd format
     }
 }

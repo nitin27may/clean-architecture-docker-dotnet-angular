@@ -20,6 +20,8 @@ Stay tuned and watch this repository for the latest updates!
 
 To understand this project in-depth, refer to our detailed series of articles on Clean Architecture. This series explains the architectural decisions, setup processes, and best practices used throughout this project.
 
+# Work in Progress
+
 1. [Clean Architecture: Introduction to the Project Structure]() - High-level structure and role of each layer.
 2. [Clean Architecture: Implementing AutoMapper for DTO Mapping and Audit Logging]() - Utilizing AutoMapper to handle data mapping and audit tracking.
 3. [Clean Architecture: Validating Inputs with FluentValidation]() - Ensuring robust input validation using FluentValidation.
@@ -58,11 +60,13 @@ A complete backend and frontend project structure to build on, with login, user 
 - [ ] Docker Debug mode with hot reload for the API and UI
 - [ ] Docker Production version
 
-
 ## Architecture
 The project is structured with Clean Architecture principles, separating the solution into distinct layers to ensure scalability, maintainability, and testability. This includes a modular design with API, Application, Domain, and Infrastructure layers.
 
 ![](documents/CleanArchitecture.png)
+
+## Containers
+![](documents/architecture.png)
 
 ## Quick Start
 To quickly start the application, clone the repository and run Docker Compose:
@@ -71,7 +75,7 @@ To quickly start the application, clone the repository and run Docker Compose:
   git clone https://github.com/nitin27may/clean-architecture-docker-dotnet-angular.git angular-dotnet
   cd angular-dotnet 
   //rename .env.example to .env 
-  docker-compose -f docker-compose.yml -f docker-compose.override.yml up
+  docker-compose up
 ```
 
 **Note** I have used SMTP send function, please update the account details
@@ -121,8 +125,8 @@ It contains sample for:
 8. Complete CRUD example for Contact
 
 
-**[Dockerfile for production](/Api/Dockerfile)**
-**[Dockerfile for development](/Api/debug.dockerfile)**
+**[Dockerfile for production](/backend/src/Dockerfile)**
+**[Dockerfile for development](/backend/src/Debug.Dockerfile)**
 
 
 ## Getting started
