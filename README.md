@@ -60,11 +60,13 @@ A complete backend and frontend project structure to build on, with login, user 
 - [ ] Docker Debug mode with hot reload for the API and UI
 - [ ] Docker Production version
 
-
 ## Architecture
 The project is structured with Clean Architecture principles, separating the solution into distinct layers to ensure scalability, maintainability, and testability. This includes a modular design with API, Application, Domain, and Infrastructure layers.
 
 ![](documents/CleanArchitecture.png)
+
+## Containers
+![](documents/architecture.png)
 
 ## Quick Start
 To quickly start the application, clone the repository and run Docker Compose:
@@ -73,7 +75,7 @@ To quickly start the application, clone the repository and run Docker Compose:
   git clone https://github.com/nitin27may/clean-architecture-docker-dotnet-angular.git angular-dotnet
   cd angular-dotnet 
   //rename .env.example to .env 
-  docker-compose -f docker-compose.yml -f docker-compose.override.yml up
+  docker-compose up
 ```
 
 **Note** I have used SMTP send function, please update the account details
