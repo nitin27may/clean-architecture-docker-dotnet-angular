@@ -61,11 +61,8 @@
                                         />
                                     </td>
                                     <td>
-                                        <ngb-highlight
-                                            [result]="contact.mobile"
-                                            [term]="filter.value"
-                                        />
-                                      </td>
+                                      {{ contact.mobile | phoneNumberFormat: contact.countryCode}}
+                                    </td>
                                       <td>
                                         <ngb-highlight
                                             [result]="contact.city"

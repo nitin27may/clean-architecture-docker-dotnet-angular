@@ -50,6 +50,23 @@
                                   class="form-control"
                                   formControlName="dateOfBirth"
                               />
+
+                              <!-- <div class="input-group">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="dateOfBirth"
+                                    id="datePicker"
+                                    class="form-control"
+                                    placeholder="yyyy-mm-dd"
+
+                                    ngbDatepicker
+                                    #dp="ngbDatepicker"
+                                />
+                                <button class="btn btn-outline-secondary" (click)="dp.toggle()" type="button">
+                                  <i class="bi bi-calendar"></i>
+                                </button>
+                              </div> -->
                           </div>
                             <div class="col-sm-6 col-md-6">
                                 <label for="email" class="form-label"
@@ -73,10 +90,10 @@
                                   aria-label="Country code"
                                   style="max-width: 100px;"
                               >
-                                  <option value="+1">+1</option>
-                                  <option value="+44">+44</option>
-                                  <option value="+91" selected>+91</option>
-                                  <option value="+61">+61</option>
+                                  <option value="1">+1</option>
+                                  <option value="44">+44</option>
+                                  <option value="91">+91</option>
+                                  <option value="61">+61</option>
                               </select>
                                 <input
                                     type="text"
