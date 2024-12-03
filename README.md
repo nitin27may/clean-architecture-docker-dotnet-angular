@@ -24,18 +24,18 @@ To understand this project in-depth, refer to our detailed series of articles on
 
 # Work in Progress
 
-1. [Clean Architecture: Introduction to the Project Structure]() - High-level structure and role of each layer.
-2. [Clean Architecture: Implementing AutoMapper for DTO Mapping and Audit Logging]() - Utilizing AutoMapper to handle data mapping and audit tracking.
-3. [Clean Architecture: Validating Inputs with FluentValidation]() - Ensuring robust input validation using FluentValidation.
-4. [Clean Architecture: Dependency Injection Setup Across Layers]() - Setting up DI across multiple layers for modularity.
-5. [Clean Architecture: Implementing Activity Logging with Custom Attributes]() - Tracking user actions with custom activity logs.
-6. [Clean Architecture: Handling Authorization and Role-Based Access Control (RBAC)]() - Implementing authorization policies and role-based access.
-7. [Clean Architecture: The Unit of Work Pattern and Transaction Management Using Dapper]() - Managing database transactions and consistency.
-8. [Clean Architecture: Using Dapper for Data Access with the Repository Pattern]() - Leveraging Dapper for efficient data access.
-9. [Clean Architecture: Best Practices for Creating and Using DTOs in the API]() - Building and using DTOs effectively.
-10. [Clean Architecture: Seeding Initial Data Using Docker Compose and SQL Scripts]() - Initial data seeding setup with Docker Compose.
-11. [Dockerizing the .NET Core API and MS SQL Server]() - Containerizing the application for smooth deployment.
-12. [Error Handling and Exception Management in the API]() - Enhancing resilience with custom error handling.
+1. [Clean Architecture: Introduction to the Project Structure](https://nitinksingh.com/clean-architecture-introduction-to-the-project-structure/) - Overview of architectural layers and their roles
+2. [Clean Architecture: Implementing AutoMapper for DTO Mapping and Audit Logging](https://nitinksingh.com/implementing-automapper-for-dto-mapping-and-audit-logging/) - Setting up AutoMapper for data transformation and audit trails
+3. [Clean Architecture: Validating Inputs with FluentValidation](https://nitinksingh.com/validating-inputs-with-fluent-validation/) - Implementing clean input validation with FluentValidation
+4. [Clean Architecture: Dependency Injection Setup Across Layers](https://nitinksingh.com/dependency-injection-setup-across-layers/) - Configuring dependency injection for better modularity
+5. [Clean Architecture: Implementing Activity Logging with Custom Attributes](https://nitinksingh.com/implementing-activity-logging-with-custom-attributes/) - Building a custom attribute system for activity tracking
+6. [Clean Architecture: Handling Authorization and Role-Based Access Control (RBAC)](https://nitinksingh.com/role-based-access-control-rbac-implementation-in-clean-architecture) - Setting up robust authorization and access control
+7. [Clean Architecture: The Unit of Work Pattern and Transaction Management Using Dapper](https://nitinksingh.com/unit-of-work-pattern-and-its-role-in-managing-transactions/) - Implementing reliable transaction management
+8. [Clean Architecture: Using Dapper for Data Access with the Repository Pattern](https://nitinksingh.com/using-dapper-for-data-access-and-repository-pattern/) - Implementing efficient data access patterns
+9. [Clean Architecture: Best Practices for Creating and Using DTOs in the API](https://nitinksingh.com/best-practices-for-creating-and-using-dtos-in-the-api/) - Designing and implementing effective DTOs
+10. [Clean Architecture: Seeding Initial Data Using Docker Compose and SQL Scripts](https://nitinksingh.com/seeding-initial-data-using-docker-compose-and-sql-scripts/) - Setting up automated data seeding
+11. [Dockerizing the .NET Core API and MS SQL Server](https://nitinksingh.com/dockerizing-the-net-core-api-and-ms-sql-server/) - Creating a containerized development environment
+12. [Error Handling and Exception Management in the API](https://nitinksingh.com/error-handling-and-exception-management-in-the-api/) - Building a robust error handling system
 
 ## Features
 A complete backend and frontend project structure to build on, with login, user and permission-based role management already integrated
