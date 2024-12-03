@@ -3,7 +3,7 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: Debug.Dockerfile
+      dockerfile: debug.dockerfile
     command: ["npm", "run", "start:debug"]
     ports:
       - 4200:4200
