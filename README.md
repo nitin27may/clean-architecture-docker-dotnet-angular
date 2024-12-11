@@ -57,8 +57,8 @@ A complete backend and frontend project structure to build on, with login, user 
 ### Dockerized Setup
 - [x] Docker-Compose for Multi-Container Orchestration with NGINX as Load Balancer
 - [ ] Health Checks
-- [ ] Docker Debug mode with hot reload for the API and UI
-- [ ] Docker Production version
+- [x] Docker Debug mode with hot reload for the API and UI
+- [x] Docker Production version
 
 ## Architecture
 The project is structured with Clean Architecture principles, separating the solution into distinct layers to ensure scalability, maintainability, and testability. This includes a modular design with API, Application, Domain, and Infrastructure layers.
