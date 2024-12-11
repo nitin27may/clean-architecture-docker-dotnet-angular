@@ -85,8 +85,8 @@ The apps written in the following JavaScript frameworks/libraries:
 
 | folder          | Description                                                                                  |
 | --------------- | -------------------------------------------------------------------------------------------- |
-| **Frontend (Angular)** | [Angular 18-based front-end application with JWT security.](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/tree/master/frontend)         |
-| **Api (.Net)** | [.NET 8 REST API with Clean Architectuire.](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/tree/master/WebApi) |
+| **Frontend (Angular)** | [Angular 19-based front-end application with JWT security.](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/tree/master/frontend)         |
+| **Api (.Net)** | [.NET 9 REST API with Clean Architectuire.](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/tree/main/backend/src) |
 
 ### Built With
 #### Angular (19.0.0)
