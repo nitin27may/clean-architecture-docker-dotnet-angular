@@ -53,6 +53,8 @@ A complete backend and frontend project structure to build on, with login, user 
 ### Frontend: Angular
 - [x] Angular 19
 - [x] Bootstrap Integration
+- [ ] Role based access of pages (Routing) - Coming Soon
+- [ ] Role based action (Add, Edit, Delete) on a page (feature) - Coming Soon
 
 ### Dockerized Setup
 - [x] Docker-Compose for Multi-Container Orchestration with NGINX as Load Balancer
@@ -72,11 +74,25 @@ The project is structured with Clean Architecture principles, separating the sol
 To quickly start the application, clone the repository and run Docker Compose:
 
 ```
-  git clone https://github.com/nitin27may/clean-architecture-docker-dotnet-angular.git angular-dotnet
-  cd angular-dotnet 
-  //rename .env.example to .env 
-  docker-compose up
+git clone https://github.com/nitin27may/clean-architecture-docker-dotnet-angular.git angular-dotnet
+cd angular-dotnet 
 ```
+Rename `.env.example` to `.env` :
+
+Shell
+```bash
+mv .env.example .env
+```
+Powershell
+```powershell
+Rename-Item .env.example .env
+```
+Run below command to run all containers: 
+```
+docker-compose up
+```
+
+ 
 
 **Note** I have used SMTP send function, please update the account details
 
