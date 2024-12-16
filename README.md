@@ -46,7 +46,7 @@ A complete backend and frontend project structure to build on, with login, user 
 - [x] Dapper Support
 - [x] Authentication/Authorization based on OIDC/OAuth2 and ASP.NET Core Identity
 - [x] Middleware for Exception Handling
-- [x] Role Based API access, Support for Feature and Operation Mapping
+- [x] Role Based API access, Support for Feature and Operation Mapping (Based on Policy)
 - [x] Activity Log (as User's Activity)
 - [x] Swagger/OpenAPI Documentation
 
