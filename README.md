@@ -27,7 +27,7 @@ To understand this project in-depth, refer to our detailed series of articles on
 3. [Clean Architecture: Validating Inputs with FluentValidation](https://nitinksingh.com/validating-inputs-with-fluent-validation/) - Implementing clean input validation with FluentValidation
 4. [Clean Architecture: Dependency Injection Setup Across Layers](https://nitinksingh.com/dependency-injection-setup-across-layers/) - Configuring dependency injection for better modularity
 5. [Clean Architecture: Implementing Activity Logging with Custom Attributes](https://nitinksingh.com/implementing-activity-logging-with-custom-attributes/) - Building a custom attribute system for activity tracking
-6. [Clean Architecture: Handling Authorization and Role-Based Access Control (RBAC)](https://nitinksingh.com/role-based-access-control-rbac-implementation-in-clean-architecture) - Setting up robust authorization and access control
+6. [Clean Architecture: Handling Authorization and Role-Based Access Control (RBAC)](https://nitinksingh.com/handling-authorization-and-role-based-access-control-rbac/) - Setting up robust authorization and access control
 7. [Clean Architecture: The Unit of Work Pattern and Transaction Management Using Dapper](https://nitinksingh.com/unit-of-work-pattern-and-its-role-in-managing-transactions/) - Implementing reliable transaction management
 8. [Clean Architecture: Using Dapper for Data Access with the Repository Pattern](https://nitinksingh.com/using-dapper-for-data-access-and-repository-pattern/) - Implementing efficient data access patterns
 9. [Clean Architecture: Best Practices for Creating and Using DTOs in the API](https://nitinksingh.com/best-practices-for-creating-and-using-dtos-in-the-api/) - Designing and implementing effective DTOs
