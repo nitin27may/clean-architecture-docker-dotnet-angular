@@ -37,7 +37,9 @@ services:
       - mssql_network
       
   mssql:
-    image: mcr.microsoft.com/mssql/server:2022-latest
+    build:
+      context: ./mssql
+      dockerfile: Dockerfile
     container_name: sqlserver_express
     environment:
       - ACCEPT_EULA=Y
@@ -52,7 +54,7 @@ services:
       - /bin/bash
       - -c
       - |
-        /opt/mssql/bin/sqlservr & sleep 15s;
+        /opt/mssql/bin/sqlservr & sleep 40s;
         /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${SQL_PASSWORD} -d master -i /scripts/seed-data.sql; wait
     networks:
       - mssql_network
