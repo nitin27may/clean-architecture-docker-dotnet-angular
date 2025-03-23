@@ -17,7 +17,7 @@ namespace Contact.Infrastructure.Persistence.Helper
             _logger = logger;
         }
 
-        public IDbConnection GetConnection()
+        public SqlConnection GetConnection()
         {
             _logger.LogInformation("Connection String: {connectionString}", myConfig.ConnectionStrings.DefaultConnection);  
             return new SqlConnection(myConfig.ConnectionStrings.DefaultConnection);
@@ -30,47 +30,47 @@ namespace Contact.Infrastructure.Persistence.Helper
 
         public async Task<int> Execute(string sp, object parms, CommandType commandType = CommandType.Text, IDbTransaction? transaction = null)
         { 
-            var db = transaction?.Connection ?? GetConnection();
+            var db = transaction?.Connection as SqlConnection ?? GetConnection();
             try
             {
                 if (db.State == ConnectionState.Closed)
-                    db.Open();
+                    await db.OpenAsync();
 
                 var resultObj = await db.ExecuteAsync(sp, parms, commandType: commandType, transaction: transaction);
                 if (transaction == null)
-                    db.Close();
+                    await db.CloseAsync();
                 return resultObj;
             }
             catch (Exception exception)
             {
                 if (transaction == null && db?.State == ConnectionState.Open)
-                    db.Close();
+                    await db.CloseAsync();
                 _logger.LogInformation("SQL DB error exception: {error}", exception.Message);
-                throw exception;
+                throw;
             }
         }
 
-        public async Task<T> Get<T>(string sp, Object parms, CommandType commandType = CommandType.Text, IDbTransaction transaction = null)
+        public async Task<T> Get<T>(string sp, Object parms, CommandType commandType = CommandType.Text, IDbTransaction? transaction = null)
         {
             T result;
-            var db = transaction?.Connection ?? GetConnection();
+            var db = transaction?.Connection as SqlConnection ?? GetConnection();
             try
             {
                 if (db.State == ConnectionState.Closed)
-                    db.Open();
+                    await db.OpenAsync();
 
                 var resultObj = await db.QueryFirstOrDefaultAsync<T>(sp, parms, commandType: commandType, transaction: transaction);
                 result = resultObj;
                 if (transaction == null)
-                    db.Close();
+                    await db.CloseAsync();
                 return result;
             }
             catch (Exception exception)
             {
                 if (transaction == null && db?.State == ConnectionState.Open)
-                    db.Close();
+                    await db.CloseAsync();
                 _logger.LogInformation("SQL DB error exception: {error}", exception.Message);
-                throw exception;
+                throw;
             }
         }
 
@@ -78,67 +78,67 @@ namespace Contact.Infrastructure.Persistence.Helper
         {
             try
             {
-                using (IDbConnection db = GetConnection())
+                using (var db = GetConnection())
                 {
+                    await db.OpenAsync();
                     var result = await db.QueryAsync<T>(sp, parms, commandType: commandType);
+                    await db.CloseAsync();
                     return result.ToList();
                 }
             }
             catch (Exception ex)
             {
                 _logger.LogInformation("SQL DB error exception: {error}", ex.Message);
-               
-                throw ex;
+                throw;
             }
         }
 
-        public async Task<T> Insert<T>(string sp, Object parms, CommandType commandType = CommandType.Text, IDbTransaction transaction = null)
+        public async Task<T> Insert<T>(string sp, Object parms, CommandType commandType = CommandType.Text, IDbTransaction? transaction = null)
         {
             T result;
-            var db = transaction?.Connection ?? GetConnection();
+            var db = transaction?.Connection as SqlConnection ?? GetConnection();
             try
             {
                 if (db.State == ConnectionState.Closed)
-                    db.Open();
+                    await db.OpenAsync();
 
                 var resultObj = await db.QueryFirstOrDefaultAsync<T>(sp, parms, commandType: commandType, transaction: transaction);
                 result = resultObj;
                 if (transaction == null)
-                    db.Close();
+                    await db.CloseAsync();
                 return result;
             }
             catch (Exception exception)
             {
                 if (transaction == null && db?.State == ConnectionState.Open)
-                    db.Close();
+                    await db.CloseAsync();
                 _logger.LogInformation("SQL DB error exception: {error}", exception.Message);
-                throw exception;
+                throw;
             }
         }
 
         public async Task<T> Update<T>(string sp, object parms, CommandType commandType = CommandType.Text, IDbTransaction? transaction = null)
         {
             T result;
-            var db = transaction?.Connection ?? GetConnection();
+            var db = transaction?.Connection as SqlConnection ?? GetConnection();
             try
             {
                 if (db.State == ConnectionState.Closed)
-                    db.Open();
+                    await db.OpenAsync();
 
                 var resultObj = await db.QueryFirstOrDefaultAsync<T>(sp, parms, commandType: commandType, transaction: transaction);
                 result = resultObj;
                 if (transaction == null)
-                    db.Close();
+                    await db.CloseAsync();
                 return result;
             }
             catch (Exception ex)
             {
                 if (transaction == null && db?.State == ConnectionState.Open)
-                    db.Close();
+                    await db.CloseAsync();
                 _logger.LogInformation("SQL DB error exception: {error}", ex.Message);
-                throw ex;
+                throw;
             }
-
         }
     }
 }
