@@ -12,10 +12,7 @@ This template is designed for ease of use, customization, and scalability. It ad
 ## **Note**
 This project is under active development, and we are regularly adding new features, enhancements, and documentation updates. 
 
-- The README will soon include more detailed descriptions and usage guides.
-- A series of in-depth articles explaining the architecture, design, and implementation details is also in progress.
-
-Stay tuned and watch this repository for the latest updates!
+Stay tuned and watch this repository for the latest updates! [Roadmap](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular?tab=readme-ov-file#roadmap--upcoming-features)
 <hr>
 
 ## Clean Architecture Series (Ctrl+Click or Cmd+Click to open in a new tab)
