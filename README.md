@@ -174,6 +174,10 @@ Focus: Enhancing authentication with external providers.
 
 ### Additional Planned Improvements
 
+#### Moving from MS SQL to PostgreSQL
+- [ ] Update the Dapper helper to use PostgreSQL
+- [ ] Update existing queries if required
+
 #### DevOps Enhancements
 - [ ] CI/CD pipeline improvements
 - [ ] Kubernetes deployment support
