@@ -49,7 +49,7 @@ A complete backend and frontend project structure to build on, with login, user 
 
 ### Frontend: Angular
 - [x] Angular 19
-- [x] Bootstrap Integration
+- [x] Tailwind CSS and Angular Material
 - [ ] Role based access of pages (Routing) - Coming Soon
 - [ ] Role based action (Add, Edit, Delete) on a page (feature) - Coming Soon
 

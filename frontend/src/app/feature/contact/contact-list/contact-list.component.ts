@@ -17,7 +17,7 @@ import { PhoneNumberFormatPipe } from "../../../@core/pipes/phoneNumberFormat.pi
         PhoneNumberFormatPipe
     ],
     templateUrl: './contact-list.component.html',
-    styleUrl: './contact-list.component.css',
+    styleUrl: './contact-list.component.scss',
     providers: [DecimalPipe, ContactService]
 })
 export class ContactListComponent implements OnInit {

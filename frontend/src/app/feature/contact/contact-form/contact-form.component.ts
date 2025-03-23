@@ -17,7 +17,7 @@ import { errorTailorImports } from "../../../@core/components/validation";
     selector: 'app-contact-form',
     imports: [ReactiveFormsModule, RouterModule, CommonModule, errorTailorImports, NgbDatepickerModule],
     templateUrl: './contact-form.component.html',
-    styleUrl: './contact-form.component.css',
+    styleUrl: './contact-form.component.scss',
     providers: [ContactService]
 })
 export class ContactFormComponent implements OnInit {

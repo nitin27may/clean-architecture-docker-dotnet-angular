@@ -14,7 +14,7 @@ import { ValidationService } from '../../../@core/services/validation.service';
     selector: 'app-register',
     imports: [RouterModule, ReactiveFormsModule],
     templateUrl: './register.component.html',
-    styleUrl: './register.component.css'
+    styleUrl: './register.component.scss'
 })
 export class RegisterComponent implements OnInit {
     loading = false;

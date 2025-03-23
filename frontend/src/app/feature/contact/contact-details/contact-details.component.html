@@ -1,128 +1,70 @@
-<div class="container px-4 py-5">
-    <div class="row align-items-center">
-        <div
-            class="col-xl-12 col-lg-12 col-md-12 col-sm-12 justify-content-center"
-        >
-            <div class="panel panel-default container px-4 py-5">
-                <div class="row wrapper border-bottom white-bg page-heading">
-                    <div class="col-sm-3"></div>
-                    <div class="col-sm-4">
-                        <h2>Contact Details</h2>
-                    </div>
-                </div>
-                <div>
-                    <div class="col-md-8 offset-md-3">
-                        <span class="anchor" id="formComplex"></span>
-                        <div class="my-5"></div>
-                        <h3>Details</h3>
-                        <!-- form complex example -->
-                        <form>
-                            <div class="row">
-                                <div class="form-group col-sm-6 col-md-6">
-                                    <label
-                                        for="firstName"
-                                        class="col-sm-4 col-md-4 col-form-label"
-                                        >First Name:</label
-                                    >
-                                    <label
-                                        for="firstName"
-                                        class="col-sm-8 col-md-8 col-form-label"
-                                        >{{ contact.firstName }}</label
-                                    >
-                                </div>
-                                <div class="form-group col-sm-6 col-md-6">
-                                    <label
-                                        for="lastName"
-                                        class="col-sm-4 col-md-4 col-form-label"
-                                        >Last Name:</label
-                                    >
-                                    <label
-                                        for="lastName"
-                                        class="col-sm-8 col-md-8 col-form-label"
-                                        >{{ contact.lastName }}</label
-                                    >
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-sm-6 col-md-6">
-                                    <label
-                                        for="email"
-                                        class="col-sm-4 col-md-4 col-form-label"
-                                        >Email:</label
-                                    >
-                                    <label
-                                        for="email"
-                                        class="col-sm-8 col-md-8 col-form-label"
-                                        >{{ contact.email }}</label
-                                    >
-                                </div>
-                                <div class="form-group col-sm-6 col-md-6">
-                                    <label
-                                        for="mobile"
-                                        class="col-sm-4 col-md-4 col-form-label"
-                                        >Mobile:</label
-                                    >
-                                    <label
-                                        for="mobile"
-                                        class="col-sm-8 col-md-8 col-form-label"
-                                        >{{ contact.mobile }}</label
-                                    >
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-sm-6 col-md-6">
-                                    <label
-                                        for="city"
-                                        class="col-sm-4 col-md-4 col-form-label"
-                                        >City:</label
-                                    >
-                                    <label
-                                        for="city"
-                                        class="col-sm-8 col-md-8 col-form-label"
-                                        >{{ contact.city }}</label
-                                    >
-                                </div>
-                                <div class="form-group col-sm-6 col-md-6">
-                                    <label
-                                        for="postalCode"
-                                        class="col-sm-4 col-md-4 col-form-label"
-                                        >Postal Code:</label
-                                    >
-                                    <label
-                                        for="postalCode"
-                                        class="col-sm-8 col-md-8 col-form-label"
-                                        >{{ contact.postalCode }}</label
-                                    >
-                                </div>
-                            </div>
-                            <div class="row g-3">
-                                <div class="col-sm-6 col-md-6">
-                                    <a
-                                        href="javascript:void(0);"
-                                        [routerLink]="['/contacts']"
-                                        class="btn btn-primary"
-                                    >
-                                        <i class="fa fa-chevron-left"></i>
-                                        Back</a
-                                    >
-                                </div>
-                                <div class="col-sm-6 col-md-6">
-                                    <div class="btn-group float-end">
-                                        <span></span>
-                                        <button
-                                            class="btn btn-primary"
-                                            (click)="edit()"
-                                        >
-                                            Edit
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- </main> -->
-                </div>
-            </div>
-        </div>
+<div class="container mx-auto px-4 py-6">
+  <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-sm overflow-hidden">
+    <!-- Header -->
+    <div class="p-6 bg-primary text-white flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Contact Details</h1>
+      <div class="space-x-2">
+        <button mat-icon-button [routerLink]="['/contacts/edit', contact.id]">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="deleteContact()">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
     </div>
+
+    <!-- Content -->
+    <div class="p-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Basic Info Section -->
+        <div class="space-y-4">
+          <div>
+            <h3 class="text-lg font-semibold text-gray-700">Basic Information</h3>
+            <hr class="my-2">
+          </div>
+
+          <div>
+            <div class="text-sm text-gray-500">Full Name</div>
+            <div class="text-gray-900">{{contact.firstName}} {{contact.lastName}}</div>
+          </div>
+
+          <div>
+            <div class="text-sm text-gray-500">Email</div>
+            <div class="text-gray-900">{{contact.email}}</div>
+          </div>
+
+          <div>
+            <div class="text-sm text-gray-500">Phone</div>
+            <div class="text-gray-900">{{contact.phone || 'Not provided'}}</div>
+          </div>
+
+          <div>
+            <div class="text-sm text-gray-500">Birth Date</div>
+            <div class="text-gray-900">{{contact.birthDate | date:'mediumDate' || 'Not provided'}}</div>
+          </div>
+        </div>
+
+        <!-- Address Section -->
+        <div class="space-y-4">
+          <div>
+            <h3 class="text-lg font-semibold text-gray-700">Address</h3>
+            <hr class="my-2">
+          </div>
+
+          <div>
+            <div class="text-sm text-gray-500">Address</div>
+            <div class="text-gray-900 whitespace-pre-line">{{contact.address || 'Not provided'}}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="mt-8 flex justify-end">
+        <button mat-stroked-button routerLink="/contacts">
+          <mat-icon>arrow_back</mat-icon>
+          Back to Contacts
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

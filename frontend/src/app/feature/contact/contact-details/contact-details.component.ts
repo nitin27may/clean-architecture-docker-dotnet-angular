@@ -9,7 +9,7 @@ import { ReactiveFormsModule } from "@angular/forms";
     selector: 'app-contact-details',
     imports: [RouterModule, CommonModule, ReactiveFormsModule],
     templateUrl: './contact-details.component.html',
-    styleUrl: './contact-details.component.css',
+    styleUrl: './contact-details.component.scss',
     providers: [ContactService]
 })
 export class ContactDetailsComponent implements OnInit {

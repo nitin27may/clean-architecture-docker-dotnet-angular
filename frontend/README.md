@@ -29,15 +29,13 @@ Next development
 * [x] Docker Support
 * [ ] Add Service Worker
 
-## Build with
+## Versions
 
-Describes which version .
-
-| Name       | Version  |
-| ---------- | -------- |
-| bootstrap     | v5.3.2    |
-| @ng-bootstrap | v17.0.0 |
-
+| Package       | Version   |
+|---------------|-----------|
+| Angular       | v19.0.0   |
+| Tailwind CSS  | v3.4.1    |
+| Angular Material | v19.0.0 |
 
 ### Dockerfile Production
 
@@ -96,4 +94,3 @@ RUN npm install -g @angular/cli
 COPY . /app/
 
 EXPOSE 4200 49153
-```

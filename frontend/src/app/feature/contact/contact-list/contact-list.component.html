@@ -1,111 +1,72 @@
-<div class="container px-4 py-5" style="min-height: 1200px">
-    <div class="row align-items-center">
-        <div
-            class="col-xl-12 col-lg-12 col-md-12 col-sm-12 justify-content-center"
-        >
-            <div class="panel panel-default container px-4 py-5">
-                <div class="row wrapper border-bottom white-bg page-heading">
-                    <div class="col-lg-4 col-md-4 col-sm-4">
-                        <h2>Contact List</h2>
-                    </div>
-                    <div class="col-lg-8 col-md-8 col-sm-8">
-                        <div class="title-action">
-                            <a
-                                href="javascript:void(0);"
-                                [routerLink]="['/contacts/create']"
-                                class="btn btn-primary float-end"
-                            >
-                                <i class="fa fa-plus-circle"></i> Add New
-                                Contact</a
-                            >
-                        </div>
-                    </div>
-                </div>
+<div class="container mx-auto px-4 py-6">
+  <div class="mb-6 flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-gray-900">Contacts</h1>
+    <button mat-raised-button color="primary" routerLink="/contacts/add">
+      <mat-icon>add</mat-icon>
+      Add Contact
+    </button>
+  </div>
 
-                <div class="">
-                    <br />
+  <!-- Search and Filters -->
+  <div class="mb-6 bg-white rounded-lg shadow-sm p-4">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Search contacts</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Name, email, or phone">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
 
-                    <table class="table-striped table">
-                        <thead>
-                            <tr>
-                                <th scope="col">First Name</th>
-                                <th scope="col">Last Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Mobile</th>
-                                <th scope="col">City</th>
-                                <th scope="col">Postal Code</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @for (contact of contacts; track contact.email) {
-                                <tr
-                                    style="cursor: pointer"
-                                    (click)="onSelect(contact)"
-                                >
-                                    <td>
-                                        <ngb-highlight
-                                            [result]="contact.firstName"
-                                            [term]="filter.value"
-                                        />
-                                    </td>
-                                    <td>
-                                        <ngb-highlight
-                                            [result]="contact.lastName"
-                                            [term]="filter.value"
-                                        />
-                                    </td>
-                                    <td>
-                                        <ngb-highlight
-                                            [result]="contact.email"
-                                            [term]="filter.value"
-                                        />
-                                    </td>
-                                    <td>
-                                      {{ contact.mobile | phoneNumberFormat: contact.countryCode}}
-                                    </td>
-                                      <td>
-                                        <ngb-highlight
-                                            [result]="contact.city"
-                                            [term]="filter.value"
-                                        />
-                                      </td>
-                                      <td>
-                                        <ngb-highlight
-                                            [result]="contact.postalCode"
-                                            [term]="filter.value"
-                                        />
-                                    </td>
-                                </tr>
-                            } @empty {
-                                <tr>
-                                    <td colspan="4" style="text-align: center">
-                                        No contacts found
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                    <div class="d-flex justify-content-between p-2">
-                        <ngb-pagination
-                            [collectionSize]="collectionSize"
-                            [(page)]="page"
-                            [pageSize]="pageSize"
-                            (pageChange)="refreshContacts()"
-                        >
-                        </ngb-pagination>
-                        <select
-                            class="form-select"
-                            style="width: auto; height: 40px"
-                            [(ngModel)]="pageSize"
-                            (ngModelChange)="refreshContacts()"
-                        >
-                            <option [ngValue]="2">2 items per page</option>
-                            <option [ngValue]="4">4 items per page</option>
-                            <option [ngValue]="6">6 items per page</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+  <!-- Table -->
+  <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+    <mat-table [dataSource]="dataSource" matSort class="w-full">
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+        <mat-cell *matCellDef="let contact">
+          {{contact.firstName}} {{contact.lastName}}
+        </mat-cell>
+      </ng-container>
+
+      <!-- Email Column -->
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+        <mat-cell *matCellDef="let contact">{{contact.email}}</mat-cell>
+      </ng-container>
+
+      <!-- Phone Column -->
+      <ng-container matColumnDef="phone">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Phone</mat-header-cell>
+        <mat-cell *matCellDef="let contact">{{contact.phone}}</mat-cell>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+        <mat-cell *matCellDef="let contact">
+          <button mat-icon-button [routerLink]="['/contacts', contact.id]" matTooltip="View details">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button mat-icon-button [routerLink]="['/contacts/edit', contact.id]" matTooltip="Edit">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteContact(contact)" matTooltip="Delete">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+      <!-- No Results Row -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell py-4 text-center" [attr.colspan]="displayedColumns.length">
+          No contacts matching your search
+        </td>
+      </tr>
+    </mat-table>
+
+    <!-- Paginator -->
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+  </div>
 </div>

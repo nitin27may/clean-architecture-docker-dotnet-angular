@@ -14,6 +14,6 @@ import { HeaderComponent } from './header/header.component';
         FooterComponent,
     ],
     templateUrl: './layout.component.html',
-    styleUrl: './layout.component.css'
+    styleUrl: './layout.component.scss'
 })
 export class LayoutComponent {}

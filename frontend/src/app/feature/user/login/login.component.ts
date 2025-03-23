@@ -13,7 +13,7 @@ import { LoginService } from './login.service';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrl: './login.component.css',
+    styleUrl: './login.component.scss',
     imports: [RouterModule, ReactiveFormsModule, CommonModule],
     providers: [LoginService]
 })

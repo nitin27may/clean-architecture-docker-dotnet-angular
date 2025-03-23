@@ -1,294 +1,95 @@
-<div class="container px-4 py-5">
-    <div class="row align-items-center">
-        <div
-            class="col-xl-12 col-lg-12 col-md-12 col-sm-12 justify-content-center"
-        >
-            <section class="nga-gradient text-white">
-                <div class="col-xxl-8 container px-4 py-5">
-                    <ul
-                        ngbNav
-                        #nav="ngbNav"
-                        [(activeId)]="active"
-                        class="nav-tabs"
-                    >
-                        <li [ngbNavItem]="1">
-                            <button ngbNavLink>Profile</button>
-                            <ng-template ngbNavContent>
-                                <div class="container py-3">
-                                    <div class="row">
-                                        <div class="col-lg-12 mx-auto">
-                                            <!-- form user info -->
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <h4 class="mb-0">
-                                                        Basic Information
-                                                    </h4>
-                                                </div>
-                                                <div class="card-body">
-                                                    <form
-                                                        class="form"
-                                                        [formGroup]="
-                                                            profileForm
-                                                        "
-                                                    >
-                                                        <div
-                                                            class="row align-items-center mb-3"
-                                                        >
-                                                            <label
-                                                                class="col-lg-3 col-form-label form-control-label"
-                                                                >First
-                                                                name</label
-                                                            >
-                                                            <div
-                                                                class="col-lg-9"
-                                                            >
-                                                                <input
-                                                                    class="form-control"
-                                                                    type="text"
-                                                                    name="firstName"
-                                                                    formControlName="firstName"
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="row align-items-center mb-3"
-                                                        >
-                                                            <label
-                                                                class="col-lg-3 col-form-label form-control-label"
-                                                                >Last
-                                                                name</label
-                                                            >
-                                                            <div
-                                                                class="col-lg-9"
-                                                            >
-                                                                <input
-                                                                    class="form-control"
-                                                                    type="text"
-                                                                    name="lastName"
-                                                                    formControlName="lastName"
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                        class="row align-items-center mb-3"
-                                                    >
-                                                        <label
-                                                            class="col-lg-3 col-form-label form-control-label"
-                                                            >User Name</label
-                                                        >
-                                                        <div
-                                                            class="col-lg-9"
-                                                        >
-                                                            <input
-                                                                class="form-control"
-                                                                type="text"
-                                                                name="userName"
-                                                                formControlName="userName"
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                        <div
-                                                            class="row align-items-center mb-3"
-                                                        >
-                                                            <label
-                                                                class="col-lg-3 col-form-label form-control-label"
-                                                                >Email</label
-                                                            >
-                                                            <div
-                                                                class="col-lg-9"
-                                                            >
-                                                                <input
-                                                                    class="form-control"
-                                                                    type="email"
-                                                                    name="email"
-                                                                    formControlName="email"
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="row align-items-center mb-3"
-                                                        >
-                                                            <label
-                                                                class="col-lg-3 col-form-label form-control-label"
-                                                                >Mobile</label
-                                                            >
-                                                            <div
-                                                                class="col-lg-9"
-                                                            >
-                                                                <input
-                                                                    class="form-control"
-                                                                    type="number"
-                                                                    name="mobile"
-                                                                    formControlName="mobile"
-                                                                />
-                                                            </div>
-                                                        </div>
-
-                                                        <div
-                                                            class="row align-items-center mb-3"
-                                                        >
-                                                            <div
-                                                                class="col-lg-6"
-                                                            ></div>
-                                                            <div
-                                                                class="col-lg-6"
-                                                            >
-                                                                <div
-                                                                    class="btn-group float-right mt-2"
-                                                                    role="group"
-                                                                >
-                                                                    <input
-                                                                        (click)="
-                                                                            resetProfileForm()
-                                                                        "
-                                                                        type="submit"
-                                                                        class="btn btn-secondary"
-                                                                        value="Reset"
-                                                                    />
-                                                                    <input
-                                                                        (click)="
-                                                                            updateProfile()
-                                                                        "
-                                                                        type="button"
-                                                                        class="btn btn-primary"
-                                                                        value="Update"
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <!-- /form user info -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </ng-template>
-                        </li>
-                        <li [ngbNavItem]="2">
-                            <button ngbNavLink>Password</button>
-                            <ng-template ngbNavContent>
-                                <div class="container py-3">
-                                    <div class="row">
-                                        <div class="col-lg-12 mx-auto">
-                                            <!-- form user info -->
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <h4 class="mb-0">
-                                                        Password Update
-                                                    </h4>
-                                                </div>
-                                                <div class="card-body">
-                                                    <form
-                                                        class="form"
-                                                        [formGroup]="
-                                                            passwordForm
-                                                        "
-                                                        name="passwordForm"
-                                                        novalidate
-                                                        autocomplete="off"
-                                                    >
-                                                        <div
-                                                            class="row align-items-center mb-3"
-                                                        >
-                                                            <label
-                                                                class="col-lg-3 col-form-label form-control-label"
-                                                                >Current Password</label
-                                                            >
-                                                            <div
-                                                                class="col-lg-9"
-                                                            >
-                                                                <input
-                                                                    class="form-control"
-                                                                    type="password"
-                                                                    name="currentPassword"
-                                                                    formControlName="currentPassword"
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="row align-items-center mb-3"
-                                                        >
-                                                            <label
-                                                                class="col-lg-3 col-form-label form-control-label"
-                                                                >Password</label
-                                                            >
-                                                            <div
-                                                                class="col-lg-9"
-                                                            >
-                                                                <input
-                                                                    class="form-control"
-                                                                    type="password"
-                                                                    name="password"
-                                                                    formControlName="password"
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="row align-items-center mb-3"
-                                                        >
-                                                            <label
-                                                                class="col-lg-3 col-form-label form-control-label"
-                                                                >Confirm</label
-                                                            >
-                                                            <div
-                                                                class="col-lg-9"
-                                                            >
-                                                                <input
-                                                                    class="form-control"
-                                                                    type="password"
-                                                                    name="confirmPassword"
-                                                                    formControlName="confirmPassword"
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="row align-items-center mb-3"
-                                                        >
-                                                            <div
-                                                                class="col-lg-6"
-                                                            ></div>
-                                                            <div
-                                                                class="col-lg-6"
-                                                            >
-                                                                <div
-                                                                    class="btn-group float-right mt-2"
-                                                                    role="group"
-                                                                >
-                                                                    <input
-                                                                        type="submit"
-                                                                        class="btn btn-secondary"
-                                                                        (click)="
-                                                                            resetPasswordForm()
-                                                                        "
-                                                                        value="Reset"
-                                                                    />
-                                                                    <input
-                                                                        type="button"
-                                                                        (click)="
-                                                                            updatePassword()
-                                                                        "
-                                                                        class="btn btn-primary"
-                                                                        value="Update"
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <!-- /form user info -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </ng-template>
-                        </li>
-                    </ul>
-                    <div [ngbNavOutlet]="nav" class="mt-2"></div>
-
-                    <pre>Active: {{ active }}</pre>
-                </div>
-            </section>
+<div class="container mx-auto px-4 py-6">
+  <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-sm overflow-hidden">
+    <div class="p-6 bg-primary text-white">
+      <div class="flex flex-col md:flex-row items-center">
+        <div class="flex-shrink-0 mb-4 md:mb-0 md:mr-4">
+          <mat-icon class="text-6xl">account_circle</mat-icon>
         </div>
+        <div>
+          <h1 class="text-2xl font-bold">{{user?.firstName}} {{user?.lastName}}</h1>
+          <p>{{user?.email}}</p>
+        </div>
+      </div>
     </div>
+
+    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" class="p-4">
+      <!-- Profile Tab -->
+      <mat-tab label="Profile">
+        <div class="p-4">
+          <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- First Name -->
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>First Name</mat-label>
+                <input matInput formControlName="firstName">
+                <mat-error *ngIf="profileForm.get('firstName')?.invalid">First name is required</mat-error>
+              </mat-form-field>
+
+              <!-- Last Name -->
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Last Name</mat-label>
+                <input matInput formControlName="lastName">
+                <mat-error *ngIf="profileForm.get('lastName')?.invalid">Last name is required</mat-error>
+              </mat-form-field>
+
+              <!-- Email -->
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" type="email">
+                <mat-error *ngIf="profileForm.get('email')?.invalid">Please enter a valid email</mat-error>
+              </mat-form-field>
+
+              <!-- Phone -->
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Phone</mat-label>
+                <input matInput formControlName="phoneNumber">
+              </mat-form-field>
+            </div>
+
+            <div class="flex justify-end">
+              <button mat-raised-button color="primary" type="submit" [disabled]="profileForm.invalid || loading">
+                <mat-spinner *ngIf="loading" diameter="20" class="mr-2"></mat-spinner>
+                Save Changes
+              </button>
+            </div>
+          </form>
+        </div>
+      </mat-tab>
+
+      <!-- Change Password Tab -->
+      <mat-tab label="Change Password">
+        <div class="p-4">
+          <form [formGroup]="passwordForm" (ngSubmit)="changePassword()" class="space-y-4">
+            <!-- Current Password -->
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>Current Password</mat-label>
+              <input matInput type="password" formControlName="currentPassword">
+              <mat-error *ngIf="passwordForm.get('currentPassword')?.invalid">Current password is required</mat-error>
+            </mat-form-field>
+
+            <!-- New Password -->
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>New Password</matInput>
+              <input matInput type="password" formControlName="newPassword">
+              <mat-error *ngIf="passwordForm.get('newPassword')?.invalid">New password is required</mat-error>
+            </mat-form-field>
+
+            <!-- Confirm Password -->
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>Confirm Password</mat-label>
+              <input matInput type="password" formControlName="confirmPassword">
+              <mat-error *ngIf="passwordForm.get('confirmPassword')?.invalid">Passwords do not match</mat-error>
+            </mat-form-field>
+
+            <div class="flex justify-end">
+              <button mat-raised-button color="primary" type="submit" [disabled]="passwordForm.invalid || loading">
+                <mat-spinner *ngIf="loading" diameter="20" class="mr-2"></mat-spinner>
+                Update Password
+              </button>
+            </div>
+          </form>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
 </div>

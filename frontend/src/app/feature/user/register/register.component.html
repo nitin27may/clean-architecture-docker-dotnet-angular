@@ -1,103 +1,81 @@
-<div class="container">
-	<div class="row mb-5">
-        <div
-            class="col-xl-12 col-lg-12 col-md-12  col-sm-12 min-vh-100 d-flex flex-column justify-content-center"
-        >
-            <!-- <h1 class="h5 card-header py-4 text-center">
-                <i class="fas fa-user-plus me-4"></i><strong>SignUp</strong>
-            </h1> -->
-            <div class="row">
-                <div class="col-lg-4 col-md-8 mx-auto">
-                    <div class="card">
-                      <h1 class="h5 card-header text-center py-4">
-                        <i class="fas fa-user-plus me-4"></i><strong>SignUp</strong>
-                      </h1>
-                        <article class="card-body">
-                            <!-- <a
-                                [routerLink]="['/login']"
-                                class="btn btn-outline-primary float-right"
-                                >Sign in</a
-                            > -->
-                            <!-- <h4 class="card-title mb-4 mt-1">SignUp</h4> -->
-                            <form
-                                (submit)="register()"
-                                novalidate
-                                autocomplete="off"
-                                [formGroup]="registerForm"
-                                class="row g-3"
-                            >
-                                <div class="col-sm-12 col-md-12">
-                                    <label>First Name</label>
-                                    <input
-                                        type="text"
-                                        formControlName="firstName"
-                                        name="firstName"
-                                        class="form-control"
-                                    />
-                                </div>
-                                <div class="col-sm-12 col-md-12">
-                                    <label>Last Name</label>
-                                    <input
-                                        name="lastName"
-                                        class="form-control"
-                                        type="text"
-                                        formControlName="lastName"
-                                    />
-                                </div>
-                                <div class="col-sm-12 col-md-12">
-                                    <label>Your email</label>
-                                    <input
-                                        class="form-control"
-                                        type="email"
-                                        name="username"
-                                        formControlName="username"
-                                    />
-                                </div>
-                                <div class="col-sm-12 col-md-12">
-                                    <label>Your password</label>
-                                    <input
-                                        class="form-control"
-                                        type="password"
-                                        name="password"
-                                        formControlName="password"
-                                    />
-                                </div>
-                                <div class="col-sm-12 col-md-12">
-                                    <label>Confirm password</label>
-                                    <input
-                                        class="form-control"
-                                        type="password"
-                                        name="confirmPassword"
-                                        formControlName="confirmPassword"
-                                    />
-                                </div>
-                                <div class="col-sm-12 col-md-12 mt-3">
-                                    <!-- checkbox .// -->
-                                    <!-- form-group// -->
-                                    <div class="form-group">
-                                        <button
-                                            type="submit"
-                                            [disabled]="registerForm.invalid"
-                                            class="btn btn-primary btn-block"
-                                        >
-                                        SignUp
-                                        </button>
-                                        <button
-                                        type="button"
-                                        class="btn float-end btn-primary btn-outline-light me-2"
-                                        routerLink="/login"
-                                    >
-                                        <i class="fas fa-sign-in-alt me-2"></i>Login
-                                    </button>
-                                    </div>
-                                </div>
-                                <!-- form-group// -->
-                            </form>
-                        </article>
-                    </div>
-                    <!-- card.// -->
-                </div>
-            </div>
-        </div>
+<div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div class="w-full max-w-md space-y-8">
+    <div class="text-center">
+      <h2 class="text-3xl font-bold tracking-tight text-gray-900">Create an account</h2>
+      <p class="mt-2 text-sm text-gray-600">
+        Or
+        <a routerLink="/login" class="text-primary hover:text-primary-dark font-medium">sign in to your account</a>
+      </p>
     </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="mt-8 space-y-6">
+      <div class="space-y-4 rounded-md shadow-sm">
+        <!-- First Name & Last Name -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName" required>
+            <mat-error *ngIf="registerForm.get('firstName')?.invalid">First name is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName" required>
+            <mat-error *ngIf="registerForm.get('lastName')?.invalid">Last name is required</mat-error>
+          </mat-form-field>
+        </div>
+
+        <!-- Email -->
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Email address</mat-label>
+          <input matInput type="email" formControlName="email" required>
+          <mat-error *ngIf="registerForm.get('email')?.invalid">Please enter a valid email</mat-error>
+        </mat-form-field>
+
+        <!-- Password -->
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Password</mat-label>
+          <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
+          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="registerForm.get('password')?.invalid">
+            Password must be at least 8 characters with a mix of letters, numbers, and symbols
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Confirm Password -->
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="confirmPassword" required>
+          <mat-error *ngIf="registerForm.get('confirmPassword')?.invalid">
+            Passwords do not match
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Terms & Conditions -->
+      <div>
+        <mat-checkbox formControlName="terms" color="primary" required>
+          I agree to the <a href="#" class="text-primary hover:underline">Terms of Service</a> and
+          <a href="#" class="text-primary hover:underline">Privacy Policy</a>
+        </mat-checkbox>
+        <mat-error *ngIf="registerForm.get('terms')?.invalid && registerForm.get('terms')?.touched">
+          You must accept the terms to register
+        </mat-error>
+      </div>
+
+      <div>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          class="w-full"
+          [disabled]="registerForm.invalid || loading">
+          <mat-spinner *ngIf="loading" diameter="20" class="mr-2"></mat-spinner>
+          Create Account
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

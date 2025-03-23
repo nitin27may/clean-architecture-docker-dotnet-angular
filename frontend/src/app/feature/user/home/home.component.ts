@@ -10,7 +10,7 @@ import { environment } from "../../../../environments/environment";
     selector: 'app-home',
     imports: [],
     templateUrl: './home.component.html',
-    styleUrl: './home.component.css',
+    styleUrl: './home.component.scss',
     encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent {

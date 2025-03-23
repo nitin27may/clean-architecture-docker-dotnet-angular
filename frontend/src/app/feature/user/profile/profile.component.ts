@@ -18,7 +18,7 @@ import { ValidationService } from '../../../@core/services/validation.service';
     // changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [NgbNavModule, ReactiveFormsModule],
     templateUrl: './profile.component.html',
-    styleUrls: ['./profile.component.css']
+    styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
     active = 1;
