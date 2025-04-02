@@ -9,22 +9,23 @@
     </div>
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="mt-8 space-y-6">
-      <div class="space-y-4 rounded-md shadow-sm">
+      <div class="space-y-4">
         <!-- Email Field -->
         <mat-form-field appearance="outline" class="w-full">
           <mat-label>Email address</mat-label>
-          <input matInput type="email" formControlName="email" placeholder="Email address" required>
-          <mat-error *ngIf="loginForm.get('email')?.invalid">Please enter a valid email</mat-error>
+          <input matInput type="email" formControlName="email" required>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('required')">Email is required</mat-error>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('email')">Please enter a valid email</mat-error>
         </mat-form-field>
 
         <!-- Password Field -->
         <mat-form-field appearance="outline" class="w-full">
           <mat-label>Password</mat-label>
           <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
-          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+          <button type="button" mat-icon-button matSuffix (click)="togglePasswordVisibility()">
             <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
-          <mat-error *ngIf="loginForm.get('password')?.invalid">Password is required</mat-error>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Password is required</mat-error>
         </mat-form-field>
       </div>
 
@@ -33,17 +34,15 @@
         <a routerLink="/forgot-password" class="text-sm text-primary hover:text-primary-dark">Forgot password?</a>
       </div>
 
-      <div>
-        <button
-          mat-raised-button
-          color="primary"
-          type="submit"
-          class="w-full"
-          [disabled]="loginForm.invalid || loading">
-          <mat-spinner *ngIf="loading" diameter="20" class="mr-2"></mat-spinner>
-          Sign in
-        </button>
-      </div>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        class="w-full h-11 flex items-center justify-center"
+        [disabled]="loginForm.invalid">
+        <mat-spinner *ngIf="loading" [diameter]="24" class="mr-2"></mat-spinner>
+        <span>Sign in</span>
+      </button>
     </form>
   </div>
 </div>

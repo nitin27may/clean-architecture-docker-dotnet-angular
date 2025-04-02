@@ -40,7 +40,7 @@
 
           <div>
             <div class="text-sm text-gray-500">Birth Date</div>
-            <div class="text-gray-900">{{contact.birthDate | date:'mediumDate' || 'Not provided'}}</div>
+            <div class="text-gray-900">{{contact.birthDate ? (contact.birthDate | date:'mediumDate') : 'Not provided'}}</div>
           </div>
         </div>
 

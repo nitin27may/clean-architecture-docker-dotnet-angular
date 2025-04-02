@@ -1,30 +1,45 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-
 import {
     ReactiveFormsModule,
     UntypedFormBuilder,
     UntypedFormGroup,
     Validators,
 } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../../@core/services/user.service';
 import { ValidationService } from '../../../@core/services/validation.service';
 
 @Component({
     selector: 'app-profile',
-    // encapsulation: ViewEncapsulation.None,
-    // changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgbNavModule, ReactiveFormsModule],
+    standalone: true,
+    imports: [
+        ReactiveFormsModule,
+        CommonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatIconModule,
+        MatTabsModule,
+        MatProgressSpinnerModule
+    ],
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-    active = 1;
+    active = 0;
     user: any;
     profileForm: UntypedFormGroup;
     passwordForm: UntypedFormGroup;
+    loading = false;
+
     constructor(
         private formBuilder: UntypedFormBuilder,
         private router: Router,
@@ -34,6 +49,20 @@ export class ProfileComponent implements OnInit {
     ) {
         this.createProfileForm();
         this.createPasswordForm();
+    }
+
+    onSubmit(): void {
+        if (this.profileForm.valid) {
+            this.loading = true;
+            this.updateProfile();
+        }
+    }
+
+    changePassword(): void {
+        if (this.passwordForm.valid) {
+            this.loading = true;
+            this.updatePassword();
+        }
     }
 
     createProfileForm(): UntypedFormGroup {

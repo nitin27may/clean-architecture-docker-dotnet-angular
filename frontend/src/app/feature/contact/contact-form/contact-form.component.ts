@@ -6,22 +6,42 @@ import {
     UntypedFormGroup,
     Validators,
 } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { NgbCalendar, NgbDatepickerModule, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { ValidationService } from '../../../@core/services/validation.service';
 import { ContactService } from '../contact.service';
 import { errorTailorImports } from "../../../@core/components/validation";
 
 @Component({
     selector: 'app-contact-form',
-    imports: [ReactiveFormsModule, RouterModule, CommonModule, errorTailorImports, NgbDatepickerModule],
+    standalone: true,
+    imports: [
+        ReactiveFormsModule, 
+        RouterModule, 
+        CommonModule, 
+        errorTailorImports, 
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatDatepickerModule, 
+        MatNativeDateModule,
+        MatProgressSpinnerModule
+    ],
     templateUrl: './contact-form.component.html',
     styleUrl: './contact-form.component.scss',
     providers: [ContactService]
 })
 export class ContactFormComponent implements OnInit {
     contactForm: UntypedFormGroup;
+    loading = false;
+    isEditMode = false;
+
     constructor(
         private formBuilder: UntypedFormBuilder,
         private router: Router,
@@ -30,6 +50,13 @@ export class ContactFormComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private toastrService: ToastrService
     ) {}
+
+    onSubmit(): void {
+        if (this.contactForm.invalid) {
+            return;
+        }
+        this.submit();
+    }
 
     createForm(): void {
         this.contactForm = this.formBuilder.group({
@@ -81,40 +108,42 @@ export class ContactFormComponent implements OnInit {
     }
 
     save(contact: any): void {
-        this.contactService.create(contact).subscribe(
-            (data) => {
-                this.toastrService.success(
-                    'Contact created successfully',
-                    'Success'
-                );
+        this.loading = true;
+        this.contactService.create(contact).subscribe({
+            next: (data) => {
+                this.toastrService.success('Contact created successfully', 'Success');
                 this.router.navigate(['/contacts']);
             },
-
-            (error) => {}
-        );
+            error: (error) => {
+                this.loading = false;
+                this.toastrService.error(error.message || 'Error creating contact');
+            }
+        });
     }
+
     update(contact: any): void {
-        this.contactService.update(contact).subscribe(
-            (data) => {
-                this.toastrService.success(
-                    'Contact updated successfully',
-                    'Success'
-                );
+        this.loading = true;
+        this.contactService.update(contact).subscribe({
+            next: (data) => {
+                this.toastrService.success('Contact updated successfully', 'Success');
                 this.router.navigate(['/contacts']);
             },
-
-            (error) => {}
-        );
+            error: (error) => {
+                this.loading = false;
+                this.toastrService.error(error.message || 'Error updating contact');
+            }
+        });
     }
+
     ngOnInit(): void {
         this.createForm();
         this.getContactDetails();
     }
 
     private getContactDetails() {
-      console.log("data", this.activatedRoute.snapshot.data);
         const contactDetails = this.activatedRoute.snapshot.data.contactDetails;
         if (contactDetails) {
+            this.isEditMode = true;
             this.contactForm.patchValue(contactDetails);
             this.contactForm.controls.dateOfBirth.setValue(this.formatDate(contactDetails.dateOfBirth));
         }

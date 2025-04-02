@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
     ReactiveFormsModule,
@@ -5,6 +6,10 @@ import {
     UntypedFormGroup,
     Validators,
 } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router, RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../../@core/services/user.service';
@@ -12,13 +17,24 @@ import { ValidationService } from '../../../@core/services/validation.service';
 
 @Component({
     selector: 'app-register',
-    imports: [RouterModule, ReactiveFormsModule],
+    standalone: true,
+    imports: [
+        RouterModule, 
+        ReactiveFormsModule, 
+        CommonModule, 
+        MatFormFieldModule, 
+        MatInputModule, 
+        MatIconModule,
+        MatProgressSpinnerModule
+    ],
     templateUrl: './register.component.html',
     styleUrl: './register.component.scss'
 })
 export class RegisterComponent implements OnInit {
     loading = false;
+    hidePassword = true;
     registerForm: UntypedFormGroup;
+    
     constructor(
         private formBuilder: UntypedFormBuilder,
         private router: Router,
@@ -29,18 +45,26 @@ export class RegisterComponent implements OnInit {
         this.registerForm = this.createForm();
     }
 
+    onSubmit(): void {
+        if (this.registerForm.invalid) {
+            return;
+        }
+        this.register();
+    }
+    
     register(): void {
         this.loading = true;
-        this.userService.create(this.registerForm.value).subscribe(
-            (data) => {
+        this.userService.create(this.registerForm.value).subscribe({
+            next: (data) => {
                 this.toastrService.success('Registration successful');
                 this.router.navigate(['/login']);
                 console.log(data);
             },
-            (error) => {
+            error: (error) => {
                 this.loading = false;
+                this.toastrService.error(error.message || 'Registration failed');
             }
-        );
+        });
     }
 
     createForm(): UntypedFormGroup {
