@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import {
     ReactiveFormsModule,
     UntypedFormBuilder,
@@ -12,8 +12,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { LoginService } from './login.service';
 
 @Component({
@@ -22,38 +22,40 @@ import { LoginService } from './login.service';
     styleUrl: './login.component.scss',
     standalone: true,
     imports: [
-        RouterModule, 
-        ReactiveFormsModule, 
-        CommonModule, 
+        RouterModule,
+        ReactiveFormsModule,
+        CommonModule,
         MatFormFieldModule,
         MatInputModule,
         MatIconModule,
         MatButtonModule,
         MatProgressSpinnerModule,
-        MatCheckboxModule
-    ],
-    providers: [LoginService]
+        MatCheckboxModule,
+        MatSnackBarModule
+    ]
 })
 export class LoginComponent implements OnInit {
-    model: any = {};
-    loading = false;
-    returnUrl: string;
-    loginForm: UntypedFormGroup;
-    hidePassword = true;
-    constructor(
-        private formBuilder: UntypedFormBuilder,
-        private route: ActivatedRoute,
-        private router: Router,
-        private loginService: LoginService,
-        private toastrService: ToastrService
-    ) {}
+    // Services using inject pattern
+    private formBuilder = inject(UntypedFormBuilder);
+    private route = inject(ActivatedRoute);
+    private router = inject(Router);
+    private loginService = inject(LoginService);
+    private snackBar = inject(MatSnackBar);
+
+    // State using signals
+    model = signal<any>({});
+    loading = signal<boolean>(false);
+    returnUrl = signal<string>('');
+    hidePassword = signal<boolean>(true);
+
+    loginForm!: UntypedFormGroup;
 
     ngOnInit(): void {
         // reset login status
         this.createForm();
 
         // get return url from route parameters or default to "/"
-        this.returnUrl = this.route.snapshot.queryParams[`returnUrl`] || '/' ;
+        this.returnUrl.set(this.route.snapshot.queryParams[`returnUrl`] || '/');
 
         // Retrieve the username from localStorage if it exists
         if (typeof window !== 'undefined') {
@@ -64,6 +66,7 @@ export class LoginComponent implements OnInit {
             }
         }
     }
+
     createForm(): void {
         this.loginForm = this.formBuilder.group({
             email: ['', [Validators.required, Validators.email]],
@@ -73,41 +76,45 @@ export class LoginComponent implements OnInit {
     }
 
     togglePasswordVisibility(): void {
-        this.hidePassword = !this.hidePassword;
+        this.hidePassword.update(value => !value);
     }
-    
+
     onSubmit(): void {
         this.login(this.loginForm);
     }
 
     login(loginForm: UntypedFormGroup): void {
         if (loginForm.valid) {
-            this.loading = true;
+            this.loading.set(true);
             this.loginService
                 .login(
-                    loginForm.controls.email.value,
-                    loginForm.controls.password.value
+                    loginForm.controls['email'].value,
+                    loginForm.controls['password'].value
                 )
                 .subscribe({
                     next: (data) => {
-                        this.loading = false;
-                        if (loginForm.controls.rememberMe.value) {
+                        this.loading.set(false);
+                        if (loginForm.controls['rememberMe'].value) {
                             localStorage.setItem(
                                 'rememberedUsername',
-                                loginForm.controls.email.value
+                                loginForm.controls['email'].value
                             );
                         } else {
                             localStorage.removeItem('rememberedUsername');
                         }
-                        this.router.navigate([this.returnUrl]);
+                        this.router.navigate([this.returnUrl()]);
                     },
                     error: (error) => {
-                        this.toastrService.error(error?.message || 'Login failed');
-                        this.loading = false;
+                        this.snackBar.open(error?.message || 'Login failed', 'Close', {
+                            duration: 3000,
+                        });
+                        this.loading.set(false);
                     }
                 });
         } else {
-            this.toastrService.error('Please enter valid credentials');
+            this.snackBar.open('Please enter valid credentials', 'Close', {
+                duration: 3000,
+            });
         }
     }
 }

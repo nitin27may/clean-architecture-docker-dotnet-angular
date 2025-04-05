@@ -58,7 +58,7 @@ public class UsersController : ControllerBase
         }
 
         var userId = Guid.Parse(userIdClaim);
-        var result = await _userService.FindByID(userId);
+        var result = await _userService.GetUserWithPermissionsAsync(userId);
         return Ok(result);
     }
 

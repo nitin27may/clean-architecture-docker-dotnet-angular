@@ -1,38 +1,48 @@
-<mat-toolbar class="bg-primary text-white shadow-md">
-  <div class="container mx-auto px-4 flex justify-between items-center">
-    <!-- Logo/Brand -->
-    <a routerLink="/" class="flex items-center">
-      <span class="text-xl font-bold">CleanArch App</span>
+<mat-toolbar class="mat-elevation-z3 relative z-10 border-b border-gray-200 dark:border-gray-700">
+  <!-- Left side - Menu and App Title -->
+  <div class="flex items-center">
+    <button
+      mat-icon-button
+      class="mr-2"
+      (click)="onToggleCollapsed()"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <a routerLink="/" class="font-medium text-lg hover:text-primary transition-colors no-underline text-on-surface">
+      Contacts Portal
     </a>
+  </div>
 
-    <!-- Main Navigation -->
-    <div class="hidden md:flex space-x-4">
-      <a routerLink="/home" class="py-2 px-3 hover:bg-primary-dark rounded-md transition duration-200">Home</a>
-      <a routerLink="/contacts" class="py-2 px-3 hover:bg-primary-dark rounded-md transition duration-200">Contacts</a>
-    </div>
+  <!-- Spacer -->
+  <span class="flex-1"></span>
 
-    <!-- User Menu -->
-    <div *ngIf="user" class="relative">
-      <button mat-button [matMenuTriggerFor]="userMenu" class="flex items-center">
-        <span class="mr-2">{{user.firstName}} {{user.lastName}}</span>
-        <mat-icon>account_circle</mat-icon>
+  <!-- Right side - User Info -->
+  <div class="flex items-center">
+    <!-- Theme Toggle -->
+    <button
+      mat-icon-button
+      class="mx-2"
+      (click)="toggleDarkMode()"
+      aria-label="Toggle theme"
+    >
+      <mat-icon>{{ isDarkMode() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    </button>
+
+    @if (user(); as user) {
+      <button mat-button [matMenuTriggerFor]="profileMenu">
+        <span class="mx-2">{{ user.firstName }} {{ user.lastName }}</span>
+        <mat-icon>arrow_drop_down</mat-icon>
       </button>
-      <mat-menu #userMenu="matMenu">
-        <a mat-menu-item routerLink="/profile">
-          <mat-icon>person</mat-icon>
+      <mat-menu #profileMenu="matMenu">
+        <button mat-menu-item (click)="navigateToProfile()">
+          <mat-icon>account_circle</mat-icon>
           <span>Profile</span>
-        </a>
-        <button mat-menu-item (click)="logOut()">
+        </button>
+        <button mat-menu-item (click)="logout()">
           <mat-icon>exit_to_app</mat-icon>
           <span>Logout</span>
         </button>
       </mat-menu>
-    </div>
-
-    <!-- Login Link (if not logged in) -->
-    <a *ngIf="!user" routerLink="/login" mat-button>
-      <mat-icon>login</mat-icon>
-      <span class="ml-1">Login</span>
-    </a>
+    }
   </div>
 </mat-toolbar>

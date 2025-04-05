@@ -24,8 +24,7 @@ public class CreateContactPersonValidator : AbstractValidator<CreateContactPerso
 
         // Mobile validation: 10 digits mobile number (you can customize this to suit different formats)
         RuleFor(x => x.Mobile)
-            .NotEmpty().WithMessage("Mobile number is required")
-            .InclusiveBetween(1000000000, 9999999999).WithMessage("Mobile number must be 10 digits");
+            .NotEmpty().WithMessage("Mobile number is required");
 
         // Email validation: valid email format
         RuleFor(x => x.Email)

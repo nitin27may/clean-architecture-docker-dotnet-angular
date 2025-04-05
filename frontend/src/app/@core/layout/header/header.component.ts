@@ -1,38 +1,67 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { MatMenuModule } from '@angular/material/menu';
+import { Component, DestroyRef, effect, inject, input, OnInit, output, signal, PLATFORM_ID } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { UserService } from "../../services/user.service";
-import { CommonModule } from "@angular/common";
+import { MatIcon } from '@angular/material/icon';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
+import { Router } from '@angular/router';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { LoginService } from "../../../feature/user/login/login.service";
+import { ThemeService } from '../../services/theme.service';
+import { AuthStateService } from '../../services/auth-state.service';
+
+interface UserProfile {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
 
 @Component({
   selector: 'app-header',
-  templateUrl: './header.component.html',
   standalone: true,
-  imports: [
-    RouterLink,
-    MatMenuModule,
-    MatButtonModule,
-    MatIconModule,
-    MatToolbarModule,
-    CommonModule
-  ],
-  styleUrls: ['./header.component.scss'],
-  providers: [LoginService]
+  imports: [CommonModule, MatToolbar, MatIcon, MatButtonModule, MatMenuModule],
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  user: any;
-  constructor(private userService: UserService,
-              private loginService: LoginService) {}
-  logOut() {
+  private authState = inject(AuthStateService);
+  private loginService = inject(LoginService);
+  private themeService = inject(ThemeService);
+  router = inject(Router);
+  private destroyRef = inject(DestroyRef);
+  private platformId = inject(PLATFORM_ID);
+
+  // Updated to use input/output using the Angular 19 signals API
+  collapsed = input.required<boolean>();
+  toggleCollapsed = output<void>();
+
+  user = this.authState.getCurrentUser();
+  isDarkMode = this.themeService.isDarkMode;
+
+  // Toggle dark mode using the theme service
+  toggleDarkMode() {
+    this.themeService.toggleTheme();
+  }
+
+  // Method to emit the toggle event
+  onToggleCollapsed() {
+    this.toggleCollapsed.emit();
+  }
+
+  ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      const savedUser = localStorage.getItem('currentUser');
+      if (savedUser) {
+        this.authState.initializeFromStorage();
+      }
+    }
+  }
+
+  logout() {
     this.loginService.logout();
   }
-  ngOnInit() {
-    this.userService.getCurrentUser().subscribe((user: any) => {
-      this.user = user;
-    });
+
+  navigateToProfile() {
+    this.router.navigate(['/profile']);
   }
 }

@@ -7,4 +7,6 @@ public class AuthenticateResponse
     public string LastName { get; set; }
     public string Token { get; set; }
     public bool Authenticate { get; set; }
+
+    public List<RolePermissionResponse> RolePermissions { get; set; }
 }

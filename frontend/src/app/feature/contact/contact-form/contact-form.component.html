@@ -1,59 +1,82 @@
-<div class="container mx-auto px-4 py-6">
-  <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-sm overflow-hidden">
+<div class="container mx-auto p-4">
+  <div class="max-w-6xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden transition-all duration-300">
+    <!-- Header -->
     <div class="p-6 bg-primary text-white">
-      <h1 class="text-2xl font-bold">{{isEditMode ? 'Edit' : 'Add'}} Contact</h1>
+      <div class="flex items-center gap-4">
+        <button mat-icon-button routerLink="/contacts" matTooltip="Back to contacts">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h1 class="text-2xl font-bold">{{isEditMode() ? 'Edit Contact' : 'Add Contact'}}</h1>
+      </div>
     </div>
 
+    <!-- Form -->
     <div class="p-6">
       <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="space-y-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Basic Information -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 max-w-5xl mx-auto">
           <!-- First Name -->
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>First Name</mat-label>
-            <input matInput formControlName="firstName">
-            <mat-error *ngIf="contactForm.get('firstName')?.invalid">First name is required</mat-error>
+            <input matInput formControlName="firstName" required>
           </mat-form-field>
 
           <!-- Last Name -->
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Last Name</mat-label>
-            <input matInput formControlName="lastName">
-            <mat-error *ngIf="contactForm.get('lastName')?.invalid">Last name is required</mat-error>
+            <input matInput formControlName="lastName" required>
           </mat-form-field>
 
           <!-- Email -->
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Email</mat-label>
-            <input matInput formControlName="email" type="email">
-            <mat-error *ngIf="contactForm.get('email')?.invalid">Please enter a valid email</mat-error>
+            <input matInput type="email" formControlName="email" required>
           </mat-form-field>
 
           <!-- Phone -->
           <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Phone</mat-label>
-            <input matInput formControlName="phone">
+            <mat-label>Mobile Number</mat-label>
+            <input matInput formControlName="mobile" required>
           </mat-form-field>
 
-          <!-- Birth Date -->
+          <!-- Date of Birth -->
           <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Birth Date</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="birthDate">
+            <mat-label>Date of Birth</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="dateOfBirth">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
 
-          <!-- Address -->
+          <!-- City -->
           <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Address</mat-label>
-            <textarea matInput formControlName="address" rows="3"></textarea>
+            <mat-label>City</mat-label>
+            <input matInput formControlName="city" required>
+          </mat-form-field>
+
+          <!-- Postal Code -->
+          <mat-form-field appearance="outline" class="md:col-span-2 max-w-[200px]">
+            <mat-label>Postal Code</mat-label>
+            <input matInput formControlName="postalCode" required>
           </mat-form-field>
         </div>
 
-        <div class="flex justify-end space-x-3">
-          <button mat-stroked-button type="button" routerLink="/contacts">Cancel</button>
-          <button mat-raised-button color="primary" type="submit" [disabled]="contactForm.invalid || loading">
-            <mat-spinner *ngIf="loading" diameter="20" class="mr-2"></mat-spinner>
-            {{isEditMode ? 'Update' : 'Save'}}
+        <!-- Form Actions -->
+        <div class="flex justify-end space-x-4 max-w-5xl mx-auto pt-4">
+          <button mat-stroked-button type="button" routerLink="/contacts">
+            <mat-icon class="mr-2">arrow_back</mat-icon>
+            Back
+          </button>
+          <button mat-stroked-button type="button" (click)="reset()" [disabled]="loading()">
+            <mat-icon class="mr-2">refresh</mat-icon>
+            Reset
+          </button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="contactForm.invalid || loading()">
+            <div class="flex items-center">
+              <ng-container *ngIf="loading()">
+                <mat-spinner diameter="20" class="mr-2"></mat-spinner>
+              </ng-container>
+              <span>{{isEditMode() ? 'Update' : 'Save'}}</span>
+            </div>
           </button>
         </div>
       </form>

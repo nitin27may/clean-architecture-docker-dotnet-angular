@@ -1,48 +1,53 @@
-<div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-  <div class="w-full max-w-md space-y-8">
-    <div class="text-center">
-      <h2 class="text-3xl font-bold tracking-tight text-gray-900">Sign in to your account</h2>
-      <p class="mt-2 text-sm text-gray-600">
-        Or
-        <a routerLink="/register" class="text-primary hover:text-primary-dark font-medium">create a new account</a>
-      </p>
-    </div>
+<div class="min-h-[80vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div class="w-full max-w-md">
+    <div class="bg-surface-container-highest rounded-xl p-8 shadow-lg transition-all duration-300">
+      <div class="text-center mb-8">
+        <h2 class="text-4xl font-bold mb-3 text-gradient-primary">Welcome Back</h2>
+        <p class="text-sm">
+          Or
+          <a routerLink="/signup" class="text-primary hover:text-primary/80 font-medium transition-colors">
+            create a new account
+          </a>
+        </p>
+      </div>
 
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="mt-8 space-y-6">
-      <div class="space-y-4">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
         <!-- Email Field -->
         <mat-form-field appearance="outline" class="w-full">
           <mat-label>Email address</mat-label>
           <input matInput type="email" formControlName="email" required>
-          <mat-error *ngIf="loginForm.get('email')?.hasError('required')">Email is required</mat-error>
-          <mat-error *ngIf="loginForm.get('email')?.hasError('email')">Please enter a valid email</mat-error>
         </mat-form-field>
 
         <!-- Password Field -->
         <mat-form-field appearance="outline" class="w-full">
           <mat-label>Password</mat-label>
-          <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
+          <input matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="password" required>
           <button type="button" mat-icon-button matSuffix (click)="togglePasswordVisibility()">
-            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            <mat-icon>{{hidePassword() ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
-          <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Password is required</mat-error>
+          <mat-error *ngIf="loginForm.controls['password'].hasError('required')">Password is required</mat-error>
         </mat-form-field>
-      </div>
 
-      <div class="flex items-center justify-between">
-        <mat-checkbox formControlName="rememberMe" color="primary">Remember me</mat-checkbox>
-        <a routerLink="/forgot-password" class="text-sm text-primary hover:text-primary-dark">Forgot password?</a>
-      </div>
+        <div class="flex items-center justify-between">
+          <mat-checkbox formControlName="rememberMe" color="primary">Remember me</mat-checkbox>
+          <a routerLink="/forgot-password"
+             class="text-primary hover:text-primary/80 text-sm font-medium transition-colors">
+            Forgot password?
+          </a>
+        </div>
 
-      <button
-        mat-raised-button
-        color="primary"
-        type="submit"
-        class="w-full h-11 flex items-center justify-center"
-        [disabled]="loginForm.invalid">
-        <mat-spinner *ngIf="loading" [diameter]="24" class="mr-2"></mat-spinner>
-        <span>Sign in</span>
-      </button>
-    </form>
+        <button mat-flat-button color="primary"
+                type="submit"
+                class="w-full h-12 text-lg font-medium rounded-lg shadow-lg hover:shadow-primary/20 transition-all duration-300"
+                [disabled]="loginForm.invalid">
+          <div class="flex items-center justify-center gap-2">
+            <mat-spinner *ngIf="loading()" [diameter]="24"></mat-spinner>
+            <span>Sign in</span>
+          </div>
+        </button>
+
+
+      </form>
+    </div>
   </div>
 </div>

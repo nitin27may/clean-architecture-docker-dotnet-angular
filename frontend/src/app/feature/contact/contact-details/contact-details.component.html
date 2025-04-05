@@ -1,69 +1,77 @@
-<div class="container mx-auto px-4 py-6">
-  <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-sm overflow-hidden">
-    <!-- Header -->
-    <div class="p-6 bg-primary text-white flex justify-between items-center">
-      <h1 class="text-2xl font-bold">Contact Details</h1>
-      <div class="space-x-2">
-        <button mat-icon-button [routerLink]="['/contacts/edit', contact.id]">
-          <mat-icon>edit</mat-icon>
+<div class="container mx-auto p-4">
+  <!-- Header -->
+  <div class="max-w-6xl mx-auto mb-6 bg-primary text-white rounded-lg shadow-sm overflow-hidden transition-all duration-300">
+    <div class="p-6 flex justify-between items-center">
+      <div class="flex items-center gap-4">
+        <button mat-icon-button routerLink="/contacts" matTooltip="Back to contacts">
+          <mat-icon>arrow_back</mat-icon>
         </button>
-        <button mat-icon-button (click)="deleteContact()">
+        <h1 class="text-2xl font-bold">Contact Details</h1>
+      </div>
+      <div class="flex gap-2">
+        <button mat-raised-button color="primary" routerLink="/contacts">
+          <mat-icon>arrow_back</mat-icon>
+          Back to List
+        </button>
+        <button mat-raised-button
+                color="accent"
+                [routerLink]="['/contacts/edit', contact()?.id]"
+                *hasPermission="{ page: 'Contacts', operation: 'Update' }">
+          <mat-icon>edit</mat-icon>
+          Edit Contact
+        </button>
+        <button mat-raised-button
+                color="warn"
+                (click)="deleteContact()"
+                *hasPermission="{ page: 'Contacts', operation: 'Delete' }">
           <mat-icon>delete</mat-icon>
+          Delete Contact
         </button>
       </div>
     </div>
+  </div>
 
-    <!-- Content -->
-    <div class="p-6">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Basic Info Section -->
-        <div class="space-y-4">
-          <div>
-            <h3 class="text-lg font-semibold text-gray-700">Basic Information</h3>
-            <hr class="my-2">
-          </div>
-
-          <div>
-            <div class="text-sm text-gray-500">Full Name</div>
-            <div class="text-gray-900">{{contact.firstName}} {{contact.lastName}}</div>
-          </div>
-
-          <div>
-            <div class="text-sm text-gray-500">Email</div>
-            <div class="text-gray-900">{{contact.email}}</div>
-          </div>
-
-          <div>
-            <div class="text-sm text-gray-500">Phone</div>
-            <div class="text-gray-900">{{contact.phone || 'Not provided'}}</div>
-          </div>
-
-          <div>
-            <div class="text-sm text-gray-500">Birth Date</div>
-            <div class="text-gray-900">{{contact.birthDate ? (contact.birthDate | date:'mediumDate') : 'Not provided'}}</div>
-          </div>
-        </div>
-
-        <!-- Address Section -->
-        <div class="space-y-4">
-          <div>
-            <h3 class="text-lg font-semibold text-gray-700">Address</h3>
-            <hr class="my-2">
-          </div>
-
-          <div>
-            <div class="text-sm text-gray-500">Address</div>
-            <div class="text-gray-900 whitespace-pre-line">{{contact.address || 'Not provided'}}</div>
-          </div>
-        </div>
+  <div class="max-w-6xl mx-auto bg-surface-container rounded-lg shadow-lg overflow-hidden transition-all duration-300">
+    <!-- Contact Details -->
+    <div class="p-6 space-y-6">
+      <!-- Name Section -->
+      <div class="flex items-center space-x-4">
+        <mat-icon class="text-4xl text-primary">account_circle</mat-icon>
+        <div class="text-2xl font-bold">{{fullName()}}</div>
       </div>
 
-      <!-- Actions -->
-      <div class="mt-8 flex justify-end">
-        <button mat-stroked-button routerLink="/contacts">
-          <mat-icon>arrow_back</mat-icon>
-          Back to Contacts
-        </button>
+      <!-- Contact Information -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Email -->
+        <div class="space-y-2">
+          <div class="text-sm text-gray-500 dark:text-gray-400">Email</div>
+          <div class="text-on-surface">{{contact()?.email}}</div>
+        </div>
+
+        <!-- Phone -->
+        <div class="space-y-2">
+          <div class="text-sm text-gray-500 dark:text-gray-400">Phone</div>
+          <div class="text-on-surface">
+            {{contact()?.mobile}}
+          </div>
+        </div>
+
+        <!-- Date of Birth -->
+        <div class="space-y-2">
+          <div class="text-sm text-gray-500 dark:text-gray-400">Date of Birth</div>
+          <div class="text-on-surface">
+            {{contact()?.dateOfBirth ? (contact()?.dateOfBirth | date:'mediumDate') : 'Not provided'}}
+          </div>
+        </div>
+
+        <!-- Location Information -->
+        <div class="space-y-2">
+          <div class="text-sm text-gray-500 dark:text-gray-400">Location</div>
+          <div class="text-on-surface">
+            {{contact()?.city}}<br>
+            {{contact()?.postalCode}}
+          </div>
+        </div>
       </div>
     </div>
   </div>

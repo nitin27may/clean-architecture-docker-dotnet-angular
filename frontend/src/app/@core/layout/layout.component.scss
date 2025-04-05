@@ -1,0 +1,48 @@
+:host {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  padding: 0;
+  box-sizing: border-box;
+}
+
+mat-sidenav-container {
+  flex: 1;
+  height: calc(100vh - 64px);
+  background-color: var(--app-background) !important;
+}
+
+mat-sidenav-content {
+  transition: margin-left 500ms ease-in-out !important;
+  background-color: var(--app-background) !important;
+}
+
+mat-sidenav {
+  transition: width 500ms ease-in-out !important;
+  --mat-sidenav-container-divider-color: var(--mat-sys-outline-variant);
+  --mat-sidenav-container-shape: 0px;
+  background-color: var(--app-background) !important;
+}
+
+// Dark mode overrides
+:host-context(.dark) {
+  mat-sidenav-container,
+  mat-sidenav-content,
+  mat-sidenav {
+    background-color: var(--app-background) !important;
+    color: var(--app-text) !important;
+  }
+
+  .mat-drawer-inner-container {
+    background-color: var(--app-background) !important;
+    color: var(--app-text) !important;
+  }
+
+  mat-sidenav {
+    border-right-color: var(--app-border) !important;
+  }
+}

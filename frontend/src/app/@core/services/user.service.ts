@@ -2,8 +2,9 @@ import { Inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import { User } from "../models/user.interface";
-import { environment } from "../../../environments/environment";
+
 import { DOCUMENT } from "@angular/common";
+import { environment } from "../../environments/environment";
 
 @Injectable({providedIn: 'root'})
 export class UserService {
@@ -33,14 +34,14 @@ export class UserService {
   // }
 
   create(user: User) {
-    user.email = user.username;
+    user.email = user.userName;
     return this.http.post(environment.apiEndpoint + "/account/register", user);
   }
 
   update(user: User) {
     return this.http.put<User>(environment.apiEndpoint + "/users/" + user.id, user).pipe(
       map((user: any) => {
-        return user.data;
+        return user;
       })
     );
   }

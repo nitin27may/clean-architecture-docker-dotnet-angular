@@ -1,96 +1,59 @@
-# Frontend (Angular)
+# ContactPortal
 
-Frontend for application using Angular (updated to 18.1.0)
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.8.
 
 ## Development server
 
-Run `npm start` for a dev server. It will open `http://localhost:4200/` in your default browser. The app will automatically reload if you change any of the source files.
+To start a local development server, run:
 
-Or you can run `npm run dev-server`. It will start frontend and api together. Open  `http://localhost:4200/` to access application.
-
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build. Also, we have enabled SSR (Server side rendering) for fast first loading of UI on production.
-
-## Next Todo
-
-Next development
-
-* [x] Add Bootstrap
-* [x] Add Header and Side Menu, Profile page
-* [x] Implement Login and add Interceptor to attach token in each request
-* [x] Add CRUD example
-* [x] Add A Grid
-* [x] Add Proxy Configuration for local develolpment
-* [x] Server Side Rendering
-* [x] Reusable validation module
-* [x] Core and Shared Module
-* [x] Docker Support
-* [ ] Add Service Worker
-
-## Versions
-
-| Package       | Version   |
-|---------------|-----------|
-| Angular       | v19.0.0   |
-| Tailwind CSS  | v3.4.1    |
-| Angular Material | v19.0.0 |
-
-### Dockerfile Production
-
-```dockerfile
-# Create image based off of the official Node 10 image
-FROM node:21-alpine as builder
-
-# Copy dependency definitions
-COPY package.json package-lock.json ./
-
-RUN npm install -g npm@9.1.2
-
-## installing and Storing node modules on a separate layer will prevent unnecessary npm installs at each build
-## --legacy-peer-deps as ngx-bootstrap still depends on Angular 14
-RUN npm i --legacy-peer-deps && mkdir /app && mv ./node_modules ./app
-
-# Change directory so that our commands run inside this new directory
-WORKDIR /app
-
-# Get all the code needed to run the app
-COPY . /app/
-
-# Build server side bundles
-RUN npm run build:ssr
-
-FROM node:21-alpine
-## From 'builder' copy published folder
-COPY --from=builder /app /app
-
-WORKDIR /app
-# Expose the port the app runs in
-EXPOSE 4000
-
-USER node
-
-CMD ["node", "dist/frontend/server/main.js"]
-
+```bash
+ng serve
 ```
-### Dockerfile Development mode
-```dockerfile
 
-# Create image based off of the official 12.8-alpine
-FROM node:21-alpine
+Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-#RUN echo "nameserver 8.8.8.8" |  tee /etc/resolv.conf > /dev/null
-WORKDIR /app
+## Code scaffolding
 
-# Copy dependency definitions
-COPY package*.json ./
+Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
 
-## installing and Storing node modules on a separate layer will prevent unnecessary npm installs at each build
-RUN npm i --legacy-peer-deps --unsafe-perm=true --allow-root
+```bash
+ng generate component component-name
+```
 
-RUN npm install -g @angular/cli
+For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
 
-COPY . /app/
+```bash
+ng generate --help
+```
 
-EXPOSE 4200 49153
+## Building
+
+To build the project run:
+
+```bash
+ng build
+```
+
+This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+
+## Running unit tests
+
+To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+
+```bash
+ng test
+```
+
+## Running end-to-end tests
+
+For end-to-end (e2e) testing, run:
+
+```bash
+ng e2e
+```
+
+Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+
+## Additional Resources
+
+For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

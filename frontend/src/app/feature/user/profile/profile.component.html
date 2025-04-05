@@ -1,13 +1,14 @@
-<div class="container mx-auto px-4 py-6">
-  <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-sm overflow-hidden">
+<div class="container mx-auto p-4">
+  <div class="max-w-6xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden transition-all duration-300">
+    <!-- Header -->
     <div class="p-6 bg-primary text-white">
       <div class="flex flex-col md:flex-row items-center">
         <div class="flex-shrink-0 mb-4 md:mb-0 md:mr-4">
           <mat-icon class="text-6xl">account_circle</mat-icon>
         </div>
         <div>
-          <h1 class="text-2xl font-bold">{{user?.firstName}} {{user?.lastName}}</h1>
-          <p>{{user?.email}}</p>
+          <h1 class="text-2xl font-bold">{{user()?.firstName}} {{user()?.lastName}}</h1>
+          <p>{{user()?.email}}</p>
         </div>
       </div>
     </div>
@@ -16,40 +17,74 @@
       <!-- Profile Tab -->
       <mat-tab label="Profile">
         <div class="p-4">
+          <div class="flex justify-end mb-4">
+            <button mat-flat-button
+                    color="primary"
+                    type="button"
+                    *ngIf="!isEditMode()"
+                    (click)="toggleEditMode()">
+              <mat-icon class="mr-2">edit</mat-icon>
+              Edit Profile
+            </button>
+          </div>
+
           <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="space-y-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <!-- First Name -->
               <mat-form-field appearance="outline" class="w-full">
                 <mat-label>First Name</mat-label>
-                <input matInput formControlName="firstName">
+                <input matInput
+                       formControlName="firstName"
+                       [readonly]="!isEditMode()">
                 <mat-error *ngIf="profileForm.get('firstName')?.invalid">First name is required</mat-error>
               </mat-form-field>
 
               <!-- Last Name -->
               <mat-form-field appearance="outline" class="w-full">
                 <mat-label>Last Name</mat-label>
-                <input matInput formControlName="lastName">
+                <input matInput
+                       formControlName="lastName"
+                       [readonly]="!isEditMode()">
                 <mat-error *ngIf="profileForm.get('lastName')?.invalid">Last name is required</mat-error>
               </mat-form-field>
 
               <!-- Email -->
               <mat-form-field appearance="outline" class="w-full">
                 <mat-label>Email</mat-label>
-                <input matInput formControlName="email" type="email">
+                <input matInput
+                       formControlName="email"
+                       type="email"
+                       [readonly]="!isEditMode()">
                 <mat-error *ngIf="profileForm.get('email')?.invalid">Please enter a valid email</mat-error>
               </mat-form-field>
 
               <!-- Phone -->
               <mat-form-field appearance="outline" class="w-full">
                 <mat-label>Phone</mat-label>
-                <input matInput formControlName="phoneNumber">
+                <input matInput
+                       formControlName="mobile"
+                       [readonly]="!isEditMode()">
+                <mat-error *ngIf="profileForm.get('mobile')?.invalid">
+                  Please enter a valid phone number
+                </mat-error>
               </mat-form-field>
             </div>
 
-            <div class="flex justify-end">
-              <button mat-raised-button color="primary" type="submit" [disabled]="profileForm.invalid || loading">
-                <mat-spinner *ngIf="loading" diameter="20" class="mr-2"></mat-spinner>
-                Save Changes
+            <div class="flex justify-end gap-2" *ngIf="isEditMode()">
+              <button mat-stroked-button
+                      type="button"
+                      (click)="toggleEditMode()"
+                      class="hover:bg-surface-container-highest">
+                Cancel
+              </button>
+              <button mat-flat-button
+                      color="primary"
+                      type="submit"
+                      [disabled]="profileForm.invalid || loading">
+                <div class="flex items-center gap-2">
+                  <mat-spinner *ngIf="loading" [diameter]="20"></mat-spinner>
+                  <span>Save Changes</span>
+                </div>
               </button>
             </div>
           </form>
@@ -58,7 +93,7 @@
 
       <!-- Change Password Tab -->
       <mat-tab label="Change Password">
-        <div class="p-4">
+        <div class="p-4 max-w-md">
           <form [formGroup]="passwordForm" (ngSubmit)="changePassword()" class="space-y-4">
             <!-- Current Password -->
             <mat-form-field appearance="outline" class="w-full">
@@ -70,8 +105,8 @@
             <!-- New Password -->
             <mat-form-field appearance="outline" class="w-full">
               <mat-label>New Password</mat-label>
-              <input matInput type="password" formControlName="newPassword">
-              <mat-error *ngIf="passwordForm.get('newPassword')?.invalid">New password is required</mat-error>
+              <input matInput type="password" formControlName="password">
+              <mat-error *ngIf="passwordForm.get('password')?.invalid">New password is required</mat-error>
             </mat-form-field>
 
             <!-- Confirm Password -->

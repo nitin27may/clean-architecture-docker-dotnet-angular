@@ -3,13 +3,10 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "contacts": {
+    "contact-portal": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss"
-        },
-        "@schematics/angular:application": {
           "style": "scss"
         }
       },
@@ -20,14 +17,14 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/contacts",
+            "outputPath": "dist/contact-portal",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
-              "zone.js",
-              "@angular/localize/init"
+              "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
@@ -35,15 +32,15 @@
               }
             ],
             "styles": [
-              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
-              "node_modules/ngx-toastr/toastr.css",
-              "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.scss"
             ],
             "scripts": [],
             "server": "src/main.server.ts",
-            "prerender": false,
-            "ssr": false
+            "prerender": true,
+            "ssr": {
+              "entry": "src/server.ts"
+            }
           },
           "configurations": {
             "production": {
@@ -55,8 +52,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kB",
-                  "maximumError": "4kB"
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
                 }
               ],
               "outputHashing": "all"
@@ -73,10 +70,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "contacts:build:production"
+              "buildTarget": "contact-portal:build:production"
             },
             "development": {
-              "buildTarget": "contacts:build:development"
+              "buildTarget": "contact-portal:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -89,10 +86,10 @@
           "options": {
             "polyfills": [
               "zone.js",
-              "zone.js/testing",
-              "@angular/localize/init"
+              "zone.js/testing"
             ],
             "tsConfig": "tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
@@ -100,7 +97,7 @@
               }
             ],
             "styles": [
-              "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -108,8 +105,5 @@
         }
       }
     }
-  },
-  "cli": {
-    "analytics": "d893c76f-5030-492f-b845-f7f2d5c1a138"
   }
 }

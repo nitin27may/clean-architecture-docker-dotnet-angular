@@ -1,78 +1,69 @@
-
 services:
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: debug.dockerfile
-    command: ["npm", "run", "start:debug"]
-    ports:
-      - 4200:4200
-      - 49153:49153
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-    stdin_open: true
-    tty: true
-    depends_on:
-      - api
-    networks:
-      - mssql_network
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: debug.dockerfile
+  #   command: ["npm", "run", "start:debug"]
+  #   ports:
+  #     - 4200:4200
+  #     - 49153:49153
+  #   volumes:
+  #     - ./frontend:/app
+  #     - /app/node_modules
+  #   stdin_open: true
+  #   tty: true
+  #   depends_on:
+  #     - api
+  #   networks:
+  #     - postgres_network
  
-  api:
-    build:
-      context: ./backend/src
-      dockerfile: Debug.Dockerfile
-    command: ["dotnet", "watch", "--project", "Contact.Api/Contact.Api.csproj", "run", "--urls", "http://0.0.0.0:5000"] 
-    ports:
-      - 5000:5000
-
+  # api:
+  #   build:
+  #     context: ./backend/src
+  #     dockerfile: Debug.Dockerfile
+  #   command: ["dotnet", "watch", "--project", "Contact.Api/Contact.Api.csproj", "run", "--urls", "http://0.0.0.0:5000"] 
+  #   ports:
+  #     - 5000:5000
+  #   environment:
+  #     - ASPNETCORE__ENVIRONMENT=${ENVIRONMENT}
+  #     - DOTNET_SKIP_POLICY_LOADING=false
+  #     - AppSettings__ConnectionStrings__DefaultConnection=Host=${POSTGRES_HOST};Port=${POSTGRES_PORT};Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
+  #     - AppSettings__Secret=${JWT_SECRET}
+  #     - AppSettings__Issuer=${JWT_ISSUER}
+  #     - AppSettings__Audience=${JWT_AUDIENCE}
+  #     - AppSettings__PasswordResetUrl=${PASSWORD_RESET_URL}
+  #     - SmtpSettings__SmtpServer=${SMTP_SERVER}
+  #     - SmtpSettings__Port=${SMTP_PORT}
+  #     - SmtpSettings__Username=${SMTP_USERNAME}
+  #     - SmtpSettings__Password=${SMTP_PASSWORD}
+  #     - SmtpSettings__FromEmail=${SMTP_FROM_EMAIL}
+  #     - SmtpSettings__EnableSsl=${SMTP_ENABLE_SSL}
+  #   volumes:
+  #     - ./backend/src:/app
+  #     - ~/.vsdbg:/remote_debugger:rw
+  #   depends_on:
+  #     - postgres
+  #   networks:
+  #     - postgres_network
       
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres_db
     environment:
-      - ASPNETCORE__ENVIRONMENT=${ENVIRONMENT}
-      - DOTNET_SKIP_POLICY_LOADING=false
-      - AppSettings__ConnectionStrings__DefaultConnection=Server=${SQL_SERVER};Database=${SQL_DATABASE};User ID=${SQL_USER};Password=${SQL_PASSWORD};Trusted_Connection=False;Encrypt=False;
-      - AppSettings__Secret=${JWT_SECRET}
-      - AppSettings__Issuer=${JWT_ISSUER}
-      - AppSettings__Audience=${JWT_AUDIENCE}
-      - AppSettings__PasswordResetUrl=${PASSWORD_RESET_URL}
-      - SmtpSettings__SmtpServer=${SMTP_SERVER}
-      - SmtpSettings__Port=${SMTP_PORT}
-      - SmtpSettings__Username=${SMTP_USERNAME}
-      - SmtpSettings__Password=${SMTP_PASSWORD}
-      - SmtpSettings__FromEmail=${SMTP_FROM_EMAIL}
-      - SmtpSettings__EnableSsl=${SMTP_ENABLE_SSL}
-    volumes:
-      - ./backend/src:/app
-      - ~/.vsdbg:/remote_debugger:rw
-    depends_on:
-      - mssql
-    networks:
-      - mssql_network
-      
-  mssql:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: sqlserver_express
-    environment:
-      - ACCEPT_EULA=Y
-      - MSSQL_PID=Express   # Specifies the edition to run as Express
-      - MSSQL_SA_PASSWORD=${SQL_PASSWORD}   # Set the SA (System Administrator) password
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     ports:
-      - "1433:1433"  # Expose SQL Server port 1433
+      - "5432:5432"
     volumes:
-      - mssql_data:/var/opt/mssql  # Persist database data outside of the container
-      - ./backend/scripts:/scripts  # Mount for SQL scripts
-    entrypoint:
-      - /bin/bash
-      - -c
-      - |
-        /opt/mssql/bin/sqlservr & sleep 15s;
-        /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${SQL_PASSWORD} -d master -i /scripts/seed-data.sql; wait
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/scripts:/docker-entrypoint-initdb.d
     networks:
-      - mssql_network
+      - postgres_network
 
 volumes:
-  mssql_data: # Named volume to persist data
+  postgres_data:
 
 networks:
-  mssql_network:
+  postgres_network:
     driver: bridge

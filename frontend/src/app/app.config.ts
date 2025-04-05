@@ -1,24 +1,30 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { provideAnimations } from '@angular/platform-browser/animations';
-import { routes } from './app.routes';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-import { provideToastr } from 'ngx-toastr';
-import { AppRoutingModule } from './app.routes';
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import { provideRouter, withViewTransitions } from '@angular/router';
+import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { provideHttpClient, withInterceptors } from "@angular/common/http";
+import { JwtInterceptor } from "./@core/interceptors";
 import { provideErrorTailorConfig } from "./@core/components/validation";
-import { ErrorInterceptor, JwtInterceptor } from "./@core/interceptors";
-import { error } from "console";
-
+import { routes } from './app.routes';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 export const appConfig: ApplicationConfig = {
   providers: [
-    importProvidersFrom(BrowserModule, AppRoutingModule),
-    provideHttpClient(),
-    provideHttpClient(withInterceptorsFromDi()),
-    provideRouter(routes),
-    provideClientHydration(),
-    provideAnimations(), // required animations providers
-    provideToastr(), // Toastr providers
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    importProvidersFrom(BrowserModule),
+    provideHttpClient(withInterceptors([JwtInterceptor])),
+    provideRouter(routes,withViewTransitions()),
+    provideClientHydration(withEventReplay()),
+    provideAnimationsAsync(),
+    provideNativeDateAdapter(),
+    // {
+    //   provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+    //   useValue: {
+    //     appearance: 'outline',
+    //     floatLabel: 'never',
+    //     subscriptSizing: 'dynamic',
+    //   },
+    // },
     provideErrorTailorConfig({
       errors: {
         useFactory() {
@@ -33,8 +39,7 @@ export const appConfig: ApplicationConfig = {
         },
         deps: []
       }
-      //controlErrorComponent: CustomControlErrorComponent, // Uncomment to see errors being rendered using a custom component
-      //controlErrorComponentAnchorFn: controlErrorComponentAnchorFn // Uncomment to see errors being positioned differently
-    })
-  ],
+    })],
+
+
 };

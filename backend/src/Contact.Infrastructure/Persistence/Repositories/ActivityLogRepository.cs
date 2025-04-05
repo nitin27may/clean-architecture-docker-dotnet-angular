@@ -25,10 +25,9 @@ public class ActivityLogRepository : IActivityLogRepository
         dbPara.Add("IpAddress", logEntry.IpAddress);
         dbPara.Add("UserAgent", logEntry.UserAgent);
         var sql = @"
-            INSERT INTO ActivityLog (UserId, Activity, Endpoint, HttpMethod, Timestamp, IpAddress, UserAgent)
-            VALUES (@UserId, @Activity, @Endpoint, @HttpMethod, @Timestamp, @IpAddress, @UserAgent)"
-        ;
-
+            INSERT INTO ""ActivityLog"" (""UserId"", ""Activity"", ""Endpoint"", ""HttpMethod"", ""Timestamp"", ""IpAddress"", ""UserAgent"")
+            VALUES (@UserId, @Activity, @Endpoint, @HttpMethod, @Timestamp, @IpAddress, @UserAgent)
+            RETURNING *";
 
         await _dapperHelper.Insert<ActivityLogEntry>(sql, dbPara, CommandType.Text);
     }

@@ -1,37 +1,37 @@
-<footer class="bg-gray-100 py-8 mt-auto">
+<footer class="bg-gray-50 dark:bg-gray-900 py-8 mt-auto border-t border-gray-200 dark:border-gray-800">
   <div class="container mx-auto px-4">
     <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
       <!-- About Column -->
       <div>
-        <h5 class="font-bold text-lg mb-4">About</h5>
-        <p class="text-gray-600">Clean Architecture Application</p>
-        <p class="text-gray-600">Web Application: Angular 19, Tailwind CSS, Angular Material</p>
+        <h5 class="font-bold text-lg mb-4 text-primary dark:text-primary-light">About</h5>
+        <p class="text-gray-600 dark:text-gray-400">Clean Architecture Application</p>
+        <p class="text-gray-600 dark:text-gray-400">Web Application: Angular 19, Tailwind CSS, Angular Material</p>
       </div>
 
       <!-- Links Column -->
       <div>
-        <h5 class="font-bold text-lg mb-4">Links</h5>
+        <h5 class="font-bold text-lg mb-4 text-primary dark:text-primary-light">Links</h5>
         <ul class="space-y-2">
-          <li><a href="#" class="text-primary hover:underline">Home</a></li>
-          <li><a href="#" class="text-primary hover:underline">Contacts</a></li>
-          <li><a href="#" class="text-primary hover:underline">Profile</a></li>
+          <li><a routerLink="/" class="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors">Home</a></li>
+          <li><a routerLink="/contacts" class="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors">Contacts</a></li>
+          <li><a routerLink="/profile" class="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors">Profile</a></li>
         </ul>
       </div>
 
       <!-- Resources Column -->
       <div>
-        <h5 class="font-bold text-lg mb-4">Resources</h5>
+        <h5 class="font-bold text-lg mb-4 text-primary dark:text-primary-light">Resources</h5>
         <ul class="space-y-2">
-          <li><a href="https://angular.io/" class="text-primary hover:underline">Angular</a></li>
-          <li><a href="https://tailwindcss.com/" class="text-primary hover:underline">Tailwind CSS</a></li>
-          <li><a href="https://material.angular.io/" class="text-primary hover:underline">Angular Material</a></li>
+          <li><a href="https://angular.io/" target="_blank" class="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors">Angular</a></li>
+          <li><a href="https://tailwindcss.com/" target="_blank" class="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors">Tailwind CSS</a></li>
+          <li><a href="https://material.angular.io/" target="_blank" class="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors">Angular Material</a></li>
         </ul>
       </div>
 
       <!-- Contact Column -->
       <div>
-        <h5 class="font-bold text-lg mb-4">Contact</h5>
-        <address class="not-italic text-gray-600">
+        <h5 class="font-bold text-lg mb-4 text-primary dark:text-primary-light">Contact</h5>
+        <address class="not-italic text-gray-600 dark:text-gray-400">
           <p>Email: info&#64;example.com</p>
           <p>Phone: +1 234 567 8900</p>
         </address>
@@ -39,8 +39,8 @@
     </div>
 
     <!-- Copyright -->
-    <div class="border-t border-gray-300 mt-8 pt-4 text-center">
-      <p class="text-gray-500">&copy; 2023 Clean Architecture. All rights reserved.</p>
+    <div class="border-t border-gray-200 dark:border-gray-800 mt-8 pt-4 text-center">
+      <p class="text-gray-500 dark:text-gray-400">&copy; {{ currentYear }} Clean Architecture. All rights reserved.</p>
     </div>
   </div>
 </footer>

@@ -1,0 +1,134 @@
+@use "tailwindcss";
+
+@plugin '@tailwindcss/typography';
+@use "./colors.scss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  /* Map Tailwind variables to Angular Material theme variables */
+  --color-primary: var(--mat-sys-primary);
+  --color-on-primary: var(--mat-sys-on-primary);
+  --color-primary-container: var(--mat-sys-primary-container);
+  --color-on-primary-container: var(--mat-sys-on-primary-container);
+  --color-secondary: var(--mat-sys-secondary);
+  --color-on-secondary: var(--mat-sys-on-secondary);
+  --color-secondary-container: var(--mat-sys-secondary-container);
+  --color-on-secondary-container: var(--mat-sys-on-secondary-container);
+  --color-tertiary: var(--mat-sys-tertiary);
+  --color-on-tertiary: var(--mat-sys-on-tertiary);
+  --color-tertiary-container: var(--mat-sys-tertiary-container);
+  --color-on-tertiary-container: var(--mat-sys-on-tertiary-container);
+  --color-error: var(--mat-sys-error);
+  --color-on-error: var(--mat-sys-on-error);
+  --color-error-container: var(--mat-sys-error-container);
+  --color-on-error-container: var(--mat-sys-on-error-container);
+  --color-background: var(--mat-sys-background);
+  --color-on-background: var(--mat-sys-on-background);
+  --color-surface: var(--mat-sys-surface);
+  --color-on-surface: var(--mat-sys-on-surface);
+  --color-surface-variant: var(--mat-sys-surface-variant);
+  --color-on-surface-variant: var(--mat-sys-on-surface-variant);
+  --color-inverse-surface: var(--mat-sys-inverse-surface);
+  --color-outline: var(--mat-sys-outline);
+  --color-outline-variant: var(--mat-sys-outline-variant);
+  --color-surface-container: var(--mat-sys-surface-container);
+  --color-surface-container-high: var(--mat-sys-surface-container-high);
+
+  /* Gray shades */
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+  --color-gray-950: #030712;
+
+  --color-white: #fff;
+
+  /* Blue shades */
+  --color-blue-50: #eff6ff;
+  --color-blue-100: #dbeafe;
+  --color-blue-200: #bfdbfe;
+  --color-blue-300: #93c5fd;
+  --color-blue-400: #60a5fa;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
+  --color-blue-800: #1e40af;
+  --color-blue-900: #1e3a8a;
+  --color-blue-950: #172554;
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+/* Material Tailwind Fixes */
+.mdc-notched-outline__notch {
+  border-style: none;
+}
+
+.mat-mdc-icon-button {
+  line-height: normal;
+}
+
+/* Fix for standard material components */
+mat-card {
+  --mat-card-container-color: #ffffff;
+}
+
+/* Dark mode overrides */
+.dark mat-card {
+  --mat-card-container-color: var(--color-gray-800);
+  --mat-card-container-text-color: var(--color-gray-100);
+}
+
+.dark mat-form-field {
+  --mat-form-field-container-text-color: #ffffff;
+  --mat-form-field-container-color: transparent;
+}
+
+.dark mat-checkbox {
+  --mat-checkbox-unselected-icon-color: #ffffff;
+}
+
+/* Creating utility classes for Angular Material colors */
+.bg-primary {
+  background-color: var(--mat-sys-primary);
+}
+
+.text-primary {
+  color: var(--mat-sys-primary);
+}
+
+.bg-secondary {
+  background-color: var(--mat-sys-secondary);
+}
+
+.text-secondary {
+  color: var(--mat-sys-secondary);
+}
+
+.bg-tertiary {
+  background-color: var(--mat-sys-tertiary);
+}
+
+.text-tertiary {
+  color: var(--mat-sys-tertiary);
+}
