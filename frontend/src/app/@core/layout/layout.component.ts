@@ -36,10 +36,13 @@ export default class LayoutComponent {
   private themeService = inject(ThemeService);
   private platformId = inject(PLATFORM_ID);
 
-  collapsed = signal<boolean>(true); // Set default to true to keep menu closed
+  // Set default to false for expanded menu on desktop
+  collapsed = signal<boolean>(false);
   loading = signal<boolean>(false);
   isDarkMode = signal<boolean>(false);
   isMobile = signal<boolean>(false);
+
+  private resizeTimeout: any;
 
   sidenavWidth = computed(() => {
     if (this.isMobile() && this.collapsed()) {
@@ -50,14 +53,30 @@ export default class LayoutComponent {
 
   @HostListener('window:resize', ['$event'])
   onResize() {
-    this.checkScreenSize();
+    if (isPlatformBrowser(this.platformId)) {
+      // Add debounce to avoid multiple rapid calls
+      clearTimeout(this.resizeTimeout);
+      this.resizeTimeout = setTimeout(() => {
+        this.checkScreenSize();
+      }, 100);
+    }
   }
 
   private checkScreenSize() {
     if (isPlatformBrowser(this.platformId)) {
-      this.isMobile.set(window.innerWidth < 768);
-      if (this.isMobile()) {
+      const newIsMobile = window.innerWidth < 768;
+      
+      // Force close sidenav immediately if switching to mobile
+      if (newIsMobile && !this.isMobile()) {
+        this.sidenav?.close();
         this.collapsed.set(true);
+      }
+      
+      this.isMobile.set(newIsMobile);
+
+      if (!newIsMobile) {
+        this.collapsed.set(false);
+        this.sidenav?.open();
       }
     }
   }
@@ -67,20 +86,17 @@ export default class LayoutComponent {
     if (this.isMobile()) {
       if (this.collapsed()) {
         this.sidenav?.close();
+      } else {
+        this.sidenav?.open();
       }
     }
   }
 
   ngOnInit() {
-    this.checkScreenSize();
-    // Ensure menu starts collapsed on mobile
-    if (this.isMobile()) {
-      this.collapsed.set(true);
-      if (this.sidenav?.opened) {
-        this.sidenav.close();
-      }
-    }
     if (isPlatformBrowser(this.platformId)) {
+      // Initial screen size check
+      this.checkScreenSize();
+      
       this.isDarkMode.set(document.documentElement.classList.contains('dark'));
 
       const observer = new MutationObserver((mutations) => {
@@ -96,9 +112,19 @@ export default class LayoutComponent {
   }
 
   ngAfterViewInit() {
-    // Ensure sidenav is closed on mobile after view init
-    if (this.isMobile() && this.sidenav?.opened) {
-      this.sidenav.close();
+    // Initial sidenav state based on screen size
+    if (this.isMobile()) {
+      this.collapsed.set(true);
+      setTimeout(() => this.sidenav?.close(), 0);
+    } else {
+      this.collapsed.set(false);
+      setTimeout(() => this.sidenav?.open(), 0);
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.resizeTimeout) {
+      clearTimeout(this.resizeTimeout);
     }
   }
 }

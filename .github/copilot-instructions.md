@@ -1,7 +1,26 @@
-For Backend  use .Net 9 code, it is Webapi,  use same style (Clean Architecture) as this project is, no CQRS pattern
+# Use modern dependency injection syntax
+
+- Whenever you have to inject a dependency using Angular DI system, use the `inject` function instead of constructor based injection.
+   - this will apply to injecting services, tokens and parent components e.g. in directives as well
 
 
 
+# For all state in components and directives, use a signal instead of a class property
+- For example:
+
+` counter = signal<number>(0); `
+
+- For derived state from an existing signal, use computeds as follows.
+
+` doubleCounter = computed(() => this.counter() * 2); `
 
 
-For Frontend, Use Angular 19, standalone component and for styling use Tailwind css with Angular Material.
+- Use function style for guard, interceptors
+
+- for the service call if using subscribe use  next: 
+
+# For styling use Angular Material 19 with theming and tailwind v4 
+ - TailwindCSS for utility-first styling
+ - make sure everything supporting the theme
+
+# backend use .Net 9 clean architecture but not CQRS, plase refer the existing coding patterns for the Generic Repostiory and Generic Service as much possible

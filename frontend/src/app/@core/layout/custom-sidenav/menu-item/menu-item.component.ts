@@ -24,6 +24,7 @@ import { filter } from 'rxjs/operators';
       [class.active-route]="isItemActive(rla.isActive)"
       [activated]="isItemActive(rla.isActive)"
       (click)="toggleNestedItems()"
+      class="menu-item"
     >
       <mat-icon
         [fontSet]="isItemActive(rla.isActive) ? 'material-icons' : 'material-icons-outlined'"
@@ -31,11 +32,10 @@ import { filter } from 'rxjs/operators';
         [ngClass]="{'active-icon': isItemActive(rla.isActive)}"
         >{{ item().icon }}</mat-icon
       >
-      @if(!collapsed()) {
-        <span matListItemTitle [ngClass]="{'active-text': isItemActive(rla.isActive)}">{{ item().label }}</span>
-      }
+      <span matListItemTitle [ngClass]="{'active-text': isItemActive(rla.isActive), 'opacity-0': collapsed()}"
+        >{{ item().label }}</span>
       @if(hasSubItems()) {
-        <span matListItemMeta>
+        <span matListItemMeta [class.hidden]="collapsed()">
           <mat-icon>{{ nestedItemOpen() ? 'expand_less' : 'expand_more' }}</mat-icon>
         </span>
       }
@@ -54,31 +54,34 @@ import { filter } from 'rxjs/operators';
     }
   `,
   styles: `
-    :host * {
-      transition-property: margin-inline-start, opacity, height;
-      transition-duration: 500ms;
-      transition-timing-function: ease-in-out;
+    :host {
+      display: block;
     }
 
-    :host ::ng-deep .active-route {
-      background-color: rgba(0, 120, 212, 0.1) !important;
+    .menu-item {
+      margin: 4px 8px;
+      border-radius: 6px;
+      overflow: hidden;
+      transition: all 300ms ease-in-out;
     }
 
-    :host ::ng-deep .active-icon {
-      color: #0078D4 !important;
-    }
+    :host ::ng-deep {
+      .active-route {
+        background-color: var(--primary-lighter, rgba(0, 120, 212, 0.1)) !important;
+      }
 
-    :host ::ng-deep .active-text {
-      font-weight: 500 !important;
-      color: #0078D4 !important;
-    }
+      .active-icon {
+        color: var(--primary, #0078D4) !important;
+      }
 
-    :host ::ng-deep .mdc-list-item.active-route {
-      --mdc-list-list-item-container-color: rgba(0, 120, 212, 0.1) !important;
-    }
+      .active-text {
+        font-weight: 500 !important;
+        color: var(--primary, #0078D4) !important;
+      }
 
-    :host ::ng-deep .mat-mdc-list-item.mdc-list-item--activated {
-      --mdc-list-list-item-container-color: rgba(0, 120, 212, 0.1) !important;
+      .mat-mdc-list-item {
+        --mdc-list-list-item-container-shape: 6px;
+      }
     }
   `,
   animations: [

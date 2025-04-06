@@ -5,18 +5,15 @@
     <mat-progress-bar class="absolute top-16 z-10" mode="indeterminate" />
   }
 
-  <mat-sidenav-container class="flex-1" [hasBackdrop]="isMobile()">
-    <mat-sidenav
-      [opened]="!isMobile() || !collapsed()"
-      [mode]="isMobile() ? 'over' : 'side'"
-      [ngClass]="{'show-mobile': !collapsed() && isMobile()}"
-      [fixedInViewport]="isMobile()"
-      (closed)="collapsed.set(true)"
-      disableClose>
-      <app-custom-sidenav [collapsed]="true" />
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav [mode]="isMobile() ? 'over' : 'side'" 
+                 [opened]="!isMobile() && !collapsed()"
+                 [fixedInViewport]="true"
+                 [style.width]="sidenavWidth()">
+      <app-custom-sidenav [collapsed]="collapsed()"></app-custom-sidenav>
     </mat-sidenav>
     <mat-sidenav-content [style.margin-left]="isMobile() ? '0' : sidenavWidth()">
-      <div class="min-h-[calc(100vh-64px-64px)]">
+      <div class="min-h-[calc(100vh-64px-64px)] p-6">
         <router-outlet></router-outlet>
       </div>
       <app-footer />
