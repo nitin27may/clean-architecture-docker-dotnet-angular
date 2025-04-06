@@ -235,9 +235,9 @@ The apps written in the following JavaScript frameworks/libraries:
 ### Built With
 #### Angular (19.0.0)
 
-The fronend of this project is developed in Angular. As we are using Server Side Rendering (SSR) we have used Nodejs alpine image in place of other lightweight docker image like nginx to run Angular app.
+The frontend of this project is developed in Angular. As we are using Server Side Rendering (SSR) we have used Nodejs alpine image in place of other lightweight docker image like nginx to run Angular app.
 
-It contains sample for below (Both UI and API implmentation ):
+It contains sample for below (Both UI and API implementation ):
 
  1. User Registration
  2. Login
@@ -249,23 +249,41 @@ It contains sample for below (Both UI and API implmentation ):
 
 Also, it has sample code for Auth guard, services, http interceptors, resolver and JWT implementation
 
+## Frontend Technologies
+
+- **Angular 19**
+  - Modern dependency injection with `inject()`
+  - Signal-based state management
+  - Reactive data flow with computed signals
+- **Angular Material 19**
+  - Comprehensive Material Design components
+  - Theme customization support
+  - Built-in dark/light mode with smooth transitions
+- **TailwindCSS v4**
+  - Utility-first CSS framework
+  - Seamless integration with Material theming
+  - Responsive design utilities
+- **Responsive Layout**
+  - Mobile-first approach
+  - Flexible grid system
+  - Adaptive components
 
 **[Dockerfile for Production](/frontend/Dockerfile)**
 **[Dockerfile for Development](/frontend/debug.dockerfile)**
 
 #### Dotnet (9.0.0)
 
-Rest APis of this project is devloped using dotnet
+Rest APIs of this project are developed using dotnet
 
 It contains sample for:
 
-1. Middleware implemetation for logs
+1. Middleware implementation for logs
 2. JWT implementation for Authorization
 3. API routing
 4. User registration, login, forgot password, reset password
-5. Role based api permission
+5. Role based API permission
 6. Audit Log
-7. Fulent Validation
+7. Fluent Validation
 8. Complete CRUD example for Contact
 
 
