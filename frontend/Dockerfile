@@ -5,8 +5,7 @@ FROM node:22-alpine as builder
 COPY package*.json ./
 
 ## installing and Storing node modules on a separate layer will prevent unnecessary npm installs at each build
-## --legacy-peer-deps as ngx-bootstrap still depends on Angular 18
-RUN npm install --legacy-peer-deps && mkdir /app && mv ./node_modules /app/node_modules
+RUN npm install && mkdir /app && mv ./node_modules /app/node_modules
 
 # Change directory so that our commands run inside this new directory
 WORKDIR /app
