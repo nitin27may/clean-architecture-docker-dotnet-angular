@@ -48,6 +48,10 @@ export class HeaderComponent implements OnInit {
     this.toggleCollapsed.emit();
   }
 
+  isMenuCollapsed(): boolean {
+    return this.collapsed();
+  }
+
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       const savedUser = localStorage.getItem('currentUser');

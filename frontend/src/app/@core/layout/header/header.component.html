@@ -6,7 +6,7 @@
       class="mr-2"
       (click)="onToggleCollapsed()"
     >
-      <mat-icon>menu</mat-icon>
+      <mat-icon>{{ isMenuCollapsed() ? 'chevron_right' : 'chevron_left' }}</mat-icon>
     </button>
     <a routerLink="/" class="font-medium text-lg hover:text-primary transition-colors no-underline text-on-surface">
       Contacts Portal

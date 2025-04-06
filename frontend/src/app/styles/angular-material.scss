@@ -77,7 +77,7 @@ mat-toolbar {
   .mdc-checkbox__background {
     border-color: var(--mat-sys-outline);
   }
-  
+
   .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background {
     border-color: var(--mat-sys-primary);
     background-color: var(--mat-sys-primary);
@@ -92,7 +92,7 @@ mat-toolbar {
   .mdc-checkbox__background {
     border-color: var(--mat-sys-outline);
   }
-  
+
   .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background {
     border-color: var(--mat-sys-primary);
     background-color: var(--mat-sys-primary);
