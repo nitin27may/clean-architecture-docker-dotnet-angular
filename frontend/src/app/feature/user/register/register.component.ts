@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { signal, computed, inject } from '@angular/core';
 import { UserService } from '@core/services/user.service';
-import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
 import { RouterModule, Router } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -12,6 +11,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { errorTailorImports } from '@core/components/validation';
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
   selector: 'app-register',
@@ -27,7 +27,6 @@ import { errorTailorImports } from '@core/components/validation';
     MatIconModule,
     MatButtonModule,
     MatProgressSpinnerModule,
-    MatSnackBarModule,
     MatCheckboxModule,
     errorTailorImports
   ],
@@ -36,7 +35,7 @@ export class RegisterComponent {
   // Inject dependencies
   private fb = inject(FormBuilder);
   private userService = inject(UserService);
-  private snackBar = inject(MatSnackBar);
+  private notificationService = inject(NotificationService);
   private router = inject(Router);
 
   // State with signals
@@ -120,17 +119,13 @@ export class RegisterComponent {
       this.userService.create(this.registerForm.value).subscribe({
         next: (response) => {
           this.loading.set(false);
-          this.snackBar.open('Registration successful! Please log in.', 'Close', {
-            duration: 5000
-          });
+          this.notificationService.success('Registration successful! Please log in.');
           this.router.navigate(['/login']);
         },
         error: (error) => {
           this.loading.set(false);
           const errorMessage = error?.error?.message || 'Registration failed. Please try again.';
-          this.snackBar.open(errorMessage, 'Close', {
-            duration: 5000
-          });
+          this.notificationService.error(errorMessage);
         }
       });
     } else {

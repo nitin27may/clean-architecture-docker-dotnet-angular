@@ -1,6 +1,6 @@
 import { DecimalPipe, CommonModule } from '@angular/common';
-import { Component, ViewChild, OnInit, computed, inject, signal } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, ViewChild, OnInit,  inject, signal } from '@angular/core';
+import {  FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,9 +11,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ContactService } from '@features/contact/contact.service';
 import { HasPermissionDirective } from '@core/directives/permission.directive';
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
     selector: 'app-contact-list',
@@ -31,7 +31,6 @@ import { HasPermissionDirective } from '@core/directives/permission.directive';
         MatButtonModule,
         MatTooltipModule,
         MatSortModule,
-        MatSnackBarModule,
         HasPermissionDirective
     ],
     templateUrl: './contact-list.component.html',
@@ -41,6 +40,7 @@ import { HasPermissionDirective } from '@core/directives/permission.directive';
 export class ContactListComponent implements OnInit {
     private contactService = inject(ContactService);
     private router = inject(Router);
+    private notificationService = inject(NotificationService);
 
     contacts = signal<any[]>([]);
     dataSource = signal<MatTableDataSource<any>>(new MatTableDataSource([]));
@@ -66,7 +66,7 @@ export class ContactListComponent implements OnInit {
                 this.loading.set(false);
             },
             error: (error) => {
-                this.contactService.showNotification('Failed to load contacts', true);
+                this.notificationService.error('Failed to load contacts');
                 this.loading.set(false);
             }
         });
@@ -81,11 +81,11 @@ export class ContactListComponent implements OnInit {
         if (confirm('Are you sure you want to delete this contact?')) {
             this.contactService.delete(contact.id).subscribe({
                 next: () => {
-                    this.contactService.showNotification('Contact deleted successfully');
+                    this.notificationService.success('Contact deleted successfully');
                     this.loadContacts();
                 },
                 error: (error) => {
-                    this.contactService.showNotification('Error deleting contact', true);
+                    this.notificationService.error('Error deleting contact');
                 }
             });
         }

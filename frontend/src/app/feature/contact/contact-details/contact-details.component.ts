@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HasPermissionDirective } from '@core/directives/permission.directive';
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
     selector: 'app-contact-details',
@@ -30,6 +31,7 @@ export class ContactDetailsComponent {
     private activatedRoute = inject(ActivatedRoute);
     private router = inject(Router);
     private contactService = inject(ContactService);
+    private notificationService = inject(NotificationService);
 
     contact = signal<any>(null);
     loading = signal<boolean>(false);
@@ -47,12 +49,12 @@ export class ContactDetailsComponent {
             this.loading.set(true);
             this.contactService.delete(this.contact()!.id).subscribe({
                 next: () => {
-                    this.contactService.showNotification('Contact deleted successfully');
+                    this.notificationService.success('Contact deleted successfully');
                     this.router.navigate(['/contacts']);
                 },
                 error: (error) => {
                     this.loading.set(false);
-                    this.contactService.showNotification('Failed to delete contact', true);
+                    this.notificationService.error('Failed to delete contact');
                 }
             });
         }

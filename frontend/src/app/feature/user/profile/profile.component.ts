@@ -12,11 +12,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { UserService } from '@core/services/user.service';
 import { ValidationService } from '@core/services/validation.service';
 import { AuthStateService } from '@core/services/auth-state.service';
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
     selector: 'app-profile',
@@ -29,8 +29,7 @@ import { AuthStateService } from '@core/services/auth-state.service';
         MatButtonModule,
         MatIconModule,
         MatTabsModule,
-        MatProgressSpinnerModule,
-        MatSnackBarModule
+        MatProgressSpinnerModule
     ],
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.scss']
@@ -48,7 +47,7 @@ export class ProfileComponent implements OnInit {
     private router = inject(Router);
     private userService = inject(UserService);
     private validationService = inject(ValidationService);
-    private snackBar = inject(MatSnackBar);
+    private notificationService = inject(NotificationService);
     private authState = inject(AuthStateService);
 
     constructor() {
@@ -64,15 +63,6 @@ export class ProfileComponent implements OnInit {
         this.isEditMode.update(current => !current);
     }
 
-    showSnackbar(message: string, isError = false): void {
-        this.snackBar.open(message, 'Close', {
-            duration: 3000,
-            horizontalPosition: 'end',
-            verticalPosition: 'top',
-            panelClass: isError ? ['bg-error', 'text-on-error'] : ['bg-success', 'text-on-success']
-        });
-    }
-
     onSubmit(): void {
         if (this.profileForm.valid) {
             this.loading = true;
@@ -80,7 +70,7 @@ export class ProfileComponent implements OnInit {
         } else {
             // Mark all fields as touched to trigger validation messages
             this.profileForm.markAllAsTouched();
-            this.showSnackbar('Please fix form errors before submitting', true);
+            this.notificationService.error('Please fix form errors before submitting');
         }
     }
 
@@ -91,7 +81,7 @@ export class ProfileComponent implements OnInit {
         } else {
             // Mark all fields as touched to trigger validation messages
             this.passwordForm.markAllAsTouched();
-            this.showSnackbar('Please fix form errors before submitting', true);
+            this.notificationService.error('Please fix form errors before submitting');
         }
     }
 
@@ -140,14 +130,14 @@ export class ProfileComponent implements OnInit {
                 const updatedUser = { ...currentUser, ...data };
                 localStorage.setItem('currentUser', JSON.stringify(updatedUser));
 
-                this.showSnackbar('Profile updated successfully');
+                this.notificationService.success('Profile updated successfully');
                 this.loading = false;
                 this.isEditMode.set(false);
             },
             error: (error) => {
                 this.loading = false;
                 const errorMessage = error?.error?.message || 'Error updating profile';
-                this.showSnackbar(errorMessage, true);
+                this.notificationService.error(errorMessage);
             }
         });
     }
@@ -166,7 +156,7 @@ export class ProfileComponent implements OnInit {
             .changePassword(passwordData)
             .subscribe({
                 next: (data) => {
-                    this.showSnackbar('Password updated successfully');
+                    this.notificationService.success('Password updated successfully');
                     this.resetPasswordForm();
                     this.loading = false;
                     this.router.navigate(['/login']);
@@ -174,7 +164,7 @@ export class ProfileComponent implements OnInit {
                 error: (error) => {
                     this.loading = false;
                     const errorMessage = error?.error?.message || 'Error updating password';
-                    this.showSnackbar(errorMessage, true);
+                    this.notificationService.error(errorMessage);
                 }
             });
     }
@@ -187,7 +177,7 @@ export class ProfileComponent implements OnInit {
                 this.profileForm.patchValue(userData);
             },
             error: (error) => {
-                this.showSnackbar('Failed to load user profile', true);
+                this.notificationService.error('Failed to load user profile');
                 this.loading = false;
             }
         });

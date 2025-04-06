@@ -12,9 +12,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { LoginService } from './login.service';
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
     selector: 'app-login',
@@ -30,8 +30,7 @@ import { LoginService } from './login.service';
         MatIconModule,
         MatButtonModule,
         MatProgressSpinnerModule,
-        MatCheckboxModule,
-        MatSnackBarModule
+        MatCheckboxModule
     ]
 })
 export class LoginComponent implements OnInit {
@@ -40,7 +39,7 @@ export class LoginComponent implements OnInit {
     private route = inject(ActivatedRoute);
     private router = inject(Router);
     private loginService = inject(LoginService);
-    private snackBar = inject(MatSnackBar);
+    private notificationService = inject(NotificationService);
 
     // State using signals
     model = signal<any>({});
@@ -105,16 +104,12 @@ export class LoginComponent implements OnInit {
                         this.router.navigate([this.returnUrl()]);
                     },
                     error: (error) => {
-                        this.snackBar.open(error?.message || 'Login failed', 'Close', {
-                            duration: 3000,
-                        });
+                        this.notificationService.error(error?.message || 'Login failed');
                         this.loading.set(false);
                     }
                 });
         } else {
-            this.snackBar.open('Please enter valid credentials', 'Close', {
-                duration: 3000,
-            });
+            this.notificationService.error('Please enter valid credentials');
         }
     }
 }

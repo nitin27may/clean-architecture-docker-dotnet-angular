@@ -14,12 +14,12 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ValidationService } from '@core/services/validation.service';
 
 import { errorTailorImports } from "@core/components/validation";
 import { ContactService } from "@features/contact/contact.service";
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
     selector: 'app-contact-form',
@@ -36,8 +36,7 @@ import { ContactService } from "@features/contact/contact.service";
         MatNativeDateModule,
         MatProgressSpinnerModule,
         MatIconModule,
-        MatSelectModule,
-        MatSnackBarModule
+        MatSelectModule
     ],
     templateUrl: './contact-form.component.html',
     styleUrl: './contact-form.component.scss',
@@ -49,6 +48,7 @@ export class ContactFormComponent implements OnInit {
     private validationService = inject(ValidationService);
     private contactService = inject(ContactService);
     private activatedRoute = inject(ActivatedRoute);
+    private notificationService = inject(NotificationService);
 
     contactForm!: UntypedFormGroup;
     loading = signal<boolean>(false);
@@ -65,23 +65,23 @@ export class ContactFormComponent implements OnInit {
             if (this.isEditMode()) {
                 this.contactService.update(contact).subscribe({
                     next: () => {
-                        this.contactService.showNotification('Contact updated successfully');
+                        this.notificationService.success('Contact updated successfully');
                         this.router.navigate(['/contacts']);
                     },
                     error: (error) => {
                         this.loading.set(false);
-                        this.contactService.showNotification('Error updating contact', true);
+                        this.notificationService.error('Error updating contact');
                     }
                 });
             } else {
                 this.contactService.create(contact).subscribe({
                     next: () => {
-                        this.contactService.showNotification('Contact created successfully');
+                        this.notificationService.success('Contact created successfully');
                         this.router.navigate(['/contacts']);
                     },
                     error: (error) => {
                         this.loading.set(false);
-                        this.contactService.showNotification('Error creating contact', true);
+                        this.notificationService.error('Error creating contact');
                     }
                 });
             }
@@ -140,12 +140,12 @@ export class ContactFormComponent implements OnInit {
         this.loading.set(true);
         this.contactService.create(contact).subscribe({
             next: (data) => {
-                this.contactService.showNotification('Contact created successfully');
+                this.notificationService.success('Contact created successfully');
                 this.router.navigate(['/contacts']);
             },
             error: (error) => {
                 this.loading.set(false);
-                this.contactService.showNotification('Error creating contact', true);
+                this.notificationService.error('Error creating contact');
             }
         });
     }
@@ -154,12 +154,12 @@ export class ContactFormComponent implements OnInit {
         this.loading.set(true);
         this.contactService.update(contact).subscribe({
             next: (data) => {
-                this.contactService.showNotification('Contact updated successfully');
+                this.notificationService.success('Contact updated successfully');
                 this.router.navigate(['/contacts']);
             },
             error: (error) => {
                 this.loading.set(false);
-                this.contactService.showNotification('Error updating contact', true);
+                this.notificationService.error('Error updating contact');
             }
         });
     }
