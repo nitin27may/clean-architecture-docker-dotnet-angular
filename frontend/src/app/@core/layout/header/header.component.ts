@@ -1,4 +1,4 @@
-import { Component, DestroyRef, effect, inject, input, OnInit, output, signal, PLATFORM_ID } from '@angular/core';
+import { Component, DestroyRef, effect, inject, input, OnInit, output, signal, PLATFORM_ID, HostListener } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatToolbar } from '@angular/material/toolbar';
@@ -37,6 +37,22 @@ export class HeaderComponent implements OnInit {
 
   user = this.authState.getCurrentUser();
   isDarkMode = this.themeService.isDarkMode;
+  isMobile = signal<boolean>(false);
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.checkScreenSize();
+  }
+
+  private checkScreenSize() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.isMobile.set(window.innerWidth < 768); // 768px is typical mobile breakpoint
+      // Remove the direct set call since collapsed is an input
+      if (this.isMobile()) {
+        this.toggleCollapsed.emit(); // Emit event instead of direct modification
+      }
+    }
+  }
 
   // Toggle dark mode using the theme service
   toggleDarkMode() {
@@ -45,14 +61,28 @@ export class HeaderComponent implements OnInit {
 
   // Method to emit the toggle event
   onToggleCollapsed() {
-    this.toggleCollapsed.emit();
+    if (this.isMobile()) {
+      // On mobile, toggle between fully hidden (null width) and icon-only mode
+      this.toggleCollapsed.emit();
+    } else {
+      // On desktop, toggle between expanded and icon-only mode
+      this.toggleCollapsed.emit();
+    }
   }
 
   isMenuCollapsed(): boolean {
     return this.collapsed();
   }
 
+  getMenuIcon(): string {
+    if (this.isMobile()) {
+      return this.isMenuCollapsed() ? 'menu' : 'close';
+    }
+    return this.isMenuCollapsed() ? 'chevron_right' : 'chevron_left';
+  }
+
   ngOnInit(): void {
+    this.checkScreenSize(); // Check initial screen size
     if (isPlatformBrowser(this.platformId)) {
       const savedUser = localStorage.getItem('currentUser');
       if (savedUser) {

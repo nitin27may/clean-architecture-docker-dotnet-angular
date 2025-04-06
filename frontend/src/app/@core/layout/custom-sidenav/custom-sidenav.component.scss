@@ -1,0 +1,31 @@
+.sidenav {
+  .menu-item {
+    color: var(--app-text);
+    background-color: var(--app-background);
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+
+    &.active {
+      background-color: var(--primary-lighter);
+      color: var(--primary);
+
+      mat-icon {
+        color: var(--primary);
+      }
+    }
+  }
+}
+
+:host-context(.dark) {
+  .menu-item {
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    &.active {
+      background-color: rgba(var(--primary-rgb), 0.15);
+    }
+  }
+}

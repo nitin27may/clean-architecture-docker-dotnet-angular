@@ -1,16 +1,21 @@
 <div class="flex flex-col min-h-screen">
   <app-header [collapsed]="collapsed()" (toggleCollapsed)="toggleCollapsed()" />
 
-  <!-- Loading bar -->
   @if (loading()) {
     <mat-progress-bar class="absolute top-16 z-10" mode="indeterminate" />
   }
 
-  <mat-sidenav-container class="flex-1">
-    <mat-sidenav opened mode="side" [style.width]="sidenavWidth()">
-      <app-custom-sidenav [collapsed]="collapsed()" />
+  <mat-sidenav-container class="flex-1" [hasBackdrop]="isMobile()">
+    <mat-sidenav
+      [opened]="!isMobile() || !collapsed()"
+      [mode]="isMobile() ? 'over' : 'side'"
+      [ngClass]="{'show-mobile': !collapsed() && isMobile()}"
+      [fixedInViewport]="isMobile()"
+      (closed)="collapsed.set(true)"
+      disableClose>
+      <app-custom-sidenav [collapsed]="true" />
     </mat-sidenav>
-    <mat-sidenav-content class="content" [style.margin-left]="sidenavWidth()">
+    <mat-sidenav-content [style.margin-left]="isMobile() ? '0' : sidenavWidth()">
       <div class="min-h-[calc(100vh-64px-64px)]">
         <router-outlet></router-outlet>
       </div>

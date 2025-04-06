@@ -5,8 +5,9 @@
       mat-icon-button
       class="mr-2"
       (click)="onToggleCollapsed()"
+      [attr.aria-label]="isMobile() ? 'Toggle mobile menu' : 'Toggle sidebar'"
     >
-      <mat-icon>{{ isMenuCollapsed() ? 'chevron_right' : 'chevron_left' }}</mat-icon>
+      <mat-icon>{{ getMenuIcon() }}</mat-icon>
     </button>
     <a routerLink="/" class="font-medium text-lg hover:text-primary transition-colors no-underline text-on-surface">
       Contacts Portal
@@ -28,10 +29,14 @@
       <mat-icon>{{ isDarkMode() ? 'light_mode' : 'dark_mode' }}</mat-icon>
     </button>
 
+    <!-- User Profile Menu -->
     @if (user(); as user) {
-      <button mat-button [matMenuTriggerFor]="profileMenu">
+      <button mat-button [matMenuTriggerFor]="profileMenu" class="hidden md:flex">
         <span class="mx-2">{{ user.firstName }} {{ user.lastName }}</span>
         <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+      <button mat-icon-button [matMenuTriggerFor]="profileMenu" class="md:hidden">
+        <mat-icon>account_circle</mat-icon>
       </button>
       <mat-menu #profileMenu="matMenu">
         <button mat-menu-item (click)="navigateToProfile()">
