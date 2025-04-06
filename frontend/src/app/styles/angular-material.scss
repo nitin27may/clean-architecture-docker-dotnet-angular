@@ -75,7 +75,31 @@ mat-toolbar {
 // Fix checkbox appearance
 .mat-mdc-checkbox {
   .mdc-checkbox__background {
+    border-color: var(--mat-sys-outline);
+  }
+  
+  .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background {
     border-color: var(--mat-sys-primary);
+    background-color: var(--mat-sys-primary);
+  }
+
+  .mdc-checkbox__native-control:enabled + .mdc-checkbox__background .mdc-checkbox__checkmark {
+    color: var(--mat-sys-on-primary);
+  }
+}
+
+.dark .mat-mdc-checkbox {
+  .mdc-checkbox__background {
+    border-color: var(--mat-sys-outline);
+  }
+  
+  .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background {
+    border-color: var(--mat-sys-primary);
+    background-color: var(--mat-sys-primary);
+  }
+
+  .mdc-checkbox__native-control:enabled + .mdc-checkbox__background .mdc-checkbox__checkmark {
+    color: var(--mat-sys-on-primary);
   }
 }
 

@@ -28,13 +28,8 @@
       }
     }
 
-    /* Fix checkbox styling */
+    /* Remove custom checkbox styling to use global styles */
     .mat-mdc-checkbox {
-      .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background {
-        background-color: var(--sys-primary);
-        border-color: var(--sys-primary);
-      }
-
       .mdc-form-field {
         color: var(--sys-on-surface);
       }

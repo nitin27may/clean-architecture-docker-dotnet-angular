@@ -20,20 +20,3 @@
 .mat-mdc-form-field {
   width: 100%;
 }
-
-:host ::ng-deep {
-  .mat-mdc-checkbox {
-    .mdc-checkbox {
-      .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background {
-        border-color: var(--color-primary);
-        background-color: var(--color-primary);
-      }
-    }
-    .mdc-checkbox__ripple {
-      background-color: rgba(var(--color-primary-rgb), 0.12);
-    }
-    .mdc-form-field {
-      color: #4b5563;
-    }
-  }
-}
