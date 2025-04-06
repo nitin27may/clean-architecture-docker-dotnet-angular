@@ -1,12 +1,41 @@
 [![Angular Build](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/actions/workflows/angular-build.yml/badge.svg)](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/actions/workflows/angular-build.yml)
 [![Api Build](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/actions/workflows/api-build.yml/badge.svg)](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/actions/workflows/api-build.yml)
-# Clean Architecture Full-Stack Starter: .NET, Angular, and MS SQL Server with Docker
+
+# Clean Architecture Full-Stack Starter: .NET, Angular, and PostgreSQL with Docker
+
 ## Project Overview
-This repository serves as a comprehensive boilerplate for building a full-stack web application using **.NET 9 Web API**, **Angular 19**, and **MS SQL Server** with Docker. It includes built-in features like user registration, authentication with JWT, CRUD operations, and is optimized for both development and production environments.
+A production-ready boilerplate for building modern web applications using .NET 9 Web API, Angular 19, and PostgreSQL with Docker. This template implements clean architecture principles and includes essential features for enterprise applications.
 
-A startup project template built with **Angular 19** and **ASP.NET Core 9** (cross-platform), featuring a complete implementation of login, user management, and role-based access control. It also includes essential functionalities for rapid application development.
+### Key Technical Features
 
-This template is designed for ease of use, customization, and scalability. It adheres to best practices and conventions of both Angular and ASP.NET Core, leveraging modern technologies and tools to ensure an efficient and streamlined workflow.
+#### Frontend (Angular 19)
+- Modern dependency injection using `inject()` function
+- Signal-based state management
+- Computed signals for derived state
+- Angular Material 19 with theme support
+- TailwindCSS v4 for utility-first styling
+- JWT-based authentication with auto token refresh
+- Route guards with permission-based access control
+- Interceptors for JWT and error handling
+- Server-Side Rendering (SSR) support
+
+#### Backend (.NET 9)
+- Clean Architecture implementation
+- Generic Repository and Service patterns
+- Dapper with PostgreSQL for efficient data access
+- JWT authentication with role-based permissions 
+- Middleware for exception handling
+- Fluent Validation
+- Comprehensive audit logging
+- AutoMapper for DTO mapping
+
+#### DevOps & Infrastructure
+- Docker support with multi-stage builds
+- Docker Compose for local development
+- NGINX as load balancer
+- PostgreSQL database integration
+- Health check endpoints
+
 <hr>
 
 ## **Note**
@@ -220,7 +249,6 @@ Run below command to run all containers:
 docker-compose up
 ```
 
- 
 
 **Note** I have used SMTP send function, please update the account details
 
