@@ -1,10 +1,11 @@
-import { Component, computed, input, signal } from '@angular/core';
-import { RouterLinkActive, RouterModule } from '@angular/router';
+import { Component, OnInit, computed, input, signal, EventEmitter, Output } from '@angular/core';
+import { RouterLinkActive, RouterModule, Router, NavigationEnd } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { MenuItem } from '../menu-items';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-menu-item',
@@ -15,19 +16,23 @@ import { MenuItem } from '../menu-items';
       mat-list-item
       [style.--mat-list-list-item-leading-icon-start-space]="indentation()"
       [routerLink]="makeRoutePath()"
-      (click)="toggleNestedItems()"
       routerLinkActive
       #rla="routerLinkActive"
-      [routerLinkActiveOptions]="{ exact: item().exact }"
-      [activated]="rla.isActive"
+      [routerLinkActiveOptions]="{
+        exact: item().exact || isRootRoute() || false
+      }"
+      [class.active-route]="isItemActive(rla.isActive)"
+      [activated]="isItemActive(rla.isActive)"
+      (click)="toggleNestedItems()"
     >
       <mat-icon
-        [fontSet]="rla.isActive ? 'material-icons' : 'material-icons-outlined'"
+        [fontSet]="isItemActive(rla.isActive) ? 'material-icons' : 'material-icons-outlined'"
         matListItemIcon
+        [ngClass]="{'active-icon': isItemActive(rla.isActive)}"
         >{{ item().icon }}</mat-icon
       >
       @if(!collapsed()) {
-        <span matListItemTitle>{{ item().label }}</span>
+        <span matListItemTitle [ngClass]="{'active-text': isItemActive(rla.isActive)}">{{ item().label }}</span>
       }
       @if(hasSubItems()) {
         <span matListItemMeta>
@@ -42,6 +47,7 @@ import { MenuItem } from '../menu-items';
             [item]="subItem"
             [routeHistory]="makeBasePath()"
             [collapsed]="collapsed()"
+            (activeStatusChanged)="childActiveStatusChanged($event)"
           />
         }
       </div>
@@ -52,6 +58,27 @@ import { MenuItem } from '../menu-items';
       transition-property: margin-inline-start, opacity, height;
       transition-duration: 500ms;
       transition-timing-function: ease-in-out;
+    }
+
+    :host ::ng-deep .active-route {
+      background-color: rgba(103, 58, 183, 0.1) !important;
+    }
+
+    :host ::ng-deep .active-icon {
+      color: #673ab7 !important;
+    }
+
+    :host ::ng-deep .active-text {
+      font-weight: 500 !important;
+      color: #673ab7 !important;
+    }
+
+    :host ::ng-deep .mdc-list-item.active-route {
+      --mdc-list-list-item-container-color: rgba(103, 58, 183, 0.1) !important;
+    }
+
+    :host ::ng-deep .mat-mdc-list-item.mdc-list-item--activated {
+      --mdc-list-list-item-container-color: rgba(103, 58, 183, 0.1) !important;
     }
   `,
   animations: [
@@ -66,38 +93,115 @@ import { MenuItem } from '../menu-items';
     ]),
   ],
 })
-export class MenuItemComponent {
+export class MenuItemComponent implements OnInit {
   item = input.required<MenuItem>();
   collapsed = input.required<boolean>();
   routeHistory = input('');
 
-  level = computed(() => this.routeHistory().split('/').length - 1);
+  @Output() activeStatusChanged = new EventEmitter<boolean>();
+
+  level = computed(() => this.routeHistory().split('/').filter(Boolean).length);
   indentation = computed(() =>
     this.collapsed() ? '16px' : `${16 + this.level() * 16}px`
   );
 
   nestedItemOpen = signal(false);
+  private childIsActive = signal(false);
 
-  // Helper method to safely check for subItems
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    // Listen for route changes to update active status
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.checkActiveStatus();
+    });
+
+    // Initial check
+    this.checkActiveStatus();
+  }
+
+  private checkActiveStatus() {
+    const currentPath = this.router.url;
+    const itemPath = this.makeRoutePath();
+
+    if (!itemPath) return;
+
+    // Special handling for root route
+    if (itemPath === '/') {
+      const isExactMatch = currentPath === '/' || currentPath === '';
+      this.childIsActive.set(isExactMatch);
+      if (isExactMatch) {
+        this.activeStatusChanged.emit(true);
+      }
+      return;
+    }
+
+    // For other routes, check if the current path starts with the item path
+    // and make sure it's either an exact match or followed by a slash
+    const isActive = currentPath === itemPath ||
+                    (currentPath.startsWith(itemPath) &&
+                     (currentPath.length === itemPath.length || currentPath[itemPath.length] === '/'));
+
+    if (isActive) {
+      this.nestedItemOpen.set(true);
+      this.childIsActive.set(true);
+      this.activeStatusChanged.emit(true);
+    } else {
+      this.childIsActive.set(false);
+    }
+  }
+
+  isRootRoute(): boolean {
+    return this.item().route === '/';
+  }
+
+  isItemActive(routerLinkActive: boolean): boolean {
+    // For the root route, we need exact matching
+    if (this.isRootRoute()) {
+      return routerLinkActive && (this.router.url === '/' || this.router.url === '');
+    }
+
+    // For other routes, use RouterLinkActive or child active status
+    return routerLinkActive || this.isChildActive();
+  }
+
   hasSubItems(): boolean {
     return !!this.item().subItems && this.item().subItems.length > 0;
   }
 
   makeRoutePath() {
-    return this.item().route?.startsWith('/')
+    if (!this.item().route) return undefined;
+    return this.item().route.startsWith('/')
       ? this.item().route
       : `${this.routeHistory()}/${this.item().route}`;
   }
 
   makeBasePath() {
-    return this.item().route?.startsWith('/')
-      ? ''
+    if (!this.item().route) return this.routeHistory();
+    return this.item().route.startsWith('/')
+      ? this.item().route
       : `${this.routeHistory()}/${this.item().route}`;
   }
 
   toggleNestedItems() {
     if (this.hasSubItems()) {
       this.nestedItemOpen.update(value => !value);
+    }
+  }
+
+  isChildActive(): boolean {
+    return this.childIsActive();
+  }
+
+  childActiveStatusChanged(isActive: boolean) {
+    this.childIsActive.set(isActive);
+    if (isActive) {
+      // Expand menu if a child is active
+      this.nestedItemOpen.set(true);
+      // Notify parent that this item is active
+      this.activeStatusChanged.emit(true);
     }
   }
 }

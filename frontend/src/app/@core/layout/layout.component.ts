@@ -1,31 +1,33 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterOutlet } from '@angular/router';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { HeaderComponent } from "./header/header.component";
-import { CustomSidenavComponent } from "./custom-sidenav/custom-sidenav.component";
-import { FooterComponent } from "./footer/footer.component";
+import { HeaderComponent } from './header/header.component';
+import { CustomSidenavComponent } from './custom-sidenav/custom-sidenav.component';
+import { FooterComponent } from './footer/footer.component';
 import { CommonModule } from '@angular/common';
-import { ThemeService } from "../services/theme.service";
+import { ThemeService } from '../services/theme.service';
 
 @Component({
   selector: 'app-layout',
-  imports: [
-    CommonModule,
-    HeaderComponent,
-    MatIconModule,
-    MatSidenavModule,
-    CustomSidenavComponent,
-    RouterOutlet,
-    MatButtonModule,
-    MatProgressBarModule,
-    FooterComponent
-  ],
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
   standalone: true,
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatProgressBarModule,
+    HeaderComponent,
+    CustomSidenavComponent,
+    FooterComponent
+  ]
 })
 export default class LayoutComponent {
   private themeService = inject(ThemeService);

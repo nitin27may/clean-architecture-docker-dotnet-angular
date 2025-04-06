@@ -1,79 +1,87 @@
+import { Injectable, inject } from '@angular/core';
+import { PermissionService } from '../../services/permission.service';
+import { AuthStateService } from '../../services/auth-state.service';
+
 export interface MenuItem {
   icon: string;
   label: string;
   route?: string;
   exact?: boolean;
+  permission?: string;
   subItems?: MenuItem[];
 }
 
-export const menuItems: MenuItem[] = [
+const defaultMenuItems: MenuItem[] = [
   {
     icon: 'dashboard',
     label: 'Dashboard',
     route: '/',
-    exact: true,
-  },
-  {
-    icon: 'contacts',
-    label: 'Contacts',
-    route: '/contacts',
-    exact: false,
-  },
-  {
-    icon: 'format_list_bulleted',
-    label: 'Components',
-    route: '/components',
-    subItems: [
-      {
-        icon: 'touch_app',
-        label: 'Buttons',
-        route: 'buttons',
-      },
-      {
-        icon: 'question_answer',
-        label: 'Dialog',
-        route: 'dialog',
-      },
-      {
-        icon: 'text_fields',
-        label: 'Inputs',
-        route: 'inputs',
-      },
-      {
-        icon: 'view_agenda',
-        label: 'Panels',
-        route: 'panels',
-      },
-      {
-        icon: 'donut_large',
-        label: 'Progress',
-        route: 'progress',
-      },
-      {
-        icon: 'format_list_numbered',
-        label: 'Stepper',
-        route: 'stepper',
-      },
-      {
-        icon: 'table_chart',
-        label: 'Table',
-        route: 'table',
-      },
-      {
-        icon: 'tab',
-        label: 'Tabs',
-        route: 'tabs',
-      },
-    ],
-  },
-  {
-    icon: 'edit_note',
-    label: 'Forms',
-    route: 'forms',
-  },
-  {
-    icon: 'video_library',
-    label: 'Content',
-    route: 'content',
-  },
+    exact: true
+  }
 ];
+
+@Injectable({
+  providedIn: 'root'
+})
+export class MenuService {
+  private permissionService = inject(PermissionService);
+  private authState = inject(AuthStateService);
+
+  getMenuItems(): MenuItem[] {
+    const menuItems = [...defaultMenuItems];
+    const user = this.authState.getCurrentUser()();
+
+    if (!user?.rolePermissions) {
+      return menuItems;
+    }
+
+    // Get unique pages from permissions
+    const uniquePages = [...new Set(user.rolePermissions.map(p => p.pageName))];
+
+    // Create menu items based on permissions
+    uniquePages.forEach(pageName => {
+      if (pageName.toLowerCase() === 'dashboard') return;
+
+      const operations = this.permissionService.getPagePermissions(pageName);
+      if (operations.includes('Read')) {
+        menuItems.push({
+          icon: this.getIconForPage(pageName),
+          label: this.formatLabel(pageName),
+          route: `/${pageName.toLowerCase()}`,
+          exact: false,
+          permission: `${pageName}.Read`
+        });
+      }
+    });
+
+    return this.sortMenuItems(menuItems);
+  }
+
+  private getIconForPage(pageName: string): string {
+    const iconMap: Record<string, string> = {
+      'Users': 'person',
+      'Role': 'admin_panel_settings',
+      'Contacts': 'contacts',
+      'Permission': 'security',
+      'Setting': 'settings'
+    };
+
+    return iconMap[pageName] || 'article';
+  }
+
+  private formatLabel(pageName: string): string {
+    return pageName.replace(/([A-Z])/g, ' $1').trim();
+  }
+
+  private sortMenuItems(items: MenuItem[]): MenuItem[] {
+    const order = ['Dashboard', 'User', 'Role', 'Permission'];
+    return items.sort((a, b) => {
+      const indexA = order.indexOf(a.label);
+      const indexB = order.indexOf(b.label);
+      if (indexA === -1 && indexB === -1) return a.label.localeCompare(b.label);
+      if (indexA === -1) return 1;
+      if (indexB === -1) return -1;
+      return indexA - indexB;
+    });
+  }
+}
