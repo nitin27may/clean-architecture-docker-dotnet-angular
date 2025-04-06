@@ -14,9 +14,9 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { UserService } from '../../../@core/services/user.service';
-import { ValidationService } from '../../../@core/services/validation.service';
-import { AuthStateService } from '../../../@core/services/auth-state.service';
+import { UserService } from '@core/services/user.service';
+import { ValidationService } from '@core/services/validation.service';
+import { AuthStateService } from '@core/services/auth-state.service';
 
 @Component({
     selector: 'app-profile',

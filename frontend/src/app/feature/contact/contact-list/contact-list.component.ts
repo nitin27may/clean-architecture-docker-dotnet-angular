@@ -12,8 +12,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { ContactService } from '../contact.service';
-import { HasPermissionDirective } from '../../../@core/directives/permission.directive';
+import { ContactService } from '@features/contact/contact.service';
+import { HasPermissionDirective } from '@core/directives/permission.directive';
 
 @Component({
     selector: 'app-contact-list',

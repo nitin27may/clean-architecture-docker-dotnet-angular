@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { signal, computed, inject } from '@angular/core';
-import { UserService } from "../../../@core/services/user.service";
+import { UserService } from '@core/services/user.service';
 import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
 import { RouterModule, Router } from "@angular/router";
 import { CommonModule } from "@angular/common";
@@ -11,7 +11,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { errorTailorImports } from "../../../@core/components/validation";
+import { errorTailorImports } from '@core/components/validation';
 
 @Component({
   selector: 'app-register',

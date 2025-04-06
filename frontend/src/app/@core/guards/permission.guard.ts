@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { PermissionService } from '../services/permission.service';
+import { PermissionService } from '@core/services/permission.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 export const PermissionGuard = (pageName: string, operation: string = 'Read'): CanActivateFn => {

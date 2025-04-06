@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { PermissionService } from '../../services/permission.service';
-import { AuthStateService } from '../../services/auth-state.service';
+import { PermissionService } from '@core/services/permission.service';
+import { AuthStateService } from '@core/services/auth-state.service';
 
 export interface MenuItem {
   icon: string;

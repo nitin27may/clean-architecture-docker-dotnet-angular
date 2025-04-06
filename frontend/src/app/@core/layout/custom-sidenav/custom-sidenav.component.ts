@@ -4,10 +4,10 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs/operators';
-import { MenuService, MenuItem } from './menu-items';
-import { PermissionService } from '../../services/permission.service';
-import { AuthStateService } from '../../services/auth-state.service';
-import { MenuItemComponent } from './menu-item/menu-item.component';
+import { MenuService, MenuItem } from '@core/layout/custom-sidenav/menu-items';
+import { PermissionService } from '@core/services/permission.service';
+import { AuthStateService } from '@core/services/auth-state.service';
+import { MenuItemComponent } from '@core/layout/custom-sidenav/menu-item/menu-item.component';
 
 @Component({
   selector: 'app-custom-sidenav',

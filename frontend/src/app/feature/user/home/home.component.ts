@@ -5,8 +5,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
 import { RouterModule } from '@angular/router';
-import { environment } from '../../../environments/environment';
-import { ThemeService } from '../../../@core/services/theme.service';
+import { environment } from '@environments/environment';
+import { ThemeService } from '@core/services/theme.service';
 
 interface TechnologyCard {
   icon: string;

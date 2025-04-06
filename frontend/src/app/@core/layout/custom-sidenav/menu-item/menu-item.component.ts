@@ -4,7 +4,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { MenuItem } from '../menu-items';
+import { MenuItem } from '@core/layout/custom-sidenav/menu-items';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -61,24 +61,24 @@ import { filter } from 'rxjs/operators';
     }
 
     :host ::ng-deep .active-route {
-      background-color: rgba(103, 58, 183, 0.1) !important;
+      background-color: rgba(0, 120, 212, 0.1) !important;
     }
 
     :host ::ng-deep .active-icon {
-      color: #673ab7 !important;
+      color: #0078D4 !important;
     }
 
     :host ::ng-deep .active-text {
       font-weight: 500 !important;
-      color: #673ab7 !important;
+      color: #0078D4 !important;
     }
 
     :host ::ng-deep .mdc-list-item.active-route {
-      --mdc-list-list-item-container-color: rgba(103, 58, 183, 0.1) !important;
+      --mdc-list-list-item-container-color: rgba(0, 120, 212, 0.1) !important;
     }
 
     :host ::ng-deep .mat-mdc-list-item.mdc-list-item--activated {
-      --mdc-list-list-item-container-color: rgba(103, 58, 183, 0.1) !important;
+      --mdc-list-list-item-container-color: rgba(0, 120, 212, 0.1) !important;
     }
   `,
   animations: [

@@ -5,11 +5,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { HeaderComponent } from './header/header.component';
-import { CustomSidenavComponent } from './custom-sidenav/custom-sidenav.component';
-import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from '@core/layout/header/header.component';
+import { CustomSidenavComponent } from '@core/layout/custom-sidenav/custom-sidenav.component';
+import { FooterComponent } from '@core/layout/footer/footer.component';
 import { CommonModule } from '@angular/common';
-import { ThemeService } from '../services/theme.service';
+import { ThemeService } from '@core/services/theme.service';
 
 @Component({
   selector: 'app-layout',

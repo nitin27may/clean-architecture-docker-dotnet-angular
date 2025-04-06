@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, map } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { environment } from "../../environments/environment";
+import { environment } from "@environments/environment";
 
 @Injectable({
   providedIn: 'root'

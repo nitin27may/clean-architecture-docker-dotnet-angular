@@ -1,13 +1,13 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { ContactService } from "../contact.service";
+import { ContactService } from "@features/contact/contact.service";
 import { CommonModule } from "@angular/common";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { HasPermissionDirective } from '../../../@core/directives/permission.directive';
+import { HasPermissionDirective } from '@core/directives/permission.directive';
 
 @Component({
     selector: 'app-contact-details',

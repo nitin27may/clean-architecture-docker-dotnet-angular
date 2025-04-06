@@ -5,9 +5,9 @@ import { MatToolbar } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { Router } from '@angular/router';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { LoginService } from "../../../feature/user/login/login.service";
-import { ThemeService } from '../../services/theme.service';
-import { AuthStateService } from '../../services/auth-state.service';
+import { ThemeService } from '@core/services/theme.service';
+import { AuthStateService } from '@core/services/auth-state.service';
+import { LoginService } from "@features/user/login/login.service";
 
 interface UserProfile {
   id: string;

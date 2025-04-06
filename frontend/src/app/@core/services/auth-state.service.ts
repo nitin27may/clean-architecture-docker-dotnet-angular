@@ -1,6 +1,6 @@
 import { Injectable, signal, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { User } from '../models/user.interface';
+import { User } from '@core/models/user.interface';
 
 @Injectable({
   providedIn: 'root'

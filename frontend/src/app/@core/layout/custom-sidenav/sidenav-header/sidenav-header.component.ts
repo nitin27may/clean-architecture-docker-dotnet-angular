@@ -1,6 +1,6 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { NgClass, CommonModule } from '@angular/common';
-import { AuthStateService } from '../../../services/auth-state.service';
+import { AuthStateService } from '@core/services/auth-state.service';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({

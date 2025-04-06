@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { AuthStateService } from './auth-state.service';
-import { User } from '../models/user.interface';
+import { User } from '@core/models/user.interface';
 
 @Injectable({
     providedIn: 'root'

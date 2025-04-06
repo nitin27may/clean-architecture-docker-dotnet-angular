@@ -1,10 +1,10 @@
 import { Inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { map } from "rxjs/operators";
-import { User } from "../models/user.interface";
+import { User } from "@core/models/user.interface";
 
 import { DOCUMENT } from "@angular/common";
-import { environment } from "../../environments/environment";
+import { environment } from "@environments/environment";
 
 @Injectable({providedIn: 'root'})
 export class UserService {

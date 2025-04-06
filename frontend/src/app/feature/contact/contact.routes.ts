@@ -1,13 +1,11 @@
 import { Routes } from '@angular/router';
-import {
-  redirectToLoginIfNotAuthenticated,
-} from '../../@core/guards';
+import { redirectToLoginIfNotAuthenticated } from '@core/guards';
+import LayoutComponent from '@core/layout/layout.component';
+import { PermissionGuard } from '@core/guards/permission.guard';
 import { ContactDetailsComponent } from './contact-details/contact-details.component';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 import { ContactListComponent } from './contact-list/contact-list.component';
 import { ContactDetailsResolver } from './contact.resolver';
-import LayoutComponent from '../../@core/layout/layout.component';
-import { PermissionGuard } from '../../@core/guards/permission.guard';
 
 export default [
   {
