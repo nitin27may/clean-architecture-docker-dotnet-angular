@@ -22,7 +22,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/clean-architecture-demo.gif" alt="Application Demo" width="80%">
+  <img src="docs/clean-architecture-demo.gif" alt="Application Demo">
   <br>
   <em>Contact Management Application with Role-Based Access Control</em>
 </p>
