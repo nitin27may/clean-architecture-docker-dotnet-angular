@@ -5,6 +5,17 @@
 
 A production-ready boilerplate for building modern web applications using .NET 9 Web API, Angular 19, and PostgreSQL with Docker. This template implements clean architecture principles, ensuring maintainable, testable, and scalable code that can evolve with changing business requirements.
 
+<p align="center">
+  <img src="docs/CleanArchitecture.png" alt="Clean Architecture Diagram" width="70%">
+</p>
+
+<!-- Add application screenshot placeholder -->
+<p align="center">
+  <img src="docs/app-screenshot.png" alt="Application Screenshot" width="80%">
+  <br>
+  <em>Contact Management Application with Dark Mode Support</em>
+</p>
+
 ## Introduction
 
 Are you tired of spending weeks setting up your project infrastructure before writing a single line of business logic? This starter kit solves that problem by providing:
@@ -30,13 +41,9 @@ Rename `.env.example` to `.env`:
 
 Shell:
 ```bash
-mv .env.example .env
+cp .env.example .env
 ```
 
-PowerShell:
-```powershell
-Rename-Item .env.example .env
-```
 
 Run all containers: 
 ```bash
@@ -56,6 +63,13 @@ After startup, the following test users are available:
 | reader@gmail.com     | P@ssword#321  | Reader  |
 
 ## Project Overview
+
+<!-- Add dashboard/admin interface screenshot placeholder -->
+<p align="center">
+  <img src="docs/dashboard-screenshot.png" alt="Dashboard Screenshot" width="80%">
+  <br>
+  <em>Admin Dashboard with Role-Based Access Control</em>
+</p>
 
 This project provides a comprehensive starter template that goes beyond just connecting technologies - it demonstrates how to build a maintainable, production-quality application:
 
@@ -139,4 +153,3 @@ For support or questions, please contact Nitin Singh at nitin27may@gmail.com.
 ## Feature Requests
 
 Have ideas to improve this project? Submit a [feature request](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=).
-

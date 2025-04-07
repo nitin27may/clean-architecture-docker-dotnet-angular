@@ -42,7 +42,10 @@ You have two primary options for development:
    Copy-Item .env.example .env
    ```
 
-2. Edit the `.env` file to configure environment variables as needed.
+2. Edit the `.env` file to configure environment variables as needed. Key settings include:
+   - PostgreSQL connection details
+   - JWT secret and configuration
+   - SMTP settings for email functionality
 
 ### Starting the Development Environment
 
@@ -100,13 +103,15 @@ docker-compose down -v
    dotnet restore
    ```
 
-3. Run the API:
+3. Update the PostgreSQL connection in `appsettings.Development.json`
+
+4. Run the API:
 
    ```bash
-   dotnet run --project API
+   dotnet run --project Contact.Api
    ```
 
-   The API will be available at `https://localhost:5001` and `http://localhost:5000`
+   The API will be available at `https://localhost:7224` and `http://localhost:5217`
 
 ### Frontend (Angular)
 
@@ -122,10 +127,12 @@ docker-compose down -v
    npm install
    ```
 
-3. Start the development server:
+3. Update the proxy configuration in `proxy.conf.json` to point to your local API
+
+4. Start the development server:
 
    ```bash
-   npm start
+   npm run serve
    ```
 
    The frontend will be available at `http://localhost:4200`
@@ -137,10 +144,8 @@ docker-compose down -v
 Access the PostgreSQL database using:
 
 ```bash
-docker exec -it [postgres-container-name] psql -U postgres
+docker exec -it postgres_db psql -U postgres -d contacts
 ```
-
-Replace `[postgres-container-name]` with the actual container name from `docker ps`.
 
 ### Using External Tools
 
@@ -148,37 +153,71 @@ You can also connect using external tools like pgAdmin, DBeaver, or JetBrains Da
 
 - **Host**: localhost
 - **Port**: 5432
-- **Username**: postgres
+- **Username**: contacts_admin (or as configured in your .env file)
 - **Password**: (from your .env file)
-- **Database**: ContactsDB
+- **Database**: contacts
 
 ## Development Workflow
 
 ### Making Backend Changes
 
 1. Modify code in the appropriate layer:
-   - Domain: For entity changes
-   - Application: For business logic
-   - Infrastructure: For external service implementations
-   - API: For endpoint changes
+   - **Domain**: For entity definitions and core business logic
+   - **Application**: For use cases, services, and orchestration
+   - **Infrastructure**: For external integrations and data access
+   - **API**: For endpoints and controllers
 
 2. If using Docker, changes will be automatically applied with hot reload.
 
-3. If running locally, some changes may require application restart.
+3. Follow the Clean Architecture principles:
+   - Domain layer has no external dependencies
+   - Application layer depends only on Domain
+   - Infrastructure implements interfaces defined in Domain/Application
+   - API layer is the entry point but delegates to Application services
 
 ### Making Frontend Changes
 
-1. Modify Angular code in the frontend directory.
-
-2. Follow these best practices:
+1. Follow these best practices:
+   - Use standalone components
    - Use signals for state management
-   - Use inject() for dependency injection
-   - Use computed signals for derived state
-   - Use Angular Material components
-   - Use TailwindCSS for styling
-   - Create reusable components in the shared module
+   - Use the inject() function for dependency injection
+   - Integrate Material components with TailwindCSS utilities
+   - Implement permission checks for UI elements
 
-3. Changes will be automatically applied with hot reload.
+2. Structure new features following the established pattern:
+   ```
+   /feature
+     /your-feature
+       /components
+       your-feature.routes.ts
+       your-feature.service.ts
+       your-feature.interface.ts
+   ```
+
+3. For state management, follow the signal pattern:
+   ```typescript
+   // Component state
+   loading = signal<boolean>(false);
+   items = signal<YourType[]>([]);
+   
+   // Computed values
+   totalItems = computed(() => this.items().length);
+   
+   // Updating state
+   fetchItems() {
+     this.loading.set(true);
+     this.service.getItems().subscribe({
+       next: (data) => {
+         this.items.set(data);
+         this.loading.set(false);
+       },
+       error: (err) => {
+         this.loading.set(false);
+         this.notificationService.error('Failed to load items');
+       }
+     });
+   }
+   ```
 
 ## Testing
 
@@ -205,53 +244,173 @@ npm test
 ### Debugging Backend
 
 1. **With Docker**:
-   - The debug.dockerfile is configured for remote debugging
-   - In Visual Studio Code, use the "Attach to .NET Core in Docker" launch configuration
+   
+   Configure VS Code for Docker debugging by adding this to `.vscode/launch.json`:
+   ```json
+   {
+     "name": ".NET Core Docker Attach",
+     "type": "coreclr",
+     "request": "attach",
+     "processId": "${command:pickRemoteProcess}",
+     "pipeTransport": {
+       "pipeProgram": "docker",
+       "pipeArgs": ["exec", "-i", "api"],
+       "debuggerPath": "/usr/local/bin/vsdbg",
+       "pipeCwd": "${workspaceFolder}",
+       "quoteArgs": false
+     },
+     "sourceFileMap": {
+       "/app": "${workspaceFolder}/backend/src"
+     }
+   }
+   ```
 
 2. **Without Docker**:
    - Use standard .NET debugging in your IDE
+   - Set breakpoints and run with F5 in VS Code or Visual Studio
 
 ### Debugging Frontend
 
 1. **With Docker**:
-   - Access the application and use browser dev tools
+   - Access the application at http://localhost:4200
+   - Use browser developer tools to debug
+   - Source maps are enabled for easier debugging
 
 2. **Without Docker**:
    - Use standard Angular debugging with browser dev tools
    - For VS Code, use the "Launch Chrome" launch configuration
 
+## Working with Permissions
+
+The system uses a role-based permission model:
+
+1. **Backend Permission Definition**: 
+   - Permissions are stored in the database as Page-Operation combinations
+   - Controllers use the `[AuthorizePermission("PageName.Operation")]` attribute
+
+2. **Frontend Permission Checks**:
+   - Routes are protected with the `PermissionGuard` 
+   - UI elements use the `*hasPermission` directive
+   - Example: `*hasPermission="{ page: 'Contacts', operation: 'Create' }"`
+
+3. **Adding New Permissions**:
+   - Add permission in the database seed script
+   - Assign permission to roles in `RolePermissions` table
+   - Use consistent naming: `{EntityName}.{Operation}`
+
 ## Common Tasks
 
 ### Adding a New Entity
 
-1. Create the entity in the Domain layer
-2. Create repository interface in Domain layer
-3. Implement repository in Infrastructure layer
-4. Create DTOs in Application layer
-5. Create mapping profile in Application layer
-6. Create service in Application layer
-7. Create API controller in API layer
-8. Add Angular service and components in Frontend
-
-### Adding a New API Endpoint
-
-1. Choose the appropriate controller or create a new one
-2. Add the endpoint method with proper HTTP verb
-3. Implement validation if needed
-4. Add appropriate authorization attributes
-5. Update Swagger documentation
-
-### Adding a New Angular Component
-
-1. Generate component:
-   ```
-   ng generate component features/your-feature/your-component
+1. **Create Entity in Domain Layer**:
+   ```csharp
+   public class YourEntity : BaseEntity
+   {
+       public required string Name { get; set; }
+       // Other properties...
+   }
    ```
 
-2. Add routing if needed
-3. Implement the component with signals for state
-4. Use inject() for dependency injection
-5. Add necessary services
+2. **Create Repository Interface**:
+   ```csharp
+   public interface IYourEntityRepository : IGenericRepository<YourEntity>
+   {
+       // Additional methods if needed
+   }
+   ```
+
+3. **Implement Repository**:
+   ```csharp
+   public class YourEntityRepository : GenericRepository<YourEntity>, IYourEntityRepository
+   {
+       public YourEntityRepository(IDapperHelper dapperHelper)
+           : base(dapperHelper, "YourEntities")
+       {
+       }
+   }
+   ```
+
+4. **Create DTOs**:
+   ```csharp
+   public class CreateYourEntityDto { /* properties */ }
+   public class UpdateYourEntityDto { /* properties */ }
+   public class YourEntityResponseDto { /* properties */ }
+   ```
+
+5. **Create Service Interface and Implementation**:
+   ```csharp
+   public interface IYourEntityService : IGenericService<YourEntity, YourEntityResponseDto, CreateYourEntityDto, UpdateYourEntityDto> { }
+   
+   public class YourEntityService : GenericService<YourEntity, YourEntityResponseDto, CreateYourEntityDto, UpdateYourEntityDto>, IYourEntityService
+   {
+       public YourEntityService(IGenericRepository<YourEntity> repository, IMapper mapper, IUnitOfWork unitOfWork)
+           : base(repository, mapper, unitOfWork)
+       {
+       }
+   }
+   ```
+
+6. **Register in Dependency Injection**:
+   ```csharp
+   // In ApplicationServiceCollectionExtensions.cs
+   services.AddScoped<IYourEntityService, YourEntityService>();
+   
+   // In InfrastructureServiceCollectionExtensions.cs
+   services.AddScoped<IYourEntityRepository, YourEntityRepository>();
+   ```
+
+7. **Create API Controller**:
+   ```csharp
+   [Route("api/[controller]")]
+   [ApiController]
+   [Authorize]
+   public class YourEntityController : ControllerBase
+   {
+       private readonly IYourEntityService _service;
+       
+       public YourEntityController(IYourEntityService service)
+       {
+           _service = service;
+       }
+       
+       [HttpGet]
+       [AuthorizePermission("YourEntity.Read")]
+       public async Task<IActionResult> GetAll()
+       {
+           var entities = await _service.FindAll();
+           return Ok(entities);
+       }
+       
+       // Other actions...
+   }
+   ```
+
+8. **Create Angular Service and Components**:
+   ```typescript
+   // service
+   @Injectable({ providedIn: 'root' })
+   export class YourEntityService {
+     private http = inject(HttpClient);
+     
+     getAll() {
+       return this.http.get<YourEntity[]>('/api/YourEntity');
+     }
+     
+     // Other methods...
+   }
+   
+   // component
+   @Component({
+     standalone: true,
+     // other metadata
+   })
+   export class YourEntityListComponent {
+     private service = inject(YourEntityService);
+     entities = signal<YourEntity[]>([]);
+     
+     // Component logic...
+   }
+   ```
 
 ## Building for Production
 
@@ -266,14 +425,41 @@ dotnet publish -c Release
 
 ```bash
 cd frontend
-npm run build:prod
+npm run build
 ```
 
 ### Using Docker
 
 ```bash
-docker-compose -f docker-compose.prod.yml up --build
+docker-compose -f docker-compose.yml up --build
 ```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **PostgreSQL Connection Issues**:
+   - Check connection string in `.env` file
+   - Ensure PostgreSQL container is running
+
+2. **Frontend API Connection Issues**:
+   - Verify API URL in environment settings
+   - Check proxy configuration
+
+3. **Permission Errors**:
+   - Verify user has the required role and permissions
+   - Check permission attribute on controller action
+
+4. **Hot Reload Not Working**:
+   - Ensure Docker volume mappings are correct
+   - Check for file watching issues
+
+### Getting Help
+
+If you encounter issues:
+1. Check the documentation
+2. Review existing GitHub issues
+3. Open a new issue with detailed information about your problem
 
 ## Additional Resources
 

@@ -17,6 +17,7 @@ import { UserService } from '@core/services/user.service';
 import { ValidationService } from '@core/services/validation.service';
 import { AuthStateService } from '@core/services/auth-state.service';
 import { NotificationService } from '@core/services/notification.service';
+import { User } from "../../../@core/models/user.interface";
 
 @Component({
     selector: 'app-profile',
@@ -118,17 +119,48 @@ export class ProfileComponent implements OnInit {
     }
 
     updateProfile() {
-        this.userService.update(this.profileForm.value).subscribe({
-            next: (data) => {
-                // Update both signals
-                this.user.set(data);
-                this.userData.set(data);
-                this.authState.updateUser(data); // Update shared state
+        // Only send the fields that should be updated
+        const profileUpdate : User = {
+            id: this.profileForm.value.id,
+            firstName: this.profileForm.value.firstName,
+            lastName: this.profileForm.value.lastName,
+            userName: this.profileForm.value.userName,
+            email: this.profileForm.value.email,
+            mobile: this.profileForm.value.mobile
+        };
 
-                // Sync with localStorage
+        this.userService.update(profileUpdate).subscribe({
+            next: (data) => {
+                // Preserve role permissions from the original user data
+                const updatedUserData = {
+                    ...this.userData(),
+                    ...data
+                };
+
+                console.log('updatedUserData', updatedUserData);
                 const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-                const updatedUser = { ...currentUser, ...data };
-                localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+                updatedUserData.rolePermissions = currentUser.rolePermissions;
+                updatedUserData.token = currentUser.token;
+                console.log('Again updates', updatedUserData);
+                // Update both signals
+                this.user.set(updatedUserData);
+                this.userData.set(updatedUserData);
+                this.authState.updateUser(updatedUserData); // Update shared state
+
+                // Sync with localStorage - preserve existing properties
+                // const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+                // console.log('currentUser', currentUser);
+                // const updatedUser = {
+                //     ...currentUser,
+                //     firstName: data.firstName,
+                //     lastName: data.lastName,
+                //     userName: data.userName,
+                //     email: data.email,
+                //     mobile: data.mobile,
+                //     token: currentUser.token,
+                //     rolePermissions: currentUser.rolePermissions
+                // };
+                // localStorage.setItem('currentUser', JSON.stringify(updatedUser));
 
                 this.notificationService.success('Profile updated successfully');
                 this.loading = false;

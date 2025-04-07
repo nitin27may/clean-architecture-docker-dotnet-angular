@@ -18,8 +18,7 @@ CREATE TABLE IF NOT EXISTS "Contacts" (
     "FirstName" VARCHAR(100) NOT NULL,
     "LastName" VARCHAR(100) NOT NULL,
     "DateOfBirth" DATE,
-    "CountryCode" INTEGER NOT NULL,
-    "Mobile" BIGINT NOT NULL,
+    "Mobile" VARCHAR(20) NOT NULL,
     "Email" VARCHAR(255) NOT NULL,
     "City" VARCHAR(100) NOT NULL,
     "PostalCode" VARCHAR(10) NOT NULL,
@@ -96,7 +95,7 @@ CREATE TABLE IF NOT EXISTS "Users" (
     "LastName" VARCHAR(250) NOT NULL,
     "UserName" VARCHAR(100) NOT NULL,
     "Email" VARCHAR(200) NOT NULL,
-    "Mobile" INTEGER NOT NULL,
+    "Mobile" VARCHAR(20) NOT NULL,
     "Password" TEXT NOT NULL,
     "CreatedOn" TIMESTAMP WITH TIME ZONE NOT NULL,
     "CreatedBy" UUID,
@@ -143,14 +142,13 @@ INSERT INTO "Roles" ("Id", "Name", "Description", "CreatedOn", "CreatedBy") VALU
 
 -- Insert initial admin user
 INSERT INTO "Users" ("Id", "FirstName", "LastName", "UserName", "Email", "Mobile", "Password", "CreatedOn") VALUES
-('26402b6c-ebdd-44c3-9188-659a134819cb', 'Nitin', 'Singh', 'nitin27may@gmail.com', 'nitin27may@gmail.com', 9833364, 'AQAAAAIAAYagAAAAEC1iNqNI7oqJKNcpJ+kYreWvBzjMxE/FWhfoDXzP5CoV60u6JHm5PwHIb3w7K7lWxw==', TIMESTAMPTZ '2024-08-24 02:56:23.6635113+00');
+('26402b6c-ebdd-44c3-9188-659a134819cb', 'Nitin', 'Singh', 'nitin27may@gmail.com', 'nitin27may@gmail.com', '+91983336412', 'AQAAAAIAAYagAAAAEC1iNqNI7oqJKNcpJ+kYreWvBzjMxE/FWhfoDXzP5CoV60u6JHm5PwHIb3w7K7lWxw==', TIMESTAMPTZ '2024-08-24 02:56:23.6635113+00');
 
 -- Insert additional users
 INSERT INTO "Users" ("Id", "FirstName", "LastName", "UserName", "Email", "Mobile", "Password", "CreatedOn", "CreatedBy", "UpdatedOn", "UpdatedBy")
 VALUES
-    ('424ffb80-05bf-43f8-8814-2772a5de2543', 'Sachin', 'Singh', 'reader@gmail.com', 'reader@gmail.com', 9833364, 'AQAAAAIAAYagAAAAEC1iNqNI7oqJKNcpJ+kYreWvBzjMxE/FWhfoDXzP5CoV60u6JHm5PwHIb3w7K7lWxw==', TIMESTAMPTZ '2024-09-05 14:48:17.0399044+00', '00000000-0000-0000-0000-000000000000', NULL, NULL),
-    ('3aa35df1-2578-4ed3-a93b-8b8eb955499e', 'Vikram', 'Singh', 'editor@gmail.com', 'editor@gmail.com', 9833364, 'AQAAAAIAAYagAAAAEC1iNqNI7oqJKNcpJ+kYreWvBzjMxE/FWhfoDXzP5CoV60u6JHm5PwHIb3w7K7lWxw==', TIMESTAMPTZ '2024-08-28 20:29:02.2362893+00', '00000000-0000-0000-0000-000000000000', NULL, NULL);
-
+    ('424ffb80-05bf-43f8-8814-2772a5de2543', 'Sachin', 'Singh', 'reader@gmail.com', 'reader@gmail.com', '+91983336421', 'AQAAAAIAAYagAAAAEC1iNqNI7oqJKNcpJ+kYreWvBzjMxE/FWhfoDXzP5CoV60u6JHm5PwHIb3w7K7lWxw==', TIMESTAMPTZ '2024-09-05 14:48:17.0399044+00', '00000000-0000-0000-0000-000000000000', NULL, NULL),
+    ('3aa35df1-2578-4ed3-a93b-8b8eb955499e', 'Vikram', 'Singh', 'editor@gmail.com', 'editor@gmail.com', '+91983336421', 'AQAAAAIAAYagAAAAEC1iNqNI7oqJKNcpJ+kYreWvBzjMxE/FWhfoDXzP5CoV60u6JHm5PwHIb3w7K7lWxw==', TIMESTAMPTZ '2024-08-28 20:29:02.2362893+00', '00000000-0000-0000-0000-000000000000', NULL, NULL);
 -- Assign roles to the new users
 INSERT INTO "UserRoles" ("Id", "UserId", "RoleId", "CreatedOn", "CreatedBy") VALUES
     (uuid_generate_v4(), '424ffb80-05bf-43f8-8814-2772a5de2543', '3a07551f-7473-44a6-a664-e6c7c834902b', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),  -- Reader role for Sachin
@@ -196,18 +194,18 @@ INSERT INTO "RolePermissions" ("RoleId", "PermissionId", "CreatedOn", "CreatedBy
 ('3a07551f-7473-44a6-a664-e6c7c834902b', '82755e66-b743-46e2-b612-efd2db6bcd75', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'); -- Read
 
 -- Assign admin role to admin user
-INSERT INTO "UserRoles" ("UserId", "RoleId", "CreatedOn", "CreatedBy") VALUES
-('26402b6c-ebdd-44c3-9188-659a134819cb', 'd95d2348-1d79-4b93-96d4-e48e87fcb4b5', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb');
+-- INSERT INTO "UserRoles" ("UserId", "RoleId", "CreatedOn", "CreatedBy") VALUES
+-- ('26402b6c-ebdd-44c3-9188-659a134819cb', 'd95d2348-1d79-4b93-96d4-e48e87fcb4b5', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb');
 
 -- Insert sample contacts
-INSERT INTO "Contacts" ("Id", "FirstName", "LastName", "DateOfBirth", "CountryCode", "Mobile", "Email", "City", "PostalCode", "CreatedOn", "CreatedBy") VALUES
-(uuid_generate_v4(), 'John', 'Smith', '1985-03-15', 1, 4155552671, 'john.smith@email.com', 'San Francisco', '94105', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
-(uuid_generate_v4(), 'Maria', 'Garcia', '1990-07-22', 34, 915553492, 'maria.garcia@email.com', 'Madrid', '28001', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
-(uuid_generate_v4(), 'David', 'Chen', '1988-11-30', 86, 13911234567, 'david.chen@email.com', 'Shanghai', '200000', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
-(uuid_generate_v4(), 'Sarah', 'Johnson', '1992-04-18', 44, 2075556789, 'sarah.j@email.com', 'London', 'SW1A 1AA', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
-(uuid_generate_v4(), 'Raj', 'Patel', '1987-09-25', 91, 9876543210, 'raj.patel@email.com', 'Mumbai', '400001', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
-(uuid_generate_v4(), 'Emma', 'Wilson', '1995-01-12', 61, 412345678, 'emma.w@email.com', 'Sydney', '2000', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
-(uuid_generate_v4(), 'Hans', 'Schmidt', '1983-06-08', 49, 1517234567, 'hans.schmidt@email.com', 'Berlin', '10115', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
-(uuid_generate_v4(), 'Sophie', 'Dubois', '1993-12-03', 33, 612345678, 'sophie.d@email.com', 'Paris', '75001', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
-(uuid_generate_v4(), 'Carlos', 'Santos', '1986-08-17', 55, 11987654321, 'carlos.s@email.com', 'São Paulo', '01000-000', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
-(uuid_generate_v4(), 'Yuki', 'Tanaka', '1991-05-29', 81, 9012345678, 'yuki.t@email.com', 'Tokyo', '100-0001', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb');
+INSERT INTO "Contacts" ("Id", "FirstName", "LastName", "DateOfBirth", "Mobile", "Email", "City", "PostalCode", "CreatedOn", "CreatedBy") VALUES
+(uuid_generate_v4(), 'John', 'Smith', '1985-03-15', '+14155552671', 'john.smith@email.com', 'San Francisco', '94105', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+(uuid_generate_v4(), 'Maria', 'Garcia', '1990-07-22', '+34915553492', 'maria.garcia@email.com', 'Madrid', '28001', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+(uuid_generate_v4(), 'David', 'Chen', '1988-11-30', '+8613911234567', 'david.chen@email.com', 'Shanghai', '200000', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+(uuid_generate_v4(), 'Sarah', 'Johnson', '1992-04-18', '+442075556789', 'sarah.j@email.com', 'London', 'SW1A 1AA', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+(uuid_generate_v4(), 'Raj', 'Patel', '1987-09-25', '+919876543210', 'raj.patel@email.com', 'Mumbai', '400001', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+(uuid_generate_v4(), 'Emma', 'Wilson', '1995-01-12', '+61412345678', 'emma.w@email.com', 'Sydney', '2000', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+(uuid_generate_v4(), 'Hans', 'Schmidt', '1983-06-08', '+491517234567', 'hans.schmidt@email.com', 'Berlin', '10115', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+(uuid_generate_v4(), 'Sophie', 'Dubois', '1993-12-03', '+33612345678', 'sophie.d@email.com', 'Paris', '75001', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+(uuid_generate_v4(), 'Carlos', 'Santos', '1986-08-17', '+5511987654321', 'carlos.s@email.com', 'São Paulo', '01000-000', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+(uuid_generate_v4(), 'Yuki', 'Tanaka', '1991-05-29', '+819012345678', 'yuki.t@email.com', 'Tokyo', '100-0001', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb');

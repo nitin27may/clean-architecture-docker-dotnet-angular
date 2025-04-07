@@ -68,6 +68,14 @@
                   Please enter a valid phone number
                 </mat-error>
               </mat-form-field>
+
+              <!-- Role Name (Plain Label) -->
+              <div class="w-full">
+                <div class="text-sm text-gray-500 dark:text-gray-400 mb-1 ml-1">Role</div>
+                <div class="px-4 py-3 border rounded-md bg-surface-container-low dark:bg-surface-container-highest border-outline-variant">
+                  {{ user()?.rolePermissions?.[0]?.roleName || 'N/A' }}
+                </div>
+              </div>
             </div>
 
             <div class="flex justify-end gap-2" *ngIf="isEditMode()">

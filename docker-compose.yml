@@ -1,12 +1,12 @@
 services:
-  # frontend:
-  #   build:
-  #     context: ./frontend
-  #     dockerfile: Dockerfile
-  #   depends_on:
-  #     - api
-  #   networks:
-  #     - postgres_network
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    depends_on:
+      - api
+    networks:
+      - postgres_network
 
   api:
     build:

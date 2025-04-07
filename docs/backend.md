@@ -56,7 +56,7 @@ Contains the business logic and orchestrates the domain objects:
 ### 3. Infrastructure Layer
 
 Implements interfaces defined in the domain and application layers:
-- Database access with Dapper
+- Database access with Dapper and PostgreSQL
 - External service integrations
 - File storage implementations
 - Email service implementation
@@ -79,18 +79,53 @@ The entry point to the application:
 The solution implements a generic repository pattern for data access:
 
 ```csharp
-public interface IGenericRepository<T> where T : class
+public interface IGenericRepository<T> where T : BaseEntity
 {
-    Task<T> GetByIdAsync(int id);
-    Task<IReadOnlyList<T>> ListAllAsync();
-    Task<T> AddAsync(T entity);
-    Task UpdateAsync(T entity);
-    Task DeleteAsync(T entity);
+    Task<T> Add(T item, IDbTransaction? transaction = null);
+    Task<bool> Delete(Guid id);
+    Task<T> Update(T item, IDbTransaction? transaction = null);
+    Task<T> FindByID(Guid id);
+    Task<IEnumerable<T>> Find(string query, object? parameters = null);
+    Task<IEnumerable<T>> FindAll();
 }
 
-public class GenericRepository<T> : IGenericRepository<T> where T : class
+public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
 {
-    // Implementation using Dapper
+    protected readonly IDapperHelper _dapperHelper;
+    protected readonly string _tableName;
+
+    public GenericRepository(IDapperHelper dapperHelper, string tableName)
+    {
+        _dapperHelper = dapperHelper;
+        _tableName = tableName;
+    }
+
+    // Implementation methods...
+}
+```
+
+### PostgreSQL Integration
+
+The application uses Npgsql for PostgreSQL database access:
+
+```csharp
+public class DapperHelper : IDapperHelper
+{
+    private readonly AppSettings myConfig;
+    private readonly ILogger _logger;
+
+    public DapperHelper(IOptions<AppSettings> myConfigValue, ILogger<DapperHelper> logger)
+    {
+        myConfig = myConfigValue.Value;
+        _logger = logger;
+    }
+
+    public NpgsqlConnection GetConnection()
+    {
+        return new NpgsqlConnection(myConfig.ConnectionStrings.DefaultConnection);
+    }
+
+    // Implementation methods...
 }
 ```
 
@@ -99,22 +134,25 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 Services follow a generic pattern for common operations:
 
 ```csharp
-public interface IGenericService<TDto, TEntity> 
-    where TDto : class
-    where TEntity : class
+public class GenericService<TEntity, TResponse, TCreate, TUpdate>
+        : IGenericService<TEntity, TResponse, TCreate, TUpdate>
+        where TEntity : BaseEntity
+        where TResponse : class
+        where TCreate : class
+        where TUpdate : class
 {
-    Task<TDto> GetByIdAsync(int id);
-    Task<IEnumerable<TDto>> GetAllAsync();
-    Task<TDto> CreateAsync(TDto dto);
-    Task UpdateAsync(TDto dto);
-    Task DeleteAsync(int id);
-}
+    private readonly IGenericRepository<TEntity> _repository;
+    private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
 
-public class GenericService<TDto, TEntity> : IGenericService<TDto, TEntity>
-    where TDto : class
-    where TEntity : class
-{
-    // Implementation using repository and automapper
+    public GenericService(IGenericRepository<TEntity> repository, IMapper mapper, IUnitOfWork unitOfWork)
+    {
+        _repository = repository;
+        _mapper = mapper;
+        _unitOfWork = unitOfWork;
+    }
+
+    // Implementation methods...
 }
 ```
 
@@ -123,67 +161,225 @@ public class GenericService<TDto, TEntity> : IGenericService<TDto, TEntity>
 For transaction management:
 
 ```csharp
-public interface IUnitOfWork : IDisposable
+public class UnitOfWork : IUnitOfWork
 {
-    Task BeginTransactionAsync();
-    Task CommitAsync();
-    Task RollbackAsync();
+    private readonly IDapperHelper _dapperHelper;
+    private IDbTransaction _transaction;
+    private IDbConnection _connection;
+
+    public UnitOfWork(IDapperHelper dapperHelper)
+    {
+        _dapperHelper = dapperHelper;
+        _connection = _dapperHelper.GetConnection();
+    }
+
+    public IDbTransaction BeginTransaction()
+    {
+        if (_connection.State == ConnectionState.Closed)
+            _connection.Open();
+
+        _transaction = _connection.BeginTransaction();
+        return _transaction;
+    }
+    
+    // Implementation methods...
 }
 ```
 
 ## Authentication System
 
 JWT-based authentication with:
-- Token generation and validation
-- Refresh token mechanism
-- Role-based authorization
-- Claims-based authorization policies
+
+```csharp
+public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest authenticateRequest)
+{
+    var user = await _userRepository.FindByUserName(authenticateRequest.Username);
+    if (user == null)
+    {
+        var failedResponse = new AuthenticateResponse()
+        {
+            Authenticate = false
+        };
+        return failedResponse;
+    }
+    
+    var passwordHasher = new PasswordHasher<string>();
+    var result = passwordHasher.VerifyHashedPassword(
+        user.Email, 
+        user.Password, 
+        authenticateRequest.Password
+    );
+    
+    var token = await GenerateJwtToken(user);
+    
+    // Create and return response...
+}
+```
+
+## Role-Based Authorization
+
+The backend implements a flexible permission system:
+
+```csharp
+public class PermissionHandler : AuthorizationHandler<PermissionRequirement>
+{
+    private readonly IServiceProvider _serviceProvider;
+
+    public PermissionHandler(IServiceProvider serviceProvider)
+    {
+        _serviceProvider = serviceProvider;
+    }
+
+    protected override async Task HandleRequirementAsync(
+        AuthorizationHandlerContext context, 
+        PermissionRequirement requirement)
+    {
+        using (var scope = _serviceProvider.CreateScope())
+        {
+            var _userService = scope.ServiceProvider.GetRequiredService<IUserService>();
+            var _rolePermissionService = scope.ServiceProvider.GetRequiredService<IRolePermissionService>();
+
+            if (context.User.Identity.IsAuthenticated)
+            {
+                var userId = _userService.GetUserId(context.User);
+                var roles = await _userService.GetUserRolesAsync(context.User);
+
+                var rolePermissionMappings = await _rolePermissionService.GetRolePermissionMappingsAsync();
+                var userPermissions = rolePermissionMappings
+                    .Where(rpm => roles.Contains(rpm.RoleName))
+                    .Select(rpm => $"{rpm.PageName}.{rpm.OperationName}Policy");
+
+                if (userPermissions.Contains(requirement.Permission))
+                {
+                    context.Succeed(requirement);
+                }
+                else
+                {
+                    context.Fail();
+                }
+            }
+        }
+    }
+}
+```
 
 ## API Features
+
+### Global Error Handling
+
+Centralized error handling with middleware:
+
+```csharp
+public class ExceptionMiddleware
+{
+    private readonly RequestDelegate _next;
+    private readonly ILogger<ExceptionMiddleware> _logger;
+
+    public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
+    {
+        _next = next;
+        _logger = logger;
+    }
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        try
+        {
+            await _next(context);
+        }
+        catch (Exception ex)
+        {
+            await HandleExceptionAsync(context, ex);
+        }
+    }
+
+    private Task HandleExceptionAsync(HttpContext context, Exception exception)
+    {
+        // Custom exception handling logic...
+    }
+}
+```
+
+### Activity Logging
+
+Comprehensive activity tracking:
+
+```csharp
+public class ActivityLoggingMiddleware
+{
+    private readonly RequestDelegate _next;
+    private readonly ILogger<ActivityLoggingMiddleware> _logger;
+    private readonly IServiceProvider _serviceProvider;
+
+    public ActivityLoggingMiddleware(
+        RequestDelegate next, 
+        ILogger<ActivityLoggingMiddleware> logger, 
+        IServiceProvider serviceProvider)
+    {
+        _next = next;
+        _logger = logger;
+        _serviceProvider = serviceProvider;
+    }
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        var endpoint = context.GetEndpoint();
+        var activityAttribute = endpoint?.Metadata.GetMetadata<ActivityLogAttribute>();
+
+        if (activityAttribute != null)
+        {
+            // Log activity...
+        }
+
+        await _next(context);
+    }
+}
+```
 
 ### Contact Management API
 
 Complete CRUD operations:
-- `GET /api/contacts` - List all contacts
-- `GET /api/contacts/{id}` - Get contact by ID
-- `POST /api/contacts` - Create new contact
-- `PUT /api/contacts/{id}` - Update contact
-- `DELETE /api/contacts/{id}` - Delete contact
+- `GET /api/ContactPerson` - List all contacts
+- `GET /api/ContactPerson/{id}` - Get contact by ID
+- `POST /api/ContactPerson` - Create new contact
+- `PUT /api/ContactPerson/{id}` - Update contact
+- `DELETE /api/ContactPerson/{id}` - Delete contact
 
-### User Management API
+Each endpoint is protected with appropriate permissions:
 
-User operations:
-- `POST /api/auth/register` - Register new user
-- `POST /api/auth/login` - User login
-- `POST /api/auth/forgot-password` - Initiate password reset
-- `POST /api/auth/reset-password` - Complete password reset
-- `GET /api/users/profile` - Get current user profile
-- `PUT /api/users/profile` - Update user profile
-- `PUT /api/users/change-password` - Change password
+```csharp
+[HttpPost]
+[ActivityLog("Creating new Contact")]
+[AuthorizePermission("Contacts.Create")]
+public async Task<IActionResult> Add(CreateContactPerson createContactPerson)
+{
+    var createdContactPerson = await _contactPersonService.Add(createContactPerson);
+    return CreatedAtAction(nameof(GetById), new { id = createdContactPerson.Id }, createdContactPerson);
+}
+```
 
-## Error Handling
+## Data Seeding
 
-Standardized error handling approach:
-- Global exception middleware
-- Structured error responses
-- Detailed logging
-- Custom domain exceptions
+The application includes seed data for essential entities:
 
-## Validation
+- Users with roles (Admin, Editor, Reader)
+- Permissions for different operations
+- Sample contacts
 
-Request validation using FluentValidation:
-- Input sanitization
-- Business rule validation
-- Custom validation messages
-- Validation failure responses
+Seed data is implemented in SQL scripts that run on container initialization:
 
-## Logging & Auditing
+```sql
+-- Insert roles
+INSERT INTO "Roles" ("Id", "Name", "Description", "CreatedOn", "CreatedBy") VALUES
+('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', 'Admin', 'This is Admin Role', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('3a07551f-7473-44a6-a664-e6c7c834902b', 'Reader', 'This is a Reader role', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('104102f5-e0ec-4739-8fda-f05552b677c3', 'Editor', 'This is editor role', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb');
 
-Comprehensive logging strategy:
-- Activity logging for user actions
-- Audit trails for data changes
-- Exception logging
-- Performance metrics
+-- Insert sample contacts
+INSERT INTO "Contacts" ("Id", "FirstName", "LastName", "DateOfBirth", "CountryCode", "Mobile", "Email", "City", "PostalCode", "CreatedOn", "CreatedBy") VALUES
+(uuid_generate_v4(), 'John', 'Smith', '1985-03-15', 1, 4155552671, 'john.smith@email.com', 'San Francisco', '94105', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+-- More contact records...
+```
 
 ## Docker Integration
 
@@ -191,48 +387,94 @@ The backend is containerized with two Docker configurations:
 
 1. **Production Build**
    - Multi-stage build for minimal image size
-   - Optimized for performance
-   - Environment-specific configurations
+   - PostgreSQL database container
+   - Environment variable configuration
+
+```dockerfile
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
+WORKDIR /app
+EXPOSE 8000
+ENV ASPNETCORE_URLS=http://+:8000
+RUN groupadd -g 2000 dotnet \
+    && useradd -m -u 2000 -g 2000 dotnet
+USER dotnet
+
+# Build stage
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+ARG BUILD_CONFIGURATION=Release
+ARG DOTNET_SKIP_POLICY_LOADING=true
+WORKDIR /src
+# Copy and restore projects...
+
+# Publish stage
+FROM build AS publish
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "./Contact.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+
+# Final stage
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "Contact.Api.dll"]
+```
 
 2. **Development Build**
    - Configured for active development
-   - Hot reload support
+   - Hot reload support with `dotnet watch`
    - Debugging capabilities
-
-## Database Migration & Seeding
-
-Database initialization strategy:
-- SQL scripts for schema creation
-- Data seeding for initial setup
-- Default users and roles creation
-- Docker volume persistence
 
 ## Project Structure
 
 ```
 /backend/src
-├── API/                       # API Layer
+├── Contact.Api                # API Layer
 │   ├── Controllers/           # API endpoints
-│   ├── Middleware/            # Custom middleware
-│   ├── Extensions/            # Service configuration extensions
+│   ├── Core/                  # Core API functionality
+│   │   ├── Attributes/        # Custom attributes
+│   │   ├── Authorization/     # Authorization logic
+│   │   └── Middleware/        # API middleware
 │   └── Program.cs             # Application entry point
-├── Application/               # Application Layer
-│   ├── DTOs/                  # Data Transfer Objects
+├── Contact.Application        # Application Layer
 │   ├── Interfaces/            # Application interfaces
-│   ├── Mapping/               # AutoMapper profiles
+│   ├── Mappings/              # AutoMapper profiles
 │   ├── Services/              # Application services
-│   └── Validation/            # Request validators
-├── Domain/                    # Domain Layer
+│   └── UseCases/              # Use case DTOs
+├── Contact.Domain             # Domain Layer
 │   ├── Entities/              # Domain entities
-│   ├── Events/                # Domain events
-│   ├── Exceptions/            # Domain-specific exceptions
+│   ├── Exceptions/            # Domain exceptions
 │   └── Interfaces/            # Domain interfaces
-└── Infrastructure/            # Infrastructure Layer
-    ├── Data/                  # Data access
-    ├── Identity/              # Authentication implementation
-    ├── Logging/               # Logging implementation
-    └── Services/              # External service implementations
+└── Contact.Infrastructure     # Infrastructure Layer
+    ├── ExternalServices/      # External API integrations
+    ├── Persistence/           # Data access
+    │   ├── Helper/            # Dapper helpers
+    │   └── Repositories/      # Repository implementations
+    └── Services/              # Infrastructure services
 ```
+
+## PostgreSQL Migration Notes
+
+The application has migrated from SQL Server to PostgreSQL with the following changes:
+
+1. Connection string format:
+   ```
+   Host=localhost;Port=5432;Database=contacts;Username=contacts_admin;Password=password
+   ```
+
+2. Dapper helper implementation using Npgsql:
+   ```csharp
+   public NpgsqlConnection GetConnection()
+   {
+       return new NpgsqlConnection(myConfig.ConnectionStrings.DefaultConnection);
+   }
+   ```
+
+3. SQL query adaptations:
+   - Use double quotes for identifiers: `"TableName"."ColumnName"`
+   - PostgreSQL-specific functions and types
+   - UUID type for primary keys
+
+4. Startup configuration:
+   - Register the PostgreSQL extension in the database initialization
 
 ## Best Practices
 
@@ -243,8 +485,8 @@ When working with the backend codebase, follow these guidelines:
 3. Use proper exception handling
 4. Validate all incoming requests
 5. Follow SOLID principles
-6. Create comprehensive unit tests
-7. Document API endpoints properly
-8. Implement proper logging
-9. Use async/await consistently
-10. Maintain high code coverage in tests
+6. Implement proper logging
+7. Use async/await consistently
+8. Use transactions for operations that modify multiple entities
+9. Keep controllers thin by delegating to services
+10. Follow the established permission model for security
