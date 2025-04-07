@@ -65,11 +65,11 @@ After startup, the following test users are available:
 ## Project Overview
 
 <!-- Add dashboard/admin interface screenshot placeholder -->
-<p align="center">
+<!-- <p align="center">
   <img src="docs/dashboard-screenshot.png" alt="Dashboard Screenshot" width="80%">
   <br>
   <em>Admin Dashboard with Role-Based Access Control</em>
-</p>
+</p> -->
 
 This project provides a comprehensive starter template that goes beyond just connecting technologies - it demonstrates how to build a maintainable, production-quality application:
 
