@@ -11,7 +11,7 @@ A production-ready boilerplate for building modern web applications using .NET 9
 <p align="center">
   <img src="docs/clean-architecture-demo.gif" alt="Application Screenshot" width="80%">
   <br>
-  <em>Contact Management Application with Dark Mode Support</em>
+  <em>Contact Management Application with Role based Access Control</em>
 </p>
 
 ## Introduction
