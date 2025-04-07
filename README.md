@@ -22,9 +22,10 @@
 </p>
 
 <p align="center">
-  <img src="docs/clean-architecture-demo.gif" alt="Application Demo">
-  <br>
-  <em>Contact Management Application with Role-Based Access Control</em>
+  
+![Application Demo](docs/clean-architecture-demo.gif)
+  
+<em>Contact Management Application with Role-Based Access Control</em>
 </p>
 
 ## ✨ What is this?
