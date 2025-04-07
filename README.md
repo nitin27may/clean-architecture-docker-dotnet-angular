@@ -5,13 +5,11 @@
 
 A production-ready boilerplate for building modern web applications using .NET 9 Web API, Angular 19, and PostgreSQL with Docker. This template implements clean architecture principles, ensuring maintainable, testable, and scalable code that can evolve with changing business requirements.
 
-<p align="center">
-  <img src="docs/CleanArchitecture.png" alt="Clean Architecture Diagram" width="70%">
-</p>
 
-<!-- Add application screenshot placeholder -->
+
+<!-- Application demo gif via HTTP -->
 <p align="center">
-  <img src="docs/app-screenshot.png" alt="Application Screenshot" width="80%">
+  <img src="docs/clean-architecture-demo.gif" alt="Application Screenshot" width="80%">
   <br>
   <em>Contact Management Application with Dark Mode Support</em>
 </p>
@@ -27,7 +25,9 @@ Are you tired of spending weeks setting up your project infrastructure before wr
 - **Code Quality**: Linting, formatting, and static analysis configurations included
 
 Whether you're building a startup MVP or an enterprise application, this template provides the solid foundation you need to focus on what matters - delivering business value.
-
+<p align="center">
+  <img src="docs/CleanArchitecture.png" alt="Clean Architecture Diagram" width="70%">
+</p>
 ## Quick Start
 
 To quickly start the application, clone the repository and run Docker Compose:
