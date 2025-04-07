@@ -38,8 +38,6 @@ cd angular-dotnet
 ```
 
 Rename `.env.example` to `.env`:
-
-Shell:
 ```bash
 cp .env.example .env
 ```
