@@ -1,153 +1,155 @@
-[![Angular Build](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/actions/workflows/angular-build.yml/badge.svg)](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/actions/workflows/angular-build.yml)
-[![Api Build](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/actions/workflows/api-build.yml/badge.svg)](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/actions/workflows/api-build.yml)
+# 🚀 Clean Architecture Full-Stack Starter: .NET, Angular, and PostgreSQL
 
-# Clean Architecture Full-Stack Starter: .NET, Angular, and PostgreSQL with Docker
-
-A production-ready boilerplate for building modern web applications using .NET 9 Web API, Angular 19, and PostgreSQL with Docker. This template implements clean architecture principles, ensuring maintainable, testable, and scalable code that can evolve with changing business requirements.
-
-
-
-<!-- Application demo gif via HTTP -->
-<p align="center">
-  <img src="docs/clean-architecture-demo.gif" alt="Application Screenshot" width="80%">
+<!-- <p align="center">
+  <img src="docs/logo.png" alt="Clean Architecture Logo" width="150px">
   <br>
-  <em>Contact Management Application with Role based Access Control</em>
-</p>
+  <em>Production-ready | Maintainable | Scalable</em>
+</p> -->
 
-## Introduction
-
-Are you tired of spending weeks setting up your project infrastructure before writing a single line of business logic? This starter kit solves that problem by providing:
-
-- **Production-Ready Architecture**: Built on enterprise-grade patterns that scale
-- **Modern Tech Stack**: Latest versions of .NET 9, Angular 19, and PostgreSQL
-- **Developer Experience**: Hot reload, comprehensive testing setup, and Docker integration
-- **Best Practices**: Authentication, authorization, logging, and error handling already implemented
-- **Code Quality**: Linting, formatting, and static analysis configurations included
-
-Whether you're building a startup MVP or an enterprise application, this template provides the solid foundation you need to focus on what matters - delivering business value.
 <p align="center">
-  <img src="docs/CleanArchitecture.png" alt="Clean Architecture Diagram" width="70%">
+  <a href="https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/actions/workflows/angular-build.yml">
+    <img src="https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/actions/workflows/angular-build.yml/badge.svg" alt="Angular Build">
+  </a>
+  <a href="https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/actions/workflows/api-build.yml">
+    <img src="https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/actions/workflows/api-build.yml/badge.svg" alt="API Build">
+  </a>
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT License">
+  </a>
+  <img src="https://img.shields.io/badge/Angular-19-DD0031.svg" alt="Angular 19">
+  <img src="https://img.shields.io/badge/.NET-9-512BD4.svg" alt=".NET 9">
+  <img src="https://img.shields.io/badge/PostgreSQL-16-336791.svg" alt="PostgreSQL 16">
 </p>
-## Quick Start
 
-To quickly start the application, clone the repository and run Docker Compose:
+<p align="center">
+  <img src="docs/clean-architecture-demo.gif" alt="Application Demo" width="80%">
+  <br>
+  <em>Contact Management Application with Role-Based Access Control</em>
+</p>
+
+## ✨ What is this?
+
+A production-ready **full-stack starter kit** built with modern technologies and best practices:
+
+- **Frontend**: Angular 19 with signals, Material Design, and TailwindCSS
+- **Backend**: .NET 9 API with Clean Architecture
+- **Database**: PostgreSQL with Dapper
+- **DevOps**: Docker, GitHub Actions, NGINX
+
+Perfect for developers who want to **focus on business logic** instead of configuring infrastructure.
+
+## 🏗️ Why Clean Architecture?
+
+<p align="center">
+  <img src="docs/CleanArchitecture.png" alt="Clean Architecture Diagram" width="60%">
+</p>
+
+Clean Architecture provides **significant benefits** for your application:
+
+- ✅ **Maintainability**: Separate concerns to make your code easier to understand and modify
+- ✅ **Testability**: Independent components that can be tested in isolation
+- ✅ **Flexibility**: Swap frameworks or technologies without rewriting your core business logic
+- ✅ **Scalability**: Grow your application with a clear structure that new team members can quickly understand
+
+## 🚀 Quick Start
 
 ```bash
-git clone https://github.com/nitin27may/clean-architecture-docker-dotnet-angular.git angular-dotnet
-cd angular-dotnet 
-```
+# Clone the repository
+git clone https://github.com/nitin27may/clean-architecture-docker-dotnet-angular.git clean-app
+cd clean-app
 
-Rename `.env.example` to `.env`:
-```bash
+# Create .env file (required)
 cp .env.example .env
-```
 
-
-Run all containers: 
-```bash
+# Start all services with Docker Compose
 docker-compose up
 ```
 
-**Note:** The application uses SMTP for email functions. Please update account details in the `.env` file.
+🔗 Then access:
+- Frontend: http://localhost
+- API: http://localhost/api
+- Swagger: http://localhost/swagger
 
-### Default Users
+### 👤 Default Users
 
-After startup, the following test users are available:
- 
-| Username             | Password      | Role    |
-|----------------------|---------------|---------|
-| nitin27may@gmail.com | P@ssword#321  | Admin   |
-| editor@gmail.com     | P@ssword#321  | Editor  |
-| reader@gmail.com     | P@ssword#321  | Reader  |
+| Username | Password | Role |
+|----------|----------|------|
+| nitin27may@gmail.com | P@ssword#321 | Admin |
+| editor@gmail.com | P@ssword#321 | Editor |
+| reader@gmail.com | P@ssword#321 | Reader |
 
-## Project Overview
+## 🔥 Key Features
 
-<!-- Add dashboard/admin interface screenshot placeholder -->
-<!-- <p align="center">
-  <img src="docs/dashboard-screenshot.png" alt="Dashboard Screenshot" width="80%">
+<table>
+  <tr>
+    <td width="33%">
+      <h3>📱 Modern Frontend</h3>
+      <ul>
+        <li>Angular 19 with standalone components</li>
+        <li>Signal-based state management</li>
+        <li>Material Design + TailwindCSS</li>
+        <li>Dark/light theme support</li>
+        <li>Responsive mobile-first design</li>
+         <li>Role Based Routing and Menu</li>
+      </ul>
+    </td>
+    <td width="33%">
+      <h3>🔒 Secure Backend</h3>
+      <ul>
+        <li>Clean Architecture implementation</li>
+        <li>Generic Repository pattern</li>
+        <li>JWT authentication</li>
+        <li>Role-based permissions</li>
+        <li>User Activity Logging</li>
+        <li>Golbal Exception Handling</li>
+        <li>PostgreSQL with Dapper</li>
+      </ul>
+    </td>
+    <td width="33%">
+      <h3>🚢 DevOps Ready</h3>
+      <ul>
+        <li>Docker containerization</li>
+        <li>GitHub Actions workflows</li>
+        <li>NGINX reverse proxy</li>
+        <li>Multi-environment configs</li>
+        <li>Database migrations</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+## 🧩 Architecture
+
+<p align="center">
+  <img src="docs/architecture.png" alt="Container Architecture" width="80%">
   <br>
-  <em>Admin Dashboard with Role-Based Access Control</em>
-</p> -->
+  <em>Container Architecture Overview</em>
+</p>
 
-This project provides a comprehensive starter template that goes beyond just connecting technologies - it demonstrates how to build a maintainable, production-quality application:
+## 📚 Documentation
 
-1. **Complete User Management System** - Registration with email verification, login with JWT, password reset, profile management, and role-based authorization
-   
-2. **Clean Domain-Driven Design** - Business logic isolated from infrastructure concerns, making it easier to adapt to changing requirements
+📖 Comprehensive documentation is available:
 
-3. **DevOps Ready** - GitHub Actions workflows, Docker configurations for both development and production, and multi-environment support
+- [Development Guide](./docs/development-guide.md) - Get started with development
+- [Frontend Documentation](./docs/frontend.md) - Angular architecture details
+- [Backend Documentation](./docs/backend.md) - .NET API implementation
+- [Feature List](./docs/features.md) - Detailed feature breakdown
+- [Clean Architecture Series](./docs/architecture-series.md) - In-depth articles
+- [Roadmap](./docs/roadmap.md) - Upcoming features
 
-4. **Performance Optimized** - Database query optimization, frontend bundle optimization, and caching strategies implemented
 
-5. **Enterprise Patterns** - Repository pattern, unit of work, specification pattern, and more to maintain code quality at scale
+## 🤝 Contributing
 
-6. **Developer Productivity** - Auto-generated API clients, comprehensive test suites, and documentation to help new team members get productive quickly
+We welcome contributions! See our [contributing guide](./CONTRIBUTING.md) for details on how to get involved.
 
-### Feature Highlights
+## 📄 License
 
-| Feature | Frontend | Backend |
-|---------|----------|---------|
-| **Authentication** | JWT with auto-refresh, secure storage | Token generation, validation, refresh mechanism |
-| **Authorization** | Role-based UI components, route guards | Policy-based endpoints, role verification |
-| **User Management** | Profile editing, password management | Secure storage, email verification |
-| **Error Handling** | Global error interceptor, user-friendly messages | Exception middleware, structured error responses |
-| **Form Management** | Reactive forms with validation | Model validation, error mapping |
-| **API Integration** | Strongly-typed HTTP clients | OpenAPI documentation, versioning |
-| **State Management** | Signal-based reactive state | Clean separation of concerns |
-| **UI Components** | Material Design + TailwindCSS | N/A |
-| **Data Access** | N/A | Repository pattern with Dapper |
-| **Logging** | Console and error interceptor | Structured logging with Serilog |
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Architecture
+## 📧 Contact
 
-![Clean Architecture Diagram](docs/CleanArchitecture.png)
+For questions or support, please contact Nitin Singh at nitin27may@gmail.com.
 
-### Container Architecture
+## 🌟 Star the Repository
 
-![Container Architecture Diagram](docs/architecture.png)
-
-## Key Features
-
-### Frontend (Angular 19)
-- Modern dependency injection using `inject()` function
-- Signal-based state management
-- Angular Material 19 with theme support
-- TailwindCSS v4 for utility-first styling
-- JWT authentication with auto refresh
-- [More details in frontend documentation](./docs/frontend.md)
-
-### Backend (.NET 9)
-- Clean Architecture implementation
-- Generic Repository and Service patterns
-- Dapper with PostgreSQL for data access
-- JWT authentication with role-based permissions
-- [More details in backend documentation](./docs/backend.md)
-
-## Prerequisites
-
-- [Docker Desktop](https://www.docker.com/products/docker-desktop) (latest version)
-- Git
-
-## Learn More
-
-For in-depth understanding, check out our [documentation](./docs/):
-- [Clean Architecture Article Series](./docs/architecture-series.md)
-- [Detailed Feature List](./docs/features.md)
-- [Development Guide](./docs/development-guide.md)
-- [Roadmap & Upcoming Features](./docs/roadmap.md)
-
-## Contributing
-
-We welcome contributions! See our [contributing guide](./CONTRIBUTING.md) for details.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE file](LICENSE) for details.
-
-## Contact
-
-For support or questions, please contact Nitin Singh at nitin27may@gmail.com.
-
-## Feature Requests
-
-Have ideas to improve this project? Submit a [feature request](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=).
+If you find this project useful, please consider giving it a star on GitHub to show your support!

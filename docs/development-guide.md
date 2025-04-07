@@ -35,10 +35,9 @@ You have two primary options for development:
 1. Create your environment file:
 
    ```bash
-   # Unix/Mac
    cp .env.example .env
    
-   # Windows (PowerShell)
+   # (PowerShell)
    Copy-Item .env.example .env
    ```
 
