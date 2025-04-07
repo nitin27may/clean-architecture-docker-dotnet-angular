@@ -147,21 +147,6 @@ export class ProfileComponent implements OnInit {
                 this.userData.set(updatedUserData);
                 this.authState.updateUser(updatedUserData); // Update shared state
 
-                // Sync with localStorage - preserve existing properties
-                // const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-                // console.log('currentUser', currentUser);
-                // const updatedUser = {
-                //     ...currentUser,
-                //     firstName: data.firstName,
-                //     lastName: data.lastName,
-                //     userName: data.userName,
-                //     email: data.email,
-                //     mobile: data.mobile,
-                //     token: currentUser.token,
-                //     rolePermissions: currentUser.rolePermissions
-                // };
-                // localStorage.setItem('currentUser', JSON.stringify(updatedUser));
-
                 this.notificationService.success('Profile updated successfully');
                 this.loading = false;
                 this.isEditMode.set(false);
