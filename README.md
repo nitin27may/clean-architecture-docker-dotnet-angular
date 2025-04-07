@@ -51,6 +51,8 @@ Clean Architecture provides **significant benefits** for your application:
 - ✅ **Flexibility**: Swap frameworks or technologies without rewriting your core business logic
 - ✅ **Scalability**: Grow your application with a clear structure that new team members can quickly understand
 
+[Clean Architecture Series](./docs/architecture-series.md) - Read more about it!
+
 ## 🚀 Quick Start
 
 ```bash
