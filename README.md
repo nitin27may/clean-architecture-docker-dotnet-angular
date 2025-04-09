@@ -136,7 +136,7 @@ docker-compose up
 - [Development Guide](./docs/development-guide.md) - Get started with development
 - [Frontend Documentation](./docs/frontend.md) - Angular architecture details
 - [Backend Documentation](./docs/backend.md) - .NET API implementation
-- [Feature List](./docs/features.md) - Detailed feature breakdown
+- [Feature List](./docs/visual-feature-guide.md) - Detailed feature breakdown
 - [Clean Architecture Series](./docs/architecture-series.md) - In-depth articles
 - [Roadmap](./docs/roadmap.md) - Upcoming features
 
