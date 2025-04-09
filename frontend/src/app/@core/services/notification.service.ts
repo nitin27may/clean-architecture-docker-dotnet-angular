@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,8 @@ export class NotificationService {
     horizontalPosition: 'right',
     verticalPosition: 'top'
   };
+
+  private notificationSubject = new Subject<any>();
 
   success(message: string): void {
     this.snackBar.open(message, 'Close', {
@@ -40,5 +43,13 @@ export class NotificationService {
       ...this.defaultConfig,
       panelClass: ['info-snackbar']
     });
+  }
+
+  getNotificationObservable() {
+    return this.notificationSubject.asObservable();
+  }
+
+  notify(notification: any) {
+    this.notificationSubject.next(notification);
   }
 }

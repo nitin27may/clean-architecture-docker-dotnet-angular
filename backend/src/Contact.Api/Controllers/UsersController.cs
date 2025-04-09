@@ -1,4 +1,4 @@
-﻿using Contact.Api.Core.Attributes;
+using Contact.Api.Core.Attributes;
 using Contact.Application.Interfaces;
 using Contact.Application.UseCases.Users;
 using Microsoft.AspNetCore.Authorization;
@@ -12,11 +12,15 @@ public class UsersController : ControllerBase
 {
     private IUserService _userService;
     private readonly IActivityLogService _activityLogService;
+    private readonly IMessageService _messageService;
+    private readonly INotificationService _notificationService;
 
-    public UsersController(IUserService userService, IActivityLogService activityLogService)
+    public UsersController(IUserService userService, IActivityLogService activityLogService, IMessageService messageService, INotificationService notificationService)
     {
         _userService = userService;
         _activityLogService = activityLogService;
+        _messageService = messageService;
+        _notificationService = notificationService;
     }
 
     [HttpPost("register")]
@@ -107,7 +111,7 @@ public class UsersController : ControllerBase
         return Ok(result);
     }
 
-[HttpGet("activity-logs")]
+    [HttpGet("activity-logs")]
     [Authorize]
     [AuthorizePermission("ActivityLog.Read")]
     public async Task<IActionResult> GetActivityLogs([FromQuery] string username = "", [FromQuery] string email = "")
@@ -129,5 +133,43 @@ public class UsersController : ControllerBase
         {
             return BadRequest(new { message = $"Error retrieving activity logs: {ex.Message}" });
         }
+    }
+
+    [HttpPost("send-message")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> SendMessage(SendMessage sendMessage)
+    {
+        await _messageService.SendMessage(sendMessage);
+        return Ok();
+    }
+
+    [HttpGet("notifications")]
+    [Authorize]
+    public async Task<IActionResult> GetUserNotifications()
+    {
+        var userIdClaim = User.FindFirst("Id")?.Value;
+        if (userIdClaim == null)
+        {
+            return Unauthorized(new { message = "User ID not found in token" });
+        }
+
+        var userId = Guid.Parse(userIdClaim);
+        var notifications = await _notificationService.GetUserNotifications(userId);
+        return Ok(notifications);
+    }
+
+    [HttpPut("notifications/{id}/read")]
+    [Authorize]
+    public async Task<IActionResult> MarkNotificationAsRead(Guid id)
+    {
+        var userIdClaim = User.FindFirst("Id")?.Value;
+        if (userIdClaim == null)
+        {
+            return Unauthorized(new { message = "User ID not found in token" });
+        }
+
+        var userId = Guid.Parse(userIdClaim);
+        await _notificationService.MarkAsRead(userId, id);
+        return NoContent();
     }
 }

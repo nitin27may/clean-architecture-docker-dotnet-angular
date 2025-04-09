@@ -1,0 +1,14 @@
+<div class="admin-messages">
+  <h2>Admin Messages</h2>
+  <form [formGroup]="messageForm" (ngSubmit)="sendMessage()">
+    <mat-form-field appearance="fill">
+      <mat-label>Message</mat-label>
+      <textarea matInput formControlName="message" required></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Recipient (optional)</mat-label>
+      <input matInput formControlName="recipient">
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Send Message</button>
+  </form>
+</div>

@@ -3,6 +3,7 @@ using Contact.Application.Interfaces;
 using Contact.Application.UseCases.ContactPerson;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Contact.Api.Controllers;
 
@@ -12,10 +13,12 @@ namespace Contact.Api.Controllers;
 public class ContactPersonController : ControllerBase
 {
     private readonly IContactPersonService _contactPersonService;
+    private readonly IHubContext<ContactHub> _hubContext;
 
-    public ContactPersonController(IContactPersonService contactPersonService)
+    public ContactPersonController(IContactPersonService contactPersonService, IHubContext<ContactHub> hubContext)
     {
         _contactPersonService = contactPersonService;
+        _hubContext = hubContext;
     }
 
     [HttpPost]
@@ -24,17 +27,19 @@ public class ContactPersonController : ControllerBase
     public async Task<IActionResult> Add(CreateContactPerson createContactPerson)
     {
         var createdContactPerson = await _contactPersonService.Add(createContactPerson);
+        await _hubContext.Clients.All.SendAsync("ContactAdded", createdContactPerson);
         return CreatedAtAction(nameof(GetById), new { id = createdContactPerson.Id }, createdContactPerson);
     }
 
     [HttpPut("{id}")]
     [ActivityLog("Updating Contact")]
     [AuthorizePermission("Contacts.Update")]
-    public async Task<IActionResult> Update(Guid id,UpdateContactPerson updateContactPerson)
+    public async Task<IActionResult> Update(Guid id, UpdateContactPerson updateContactPerson)
     {
         var contactPerson = await _contactPersonService.FindByID(id);
         if (contactPerson == null) return NotFound();
         var updatedContactPerson = await _contactPersonService.Update(updateContactPerson);
+        await _hubContext.Clients.All.SendAsync("ContactUpdated", updatedContactPerson);
         return Ok(updatedContactPerson);
     }
 
@@ -45,6 +50,7 @@ public class ContactPersonController : ControllerBase
     {
         var deleted = await _contactPersonService.Delete(id);
         if (!deleted) return NotFound();
+        await _hubContext.Clients.All.SendAsync("ContactDeleted", id);
         return NoContent();
     }
 

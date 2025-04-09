@@ -1,0 +1,12 @@
+<div class="notification-center">
+  <h2>Notification Center</h2>
+  <ul>
+    <li *ngFor="let notification of notifications" [class.read]="notification.isRead">
+      <div class="notification-message">{{ notification.message }}</div>
+      <div class="notification-actions">
+        <button (click)="markAsRead(notification)" *ngIf="!notification.isRead">Mark as Read</button>
+        <button (click)="archiveNotification(notification)">Archive</button>
+      </div>
+    </li>
+  </ul>
+</div>

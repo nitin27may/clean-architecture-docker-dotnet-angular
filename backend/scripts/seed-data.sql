@@ -105,6 +105,18 @@ CREATE TABLE IF NOT EXISTS "Users" (
     "UpdatedBy" UUID
 );
 
+-- Create Notifications table
+CREATE TABLE IF NOT EXISTS "Notifications" (
+    "Id" UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    "UserId" UUID NOT NULL,
+    "Message" TEXT NOT NULL,
+    "IsRead" BOOLEAN DEFAULT FALSE,
+    "CreatedOn" TIMESTAMP WITH TIME ZONE NOT NULL,
+    "CreatedBy" UUID NOT NULL,
+    "UpdatedOn" TIMESTAMP WITH TIME ZONE,
+    "UpdatedBy" UUID
+);
+
 -- Set up foreign key constraints
 ALTER TABLE "Permissions" ADD CONSTRAINT "FK_Permissions_Operations" 
     FOREIGN KEY("OperationId") REFERENCES "Operations"("Id");
@@ -135,7 +147,9 @@ INSERT INTO "Operations" ("Id", "Name", "Description", "CreatedOn", "CreatedBy")
 INSERT INTO "Pages" ("Id", "Name", "Url", "CreatedOn", "CreatedBy") VALUES
 ('aa56a391-e880-4ac5-9f6f-6c8aa33454b8', 'Contacts', '/contacts', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
 ('c4943131-a642-4352-9725-e44ba5972b4b', 'Users', 'admin/users', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
-('c4943131-a642-4352-9725-e44ba5972b4c', 'ActivityLog', 'admin/activity-logs', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb');
+('c4943131-a642-4352-9725-e44ba5972b4c', 'ActivityLog', 'admin/activity-logs', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d4943131-a642-4352-9725-e44ba5972b4d', 'AdminMessages', 'admin/admin-messages', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('e4943131-a642-4352-9725-e44ba5972b4e', 'NotificationCenter', 'notifications/notification-center', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb');
 
 -- Insert data into Roles table
 INSERT INTO "Roles" ("Id", "Name", "Description", "CreatedOn", "CreatedBy") VALUES
@@ -168,7 +182,9 @@ INSERT INTO "Permissions" ("Id", "PageId", "OperationId", "Description", "Create
 ('c94c23ad-59d4-4f80-91ee-39316140db17', 'c4943131-a642-4352-9725-e44ba5972b4b', 'dce8d805-df41-4549-be7b-6ed5647b09c3', 'User Update', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
 ('82755e66-b743-46e2-b612-efd2db6bcd75', 'c4943131-a642-4352-9725-e44ba5972b4b', '7493f274-5007-4e17-9840-88c9a096422f', 'User Read', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
 ('82755e66-b743-46e2-b612-efd2db6bce75', 'c4943131-a642-4352-9725-e44ba5972b4b', 'cef15d6f-25e4-422b-a7d6-405aaa2de2d5', 'User Delete', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
-('d35daa4e-fd02-4934-98d2-5b06e9b694b9', 'c4943131-a642-4352-9725-e44ba5972b4c', '7493f274-5007-4e17-9840-88c9a096422f', 'ActivityLog Read', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb');
+('d35daa4e-fd02-4934-98d2-5b06e9b694b9', 'c4943131-a642-4352-9725-e44ba5972b4c', '7493f274-5007-4e17-9840-88c9a096422f', 'ActivityLog Read', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d35daa4e-fd02-4934-98d2-5b06e9b694c0', 'd4943131-a642-4352-9725-e44ba5972b4d', '09be3f29-6429-4089-a2a9-a17efe46cd7b', 'AdminMessages Create', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d35daa4e-fd02-4934-98d2-5b06e9b694c1', 'e4943131-a642-4352-9725-e44ba5972b4e', '7493f274-5007-4e17-9840-88c9a096422f', 'NotificationCenter Read', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb');
 
 -- Set up admin role permissions
 INSERT INTO "RolePermissions" ("RoleId", "PermissionId", "CreatedOn", "CreatedBy") VALUES
@@ -180,7 +196,9 @@ INSERT INTO "RolePermissions" ("RoleId", "PermissionId", "CreatedOn", "CreatedBy
 ('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', 'c94c23ad-59d4-4f80-91ee-39316140db17', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
 ('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', '82755e66-b743-46e2-b612-efd2db6bcd75', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
 ('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', '82755e66-b743-46e2-b612-efd2db6bce75', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
-('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', 'd35daa4e-fd02-4934-98d2-5b06e9b694b9', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb');
+('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', 'd35daa4e-fd02-4934-98d2-5b06e9b694b9', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', 'd35daa4e-fd02-4934-98d2-5b06e9b694c0', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', 'd35daa4e-fd02-4934-98d2-5b06e9b694c1', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb');
 
 -- Set up editor role permissions (can read, create and update)
 INSERT INTO "RolePermissions" ("RoleId", "PermissionId", "CreatedOn", "CreatedBy") VALUES

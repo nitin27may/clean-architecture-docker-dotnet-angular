@@ -1,0 +1,25 @@
+.admin-messages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.admin-messages h2 {
+  margin-bottom: 20px;
+}
+
+.admin-messages form {
+  width: 100%;
+  max-width: 600px;
+}
+
+.admin-messages mat-form-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.admin-messages button {
+  display: block;
+  margin: 0 auto;
+}

@@ -1,0 +1,33 @@
+.notification-center {
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem;
+      border-bottom: 1px solid #ccc;
+
+      &.read {
+        background-color: #f0f0f0;
+      }
+
+      .notification-message {
+        flex: 1;
+      }
+
+      .notification-actions {
+        button {
+          margin-left: 0.5rem;
+        }
+      }
+    }
+  }
+}
