@@ -8,7 +8,7 @@ permalink: /
 # Clean Architecture Full-Stack Starter
 {: .fs-9 }
 
-A production-ready full-stack application with Angular 19, .NET 9, and PostgreSQL using Clean Architecture principles.
+A production-ready full-stack application with Angular 19, .NET 9, and PostgreSQL using Clean Architecture principles
 {: .fs-6 .fw-300 }
 
 [Get Started](#-quick-start-in-60-seconds){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
