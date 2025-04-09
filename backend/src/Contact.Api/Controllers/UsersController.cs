@@ -109,6 +109,7 @@ public class UsersController : ControllerBase
 
     [HttpGet("activity-logs")]
     [Authorize]
+    [AuthorizePermission("ActivityLog.Read")]
     public async Task<IActionResult> GetActivityLogs([FromQuery] string username, [FromQuery] string email)
     {
         var logs = await _activityLogService.GetActivityLogsAsync(username, email);
