@@ -11,10 +11,12 @@ namespace Contact.Api.Controllers;
 public class UsersController : ControllerBase
 {
     private IUserService _userService;
+    private readonly IActivityLogService _activityLogService;
 
-    public UsersController(IUserService userService)
+    public UsersController(IUserService userService, IActivityLogService activityLogService)
     {
         _userService = userService;
+        _activityLogService = activityLogService;
     }
 
     [HttpPost("register")]
@@ -103,5 +105,13 @@ public class UsersController : ControllerBase
     {
         var result = await _userService.ChangePassword(changePassword);
         return Ok(result);
+    }
+
+    [HttpGet("activity-logs")]
+    [Authorize]
+    public async Task<IActionResult> GetActivityLogs([FromQuery] string username, [FromQuery] string email)
+    {
+        var logs = await _activityLogService.GetActivityLogsAsync(username, email);
+        return Ok(logs);
     }
 }

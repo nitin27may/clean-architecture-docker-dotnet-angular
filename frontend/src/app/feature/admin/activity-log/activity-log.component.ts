@@ -3,11 +3,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { UserService } from '@core/services/user.service';
 
 @Component({
-  selector: 'app-users-list',
-  templateUrl: './users-list.component.html',
-  styleUrls: ['./users-list.component.scss']
+  selector: 'app-activity-log',
+  templateUrl: './activity-log.component.html',
+  styleUrls: ['./activity-log.component.scss']
 })
-export class UserListComponent implements OnInit {
+export class ActivityLogComponent implements OnInit {
   filterForm: FormGroup;
   activityLogs: any[] = [];
 

@@ -61,4 +61,10 @@ export class UserService {
   delete(_id: string) {
     return this.http.delete(environment.apiEndpoint + "/user/" + _id);
   }
+
+  getActivityLogs(username: string, email: string) {
+    return this.http.get<any[]>(`${environment.apiEndpoint}/users/activity-logs`, {
+      params: { username, email }
+    });
+  }
 }
