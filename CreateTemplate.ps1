@@ -48,10 +48,22 @@ $excludedItems = @(
     "appsettings.Development.json", "CreateTemplate.ps1", "nupkg"
 )
 
+# Get absolute path of the output directory to avoid copying it
+$absoluteOutputPath = (Resolve-Path -Path $OutputDirectory).Path
+
 # Get all directories in the source directory except excluded ones
 Get-ChildItem -Path $SourceDirectory -Directory | 
-    Where-Object { $excludedItems -notcontains $_.Name } | 
+    Where-Object { 
+        $excludedItems -notcontains $_.Name -and 
+        # Skip if the current directory is the output directory
+        $_.FullName -ne $absoluteOutputPath -and 
+        # Skip if the current directory is inside the output directory
+        -not $_.FullName.StartsWith("$absoluteOutputPath\") -and
+        # Skip if the output directory is inside the current directory
+        -not $absoluteOutputPath.StartsWith("$($_.FullName)\")
+    } | 
     ForEach-Object {
+        Write-Host "Copying directory: $($_.Name)"
         Copy-Item -Path $_.FullName -Destination $OutputDirectory -Recurse -Force
     }
 
@@ -63,6 +75,7 @@ Get-ChildItem -Path $SourceDirectory -File |
         $_.Extension -ne ".nupkg"
     } | 
     ForEach-Object {
+        Write-Host "Copying file: $($_.Name)"
         Copy-Item -Path $_.FullName -Destination $OutputDirectory -Force
     }
 
