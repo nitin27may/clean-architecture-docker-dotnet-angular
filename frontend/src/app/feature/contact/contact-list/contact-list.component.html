@@ -22,7 +22,7 @@
 
   <!-- Table Container -->
   <div class="max-w-6xl mx-auto bg-surface-container rounded-lg shadow-lg overflow-x-auto transition-all duration-300">
-    <table mat-table [dataSource]="dataSource()" matSort class="min-w-full">
+    <table mat-table [dataSource]="dataSource()" matSort (matSortChange)="sortData($event)" class="min-w-full">
       <!-- Name Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header class="bg-surface-container-high font-medium text-on-surface-variant px-6 py-4 w-[20%]">Name</th>
@@ -84,5 +84,15 @@
         </td>
       </tr>
     </table>
+    
+    <!-- Paginator -->
+    <mat-paginator 
+      [pageSize]="pageSize()" 
+      [pageSizeOptions]="pageSizeOptions" 
+      [length]="totalItems()"
+      (page)="pageChanged($event)"
+      class="border-t border-outline-variant"
+      aria-label="Select page of contacts">
+    </mat-paginator>
   </div>
 </div>
