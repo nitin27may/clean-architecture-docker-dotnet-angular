@@ -40,35 +40,7 @@ We have an ambitious roadmap to enhance this project with the following features
 - [ ] Create visualization of recent system activity
 - [ ] Add export capabilities for compliance purposes
 
-### Data Update Activity Timeline
-- [ ] Add activity history to contact profiles
-- [ ] Show who changed what and when
-- [ ] Implement filtering for contact-specific activities
-- [ ] Display visual diff of contact changes
-
-## Phase 3: Application Logs & Monitoring
-
-**Focus**: System-level logging, monitoring, and diagnostics.
-
-### System Logging Implementation
-- [ ] Create structured logging for application errors
-- [ ] Implement performance tracking for critical operations
-- [ ] Add security event logging
-- [ ] Configure log levels and categories
-
-### Admin Diagnostics Dashboard
-- [ ] Design system health dashboard
-- [ ] Create visualizations for error rates and performance
-- [ ] Implement log search and filtering
-- [ ] Add alert configuration for critical issues
-
-### Performance Monitoring
-- [ ] Add timing metrics for API endpoints
-- [ ] Track database query performance
-- [ ] Monitor client-side performance
-- [ ] Implement threshold alerts
-
-## Phase 4: Real-Time Notifications
+## Phase 3: Real-Time Notifications
 
 **Focus**: Adding collaborative features with real-time updates.
 
@@ -92,6 +64,30 @@ We have an ambitious roadmap to enhance this project with the following features
 - [ ] Implement notification delivery when browser is closed
 - [ ] Add notification interaction handling (clicks/dismissals)
 - [ ] Create notification grouping and priority levels
+
+
+## Phase 4: Application Logs & Monitoring
+
+**Focus**: System-level logging, monitoring, and diagnostics.
+
+### System Logging Implementation
+- [ ] Create structured logging for application errors
+- [ ] Implement performance tracking for critical operations
+- [ ] Add security event logging
+- [ ] Configure log levels and categories
+
+### Admin Diagnostics Dashboard
+- [ ] Design system health dashboard
+- [ ] Create visualizations for error rates and performance
+- [ ] Implement log search and filtering
+- [ ] Add alert configuration for critical issues
+
+### Performance Monitoring
+- [ ] Add timing metrics for API endpoints
+- [ ] Track database query performance
+- [ ] Monitor client-side performance
+- [ ] Implement threshold alerts
+
 
 ## Phase 5: Social Media Login
 
