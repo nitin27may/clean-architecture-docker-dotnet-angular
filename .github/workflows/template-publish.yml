@@ -1,0 +1,114 @@
+name: Build and Publish Template Package
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Package version (e.g., 1.0.0)'
+        required: true
+        default: '1.0.0'
+      author:
+        description: 'Template author'
+        required: true
+        default: 'Nitin Singh'
+      description:
+        description: 'Template description'
+        required: true
+        default: 'Full-stack Clean Architecture template with .NET 9 API and Angular 19'
+
+jobs:
+  build-and-publish:
+    runs-on: windows-latest
+    
+    env:
+      TEMPLATE_VERSION: ${{ github.event.inputs.version }}
+      TEMPLATE_AUTHOR: ${{ github.event.inputs.author }}
+      TEMPLATE_DESCRIPTION: ${{ github.event.inputs.description }}
+      NUGET_AUTH_TOKEN: ${{ secrets.NUGET_API_KEY }}
+      
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v1
+        with:
+          nuget-version: '6.x'
+
+      - name: Display version
+        run: echo "Building template version ${{ env.TEMPLATE_VERSION }}"
+
+      - name: Create output directories
+        run: |
+          mkdir template-output
+          mkdir nupkg
+
+      - name: Run template preparation script
+        shell: pwsh
+        run: |
+          ./CreateTemplate.ps1 -SourceDirectory . -TemplateNamespace Contact -OutputDirectory ./template-output
+
+      - name: Create .nuspec file
+        shell: pwsh
+        run: |
+          $nuspecContent = @"
+          <?xml version="1.0" encoding="utf-8"?>
+          <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+            <metadata>
+              <id>CleanArchitecture.FullStack.Template</id>
+              <version>${{ env.TEMPLATE_VERSION }}</version>
+              <title>Clean Architecture Full-Stack Template</title>
+              <authors>${{ env.TEMPLATE_AUTHOR }}</authors>
+              <description>${{ env.TEMPLATE_DESCRIPTION }}</description>
+              <tags>dotnet-new template cleanarchitecture angular fullstack docker postgresql</tags>
+              <packageTypes>
+                <packageType name="Template" />
+              </packageTypes>
+              <repository type="git" url="https://github.com/nitin27may/clean-architecture-docker-dotnet-angular" />
+              <license type="expression">MIT</license>
+              <projectUrl>https://github.com/nitin27may/clean-architecture-docker-dotnet-angular</projectUrl>
+              <requireLicenseAcceptance>false</requireLicenseAcceptance>
+              <copyright>Copyright © ${{ env.TEMPLATE_AUTHOR }} $((Get-Date).Year)</copyright>
+              <summary>A full-stack template using Clean Architecture principles with .NET 9 API backend and Angular 19 frontend, containerized with Docker.</summary>
+            </metadata>
+          </package>
+          "@
+
+          Set-Content -Path "./template-output/CleanArchitecture.FullStack.Template.nuspec" -Value $nuspecContent
+
+      - name: Update template.json metadata
+        shell: pwsh
+        run: |
+          $templateJsonPath = "./template-output/.template.config/template.json"
+          $templateJson = Get-Content -Path $templateJsonPath -Raw | ConvertFrom-Json
+          
+          $templateJson.author = "${{ env.TEMPLATE_AUTHOR }}"
+          $templateJson | ConvertTo-Json -Depth 10 | Set-Content -Path $templateJsonPath
+
+      - name: Pack template
+        run: |
+          nuget pack ./template-output/CleanArchitecture.FullStack.Template.nuspec -OutputDirectory ./nupkg
+
+      - name: Test template package
+        run: |
+          dotnet new install ./nupkg/CleanArchitecture.FullStack.Template.${{ env.TEMPLATE_VERSION }}.nupkg
+          mkdir test-project
+          cd test-project
+          dotnet new cleanarch-fullstack --Organization TestCompany
+          
+      - name: Upload package artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: nuget-package
+          path: ./nupkg/*.nupkg
+
+      - name: Push to NuGet
+        run: |
+          dotnet nuget push ./nupkg/CleanArchitecture.FullStack.Template.${{ env.TEMPLATE_VERSION }}.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
