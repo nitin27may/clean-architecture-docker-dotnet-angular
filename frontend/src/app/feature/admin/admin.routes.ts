@@ -19,7 +19,7 @@ export default [
       {
         path: 'activity-logs',
         component: ActivityLogComponent,
-        canActivate: [PermissionGuard('User', 'Read')]
+        canActivate: [PermissionGuard('ActivityLog', 'Read')]
       }
     ]
   }
