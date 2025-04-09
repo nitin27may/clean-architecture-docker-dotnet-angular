@@ -127,6 +127,12 @@ $templateJson = @{
     }
     sourceName = $TemplateNamespace
     preferNameDirectory = $true
+    # Set default output name to match project name
+    primaryOutputs = @(
+        @{ 
+            path = "" 
+        }
+    )
     symbols = @{
         Framework = @{
             type = "parameter"
@@ -140,13 +146,15 @@ $templateJson = @{
             )
             defaultValue = "net9.0"
         }
-        Organization = @{
+        ProjectName = @{
             type = "parameter"
             datatype = "string"
-            description = "Organization name to use in the project"
-            defaultValue = "YourCompany"
+            description = "The name of the project and solution"
+            defaultValue = "MyCleanApp"
             replaces = $TemplateNamespace
+            fileRename = $TemplateNamespace
         }
+        # Remove OutputDir parameter since the directory will match the project name
         SkipRestore = @{
             type = "parameter"
             datatype = "bool"
@@ -167,7 +175,14 @@ $templateJson = @{
                 @{
                     condition = "true"
                     include = @("**/*")
-                    exclude = @(".template.config/**/*")
+                    exclude = @(
+                        ".template.config/**/*",
+                        "*.nuspec",
+                        ".signature.p7s",
+                        "[Content_Types].xml",
+                        "_rels/**/*",
+                        "package/**/*"
+                    )
                 }
             )
         }

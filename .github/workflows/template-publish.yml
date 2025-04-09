@@ -55,6 +55,12 @@ jobs:
         run: |
           ./CreateTemplate.ps1 -SourceDirectory . -TemplateNamespace Contact -OutputDirectory ./template-output
 
+      - name: Prepare NuGet README
+        shell: pwsh
+        run: |
+          Copy-Item -Path "NuGet-README.md" -Destination "./template-output/../NuGet-README.md" -Force
+          Write-Host "NuGet README file copied to package location"
+
       - name: Create .nuspec file
         shell: pwsh
         run: |
@@ -77,7 +83,11 @@ jobs:
               <requireLicenseAcceptance>false</requireLicenseAcceptance>
               <copyright>Copyright © ${{ env.TEMPLATE_AUTHOR }} $((Get-Date).Year)</copyright>
               <summary>A full-stack template using Clean Architecture principles with .NET 9 API backend and Angular 19 frontend, containerized with Docker.</summary>
+              <readme>NuGet-README.md</readme>
             </metadata>
+            <files>
+              <file src="..\NuGet-README.md" target="\" />
+            </files>
           </package>
           "@
 
@@ -148,10 +158,34 @@ jobs:
           dotnet new --list | findstr "cleanarch-fullstack"
           
           # Create project from template
-          dotnet new cleanarch-fullstack --Organization TestCompany
+          dotnet new cleanarch-fullstack --ProjectName TestProject
           
           # List files to verify creation
           dir
+          
+          # Check for unwanted files
+          Write-Host "Checking for unwanted NuGet artifact files..."
+          $unwantedFiles = @(
+            ".signature.p7s",
+            "CleanArchitecture.FullStack.Template.nuspec",
+            "[Content_Types].xml"
+          )
+          
+          $foundUnwanted = $false
+          foreach ($file in $unwantedFiles) {
+            if (Test-Path $file) {
+              Write-Host "❌ Unwanted file found: $file" -ForegroundColor Red
+              $foundUnwanted = $true
+            } else {
+              Write-Host "✅ Unwanted file not present: $file" -ForegroundColor Green
+            }
+          }
+          
+          if ($foundUnwanted) {
+            Write-Host "Warning: Some unwanted files were found in the generated project." -ForegroundColor Yellow
+          } else {
+            Write-Host "Success: No unwanted NuGet artifact files were found." -ForegroundColor Green
+          }
 
       - name: Upload package artifact
         uses: actions/upload-artifact@v4
