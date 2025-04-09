@@ -157,20 +157,31 @@ export class ControlErrorsDirective implements OnInit, OnDestroy {
       return;
     }
 
+    // Create the error component
     this.ref ??= this.resolveAnchor().createComponent<ControlErrorComponent>(this.mergedConfig.controlErrorComponent);
     const instance = this.ref.instance;
 
+    // Set content
     if (this.controlErrorsTpl) {
       instance.createTemplate(this.controlErrorsTpl, error, text);
     } else {
       instance.text = text;
     }
 
+    // Apply classes
     if (this.controlErrorsClass) {
       instance.customClass = this.controlErrorsClass;
     }
 
-    if (!this.controlErrorAnchor && this.mergedConfig.controlErrorComponentAnchorFn) {
+    // If no custom anchor, attach to parent element instead of the input itself
+    if (!this.controlErrorAnchor && !this.mergedConfig.controlErrorComponentAnchorFn) {
+      // Directly append to parent for better positioning
+      const parentElement = this.host.parentElement;
+      if (parentElement) {
+        const errorElement = (this.ref.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+        parentElement.appendChild(errorElement);
+      }
+    } else if (!this.controlErrorAnchor && this.mergedConfig.controlErrorComponentAnchorFn) {
       this.customAnchorDestroyFn = this.mergedConfig.controlErrorComponentAnchorFn(
         this.host,
         (this.ref.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement,

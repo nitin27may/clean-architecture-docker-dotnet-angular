@@ -1,7 +1,6 @@
 using Contact.Api.Core.Authorization;
 using Contact.Api.Core.Middleware;
 using Contact.Application;
-using Contact.Application.Interfaces;
 using Contact.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -77,6 +76,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseMiddleware<ExceptionMiddleware>();
+app.UseMiddleware<ActivityLoggingMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

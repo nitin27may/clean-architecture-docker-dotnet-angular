@@ -1,17 +1,12 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ThemeService } from '@core/services/theme.service';
 
 @Component({
-    selector: 'app-root',
-    imports: [
-        RouterOutlet,
-        CommonModule,
-        RouterOutlet
-    ],
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.css'
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet],
+  template: `<router-outlet />`,
+  providers: [ThemeService]
 })
-export class AppComponent {
-    title = 'contacts';
-}
+export class AppComponent {}

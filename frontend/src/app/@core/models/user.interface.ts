@@ -1,10 +1,11 @@
+import { RolePermission } from './permission.interface';
+
 export interface User {
-  id: string;
-  username: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  token: string;
-  email: string;
-  mobile: string;
+    id: string;
+    firstName: string;
+    lastName: string;
+    userName: string;
+    mobile: string;
+    email: string;
+    rolePermissions?: RolePermission[];
 }

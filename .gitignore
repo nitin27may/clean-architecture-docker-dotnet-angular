@@ -12,7 +12,7 @@
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
-
+.env
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
@@ -343,5 +343,4 @@ WebApi/appsettings.Development.json
 VSIXCore/
 frontend/node_modules/
 frontend/dist/
-.env
 .DS_Store

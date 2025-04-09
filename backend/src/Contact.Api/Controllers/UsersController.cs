@@ -11,10 +11,12 @@ namespace Contact.Api.Controllers;
 public class UsersController : ControllerBase
 {
     private IUserService _userService;
+    private readonly IActivityLogService _activityLogService;
 
-    public UsersController(IUserService userService)
+    public UsersController(IUserService userService, IActivityLogService activityLogService)
     {
         _userService = userService;
+        _activityLogService = activityLogService;
     }
 
     [HttpPost("register")]
@@ -58,7 +60,7 @@ public class UsersController : ControllerBase
         }
 
         var userId = Guid.Parse(userIdClaim);
-        var result = await _userService.FindByID(userId);
+        var result = await _userService.GetUserWithPermissionsAsync(userId);
         return Ok(result);
     }
 
@@ -103,5 +105,29 @@ public class UsersController : ControllerBase
     {
         var result = await _userService.ChangePassword(changePassword);
         return Ok(result);
+    }
+
+[HttpGet("activity-logs")]
+    [Authorize]
+    [AuthorizePermission("ActivityLog.Read")]
+    public async Task<IActionResult> GetActivityLogs([FromQuery] string username = "", [FromQuery] string email = "")
+    {
+        // Ensure parameters are not null
+        username = username ?? "";
+        email = email ?? "";
+        
+        // Trim parameters to remove any whitespace
+        username = username.Trim();
+        email = email.Trim();
+        
+        try
+        {
+            var logs = await _activityLogService.GetActivityLogsAsync(username, email);
+            return Ok(logs);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = $"Error retrieving activity logs: {ex.Message}" });
+        }
     }
 }

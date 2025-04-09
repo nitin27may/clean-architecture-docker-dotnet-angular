@@ -21,4 +21,5 @@ public interface IUserService
     Task<bool> ChangePassword(ChangePassword changePassword);
     Task<bool> ForgotPassword(string email);
     Task<bool> ResetPassword(ResetPassword resetPasswordRequest);
+   Task<UserResponse> GetUserWithPermissionsAsync(Guid userId);
 }

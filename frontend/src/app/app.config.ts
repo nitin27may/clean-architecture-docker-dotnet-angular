@@ -1,41 +1,45 @@
 import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
-import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideRouter } from '@angular/router';
-
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-import { provideToastr } from 'ngx-toastr';
-import { AppRoutingModule, routes } from './app.routes';
+import { provideRouter, withViewTransitions } from '@angular/router';
+import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { provideHttpClient, withInterceptors } from "@angular/common/http";
+import { JwtInterceptor } from "./@core/interceptors";
 import { provideErrorTailorConfig } from "./@core/components/validation";
-import { ErrorInterceptor, JwtInterceptor } from "./@core/interceptors";
-import { error } from "console";
-
+import { routes } from './app.routes';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 export const appConfig: ApplicationConfig = {
-    providers: [
-        importProvidersFrom(BrowserModule, AppRoutingModule),
-        provideHttpClient(),
-        provideZoneChangeDetection({ eventCoalescing: true }),
-        provideHttpClient(withInterceptors([JwtInterceptor, ErrorInterceptor])),
-        provideRouter(routes),
-        provideClientHydration(),
-        provideAnimations(), // required animations providers
-        provideToastr(), // Toastr providers
-        provideErrorTailorConfig({
-          errors: {
-            useFactory() {
-              return {
-                required: 'This field is required',
-                minlength: ({ requiredLength, actualLength }) => `Expect ${requiredLength} but got ${actualLength}`,
-                invalidEmailAddress: error => `Email Address is not valid`,
-                invalidMobile: error => `Invalid Mobile number`,
-                invalidPassword: error => `Password is weak`,
-                passwordMustMatch: error => `Password is not matching`,
-              };
-            },
-            deps: []
-          }
-          //controlErrorComponent: CustomControlErrorComponent, // Uncomment to see errors being rendered using a custom component
-          //controlErrorComponentAnchorFn: controlErrorComponentAnchorFn // Uncomment to see errors being positioned differently
-        })
-    ],
+  providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    importProvidersFrom(BrowserModule),
+    provideHttpClient(withInterceptors([JwtInterceptor])),
+    provideRouter(routes,withViewTransitions()),
+    provideClientHydration(withEventReplay()),
+    provideAnimationsAsync(),
+    provideNativeDateAdapter(),
+    // {
+    //   provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+    //   useValue: {
+    //     appearance: 'outline',
+    //     floatLabel: 'never',
+    //     subscriptSizing: 'dynamic',
+    //   },
+    // },
+    provideErrorTailorConfig({
+      errors: {
+        useFactory() {
+          return {
+            required: 'This field is required',
+            minlength: ({ requiredLength, actualLength }) => `Expect ${requiredLength} but got ${actualLength}`,
+            invalidEmailAddress: error => `Email Address is not valid`,
+            invalidMobile: error => `Invalid Mobile number`,
+            invalidPassword: error => `Password is weak`,
+            passwordMustMatch: error => `Password is not matching`,
+          };
+        },
+        deps: []
+      }
+    })],
+
+
 };

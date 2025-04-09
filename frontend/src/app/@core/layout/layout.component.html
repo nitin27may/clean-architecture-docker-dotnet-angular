@@ -1,5 +1,22 @@
-<app-header></app-header>
-<main>
-  <router-outlet></router-outlet>
-</main>
-<app-footer></app-footer>
+<div class="flex flex-col min-h-screen">
+  <app-header [collapsed]="collapsed()" (toggleCollapsed)="toggleCollapsed()" />
+
+  @if (loading()) {
+    <mat-progress-bar class="absolute top-16 z-10" mode="indeterminate" />
+  }
+
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav [mode]="isMobile() ? 'over' : 'side'"
+                 [opened]="!isMobile() && !collapsed()"
+                 [fixedInViewport]="true"
+                 [style.width]="sidenavWidth()">
+      <app-custom-sidenav [collapsed]="collapsed()"></app-custom-sidenav>
+    </mat-sidenav>
+    <mat-sidenav-content [style.margin-left]="isMobile() ? '0' : sidenavWidth()">
+      <div class="min-h-[calc(100vh-64px-64px)] p-6">
+        <router-outlet></router-outlet>
+      </div>
+      <app-footer />
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

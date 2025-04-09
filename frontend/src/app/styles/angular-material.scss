@@ -1,0 +1,145 @@
+@use "@angular/material" as mat;
+
+html {
+  color-scheme: light;
+  @include mat.theme(
+    (
+      color: mat.$azure-palette,
+      typography: Inter,
+    )
+  );
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+mat-form-field {
+  display: block !important;
+
+  @include mat.theme(
+    (
+      density: -2,
+    )
+  );
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, "Helvetica Neue", sans-serif;
+}
+
+// Angular Material components styling overrides
+.mat-mdc-form-field-appearance-outline {
+  .mat-mdc-form-field-flex {
+    background-color: white;
+  }
+}
+
+// Fix toolbar appearance in dark mode
+mat-toolbar {
+  &.bg-white {
+    --mat-toolbar-container-background-color: white;
+  }
+}
+
+.dark mat-toolbar {
+  &.bg-gray-900 {
+    --mat-toolbar-container-background-color: #111827;
+    --mat-toolbar-container-text-color: white;
+  }
+}
+
+// Fix form field appearance
+.mat-mdc-form-field-appearance-outline {
+  .mdc-notched-outline__leading,
+  .mdc-notched-outline__notch,
+  .mdc-notched-outline__trailing {
+    border-color: var(--mat-sys-outline);
+  }
+
+  &.mat-focused {
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: var(--mat-sys-primary);
+    }
+  }
+}
+
+// Fix checkbox appearance
+.mat-mdc-checkbox {
+  .mdc-checkbox__background {
+    border-color: var(--mat-sys-outline);
+  }
+
+  .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background {
+    border-color: var(--mat-sys-primary);
+    background-color: var(--mat-sys-primary);
+  }
+
+  .mdc-checkbox__native-control:enabled + .mdc-checkbox__background .mdc-checkbox__checkmark {
+    color: var(--mat-sys-on-primary);
+  }
+}
+
+.dark .mat-mdc-checkbox {
+  .mdc-checkbox__background {
+    border-color: var(--mat-sys-outline);
+  }
+
+  .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background {
+    border-color: var(--mat-sys-primary);
+    background-color: var(--mat-sys-primary);
+  }
+
+  .mdc-checkbox__native-control:enabled + .mdc-checkbox__background .mdc-checkbox__checkmark {
+    color: var(--mat-sys-on-primary);
+  }
+}
+
+// Fix button styling
+.mat-mdc-raised-button.mat-primary {
+  --mdc-filled-button-container-color: var(--mat-sys-primary);
+  --mdc-filled-button-label-text-color: white;
+}
+
+.mat-mdc-unelevated-button.mat-primary {
+  --mdc-filled-button-container-color: var(--mat-sys-primary);
+  --mdc-filled-button-label-text-color: white;
+}
+
+.mat-mdc-outlined-button.mat-primary {
+  --mdc-outlined-button-label-text-color: var(--mat-sys-primary);
+  --mdc-outlined-button-outline-color: var(--mat-sys-primary);
+}
+
+// Snackbar styling
+.success-snackbar {
+  --mdc-snackbar-container-color: #4caf50;
+  --mdc-snackbar-supporting-text-color: white;
+  --mat-mdc-snack-bar-button-color: white;
+}
+
+.error-snackbar {
+  --mdc-snackbar-container-color: #f44336;
+  --mdc-snackbar-supporting-text-color: white;
+  --mat-mdc-snack-bar-button-color: white;
+}
+
+.warning-snackbar {
+  --mdc-snackbar-container-color: #ff9800;
+  --mdc-snackbar-supporting-text-color: white;
+  --mat-mdc-snack-bar-button-color: white;
+}
+
+.info-snackbar {
+  --mdc-snackbar-container-color: #2196f3;
+  --mdc-snackbar-supporting-text-color: white;
+  --mat-mdc-snack-bar-button-color: white;
+}

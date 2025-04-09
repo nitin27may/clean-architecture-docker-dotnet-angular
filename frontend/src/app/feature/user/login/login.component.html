@@ -1,97 +1,53 @@
-<div class="container">
-    <div class="row">
-        <div
-            class="col-xl-12 col-lg-12 col-md-12 col-sm-12 min-vh-100 d-flex flex-column justify-content-center"
-        >
-            <div class="row">
-                <div class="col-lg-4 col-md-8 mx-auto">
-                    <div class="card">
-                        <h1 class="h5 card-header py-4 text-center">
-                            <i class="fas fa-sign-in-alt me-4"></i
-                            ><strong>Login</strong>
-                        </h1>
-                        <article class="card-body">
-                            <!-- <a [routerLink]="['/signup']" class="float-right btn btn-outline-primary">Sign up</a> -->
-                            <!-- <h4 class="card-title mb-4 mt-1">Sign in</h4> -->
-                            <form
-                                (submit)="login(loginForm)"
-                                novalidate
-                                autocomplete="off"
-                                [formGroup]="loginForm"
-                                class="row g-3"
-                            >
-                                <div class="col-sm-12 col-md-12">
-                                    <label>User Name</label>
-                                    <input
-                                        class="form-control"
-                                        placeholder="Email"
-                                        type="email"
-                                        name="username"
-                                        formControlName="userName"
-                                    />
-                                </div>
-                                <div class="col-sm-12 col-md-12">
-                                    <label>Password</label>
-                                    <div class="input-group mb-3">
-                                    <input
-                                        class="form-control"
-                                        placeholder="Enter your password"
-                                        type="{{ isPasswordVisible ? 'text' : 'password' }}"
-                                        name="password"
-                                        formControlName="password"
-                                    />
-                                    <button
-                                    class="btn btn-outline-secondary"
-                                    type="button"
-                                    (click)="togglePasswordVisibility()"
-                                  >
-                                    <i [ngClass]="isPasswordVisible ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
-                                  </button>
-                                </div>
-                                </div>
-                                <div class="col-sm-12 col-md-12">
-                                    <!-- form-group// -->
+<div class="min-h-[80vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div class="w-full max-w-md">
+    <div class="bg-surface-container-highest rounded-xl p-8 shadow-lg transition-all duration-300">
+      <div class="text-center mb-8">
+        <h2 class="text-4xl font-bold mb-3 text-on-surface">Welcome Back</h2>
+        <p class="text-sm text-on-surface-variant">
+          Or
+          <a routerLink="/signup" class="text-primary hover:text-primary/80 font-medium transition-colors">
+            create a new account
+          </a>
+        </p>
+      </div>
 
-                                    <div class="checkbox">
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                name="rememberMe"
-                                                formControlName="rememberMe"
-                                            />
-                                            Remember me
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-12 mt-2">
-                                    <!-- checkbox .// -->
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
+        <!-- Email Field -->
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Email address</mat-label>
+          <input matInput type="email" formControlName="email" required>
+        </mat-form-field>
 
-                                    <!-- form-group// -->
-                                    <div class="form-group">
-                                        <button
-                                            type="submit"
-                                            [disabled]="loginForm.invalid"
-                                            class="btn btn-primary btn-block"
-                                        >
-                                            Login
-                                        </button>
+        <!-- Password Field -->
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Password</mat-label>
+          <input matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="password" required>
+          <button type="button" mat-icon-button matSuffix (click)="togglePasswordVisibility()">
+            <mat-icon>{{hidePassword() ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="loginForm.controls['password'].hasError('required')">Password is required</mat-error>
+        </mat-form-field>
 
-                                    <button
-                                    type="button"
-                                    class="btn btn-primary  float-end"
-                                    routerLink="/signup"
-                                >
-                                    <i class="fas fa-user-plus me-2"></i>Sign up
-                                </button>
-                                    </div>
-                                </div>
-                                <!-- form-group// -->
-                            </form>
-                        </article>
-                    </div>
-                    <!-- card.// -->
-                </div>
-            </div>
+        <div class="flex items-center justify-between">
+          <mat-checkbox formControlName="rememberMe" color="primary">Remember me</mat-checkbox>
+          <a routerLink="/forgot-password"
+             class="text-primary hover:text-primary/80 text-sm font-medium transition-colors">
+            Forgot password?
+          </a>
         </div>
+
+        <button mat-flat-button color="primary"
+                type="submit"
+                class="w-full h-12 text-lg font-medium rounded-lg shadow-lg hover:shadow-primary/20 transition-all duration-300"
+                [disabled]="loginForm.invalid">
+          <div class="flex items-center justify-center gap-2">
+            <mat-spinner *ngIf="loading()" [diameter]="24"></mat-spinner>
+            <span>Sign in</span>
+          </div>
+        </button>
+
+
+      </form>
     </div>
+  </div>
 </div>

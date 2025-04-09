@@ -36,14 +36,25 @@ public class ExceptionMiddleware
             ForbiddenException => StatusCodes.Status403Forbidden,
             NotFoundException => StatusCodes.Status404NotFound,
             NotAuthenticatedException => StatusCodes.Status401Unauthorized,
+            ArgumentOutOfRangeException => StatusCodes.Status500InternalServerError,
             _ => StatusCodes.Status500InternalServerError
         };
 
         _logger.LogError(exception, exception.Message);
+        
+        // Handle JWT cryptography errors specifically
+        string errorMessage = exception.Message;
+        if (exception is ArgumentOutOfRangeException argEx && 
+            errorMessage.Contains("KeyedHashAlgorithm") && 
+            errorMessage.Contains("key size"))
+        {
+            errorMessage = "Authentication error: Invalid JWT signing key configuration. Please contact system administrators.";
+        }
 
         var result = JsonSerializer.Serialize(new
         {
-            error = exception.Message
+            error = errorMessage,
+            technicalDetails = exception is ApplicationException ? null : exception.GetType().Name
         });
 
         context.Response.StatusCode = statusCode;

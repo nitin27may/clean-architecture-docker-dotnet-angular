@@ -4,9 +4,10 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 
 import { Router } from '@angular/router';
-import { environment } from '../../../../environments/environment';
+import { environment } from "@environments/environment";
 
-@Injectable()
+
+@Injectable({providedIn: 'root'})
 export class LoginService {
     constructor(
         private http: HttpClient,

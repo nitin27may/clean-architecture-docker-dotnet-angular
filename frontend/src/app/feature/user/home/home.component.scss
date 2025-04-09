@@ -1,0 +1,60 @@
+:host {
+  // Text gradient
+  .text-gradient-primary {
+    background: linear-gradient(90deg, var(--sys-primary) 0%, var(--sys-tertiary) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  // Card hover effects
+  .card-hover {
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(var(--sys-primary-rgb, 0, 0, 0), 0.1),
+                  0 8px 10px -6px rgba(var(--sys-primary-rgb, 0, 0, 0), 0.1);
+    }
+  }
+
+  // Animation utilities
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  // Background grid pattern
+  .bg-grid-pattern {
+    background-size: 20px 20px;
+    background-image:
+      linear-gradient(to right, var(--sys-outline-variant) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--sys-outline-variant) 1px, transparent 1px);
+  }
+
+  // Enhanced button styles
+  .mat-mdc-raised-button.mat-primary {
+    --mdc-filled-button-container-color: var(--sys-primary);
+    --mdc-filled-button-label-text-color: var(--sys-on-primary);
+
+    &:hover {
+      filter: brightness(1.1);
+    }
+  }
+
+  .mat-mdc-stroked-button {
+    &:hover {
+      background-color: rgba(var(--sys-primary-rgb, 0, 0, 0), 0.05);
+    }
+  }
+}

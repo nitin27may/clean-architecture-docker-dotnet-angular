@@ -3,7 +3,7 @@ import { UntypedFormGroup } from '@angular/forms';
 
 @Injectable({ providedIn: 'root' })
 export class ValidationService {
-    constructor() {}
+    // No dependencies to inject, so we can remove the empty constructor
 
     emailValidator(control: any) {
         // RFC 2822 compliant regex
@@ -32,6 +32,7 @@ export class ValidationService {
             return null;
         }
     }
+
     passwordValidator(control: any) {
         // RFC 2822 compliant regex
         if (
@@ -45,28 +46,32 @@ export class ValidationService {
             return null;
         }
     }
+
     MustMatch(controlName: string, matchingControlName: string) {
         return (formGroup: UntypedFormGroup) => {
-            const control = formGroup.get(controlName);
-            const matchingControl = formGroup.get(matchingControlName);
+            const control = formGroup.controls[controlName];
+            const matchingControl = formGroup.controls[matchingControlName];
+
+            if (!control || !matchingControl) {
+                return null; // Return if controls don't exist
+            }
 
             if (!(control.value && matchingControl.value)) {
                 // return if any of control does not have value
-                return;
+                return null;
             }
 
-            if (matchingControl.errors && !matchingControl.errors.mustMatch) {
+            if (matchingControl.errors && !matchingControl.errors['passwordMustMatch']) {
                 // return if another validator has already found an error on the matchingControl
-                return;
+                return null;
             }
 
             // set error on matchingControl if validation fails
             if (control.value !== matchingControl.value) {
-                formGroup
-                    .get(matchingControlName)
-                    .setErrors({ passwordMustMatch: true });
+                matchingControl.setErrors({ passwordMustMatch: true });
                 return { passwordMustMatch: true };
             } else {
+                matchingControl.setErrors(null);
                 return null;
             }
         };

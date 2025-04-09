@@ -16,7 +16,6 @@ public class RoleRepository : GenericRepository<Role>, IRoleRepository
     {
         var rolePara = new DynamicParameters();
         rolePara.Add("Name", roleName);
-        return await _dapperHelper.Get<Role>("select * from Roles where name = @Name", rolePara, CommandType.Text, transaction);
- 
+        return await _dapperHelper.Get<Role>(@"SELECT * FROM ""Roles"" WHERE ""Name"" = @Name", rolePara, CommandType.Text, transaction);
     }
 }

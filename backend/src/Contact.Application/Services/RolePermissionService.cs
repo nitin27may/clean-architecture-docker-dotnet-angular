@@ -32,4 +32,9 @@ public class RolePermissionService :  IRolePermissionService
     {
         return await _rolePermissionRepository.GetRolePermissionMappingsAsync();
     }
+
+    public async Task<IEnumerable<RolePermissionMapping>> GetRolePermissionMappingsAsync(Guid userId)
+    {
+        return await _rolePermissionRepository.GetRolePermissionMappingsAsync(userId);
+    }
 }

@@ -1,0 +1,31 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Import TailwindCSS utilities */
+@use "tailwindcss";
+
+/* Import Material theme */
+@use "./app/styles/angular-material.scss";
+
+/* Import custom color variables */
+// @use "./app/styles/colors.scss";
+
+/* Import custom styles */
+@use "./app/styles/custom.scss";
+
+/* Import utility classes */
+// @use "./app/styles/utilities.scss";
+
+/* Import dark mode support */
+// @use "./app/styles/dark-mode-support.scss";
+
+/* Base styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Inter, "Helvetica Neue", sans-serif;
+}
+
+/* Smooth transitions for theme changes */
+body, mat-sidenav, mat-sidenav-container, mat-sidenav-content, mat-toolbar {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}

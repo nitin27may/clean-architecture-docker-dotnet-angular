@@ -1,0 +1,24 @@
+
+
+:host {
+  .mat-mdc-form-field {
+    &.mat-mdc-form-field-appearance-outline {
+      .mat-mdc-text-field-wrapper {
+        background-color: white;
+        border-radius: 0.375rem;
+      }
+
+      &.mat-focused {
+        .mdc-notched-outline__leading,
+        .mdc-notched-outline__notch,
+        .mdc-notched-outline__trailing {
+          border-color: var(--color-primary);
+        }
+      }
+    }
+  }
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+}

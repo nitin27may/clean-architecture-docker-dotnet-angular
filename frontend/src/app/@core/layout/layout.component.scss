@@ -1,0 +1,92 @@
+:host {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  padding: 0;
+  box-sizing: border-box;
+}
+
+mat-sidenav-container {
+  flex: 1;
+  height: calc(100vh - 64px);
+  background-color: var(--app-background) !important;
+}
+
+mat-sidenav-content {
+  transition: margin-left 300ms ease-in-out !important;
+  background-color: var(--app-background) !important;
+}
+
+mat-sidenav {
+  transition: transform 300ms ease-in-out !important;
+  background-color: var(--app-background) !important;
+  border-right: 1px solid var(--app-border) !important;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+  margin-top: 64px; // Add top margin to prevent hiding under header
+  height: calc(100vh - 64px) !important;
+
+  &.mat-drawer {
+    background-color: var(--app-background) !important;
+  }
+}
+
+// Mobile styles
+@media (max-width: 768px) {
+  mat-sidenav {
+    position: fixed !important;
+    width: 65px !important;
+    transform: translateX(-100%);
+    z-index: 999;
+
+    &.show-mobile {
+      transform: translateX(0);
+      box-shadow: 4px 0 8px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  mat-sidenav-content {
+    margin-left: 0 !important;
+  }
+
+  :host ::ng-deep {
+    .mat-drawer-backdrop {
+      position: fixed !important;
+      top: 64px !important;
+      height: calc(100vh - 64px) !important;
+      background-color: rgba(0, 0, 0, 0.6) !important;
+      backdrop-filter: blur(2px);
+      z-index: 998;
+
+      &.mat-drawer-shown {
+        opacity: 1 !important;
+      }
+    }
+
+    .mat-drawer-container {
+      background-color: transparent !important;
+    }
+  }
+}
+
+// Dark mode overrides
+:host-context(.dark) {
+  mat-sidenav-container,
+  mat-sidenav-content,
+  mat-sidenav {
+    background-color: var(--app-background) !important;
+    color: var(--app-text) !important;
+  }
+
+  .mat-drawer-inner-container {
+    background-color: var(--app-background) !important;
+    color: var(--app-text) !important;
+  }
+
+  mat-sidenav {
+    border-right-color: var(--app-border) !important;
+  }
+}

@@ -18,6 +18,8 @@ public class ActivityLogRepository : IActivityLogRepository
     {
         var dbPara = new DynamicParameters();
         dbPara.Add("UserId", logEntry.UserId);
+        dbPara.Add("Username", logEntry.Username);
+        dbPara.Add("Email", logEntry.Email);
         dbPara.Add("Activity", logEntry.Activity);
         dbPara.Add("Endpoint", logEntry.Endpoint);
         dbPara.Add("HttpMethod", logEntry.HttpMethod);
@@ -25,11 +27,23 @@ public class ActivityLogRepository : IActivityLogRepository
         dbPara.Add("IpAddress", logEntry.IpAddress);
         dbPara.Add("UserAgent", logEntry.UserAgent);
         var sql = @"
-            INSERT INTO ActivityLog (UserId, Activity, Endpoint, HttpMethod, Timestamp, IpAddress, UserAgent)
-            VALUES (@UserId, @Activity, @Endpoint, @HttpMethod, @Timestamp, @IpAddress, @UserAgent)"
-        ;
-
+            INSERT INTO ""ActivityLog"" (""UserId"", ""Username"", ""Email"", ""Activity"", ""Endpoint"", ""HttpMethod"", ""Timestamp"", ""IpAddress"", ""UserAgent"")
+            VALUES (@UserId, @Username, @Email, @Activity, @Endpoint, @HttpMethod, @Timestamp, @IpAddress, @UserAgent)
+            RETURNING *";
 
         await _dapperHelper.Insert<ActivityLogEntry>(sql, dbPara, CommandType.Text);
+    }
+
+    public async Task<IEnumerable<ActivityLogEntry>> GetActivityLogsAsync(string username, string email)
+    {
+        var dbPara = new DynamicParameters();
+        dbPara.Add("Username", username);
+        dbPara.Add("Email", email);
+        var sql = @"
+            SELECT * FROM ""ActivityLog""
+            WHERE (""Username"" = @Username OR @Username IS NULL)
+            OR (""Email"" = @Email OR @Email IS NULL)";
+
+        return await _dapperHelper.GetAll<ActivityLogEntry>(sql, dbPara, CommandType.Text);
     }
 }

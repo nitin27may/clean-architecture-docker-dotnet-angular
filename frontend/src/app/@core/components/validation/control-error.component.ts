@@ -6,7 +6,6 @@ import {
   ElementRef,
   TemplateRef,
   inject,
-  signal,
 } from '@angular/core';
 import { ValidationErrors } from '@angular/forms';
 
@@ -19,36 +18,48 @@ export interface ControlErrorComponent {
 }
 
 @Component({
-    selector: 'control-error',
-    imports: [CommonModule],
-    template: `
-    @if (!errorTemplate) {
-      <label class="control-error" [class.hide-control]="hideError">{{ errorText }}</label>
+  selector: 'control-error',
+  standalone: true,
+  imports: [CommonModule],
+  template: `
+    @if (!errorTemplate && text) {
+      <div class="error-message" [class.hide-control]="hideError">{{ text }}</div>
     }
     <ng-template *ngTemplateOutlet="errorTemplate; context: errorContext"></ng-template>
   `,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    styles: [
-        `
-      .hide-control {
-        display: none !important;
-      }
+  styles: [`
+    :host {
+      display: block;
+      position: absolute;
+      left: 0;
+      bottom: -20px;
+      width: 100%;
+      z-index: 1;
+    }
 
-      :host {
-        display: block;
-      }
-    `,
-    ]
+    .error-message {
+      color: var(--mat-sys-error, #f44336);
+      font-size: 0.75rem;
+      line-height: 1.2;
+      text-align: left;
+      padding: 0.25rem 0;
+    }
+
+    .hide-control {
+      display: none !important;
+    }
+  `],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DefaultControlErrorComponent implements ControlErrorComponent {
-  errorText: string | null = null;
   errorTemplate: ErrorComponentTemplate | undefined;
   errorContext: { $implicit: ValidationErrors; text: string };
   hideError = true;
 
   private cdr = inject(ChangeDetectorRef);
-  private host: ElementRef<HTMLElement> = inject(ElementRef);
+  private host = inject(ElementRef<HTMLElement>);
   private _addClasses: string[] = [];
+  private _text: string | null = null;
 
   createTemplate(tpl: ErrorComponentTemplate, error: ValidationErrors, text: string) {
     this.errorTemplate = tpl;
@@ -64,8 +75,8 @@ export class DefaultControlErrorComponent implements ControlErrorComponent {
   }
 
   set text(value: string | null) {
-    if (value !== this.errorText) {
-      this.errorText = value;
+    if (value !== this._text) {
+      this._text = value;
       this.hideError = !value;
 
       if (this.hideError) {
@@ -73,5 +84,9 @@ export class DefaultControlErrorComponent implements ControlErrorComponent {
       }
       this.cdr.markForCheck();
     }
+  }
+
+  get text(): string | null {
+    return this._text;
   }
 }

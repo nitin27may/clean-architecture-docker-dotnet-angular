@@ -27,17 +27,29 @@ public class ActivityLoggingMiddleware
             using (var scope = _serviceProvider.CreateScope())
             {
                 var activityLogService = scope.ServiceProvider.GetRequiredService<IActivityLogService>();
-                var userIdClaim = context.User.FindFirst("id");
+                
+                // Safely extract claims from User context
+                var userIdClaim = context.User.FindFirst("Id");
                 var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
+                
+                var username = context.User.Identity?.Name ?? "Anonymous";
+                
+                // Safely extract email claim
+                var emailClaim = context.User.FindFirst(System.Security.Claims.ClaimTypes.Email) 
+                    ?? context.User.FindFirst("Email");
+                var email = emailClaim?.Value ?? "unknown@example.com";
+                
                 var activityDescription = activityAttribute.ActivityDescription;
                 var endpointPath = context.Request.Path;
                 var httpMethod = context.Request.Method;
-                var ipAddress = context.Connection.RemoteIpAddress?.ToString();
+                var ipAddress = context.Connection.RemoteIpAddress?.ToString() ?? "Unknown";
                 var userAgent = context.Request.Headers["User-Agent"].ToString();
 
                 var logEntry = new ActivityLogEntry
                 {
                     UserId = userId,
+                    Username = username,
+                    Email = email,
                     Activity = activityDescription,
                     Endpoint = endpointPath,
                     HttpMethod = httpMethod,

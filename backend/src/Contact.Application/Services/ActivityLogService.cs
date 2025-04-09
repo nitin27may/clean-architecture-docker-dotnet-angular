@@ -19,4 +19,9 @@ public class ActivityLogService : IActivityLogService
     {
         await _activityLogRepository.LogActivityAsync(logEntry);
     }
+
+    public async Task<IEnumerable<ActivityLogEntry>> GetActivityLogsAsync(string username, string email)
+    {
+        return await _activityLogRepository.GetActivityLogsAsync(username, email);
+    }
 }

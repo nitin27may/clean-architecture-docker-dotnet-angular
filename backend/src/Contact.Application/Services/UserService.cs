@@ -23,6 +23,7 @@ public class UserService : IUserService
     private readonly AppSettings _appSettings;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IEmailService _emailService;
+    private readonly IRolePermissionService _rolePermissionService;
 
     public UserService(IUserRepository userRepository,
         IRoleRepository roleRepository,
@@ -31,7 +32,8 @@ public class UserService : IUserService
         IOptions<AppSettings> appSettings,
         IMapper mapper,
          IUnitOfWork unitOfWork,
-         IEmailService emailService)
+         IEmailService emailService,
+         IRolePermissionService rolePermissionService)
     {
         _appSettings = appSettings.Value;
         _userRepository = userRepository;
@@ -41,6 +43,7 @@ public class UserService : IUserService
         _mapper = mapper;
         _unitOfWork = unitOfWork;
         _emailService = emailService;
+        _rolePermissionService = rolePermissionService;
     }
 
     public async Task<User> Add(RegisterUser createUser)
@@ -147,13 +150,16 @@ public class UserService : IUserService
         var result = passwordHasher.VerifyHashedPassword(user.Email, user.Password, authenticateRequest.Password);
         var token = await GenerateJwtToken(user);
 
+        var rolePermissions = await _rolePermissionService.GetRolePermissionMappingsAsync(user.Id);
+        var rolePermissionResponse = _mapper.Map<List<RolePermissionResponse>>(rolePermissions.ToList());
         var authenticateResponse = new AuthenticateResponse()
         {
             Authenticate = true,
             Token = token,
             Id = user.Id,
             FirstName = user.FirstName,
-            LastName = user.LastName
+            LastName = user.LastName,
+            RolePermissions = rolePermissionResponse
         };
         if (result == PasswordVerificationResult.Success || result == PasswordVerificationResult.SuccessRehashNeeded)
         {
@@ -384,5 +390,17 @@ public class UserService : IUserService
                  CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV2
              })
                 );
+    }
+
+    public async Task<UserResponse> GetUserWithPermissionsAsync(Guid userId)
+    {
+        var user = await _userRepository.FindByID(userId);
+        if (user == null) return null;
+
+        var rolePermissions = await _rolePermissionService.GetRolePermissionMappingsAsync(userId);
+        user.RolePermissions = rolePermissions.ToList();
+        var userResponse = _mapper.Map<UserResponse>(user);
+
+        return userResponse;
     }
 }

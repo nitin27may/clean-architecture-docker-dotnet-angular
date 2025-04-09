@@ -1,103 +1,108 @@
-<div class="container">
-	<div class="row mb-5">
-        <div
-            class="col-xl-12 col-lg-12 col-md-12  col-sm-12 min-vh-100 d-flex flex-column justify-content-center"
-        >
-            <!-- <h1 class="h5 card-header py-4 text-center">
-                <i class="fas fa-user-plus me-4"></i><strong>SignUp</strong>
-            </h1> -->
-            <div class="row">
-                <div class="col-lg-4 col-md-8 mx-auto">
-                    <div class="card">
-                      <h1 class="h5 card-header text-center py-4">
-                        <i class="fas fa-user-plus me-4"></i><strong>SignUp</strong>
-                      </h1>
-                        <article class="card-body">
-                            <!-- <a
-                                [routerLink]="['/login']"
-                                class="btn btn-outline-primary float-right"
-                                >Sign in</a
-                            > -->
-                            <!-- <h4 class="card-title mb-4 mt-1">SignUp</h4> -->
-                            <form
-                                (submit)="register()"
-                                novalidate
-                                autocomplete="off"
-                                [formGroup]="registerForm"
-                                class="row g-3"
-                            >
-                                <div class="col-sm-12 col-md-12">
-                                    <label>First Name</label>
-                                    <input
-                                        type="text"
-                                        formControlName="firstName"
-                                        name="firstName"
-                                        class="form-control"
-                                    />
-                                </div>
-                                <div class="col-sm-12 col-md-12">
-                                    <label>Last Name</label>
-                                    <input
-                                        name="lastName"
-                                        class="form-control"
-                                        type="text"
-                                        formControlName="lastName"
-                                    />
-                                </div>
-                                <div class="col-sm-12 col-md-12">
-                                    <label>Your email</label>
-                                    <input
-                                        class="form-control"
-                                        type="email"
-                                        name="username"
-                                        formControlName="username"
-                                    />
-                                </div>
-                                <div class="col-sm-12 col-md-12">
-                                    <label>Your password</label>
-                                    <input
-                                        class="form-control"
-                                        type="password"
-                                        name="password"
-                                        formControlName="password"
-                                    />
-                                </div>
-                                <div class="col-sm-12 col-md-12">
-                                    <label>Confirm password</label>
-                                    <input
-                                        class="form-control"
-                                        type="password"
-                                        name="confirmPassword"
-                                        formControlName="confirmPassword"
-                                    />
-                                </div>
-                                <div class="col-sm-12 col-md-12 mt-3">
-                                    <!-- checkbox .// -->
-                                    <!-- form-group// -->
-                                    <div class="form-group">
-                                        <button
-                                            type="submit"
-                                            [disabled]="registerForm.invalid"
-                                            class="btn btn-primary btn-block"
-                                        >
-                                        SignUp
-                                        </button>
-                                        <button
-                                        type="button"
-                                        class="btn float-end btn-primary btn-outline-light me-2"
-                                        routerLink="/login"
-                                    >
-                                        <i class="fas fa-sign-in-alt me-2"></i>Login
-                                    </button>
-                                    </div>
-                                </div>
-                                <!-- form-group// -->
-                            </form>
-                        </article>
-                    </div>
-                    <!-- card.// -->
-                </div>
-            </div>
+<div class="min-h-[80vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div class="w-full max-w-xl">
+    <div class="bg-surface-container-highest rounded-xl p-8 shadow-lg transition-all duration-300">
+      <div class="text-center mb-8">
+        <h2 class="text-4xl font-bold mb-3 text-gradient-primary">Create Account</h2>
+        <p class="text-sm">
+          Or
+          <a routerLink="/login" class="text-primary hover:text-primary/80 font-medium transition-colors">
+            sign in to your account
+          </a>
+        </p>
+      </div>
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-6" errorTailor aria-label="Registration form">
+        <!-- Names Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <mat-form-field appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName" [attr.aria-label]="'First Name'">
+            <mat-error *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched">
+              {{ getFirstNameError() }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName" [attr.aria-label]="'Last Name'">
+            <mat-error *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched">
+              {{ getLastNameError() }}
+            </mat-error>
+          </mat-form-field>
         </div>
+
+        <!-- Email -->
+        <mat-form-field appearance="outline">
+          <mat-label>Email address</mat-label>
+          <input matInput type="email" formControlName="email" [attr.aria-label]="'Email address'">
+          <mat-error *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+            {{ getEmailError() }}
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Password -->
+        <div class="space-y-4">
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput
+                   [type]="hidePassword() ? 'password' : 'text'"
+                   formControlName="password"
+                   [attr.aria-label]="'Password'"
+                   autocomplete="new-password">
+            <button type="button"
+                    mat-icon-button
+                    matSuffix
+                    (click)="togglePasswordVisibility()"
+                    [attr.aria-label]="hidePassword() ? 'Show password' : 'Hide password'"
+                    [attr.aria-pressed]="!hidePassword()">
+              <mat-icon>{{hidePassword() ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+              {{ getPasswordError() }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput
+                   [type]="hidePassword() ? 'password' : 'text'"
+                   formControlName="confirmPassword"
+                   [attr.aria-label]="'Confirm Password'"
+                   autocomplete="new-password">
+            <mat-error *ngIf="(registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched)
+                              || (registerForm.hasError('passwordMismatch') && registerForm.get('confirmPassword')?.touched)">
+              {{ getConfirmPasswordError() }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <!-- Terms & Conditions -->
+        <div class="bg-surface-container p-4 rounded-lg">
+          <mat-checkbox formControlName="terms"
+                       color="primary"
+                       [attr.aria-label]="'Accept terms and conditions'">
+            <span class="text-sm">
+              I agree to the
+              <a href="#" class="text-primary hover:text-primary/80 transition-colors font-medium">Terms of Service</a> and
+              <a href="#" class="text-primary hover:text-primary/80 transition-colors font-medium">Privacy Policy</a>
+            </span>
+          </mat-checkbox>
+          <mat-error *ngIf="registerForm.get('terms')?.invalid && registerForm.get('terms')?.touched" class="text-sm mt-1 block">
+            {{ getTermsError() }}
+          </mat-error>
+        </div>
+
+        <button mat-flat-button
+                color="primary"
+                type="submit"
+                class="w-full h-12 text-lg font-medium rounded-lg shadow-lg hover:shadow-primary/20 transition-all duration-300"
+                [disabled]="loading()">
+          <div class="flex items-center justify-center gap-2">
+            <mat-spinner *ngIf="loading()" [diameter]="24"></mat-spinner>
+            <span>Create Account</span>
+          </div>
+        </button>
+      </form>
     </div>
+  </div>
 </div>

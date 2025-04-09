@@ -1,111 +1,98 @@
-<div class="container px-4 py-5" style="min-height: 1200px">
-    <div class="row align-items-center">
-        <div
-            class="col-xl-12 col-lg-12 col-md-12 col-sm-12 justify-content-center"
-        >
-            <div class="panel panel-default container px-4 py-5">
-                <div class="row wrapper border-bottom white-bg page-heading">
-                    <div class="col-lg-4 col-md-4 col-sm-4">
-                        <h2>Contact List</h2>
-                    </div>
-                    <div class="col-lg-8 col-md-8 col-sm-8">
-                        <div class="title-action">
-                            <a
-                                href="javascript:void(0);"
-                                [routerLink]="['/contacts/create']"
-                                class="btn btn-primary float-end"
-                            >
-                                <i class="fa fa-plus-circle"></i> Add New
-                                Contact</a
-                            >
-                        </div>
-                    </div>
-                </div>
-
-                <div class="">
-                    <br />
-
-                    <table class="table-striped table">
-                        <thead>
-                            <tr>
-                                <th scope="col">First Name</th>
-                                <th scope="col">Last Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Mobile</th>
-                                <th scope="col">City</th>
-                                <th scope="col">Postal Code</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @for (contact of contacts; track contact.email) {
-                                <tr
-                                    style="cursor: pointer"
-                                    (click)="onSelect(contact)"
-                                >
-                                    <td>
-                                        <ngb-highlight
-                                            [result]="contact.firstName"
-                                            [term]="filter.value"
-                                        />
-                                    </td>
-                                    <td>
-                                        <ngb-highlight
-                                            [result]="contact.lastName"
-                                            [term]="filter.value"
-                                        />
-                                    </td>
-                                    <td>
-                                        <ngb-highlight
-                                            [result]="contact.email"
-                                            [term]="filter.value"
-                                        />
-                                    </td>
-                                    <td>
-                                      {{ contact.mobile | phoneNumberFormat: contact.countryCode}}
-                                    </td>
-                                      <td>
-                                        <ngb-highlight
-                                            [result]="contact.city"
-                                            [term]="filter.value"
-                                        />
-                                      </td>
-                                      <td>
-                                        <ngb-highlight
-                                            [result]="contact.postalCode"
-                                            [term]="filter.value"
-                                        />
-                                    </td>
-                                </tr>
-                            } @empty {
-                                <tr>
-                                    <td colspan="4" style="text-align: center">
-                                        No contacts found
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                    <div class="d-flex justify-content-between p-2">
-                        <ngb-pagination
-                            [collectionSize]="collectionSize"
-                            [(page)]="page"
-                            [pageSize]="pageSize"
-                            (pageChange)="refreshContacts()"
-                        >
-                        </ngb-pagination>
-                        <select
-                            class="form-select"
-                            style="width: auto; height: 40px"
-                            [(ngModel)]="pageSize"
-                            (ngModelChange)="refreshContacts()"
-                        >
-                            <option [ngValue]="2">2 items per page</option>
-                            <option [ngValue]="4">4 items per page</option>
-                            <option [ngValue]="6">6 items per page</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="container mx-auto p-4">
+  <!-- Header -->
+  <div class="max-w-6xl mx-auto mb-6 bg-primary text-white rounded-lg shadow-sm overflow-hidden transition-all duration-300">
+    <div class="p-6 flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Contacts</h1>
+      <button mat-raised-button color="accent" routerLink="/contacts/create"
+              *hasPermission="{ page: 'Contacts', operation: 'Create' }">
+        <mat-icon class="mr-2">add</mat-icon>
+        Add Contact
+      </button>
     </div>
+  </div>
+
+  <!-- Search and Filters -->
+  <div class="max-w-6xl mx-auto mb-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 transition-all duration-300">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Search contacts</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Name, email, or phone" #input>
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <!-- Table Container -->
+  <div class="max-w-6xl mx-auto bg-surface-container rounded-lg shadow-lg overflow-x-auto transition-all duration-300">
+    <table mat-table [dataSource]="dataSource()" matSort (matSortChange)="sortData($event)" class="min-w-full">
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="bg-surface-container-high font-medium text-on-surface-variant px-6 py-4 w-[20%]">Name</th>
+        <td mat-cell *matCellDef="let contact" class="px-6 py-4">
+          {{contact.firstName}} {{contact.lastName}}
+        </td>
+      </ng-container>
+
+      <!-- Email Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="bg-surface-container-high font-medium text-on-surface-variant px-6 py-4 w-[25%]">Email</th>
+        <td mat-cell *matCellDef="let contact" class="px-6 py-4">{{contact.email}}</td>
+      </ng-container>
+
+      <!-- Phone Column -->
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="bg-surface-container-high font-medium text-on-surface-variant px-6 py-4 w-[20%]">Phone</th>
+        <td mat-cell *matCellDef="let contact" class="px-6 py-4">{{contact.mobile}}</td>
+      </ng-container>
+
+      <!-- City Column -->
+      <ng-container matColumnDef="city">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="bg-surface-container-high font-medium text-on-surface-variant px-6 py-4 w-[15%]">City</th>
+        <td mat-cell *matCellDef="let contact" class="px-6 py-4">{{contact.city}}</td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="bg-surface-container-high font-medium text-on-surface-variant px-6 py-4 text-right w-[20%]">Actions</th>
+        <td mat-cell *matCellDef="let contact" class="px-6 py-4 text-right">
+          <div class="flex items-center justify-end gap-2">
+            <button mat-icon-button color="primary" [routerLink]="['/contacts/details', contact.id]"
+                    *hasPermission="{ page: 'Contacts', operation: 'Read' }"
+                    matTooltip="View details">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" [routerLink]="['/contacts/edit', contact.id]"
+                    *hasPermission="{ page: 'Contacts', operation: 'Update' }"
+                    matTooltip="Edit">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteContact(contact)"
+                    *hasPermission="{ page: 'Contacts', operation: 'Delete' }"
+                    matTooltip="Delete">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="border-b border-outline-variant"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+          class="border-b border-outline-variant hover:bg-surface-container-highest transition-colors"></tr>
+
+      <!-- No Results Row -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="px-6 py-4 text-center text-on-surface-variant" [attr.colspan]="displayedColumns.length">
+          No contacts matching your search "{{input.value}}"
+        </td>
+      </tr>
+    </table>
+    
+    <!-- Paginator -->
+    <mat-paginator 
+      [pageSize]="pageSize()" 
+      [pageSizeOptions]="pageSizeOptions" 
+      [length]="totalItems()"
+      (page)="pageChanged($event)"
+      class="border-t border-outline-variant"
+      aria-label="Select page of contacts">
+    </mat-paginator>
+  </div>
 </div>

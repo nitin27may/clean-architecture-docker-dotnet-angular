@@ -1,160 +1,85 @@
-<div class="container px-4 py-5">
-    <div class="row align-items-center">
-        <div
-            class="col-xl-12 col-lg-12 col-md-12 col-sm-12 justify-content-center"
-        >
-            <div class="panel panel-default container px-4 py-5">
-                <div class="row wrapper border-bottom white-bg page-heading">
-                    <div class="col-sm-3"></div>
-                    <div class="col-sm-4">
-                        <h2 *ngIf="!contactForm.get('id').value">
-                            Add Contact
-                        </h2>
-                        <h2 *ngIf="contactForm.get('id').value">
-                            Update Contact
-                        </h2>
-                    </div>
-                </div>
-                <div>
-                    <div class="col-md-7 offset-md-3">
-                        <span class="anchor" id="formComplex"></span>
-                        <div class="my-5"></div>
-                        <!-- <h3>Contact Details</h3> -->
-                        <form [formGroup]="contactForm" class="row g-3">
-                            <div class="col-sm-6 col-md-6">
-                                <label for="firstName" class="form-label"
-                                    >First Name</label
-                                >
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    formControlName="firstName"
-                                />
-                            </div>
-                            <div class="col-sm-6 col-md-6">
-                                <label for="lastName" class="form-label"
-                                    >Last Name</label
-                                >
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    formControlName="lastName"
-                                />
-                            </div>
-                            <div class="col-sm-6 col-md-6">
-                              <label for="lastName" class="form-label"
-                                  >Date Of Birth</label
-                              >
-                              <input
-                                  type="date"
-                                  class="form-control"
-                                  formControlName="dateOfBirth"
-                              />
-
-                              <!-- <div class="input-group">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    formControlName="dateOfBirth"
-                                    id="datePicker"
-                                    class="form-control"
-                                    placeholder="yyyy-mm-dd"
-
-                                    ngbDatepicker
-                                    #dp="ngbDatepicker"
-                                />
-                                <button class="btn btn-outline-secondary" (click)="dp.toggle()" type="button">
-                                  <i class="bi bi-calendar"></i>
-                                </button>
-                              </div> -->
-                          </div>
-                            <div class="col-sm-6 col-md-6">
-                                <label for="email" class="form-label"
-                                    >Email
-                                </label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    formControlName="email"
-                                />
-                            </div>
-                            <div class="col-sm-6 col-md-6">
-                                <label for="mobile" class="form-label"
-                                    >Mobile #</label
-                                >
-                                <div class="input-group">
-                                  <select
-                                  class="form-select"
-
-                                  formControlName="countryCode"
-                                  aria-label="Country code"
-                                  style="max-width: 100px;"
-                              >
-                                  <option value="1">+1</option>
-                                  <option value="44">+44</option>
-                                  <option value="91">+91</option>
-                                  <option value="61">+61</option>
-                              </select>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    formControlName="mobile"
-                                />
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-6">
-                                <label for="city" class="form-label"
-                                    >City</label
-                                >
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    formControlName="city"
-                                />
-                            </div>
-                            <div class="col-sm-6 col-md-6">
-                                <label for="postalCode" class="form-label"
-                                    >Postal Code</label
-                                >
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    formControlName="postalCode"
-                                />
-                            </div>
-                            <div class="row col-sm-12 col-md-12 mt-2">
-                                <div class="col-sm-6 col-md-6">
-                                    <a
-                                        href="javascript:void(0);"
-                                        [routerLink]="['/contacts']"
-                                        class="btn btn-primary"
-                                    >
-                                        <i class="fa fa-chevron-left"></i>
-                                        Back</a
-                                    >
-                                </div>
-                                <div class="col-sm-6 col-md-6">
-                                    <div class="btn-group pull-right">
-                                        <button
-                                            class="btn btn-primary"
-                                            [disabled]="contactForm.invalid"
-                                            (click)="submit()"
-                                        >
-                                            Save
-                                        </button>
-                                        <button
-                                            class="btn btn-secondary"
-                                            (click)="reset()"
-                                        >
-                                            Reset
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="container mx-auto p-4">
+  <div class="max-w-6xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden transition-all duration-300">
+    <!-- Header -->
+    <div class="p-6 bg-primary text-white">
+      <div class="flex items-center gap-4">
+        <button mat-icon-button routerLink="/contacts" matTooltip="Back to contacts">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h1 class="text-2xl font-bold">{{isEditMode() ? 'Edit Contact' : 'Add Contact'}}</h1>
+      </div>
     </div>
+
+    <!-- Form -->
+    <div class="p-6">
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="space-y-6">
+        <!-- Basic Information -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 max-w-5xl mx-auto">
+          <!-- First Name -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName" required>
+          </mat-form-field>
+
+          <!-- Last Name -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName" required>
+          </mat-form-field>
+
+          <!-- Email -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" required>
+          </mat-form-field>
+
+          <!-- Phone -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Mobile Number</mat-label>
+            <input matInput formControlName="mobile" required>
+          </mat-form-field>
+
+          <!-- Date of Birth -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Date of Birth</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="dateOfBirth">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <!-- City -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>City</mat-label>
+            <input matInput formControlName="city" required>
+          </mat-form-field>
+
+          <!-- Postal Code -->
+          <mat-form-field appearance="outline" class="md:col-span-2 max-w-[200px]">
+            <mat-label>Postal Code</mat-label>
+            <input matInput formControlName="postalCode" required>
+          </mat-form-field>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="flex justify-end space-x-4 max-w-5xl mx-auto pt-4">
+          <button mat-stroked-button type="button" routerLink="/contacts">
+            <mat-icon class="mr-2">arrow_back</mat-icon>
+            Back
+          </button>
+          <button mat-stroked-button type="button" (click)="reset()" [disabled]="loading()">
+            <mat-icon class="mr-2">refresh</mat-icon>
+            Reset
+          </button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="contactForm.invalid || loading()">
+            <div class="flex items-center">
+              <ng-container *ngIf="loading()">
+                <mat-spinner diameter="20" class="mr-2"></mat-spinner>
+              </ng-container>
+              <span>{{isEditMode() ? 'Update' : 'Save'}}</span>
+            </div>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

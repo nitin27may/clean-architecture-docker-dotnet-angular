@@ -1,0 +1,439 @@
+/* Animation utilities */
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Background pattern */
+.bg-grid-pattern {
+  background-size: 20px 20px;
+  background-image:
+    linear-gradient(to right, var(--sys-outline-variant) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--sys-outline-variant) 1px, transparent 1px);
+  opacity: 0.3;
+}
+
+/* Text gradient utility */
+.text-gradient-primary {
+  background: linear-gradient(90deg, var(--sys-primary) 0%, var(--sys-tertiary) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Card hover effects */
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+}
+
+/* Dark mode specific styles */
+html.dark {
+  color-scheme: dark;
+
+  body {
+    background-color: #111827;
+    color: #f9fafb;
+  }
+
+  .mat-mdc-card {
+    --mat-card-container-color: #1f2937;
+    --mat-card-container-text-color: #f9fafb;
+  }
+
+  .bg-white {
+    background-color: #1f2937 !important;
+  }
+
+  .text-primary {
+    color: #90CAF9 !important;
+  }
+
+  .bg-primary {
+    background-color: #90CAF9 !important;
+  }
+
+  .mat-toolbar {
+    background-color: #1f2937 !important;
+    color: #f9fafb !important;
+  }
+
+  mat-sidenav {
+    background-color: #111827 !important;
+  }
+
+  mat-sidenav-container {
+    background-color: #111827 !important;
+  }
+
+  mat-sidenav-content {
+    background-color: #111827 !important;
+  }
+
+  /* Fix for card backgrounds */
+  .mat-mdc-card-content {
+    color: #f9fafb !important;
+  }
+
+  /* Fix for form fields */
+  .mat-mdc-form-field {
+    color: #f9fafb !important;
+  }
+
+  /* Fix for other UI components */
+  .mat-mdc-button-base {
+    color: inherit;
+  }
+
+  .mat-mdc-raised-button.mat-primary {
+    --mdc-filled-button-container-color: var(--sys-primary);
+    color: black !important;
+  }
+
+  .text-gray-600, .text-gray-700, .text-gray-800 {
+    color: #d1d5db !important;
+  }
+
+  .bg-gray-100, .bg-gray-200, .bg-gray-300 {
+    background-color: #374151 !important;
+  }
+
+  /* Specific fixes for home page */
+  .bg-gray-50 {
+    background-color: #1f2937 !important;
+  }
+
+  .bg-gray-700 {
+    background-color: #374151 !important;
+  }
+
+  .bg-gray-800 {
+    background-color: #1f2937 !important;
+  }
+
+  .bg-gray-900 {
+    background-color: #111827 !important;
+  }
+
+  .text-gray-300 {
+    color: #d1d5db !important;
+  }
+}
+
+/* Basic form styling */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  &:focus {
+    outline: none;
+    border-color: var(--sys-primary);
+    box-shadow: 0 0 0 1px var(--sys-primary);
+  }
+}
+
+input[type="checkbox"] {
+  &:checked {
+    background-color: var(--sys-primary);
+    border-color: var(--sys-primary);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--sys-primary-container);
+  }
+}
+
+/* Material Drawer Styling */
+.mat-drawer-inner-container {
+  scrollbar-width: thin;
+}
+
+/* Checkbox fixes */
+input[type="checkbox"] {
+  appearance: none;
+  background-color: #fff;
+  margin: 0;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #d1d5db;
+  border-radius: 3px;
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+
+  &:checked {
+    background-color: var(--sys-primary);
+    border-color: var(--sys-primary);
+
+    &::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      transform: scale(1);
+      clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+      transform-origin: center;
+      background-color: white;
+    }
+  }
+
+  .dark & {
+    border-color: #4b5563;
+    background-color: #1f2937;
+
+    &:checked {
+      background-color: var(--sys-primary);
+      border-color: var(--sys-primary);
+    }
+  }
+}
+
+/* Material Tailwind Fixes */
+.mdc-notched-outline__notch {
+  border-style: none;
+}
+
+.mat-mdc-icon-button {
+  line-height: normal;
+}
+
+/* Material Tailwind Fixes */
+.mdc-notched-outline__notch {
+  border-style: none;
+}
+
+.mat-mdc-icon-button {
+  line-height: normal;
+}
+
+/* Fix for standard material components */
+mat-card {
+  --mat-card-container-color: #ffffff;
+}
+
+/* Dark mode overrides */
+.dark mat-card {
+  --mat-card-container-color: var(--color-gray-800);
+  --mat-card-container-text-color: var(--color-gray-100);
+}
+
+.dark mat-form-field {
+  --mat-form-field-container-text-color: #ffffff;
+  --mat-form-field-container-color: transparent;
+}
+
+.dark mat-checkbox {
+  --mat-checkbox-unselected-icon-color: #ffffff;
+}
+
+/* Creating utility classes for Angular Material colors */
+.bg-primary {
+  background-color: var(--mat-sys-primary);
+}
+
+.text-primary {
+  color: var(--mat-sys-primary);
+}
+
+.bg-secondary {
+  background-color: var(--mat-sys-secondary);
+}
+
+.text-secondary {
+  color: var(--mat-sys-secondary);
+}
+
+.bg-tertiary {
+  background-color: var(--mat-sys-tertiary);
+}
+
+.text-tertiary {
+  color: var(--mat-sys-tertiary);
+}
+
+/* Basic form styling */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  &:focus {
+    outline: none;
+    border-color: var(--sys-primary);
+    box-shadow: 0 0 0 1px var(--sys-primary);
+  }
+}
+
+input[type="checkbox"] {
+  &:checked {
+    background-color: var(--sys-primary);
+    border-color: var(--sys-primary);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--sys-primary-container);
+  }
+}
+/* Add this to src/app/styles/custom.scss or create a new file for form field styles */
+
+/* Fix for material form fields with Tailwind CSS 4 */
+.mat-mdc-form-field {
+  width: 100%;
+
+  .mat-mdc-form-field-flex {
+    background-color: white;
+    border-radius: 0.375rem;
+  }
+
+  &.mat-form-field-appearance-outline,
+  &.mat-mdc-form-field-appearance-outline {
+    /* Fix for outline appearance */
+    .mat-mdc-text-field-wrapper {
+      background-color: var(--mat-sys-surface-container-lowest);
+      border-radius: 0.375rem;
+    }
+
+    /* Remove double border effect */
+    .mdc-notched-outline__notch {
+      border-right: none;
+      border-left: none;
+    }
+
+    /* Fix for label */
+    .mat-mdc-form-field-label-wrapper {
+      top: 0;
+      padding-top: 0;
+    }
+  }
+
+  /* Fix for input text */
+  .mat-mdc-input-element {
+    caret-color: var(--mat-sys-primary);
+  }
+
+  /* Error states */
+  &.mat-form-field-invalid {
+    .mat-mdc-form-field-label {
+      color: var(--mat-sys-error);
+    }
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: var(--mat-sys-error) !important;
+    }
+  }
+
+  /* Focus states */
+  &.mat-focused {
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: var(--mat-sys-primary);
+    }
+    .mat-mdc-form-field-label {
+      color: var(--mat-sys-primary);
+    }
+  }
+}
+
+/* Fix for form field icons and suffixes */
+.mat-mdc-form-field-icon-suffix,
+.mat-mdc-form-field-text-suffix {
+  color: var(--mat-sys-on-surface-variant);
+}
+
+/* Fix for dark mode form fields */
+.dark {
+  .mat-mdc-form-field {
+    .mat-mdc-text-field-wrapper {
+      background-color: var(--mat-sys-surface-container-low);
+    }
+
+    .mat-mdc-form-field-flex {
+      background-color: var(--mat-sys-surface-container-low);
+    }
+
+    .mat-mdc-input-element {
+      color: var(--mat-sys-on-surface);
+    }
+
+    .mat-mdc-form-field-label {
+      color: var(--mat-sys-on-surface-variant);
+    }
+  }
+}
+
+/* Fix for checkbox alignment */
+.mat-mdc-checkbox {
+  .mdc-checkbox {
+    .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background {
+      border-color: var(--mat-sys-primary);
+      background-color: var(--mat-sys-primary);
+    }
+  }
+
+  .mdc-form-field {
+    color: var(--mat-sys-on-surface);
+  }
+}
+
+/* Error Tailor styling fixes - Complete overhaul */
+.error-tailor-has-error {
+  &.mat-mdc-form-field {
+    margin-bottom: 1.75rem !important;
+    position: relative;
+
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: var(--mat-sys-error) !important;
+    }
+
+    /* Hide the default error messages */
+    .mat-mdc-form-field-subscript-wrapper {
+      display: none !important;
+    }
+  }
+
+  /* Special styling for checkboxes */
+  &.mdc-form-field {
+    margin-bottom: 1.75rem !important;
+    position: relative;
+  }
+}
+
+/* Completely reposition error messages outside and below the input */
+control-error {
+  position: absolute !important;
+  bottom: -24px !important;
+  left: 0 !important;
+  font-size: 12px !important;
+  line-height: 1.2 !important;
+  width: 100% !important;
+  z-index: 1 !important;
+
+  .error-message {
+    color: var(--mat-sys-error, #f44336) !important;
+    font-size: 0.75rem !important;
+    padding: 0.25rem 1rem !important;
+  }
+}
+
+/* Ensure form field containers have proper positioning */
+.mat-mdc-form-field {
+  position: relative !important;
+}
