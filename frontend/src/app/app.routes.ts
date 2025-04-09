@@ -5,7 +5,7 @@ export const routes: Routes = [
     loadChildren: () => import('@features/contact/contact.routes'),
   },
   {
-    path: 'users',
+    path: 'admin',
     loadChildren: () => import('@features/admin/admin.routes'),
   },
   {

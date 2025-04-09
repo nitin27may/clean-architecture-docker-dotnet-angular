@@ -107,12 +107,27 @@ public class UsersController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("activity-logs")]
+[HttpGet("activity-logs")]
     [Authorize]
     [AuthorizePermission("ActivityLog.Read")]
-    public async Task<IActionResult> GetActivityLogs([FromQuery] string username, [FromQuery] string email)
+    public async Task<IActionResult> GetActivityLogs([FromQuery] string username = "", [FromQuery] string email = "")
     {
-        var logs = await _activityLogService.GetActivityLogsAsync(username, email);
-        return Ok(logs);
+        // Ensure parameters are not null
+        username = username ?? "";
+        email = email ?? "";
+        
+        // Trim parameters to remove any whitespace
+        username = username.Trim();
+        email = email.Trim();
+        
+        try
+        {
+            var logs = await _activityLogService.GetActivityLogsAsync(username, email);
+            return Ok(logs);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = $"Error retrieving activity logs: {ex.Message}" });
+        }
     }
 }

@@ -42,8 +42,8 @@ public class ActivityLogRepository : IActivityLogRepository
         var sql = @"
             SELECT * FROM ""ActivityLog""
             WHERE (""Username"" = @Username OR @Username IS NULL)
-            AND (""Email"" = @Email OR @Email IS NULL)";
+            OR (""Email"" = @Email OR @Email IS NULL)";
 
-        return await _dapperHelper.Query<ActivityLogEntry>(sql, dbPara, CommandType.Text);
+        return await _dapperHelper.GetAll<ActivityLogEntry>(sql, dbPara, CommandType.Text);
     }
 }

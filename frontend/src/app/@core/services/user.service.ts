@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import { User } from "@core/models/user.interface";
 
@@ -62,9 +62,24 @@ export class UserService {
     return this.http.delete(environment.apiEndpoint + "/user/" + _id);
   }
 
-  getActivityLogs(username: string, email: string) {
-    return this.http.get<any[]>(`${environment.apiEndpoint}/users/activity-logs`, {
-      params: { username, email }
-    });
+  getActivityLogs(username: string = '', email: string | null = null) {
+    // Create params object and only add non-empty values
+    let params = new HttpParams();
+
+    if (username) {
+      params = params.set('username', username);
+    }
+
+    if (email) {
+      params = params.set('email', email);
+    }
+
+    return this.http.get<any[]>(`${environment.apiEndpoint}/users/activity-logs`, { params })
+      .pipe(
+        map(response => {
+          console.log('Activity logs response:', response);
+          return response;
+        })
+      );
   }
 }

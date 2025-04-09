@@ -26,6 +26,7 @@ public static class ApplicationServiceCollectionExtensions
         services.AddScoped<IPermissionService, PermissionService>();
         services.AddScoped<IRolePermissionService, RolePermissionService>();
         services.AddScoped<IContactPersonService,ContactPersonService>();
+        services.AddScoped<IActivityLogService,ActivityLogService>();
         return services;
     }
 }

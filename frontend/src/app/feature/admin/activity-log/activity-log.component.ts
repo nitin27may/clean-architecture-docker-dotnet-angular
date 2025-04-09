@@ -1,17 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '@core/services/user.service';
+import { DatePipe, NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-activity-log',
   templateUrl: './activity-log.component.html',
-  styleUrls: ['./activity-log.component.scss']
+  styleUrls: ['./activity-log.component.scss'],
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    DatePipe,
+    NgFor
+  ]
 })
 export class ActivityLogComponent implements OnInit {
-  filterForm: FormGroup;
-  activityLogs: any[] = [];
+  private fb = inject(FormBuilder);
+  private userService = inject(UserService);
 
-  constructor(private fb: FormBuilder, private userService: UserService) {}
+  filterForm!: FormGroup;
+  activityLogs = signal<any[]>([]);
 
   ngOnInit(): void {
     this.filterForm = this.fb.group({
@@ -22,8 +30,10 @@ export class ActivityLogComponent implements OnInit {
 
   onFilter(): void {
     const { username, email } = this.filterForm.value;
-    this.userService.getActivityLogs(username, email).subscribe(logs => {
-      this.activityLogs = logs;
+    this.userService.getActivityLogs(username, email).subscribe({
+      next: (logs) => {
+        this.activityLogs.set(logs);
+      }
     });
   }
 }

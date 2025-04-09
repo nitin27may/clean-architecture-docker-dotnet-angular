@@ -1,6 +1,7 @@
 export interface RolePermission {
     roleName: string;
     pageName: string;
+    pageUrl: string;
     operationName: string;
 }
 

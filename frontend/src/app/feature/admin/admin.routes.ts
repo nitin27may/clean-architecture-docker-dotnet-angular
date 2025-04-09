@@ -12,7 +12,7 @@ export default [
     canActivate: [redirectToLoginIfNotAuthenticated()],
     children: [
       {
-        path: '',
+        path: 'users',
         component: UserListComponent,
         canActivate: [PermissionGuard('Users', 'Read')]
       },

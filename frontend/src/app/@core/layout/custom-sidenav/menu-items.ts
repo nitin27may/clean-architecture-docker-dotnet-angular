@@ -35,11 +35,22 @@ export class MenuService {
       return menuItems;
     }
 
-    // Get unique pages from permissions
-    const uniquePages = [...new Set(user.rolePermissions.map(p => p.pageName))];
+    // Create a map to store unique page information
+    const pageMap = new Map<string, { name: string, url: string }>();
 
-    // Create menu items based on permissions
-    uniquePages.forEach(pageName => {
+    // Process all role permissions to get unique pages with their URLs
+    user.rolePermissions.forEach(p => {
+      if (!pageMap.has(p.pageName)) {
+        pageMap.set(p.pageName, {
+          name: p.pageName,
+          // Use pageUrl if available, fallback to lowercase page name
+          url: p.pageUrl || `/${p.pageName.toLowerCase()}`
+        });
+      }
+    });
+
+    // Create menu items based on pages and permissions
+    pageMap.forEach((pageInfo, pageName) => {
       if (pageName.toLowerCase() === 'dashboard') return;
 
       const operations = this.permissionService.getPagePermissions(pageName);
@@ -47,7 +58,7 @@ export class MenuService {
         menuItems.push({
           icon: this.getIconForPage(pageName),
           label: this.formatLabel(pageName),
-          route: `/${pageName.toLowerCase()}`,
+          route: pageInfo.url,
           exact: false,
           permission: `${pageName}.Read`
         });

@@ -39,7 +39,7 @@ public class RolePermissionRepository : GenericRepository<RolePermission>, IRole
                 r.""Name"" AS RoleName,
                 p.""Id"" as PageId,
                 p.""Name"" AS PageName,
-                p.""Url"" as Route,
+                p.""Url"" as PageUrl,
                 o.""Id"" as OperationId,
                 o.""Name"" AS OperationName
             FROM ""UserRoles"" ur
