@@ -139,7 +139,7 @@ For more detailed information, explore these documentation pages:
 - [Clean Architecture Series](architecture-series.md)
 - [Frontend Documentation](frontend.md)
 - [Backend Documentation](backend.md)
-- [Feature List](features.md)
+- [Feature List](visual-feature-guide.md)
 - [Roadmap](roadmap.md)
 - [Visual Feature Guide](visual-feature-guide.md)
 
