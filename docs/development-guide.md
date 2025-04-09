@@ -1,3 +1,9 @@
+---
+layout: default
+title: Development Guide
+nav_order: 4
+permalink: /development-guide
+---
 # Development Guide
 
 This guide provides detailed instructions for setting up your development environment and working with the Clean Architecture Docker .NET Angular starter project.

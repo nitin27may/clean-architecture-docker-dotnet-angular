@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Docker Guide
-nav_order: 6
+nav_order: 3
 permalink: /docker-guide
 ---
 

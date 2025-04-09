@@ -1,3 +1,9 @@
+---
+layout: default
+title: Backend Guide
+nav_order: 7
+permalink: /backend
+---
 # Backend Documentation
 
 ## Overview

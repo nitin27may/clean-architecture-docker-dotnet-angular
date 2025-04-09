@@ -1,5 +1,10 @@
+---
+layout: default
+title: NGINX Loadbalancer
+nav_order: 8
+permalink: /loadbalancer
+---
 # NGINX - loadbalancer Image
-
 
 ## nginx Dockerfile
 

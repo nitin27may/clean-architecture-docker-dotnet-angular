@@ -1,3 +1,10 @@
+---
+layout: default
+title: Roadmap
+nav_order: 9
+permalink: /roadmap
+---
+
 # Roadmap & Upcoming Features
 
 We have an ambitious roadmap to enhance this project with the following features, organized into development phases. This document outlines our planned improvements and future direction.

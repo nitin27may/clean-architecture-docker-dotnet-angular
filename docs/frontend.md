@@ -1,3 +1,9 @@
+---
+layout: default
+title: Frontend Guide
+nav_order: 6
+permalink: /Frontend
+---
 # Frontend Documentation
 
 ## Overview

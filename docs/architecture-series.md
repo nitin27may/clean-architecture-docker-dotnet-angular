@@ -1,3 +1,10 @@
+---
+layout: default
+title: Clean Architecture Series
+nav_order: 5
+permalink: /architecture-series
+---
+
 # Clean Architecture Series
 
 This series of articles provides an in-depth understanding of the architecture and implementation details of this project. Each article focuses on a specific aspect of the Clean Architecture principles applied in this solution.

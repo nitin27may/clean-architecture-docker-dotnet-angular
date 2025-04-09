@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Feature Showcase
-nav_order: 3
+nav_order: 2
 permalink: /visual-feature-guide
 ---
 
