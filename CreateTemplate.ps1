@@ -160,27 +160,16 @@ $templateJson = @{
             defaultValue = $true
         }
     }
+    # Modified sources configuration to fix validation errors
     sources = @(
         @{
-            source = "backend/"
-            target = "backend/"
-        }
-        @{
-            source = "frontend/"
-            target = "frontend/"
-            condition = "IncludeAngular"
-        }
-        @{
-            source = "docker-compose.yml"
-            target = "docker-compose.yml"
-        }
-        @{
-            source = ".env-example"
-            target = ".env-example"
-        }
-        @{
-            source = "README.md"
-            target = "README.md"
+            modifiers = @(
+                @{
+                    condition = "true"
+                    include = @("**/*")
+                    exclude = @(".template.config/**/*")
+                }
+            )
         }
     )
     postActions = @(
