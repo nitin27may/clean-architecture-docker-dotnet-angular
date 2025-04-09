@@ -3,8 +3,7 @@ import LayoutComponent from "@core/layout/layout.component";
 import { redirectToLoginIfNotAuthenticated } from "@core/guards";
 import { UserListComponent } from "./users/users-list/users-list.component";
 import { PermissionGuard } from "@core/guards/permission.guard";
-
-
+import { ActivityLogComponent } from "./activity-log/activity-log.component";
 
 export default [
   {
@@ -17,6 +16,11 @@ export default [
         component: UserListComponent,
         canActivate: [PermissionGuard('Users', 'Read')]
       },
+      {
+        path: 'activity-logs',
+        component: ActivityLogComponent,
+        canActivate: [PermissionGuard('User', 'Read')]
+      }
     ]
   }
 ] as Routes;

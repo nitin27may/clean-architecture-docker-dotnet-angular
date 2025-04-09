@@ -29,6 +29,8 @@ public class ActivityLoggingMiddleware
                 var activityLogService = scope.ServiceProvider.GetRequiredService<IActivityLogService>();
                 var userIdClaim = context.User.FindFirst("id");
                 var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
+                var username = context.User.Identity?.Name;
+                var email = context.User.FindFirst(ClaimTypes.Email)?.Value;
                 var activityDescription = activityAttribute.ActivityDescription;
                 var endpointPath = context.Request.Path;
                 var httpMethod = context.Request.Method;
@@ -38,6 +40,8 @@ public class ActivityLoggingMiddleware
                 var logEntry = new ActivityLogEntry
                 {
                     UserId = userId,
+                    Username = username,
+                    Email = email,
                     Activity = activityDescription,
                     Endpoint = endpointPath,
                     HttpMethod = httpMethod,
