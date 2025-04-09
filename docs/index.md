@@ -13,15 +13,11 @@ A production-ready full-stack application with Angular 19, .NET 9, and PostgreSQ
 
 [Get Started](#-quick-start-in-60-seconds){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [View on GitHub](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular){: .btn .fs-5 .mb-4 .mb-md-0 }
-[Visual Feature Tour](visual-feature-guide.md){: .btn .btn-purple .fs-5 .mb-4 .mb-md-0 .ml-2 }
+[Feature List](visual-feature-guide.md){: .btn .btn-purple .fs-5 .mb-4 .mb-md-0 .ml-2 }
 
 ---
 
-<div class="callout callout-new mb-4">
-  <div class="callout-content">
-    <strong>🎬 Interactive Visual Tour Available!</strong> Explore all features through our <a href="visual-feature-guide.md">visual feature guide</a> with screenshots and detailed explanations.
-  </div>
-</div>
+
 
 <p align="center">
   <img src="/clean-architecture-docker-dotnet-angular/docs/clean-architecture-demo.gif" alt="Application Demo" width="700">
