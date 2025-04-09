@@ -100,19 +100,59 @@ jobs:
           # Check that required files exist in template-output
           $requiredFiles = @(
             "docker-compose.yml",
-            ".env-example", directory and ensure all required files exist
+            ".env-example",
             "README.md"
-          )cd test-project
+          )
           
-          foreach ($file in $requiredFiles) {rrectly
-            $filePath = "./template-output/$file"net new --list | findstr "cleanarch-fullstack"
+          foreach ($file in $requiredFiles) {
+            $filePath = "./template-output/$file"
             if (Test-Path $filePath) {
-              Write-Host "✅ $file exists" template
-            } else {          dotnet new cleanarch-fullstack --Organization TestCompany
+              Write-Host "✅ $file exists"
+            } else {
               Write-Host "❌ $file is missing"
-              # Create empty file if missing to prevent template validation errorsst files to verify creation
+              # Create empty file if missing to prevent template validation errors
               New-Item -Path $filePath -ItemType File -Force
-          dotnet nuget push ./nupkg/CleanArchitecture.FullStack.Template.${{ env.TEMPLATE_VERSION }}.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json        run: |      - name: Push to NuGet          path: ./nupkg/*.nupkg          name: nuget-package        with:        uses: actions/upload-artifact@v4      - name: Upload package artifact                    dotnet new cleanarch-fullstack --Organization TestCompany          cd test-project          mkdir test-project          dotnet new install ./nupkg/CleanArchitecture.FullStack.Template.${{ env.TEMPLATE_VERSION }}.nupkg        run: |      - name: Test template package          nuget pack ./template-output/CleanArchitecture.FullStack.Template.nuspec -OutputDirectory ./nupkg        run: |      - name: Pack template          Write-Host "Template structure verification completed"                    }            }              New-Item -Path $dirPath -ItemType Directory -Force              # Create directory if missing              Write-Host "❌ $dir directory is missing"            } else {              Write-Host "✅ $dir directory exists"            if (Test-Path $dirPath) {            $dirPath = "./template-output/$dir"          foreach ($dir in $requiredDirs) {                    )            "frontend"            "backend",          $requiredDirs = @(          # Check that required directories exist                    }            }          
+            }
+          }
+          
+          # Check that required directories exist
+          $requiredDirs = @(
+            "backend",
+            "frontend"
+          )
+          
+          foreach ($dir in $requiredDirs) {
+            $dirPath = "./template-output/$dir"
+            if (Test-Path $dirPath) {
+              Write-Host "✅ $dir directory exists"
+            } else {
+              Write-Host "❌ $dir directory is missing"
+              # Create directory if missing
+              New-Item -Path $dirPath -ItemType Directory -Force
+            }
+          }
+          
+          Write-Host "Template structure verification completed"
+
+      - name: Pack template
+        run: |
+          nuget pack ./template-output/CleanArchitecture.FullStack.Template.nuspec -OutputDirectory ./nupkg
+
+      - name: Test template package
+        run: |
+          dotnet new install ./nupkg/CleanArchitecture.FullStack.Template.${{ env.TEMPLATE_VERSION }}.nupkg
+          mkdir test-project
+          cd test-project
+          
+          # Verify template installed correctly
+          dotnet new --list | findstr "cleanarch-fullstack"
+          
+          # Create project from template
+          dotnet new cleanarch-fullstack --Organization TestCompany
+          
+          # List files to verify creation
+          dir
+
       - name: Upload package artifact
         uses: actions/upload-artifact@v4
         with:
