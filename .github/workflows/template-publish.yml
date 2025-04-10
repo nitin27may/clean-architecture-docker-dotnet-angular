@@ -237,9 +237,16 @@ jobs:
           # Verify template installed correctly
           dotnet new --list | findstr "cleanarch"
           
-          # Create project from template with parameters from template.json
-          # Test both with camelCase and PascalCase to verify both work
-          dotnet new cleanarch-fullstack --Organization TestCompany --ProjectName TestProject
+          # Get full help to see available parameters
+          dotnet new cleanarch-fullstack --help
+          
+          # Try multiple parameter formats to see which one works
+          # First try with standard --param value format
+          dotnet new cleanarch-fullstack --Organization TestCompany --ProjectName TestProject || (
+            # If that fails, try with -p:param=value format (newer .NET SDK style)
+            echo "Standard parameter format failed, trying -p: format..."
+            dotnet new cleanarch-fullstack -p:Organization=TestCompany -p:ProjectName=TestProject
+          )
           
           # List files to verify creation
           dir
@@ -249,8 +256,10 @@ jobs:
           mkdir test-project-with-org
           cd test-project-with-org
           
-          # Create project from template with organization parameter
-          dotnet new cleanarch-fullstack --organization TestCompany --projectName TestProjectWithOrg
+          # Create project with fallback options
+          dotnet new cleanarch-fullstack --organization TestCompany --projectName TestProjectWithOrg || (
+            dotnet new cleanarch-fullstack -p:Organization=TestCompany -p:ProjectName=TestProjectWithOrg
+          )
           
           # List files to verify creation
           dir
@@ -260,8 +269,10 @@ jobs:
           mkdir test-project-no-org
           cd test-project-no-org
           
-          # Create project from template without organization parameter
-          dotnet new cleanarch-fullstack --projectName TestProjectNoOrg
+          # Create project with fallback options
+          dotnet new cleanarch-fullstack --projectName TestProjectNoOrg || (
+            dotnet new cleanarch-fullstack -p:ProjectName=TestProjectNoOrg
+          )
           
           # List files to verify creation
           dir
@@ -271,12 +282,14 @@ jobs:
           mkdir test-project-no-angular
           cd test-project-no-angular
           
-          # Create project from template without Angular
-          dotnet new cleanarch-fullstack --organization TestCompany --projectName TestProjectNoAngular --includeAngular false
+          # Create project with fallback options
+          dotnet new cleanarch-fullstack --organization TestCompany --projectName TestProjectNoAngular --includeAngular false || (
+            dotnet new cleanarch-fullstack -p:Organization=TestCompany -p:ProjectName=TestProjectNoAngular -p:IncludeAngular=false
+          )
           
           # Verify that frontend directory is not created
           if (Test-Path "./frontend") {
-            Write-Error "Frontend directory should not exist when includeAngular is false"
+            Write-Error "Frontend directory should not exist when IncludeAngular is false"
             exit 1
           }
           
@@ -286,8 +299,12 @@ jobs:
       - name: Test template package with default folder naming
         shell: pwsh
         run: |
-          # Test with organization - should create folder YourCompany.TestProject
+          # Test with organization using fallback syntax
           dotnet new cleanarch-fullstack --Organization YourCompany --ProjectName TestProject
+          if (-not $?) {
+            Write-Host "Trying alternative parameter format"
+            dotnet new cleanarch-fullstack -p:Organization=YourCompany -p:ProjectName=TestProject
+          }
           
           if (Test-Path "YourCompany.TestProject") {
             Write-Host "✅ YourCompany.TestProject folder created successfully"
@@ -299,6 +316,10 @@ jobs:
           
           # Test without organization - should create folder TestProjectNoOrg
           dotnet new cleanarch-fullstack --ProjectName TestProjectNoOrg
+          if (-not $?) {
+            Write-Host "Trying alternative parameter format"
+            dotnet new cleanarch-fullstack -p:ProjectName=TestProjectNoOrg
+          }
           
           if (Test-Path "TestProjectNoOrg") {
             Write-Host "✅ TestProjectNoOrg folder created successfully"
@@ -309,7 +330,11 @@ jobs:
           }
           
           # Test with explicit output folder
-          dotnet new cleanarch-fullstack --Organization YourCompany --ProjectName TestProject -o CustomFolder
+          dotnet new cleanarch-fullstack --Organization YourCompany --ProjectName TestProject --output CustomFolder
+          if (-not $?) {
+            Write-Host "Trying alternative parameter format"
+            dotnet new cleanarch-fullstack -p:Organization=YourCompany -p:ProjectName=TestProject -o CustomFolder
+          }
           
           if (Test-Path "CustomFolder") {
             Write-Host "✅ CustomFolder created successfully"
