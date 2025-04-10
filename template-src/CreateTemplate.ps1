@@ -36,6 +36,32 @@ if (Test-Path $OutputDirectory) {
     New-Item -Path $OutputDirectory -ItemType Directory | Out-Null
 }
 
+# Ensure README is properly set up for NuGet package
+Write-Host "[$timestamp] Setting up README for NuGet package..."
+$readmePath = Join-Path $OutputDirectory "README.md"
+if (Test-Path $readmePath) {
+    Write-Host "[$timestamp] Updating existing README..."
+    $readmeContent = Get-Content -Path $readmePath -Raw
+    # Add template usage instructions at the top
+    $templateInstructions = "# Clean Architecture Full-Stack Template`n`n"
+    $templateInstructions += "## How to use this template`n`n"
+    $templateInstructions += "````n"
+    $templateInstructions += "dotnet new cleanarch-fullstack --Organization YourCompany --ProjectName YourProductName`n"
+    $templateInstructions += "````n`n"
+    $templateInstructions += "## Original README content below`n`n"
+    
+    Set-Content -Path $readmePath -Value ($templateInstructions + $readmeContent)
+} else {
+    Write-Host "[$timestamp] Creating new README..."
+    $templateInstructions = "# Clean Architecture Full-Stack Template`n`n"
+    $templateInstructions += "## How to use this template`n`n"
+    $templateInstructions += "````n"
+    $templateInstructions += "dotnet new cleanarch-fullstack --Organization YourCompany --ProjectName YourProductName`n"
+    $templateInstructions += "````n`n"
+    
+    Set-Content -Path $readmePath -Value $templateInstructions
+}
+
 # Create template structure directories
 $templateConfigDir = Join-Path $OutputDirectory ".template.config"
 New-Item -Path $templateConfigDir -ItemType Directory -Force | Out-Null
