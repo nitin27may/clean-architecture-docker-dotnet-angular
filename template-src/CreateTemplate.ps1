@@ -45,7 +45,7 @@ Write-Host "[$timestamp] Copying solution files..."
 $excludedItems = @(
     "bin", "obj", "node_modules", ".vs", ".vscode", "dist", ".git",
     ".angular", "package-lock.json", "yarn.lock", ".env", 
-    "appsettings.Development.json", "CreateTemplate.ps1", "nupkg"
+    "appsettings.Development.json", "template-src/CreateTemplate.ps1", "nupkg"
 )
 
 # Get absolute path of the output directory to avoid copying it
@@ -71,7 +71,7 @@ Get-ChildItem -Path $SourceDirectory -Directory |
 Get-ChildItem -Path $SourceDirectory -File | 
     Where-Object { 
         -not $_.Name.StartsWith('.') -and 
-        $_.Name -ne "CreateTemplate.ps1" -and 
+        $_.Name -ne "template-src/CreateTemplate.ps1" -and 
         $_.Extension -ne ".nupkg"
     } | 
     ForEach-Object {

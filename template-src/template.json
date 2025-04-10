@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Nitin",
+  "classifications": ["Web", "Clean Architecture"],
+  "name": "Clean Architecture Docker Angular",
+  "identity": "NitinSoft.CleanArch.Template",
+  "groupIdentity": "NitinSoft.CleanArch.Template",
+  "shortName": "cleanarch",
+  "sourceName": "ProjectNamePlaceholder",
+  "preferNameDirectory": true,
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "symbols": {
+    "namespacePrefix": {
+      "type": "parameter",
+      "datatype": "text",
+      "description": "Optional namespace prefix (e.g., MyOrg.)",
+      "defaultValue": "",
+      "replaces": "NamespacePrefix"
+    },
+    "projectName": {
+      "type": "parameter",
+      "datatype": "text",
+      "defaultValue": "MyApp",
+      "replaces": "ProjectNamePlaceholder"
+    }
+  }
+}
