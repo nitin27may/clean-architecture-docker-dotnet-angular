@@ -124,7 +124,7 @@ docker-compose up
 ## 🧩 Architecture
 
 <p align="center">
-  <img src="docs/architecture.png" alt="Container Architecture" width="80%">
+  <img src="docs/screenshots/architecture.png" alt="Container Architecture" width="80%">
   <br>
   <em>Container Architecture Overview</em>
 </p>
