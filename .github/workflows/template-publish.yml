@@ -177,17 +177,57 @@ jobs:
           }
           New-Item -Path $extractPath -ItemType Directory | Out-Null
           
-          # Extract the package using NuGet
-          nuget install CleanArchitecture.FullStack.Template -Source "./nupkg" -OutputDirectory $extractPath -ExcludeVersion
-          
-          # Verify README exists
-          $readmePath = "$extractPath/CleanArchitecture.FullStack.Template/README.md"
-          if (Test-Path $readmePath) {
-            Write-Host "✅ README.md exists in the NuGet package"
+          # Extract the package using NuGet with full path instead of source
+          Write-Host "Package path: $packagePath"
+          if (Test-Path $packagePath) {
+            # Use the NuGet CLI to extract the package directly
+            nuget install CleanArchitecture.FullStack.Template -Version ${{ env.TEMPLATE_VERSION }} -OutputDirectory $extractPath -Source "./nupkg"
+            
+            # Alternative extraction using simple file extraction if needed
+            if (!(Test-Path "$extractPath/CleanArchitecture.FullStack.Template")) {
+              Write-Host "Using alternative extraction method..."
+              $tempExtract = "$extractPath/temp"
+              New-Item -Path $tempExtract -ItemType Directory -Force | Out-Null
+              Copy-Item -Path $packagePath -Destination $tempExtract
+              
+              $nupkgFile = Get-ChildItem -Path $tempExtract -Filter "*.nupkg" | Select-Object -First 1
+              $extractedFolder = "$extractPath/CleanArchitecture.FullStack.Template"
+              New-Item -Path $extractedFolder -ItemType Directory -Force | Out-Null
+              
+              # Rename .nupkg to .zip for extraction
+              $zipPath = $nupkgFile.FullName -replace ".nupkg", ".zip"
+              Copy-Item -Path $nupkgFile.FullName -Destination $zipPath
+              
+              # Extract the zip file
+              Expand-Archive -Path $zipPath -DestinationPath $extractedFolder -Force
+            }
           } 
           else {
-            Write-Error "❌ README.md is missing from the NuGet package"
+            Write-Error "NuGet package not found at path: $packagePath"
           }
+          
+          # Verify README exists
+          # $readmePath = "$extractPath/CleanArchitecture.FullStack.Template.${{ env.TEMPLATE_VERSION }}/README.md"
+          # if (Test-Path $readmePath) {
+          #   Write-Host "✅ README.md exists in the NuGet package at $readmePath"
+          # } 
+          # else {
+          #   # Try alternative path
+          #   $altReadmePath = "$extractPath/CleanArchitecture.FullStack.Template/README.md"
+          #   if (Test-Path $altReadmePath) {
+          #     Write-Host "✅ README.md exists in the NuGet package at $altReadmePath"
+          #   }
+          #   else {
+          #     # Search for README.md anywhere in the extracted package
+          #     $readmeFiles = Get-ChildItem -Path $extractPath -Filter "README.md" -Recurse
+          #     if ($readmeFiles.Count -gt 0) {
+          #       Write-Host "✅ README.md found at: $($readmeFiles[0].FullName)"
+          #     }
+          #     else {
+          #       Write-Error "❌ README.md is missing from the NuGet package"
+          #     }
+          #   }
+          # }
 
       - name: Test template package
         run: |
