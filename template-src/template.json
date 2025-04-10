@@ -13,18 +13,31 @@
     "type": "project"
   },
   "symbols": {
-    "namespacePrefix": {
+    "organization": {
       "type": "parameter",
       "datatype": "text",
-      "description": "Optional namespace prefix (e.g., MyOrg.)",
+      "description": "Optional organization or company name to be used in namespaces (e.g., YourCompany). If not specified, organization name will be omitted.",
       "defaultValue": "",
-      "replaces": "NamespacePrefix"
+      "replaces": "NamespacePrefix."
     },
     "projectName": {
       "type": "parameter",
       "datatype": "text",
       "defaultValue": "MyApp",
       "replaces": "ProjectNamePlaceholder"
+    },
+    "skipOrgPrefix": {
+      "type": "computed",
+      "value": "(organization == \"\")"
+    }
+  },
+  "forms": {
+    "namespace": {
+      "identifier": "replace",
+      "pattern": {
+        "from": "^(.*?)\\.(.*?)$",
+        "to": "$1.$2"
+      }
     }
   }
 }

@@ -53,44 +53,49 @@ jobs:
       - name: Run template preparation script
         shell: pwsh
         run: |
-          ./CreateTemplate.ps1 -SourceDirectory . -TemplateNamespace Contact -OutputDirectory ./template-output
+          ./template-src/CreateTemplate.ps1 -SourceDirectory . -TemplateNamespace Contact -OutputDirectory ./template-output
 
-      - name: Create .nuspec file
+      - name: Copy template.json file
         shell: pwsh
         run: |
-          $nuspecContent = @"
-          <?xml version="1.0" encoding="utf-8"?>
-          <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
-            <metadata>
-              <id>CleanArchitecture.FullStack.Template</id>
-              <version>${{ env.TEMPLATE_VERSION }}</version>
-              <title>Clean Architecture Full-Stack Template</title>
-              <authors>${{ env.TEMPLATE_AUTHOR }}</authors>
-              <description>${{ env.TEMPLATE_DESCRIPTION }}</description>
-              <tags>dotnet-new template cleanarchitecture angular fullstack docker postgresql</tags>
-              <packageTypes>
-                <packageType name="Template" />
-              </packageTypes>
-              <repository type="git" url="https://github.com/nitin27may/clean-architecture-docker-dotnet-angular" />
-              <license type="expression">MIT</license>
-              <projectUrl>https://github.com/nitin27may/clean-architecture-docker-dotnet-angular</projectUrl>
-              <requireLicenseAcceptance>false</requireLicenseAcceptance>
-              <copyright>Copyright © ${{ env.TEMPLATE_AUTHOR }} $((Get-Date).Year)</copyright>
-              <summary>A full-stack template using Clean Architecture principles with .NET 9 API backend and Angular 19 frontend, containerized with Docker.</summary>
-            </metadata>
-          </package>
-          "@
-
-          Set-Content -Path "./template-output/CleanArchitecture.FullStack.Template.nuspec" -Value $nuspecContent
-
-      - name: Update template.json metadata
-        shell: pwsh
-        run: |
+          # Create template config directory
+          New-Item -Path "./template-output/.template.config" -ItemType Directory -Force
+          
+          # Copy the existing template.json file
+          Copy-Item -Path "./template-src/template.json" -Destination "./template-output/.template.config/template.json"
+          
+          # Update metadata in template.json
           $templateJsonPath = "./template-output/.template.config/template.json"
           $templateJson = Get-Content -Path $templateJsonPath -Raw | ConvertFrom-Json
           
           $templateJson.author = "${{ env.TEMPLATE_AUTHOR }}"
           $templateJson | ConvertTo-Json -Depth 10 | Set-Content -Path $templateJsonPath
+
+      - name: Copy README template
+        shell: pwsh
+        run: |
+          # Copy the README template if it exists
+          if (Test-Path "./template-src/README.template.md") {
+            Copy-Item -Path "./template-src/README.template.md" -Destination "./template-output/README.md"
+          }
+
+      - name: Copy and update .nuspec file
+        shell: pwsh
+        run: |
+          # Copy the .nuspec file
+          Copy-Item -Path "./template-src/CleanArchitecture.FullStack.Template.nuspec" -Destination "./template-output/CleanArchitecture.FullStack.Template.nuspec"
+          
+          # Update metadata in the .nuspec file
+          $nuspecPath = "./template-output/CleanArchitecture.FullStack.Template.nuspec"
+          $nuspecContent = Get-Content -Path $nuspecPath -Raw
+          
+          # Replace version, author, and description with workflow inputs
+          $nuspecContent = $nuspecContent -replace '<version>.*?</version>', "<version>${{ env.TEMPLATE_VERSION }}</version>"
+          $nuspecContent = $nuspecContent -replace '<authors>.*?</authors>', "<authors>${{ env.TEMPLATE_AUTHOR }}</authors>"
+          $nuspecContent = $nuspecContent -replace '<description>.*?</description>', "<description>${{ env.TEMPLATE_DESCRIPTION }}</description>"
+          $nuspecContent = $nuspecContent -replace '<copyright>.*?</copyright>', "<copyright>Copyright © ${{ env.TEMPLATE_AUTHOR }} $((Get-Date).Year)</copyright>"
+          
+          Set-Content -Path $nuspecPath -Value $nuspecContent
 
       - name: Verify template structure
         shell: pwsh
@@ -145,10 +150,36 @@ jobs:
           cd test-project
           
           # Verify template installed correctly
-          dotnet new --list | findstr "cleanarch-fullstack"
+          dotnet new --list | findstr "cleanarch"
           
-          # Create project from template
-          dotnet new cleanarch-fullstack --Organization TestCompany
+          # Create project from template with parameters from template.json
+          dotnet new cleanarch --organization TestCompany --projectName TestProject
+          
+          # List files to verify creation
+          dir
+
+      - name: Test template package with organization
+        run: |
+          dotnet new install ./nupkg/CleanArchitecture.FullStack.Template.${{ env.TEMPLATE_VERSION }}.nupkg
+          mkdir test-project-with-org
+          cd test-project-with-org
+          
+          # Verify template installed correctly
+          dotnet new --list | findstr "cleanarch"
+          
+          # Create project from template with organization parameter
+          dotnet new cleanarch --organization TestCompany --projectName TestProjectWithOrg
+          
+          # List files to verify creation
+          dir
+          
+      - name: Test template package without organization
+        run: |
+          mkdir test-project-no-org
+          cd test-project-no-org
+          
+          # Create project from template without organization parameter
+          dotnet new cleanarch --projectName TestProjectNoOrg
           
           # List files to verify creation
           dir

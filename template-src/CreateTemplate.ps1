@@ -10,8 +10,8 @@
 .PARAMETER SourceDirectory
     The directory containing the source code to templatize. Default is the current directory.
 
-.PARAMETER TemplateNamespace
-    The current namespace prefix used in the solution that will be tokenized. Default is "Contact".
+.PARAMETER OrganizationNamespace
+    The current organization namespace prefix used in the solution that will be tokenized. Default is "Contact".
 
 .PARAMETER OutputDirectory
     The directory where the prepared template will be created. Default is ".\template-output".
@@ -19,7 +19,7 @@
 
 param(
     [string]$SourceDirectory = ".",
-    [string]$TemplateNamespace = "Contact",
+    [string]$OrganizationNamespace = "Contact",
     [string]$OutputDirectory = ".\template-output"
 )
 
@@ -95,17 +95,18 @@ foreach ($file in $filesToProcess) {
     Write-Host "Processing $($file.FullName)"
     $content = Get-Content -Path $file.FullName -Raw
 
-    # Replace namespace references
+    # Replace namespace references with tokenized versions
+    # Note the trailing dot - when organization is empty, we don't want an extra dot
     if ($file.Extension -eq ".cs") {
-        $content = $content -replace "namespace\s+$TemplateNamespace\.", "namespace ${TemplateNamespace}."
-        $content = $content -replace "using\s+$TemplateNamespace\.", "using ${TemplateNamespace}."
+        $content = $content -replace "namespace\s+$OrganizationNamespace\.", "namespace NamespacePrefix."
+        $content = $content -replace "using\s+$OrganizationNamespace\.", "using NamespacePrefix."
     }
     elseif ($file.Extension -eq ".csproj") {
-        $content = $content -replace "<RootNamespace>$TemplateNamespace\.", "<RootNamespace>${TemplateNamespace}."
-        $content = $content -replace "<AssemblyName>$TemplateNamespace\.", "<AssemblyName>${TemplateNamespace}."
+        $content = $content -replace "<RootNamespace>$OrganizationNamespace\.", "<RootNamespace>NamespacePrefix."
+        $content = $content -replace "<AssemblyName>$OrganizationNamespace\.", "<AssemblyName>NamespacePrefix."
     }
     elseif ($file.Name -eq "*.sln") {
-        $content = $content -replace "$TemplateNamespace\.", "${TemplateNamespace}."
+        $content = $content -replace "$OrganizationNamespace\.", "NamespacePrefix."
     }
 
     # Write the modified content back to the file
@@ -125,7 +126,7 @@ $templateJson = @{
         language = "C#"
         type = "project"
     }
-    sourceName = $TemplateNamespace
+    sourceName = $OrganizationNamespace
     preferNameDirectory = $true
     symbols = @{
         Framework = @{
@@ -145,7 +146,7 @@ $templateJson = @{
             datatype = "string"
             description = "Organization name to use in the project"
             defaultValue = "YourCompany"
-            replaces = $TemplateNamespace
+            replaces = $OrganizationNamespace
         }
         SkipRestore = @{
             type = "parameter"

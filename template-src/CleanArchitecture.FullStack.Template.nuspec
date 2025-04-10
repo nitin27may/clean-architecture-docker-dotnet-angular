@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>CleanArchitecture.FullStack.Template</id>
+    <version>1.0.0</version>
+    <title>Clean Architecture Full-Stack Template</title>
+    <authors>Nitin Singh</authors>
+    <description>Full-stack Clean Architecture template with .NET 9 API and Angular 19</description>
+    <tags>dotnet-new template cleanarchitecture angular fullstack docker postgresql</tags>
+    <packageTypes>
+      <packageType name="Template" />
+    </packageTypes>
+    <repository type="git" url="https://github.com/nitin27may/clean-architecture-docker-dotnet-angular" />
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/nitin27may/clean-architecture-docker-dotnet-angular</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <copyright>Copyright © Nitin Singh 2024</copyright>
+    <summary>A full-stack template using Clean Architecture principles with .NET 9 API backend and Angular 19 frontend, containerized with Docker.</summary>
+  </metadata>
+</package>
