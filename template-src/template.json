@@ -5,7 +5,7 @@
   "name": "Clean Architecture Docker Angular",
   "identity": "NitinSoft.CleanArch.Template",
   "groupIdentity": "NitinSoft.CleanArch.Template",
-  "shortName": "cleanarch",
+  "shortName": "cleanarch-fullstack",
   "sourceName": "ProjectNamePlaceholder",
   "preferNameDirectory": true,
   "tags": {
@@ -23,6 +23,7 @@
     "projectName": {
       "type": "parameter",
       "datatype": "text",
+      "description": "Name of the project that will be used throughout the solution.",
       "defaultValue": "MyApp",
       "replaces": "ProjectNamePlaceholder"
     },

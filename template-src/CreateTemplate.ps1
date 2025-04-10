@@ -148,6 +148,13 @@ $templateJson = @{
             defaultValue = "YourCompany"
             replaces = $OrganizationNamespace
         }
+        ProjectName = @{
+            type = "parameter"
+            datatype = "string"
+            description = "Name of the project that will be used throughout the solution."
+            defaultValue = "MyApp"
+            replaces = "ProjectNamePlaceholder"
+        }
         SkipRestore = @{
             type = "parameter"
             datatype = "bool"
@@ -161,7 +168,6 @@ $templateJson = @{
             defaultValue = $true
         }
     }
-    # Modified sources configuration to fix validation errors
     sources = @(
         @{
             modifiers = @(

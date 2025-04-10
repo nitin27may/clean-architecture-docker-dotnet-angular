@@ -82,12 +82,18 @@ jobs:
             # Copy as main README.md in the template output root
             Copy-Item -Path "./template-src/README.template.md" -Destination "./template-output/README.md"
             
-            # Create docs directory for NuGet's readme reference
-            New-Item -Path "./template-output/docs" -ItemType Directory -Force
-            Copy-Item -Path "./template-src/README.template.md" -Destination "./template-output/docs/README.md"
+            Write-Host "✅ README file set up successfully at template-output/README.md"
             
-            Write-Host "✅ README files set up successfully"
-          } 
+            # Verify the file exists and has content
+            if (Test-Path "./template-output/README.md") {
+              $fileContent = Get-Content -Path "./template-output/README.md" -Raw
+              $contentLength = $fileContent.Length
+              Write-Host "README.md file size: $contentLength bytes"
+            } else {
+              Write-Error "README.md was not copied correctly"
+            }
+          } else {
+            Write-Error "README.template.md not found in template-src directory"
 
       - name: Copy and update .nuspec file
         shell: pwsh
@@ -153,6 +159,29 @@ jobs:
         run: |
           nuget pack ./template-output/CleanArchitecture.FullStack.Template.nuspec -OutputDirectory ./nupkg
 
+      - name: Verify template package contents
+        shell: pwsh
+        run: |
+          # Extract and verify the NuGet package contents to ensure README is included
+          $packagePath = Get-ChildItem -Path "./nupkg/*.nupkg" | Select-Object -First 1 -ExpandProperty FullName
+          $extractPath = "./nupkg-extracted"
+          
+          Write-Host "Extracting NuGet package to verify contents..."
+          if (Test-Path $extractPath) {
+            Remove-Item -Path $extractPath -Recurse -Force
+          }
+          New-Item -Path $extractPath -ItemType Directory | Out-Null
+          
+          # Extract the package using NuGet
+          nuget install CleanArchitecture.FullStack.Template -Source "./nupkg" -OutputDirectory $extractPath -ExcludeVersion
+          
+          # Verify README exists
+          $readmePath = "$extractPath/CleanArchitecture.FullStack.Template/README.md"
+          if (Test-Path $readmePath) {
+            Write-Host "✅ README.md exists in the NuGet package"
+          } else {
+            Write-Error "❌ README.md is missing from the NuGet package"
+
       - name: Test template package
         run: |
           dotnet new install ./nupkg/CleanArchitecture.FullStack.Template.${{ env.TEMPLATE_VERSION }}.nupkg
@@ -163,22 +192,19 @@ jobs:
           dotnet new --list | findstr "cleanarch"
           
           # Create project from template with parameters from template.json
-          dotnet new cleanarch --organization TestCompany --projectName TestProject
+          # Test both with camelCase and PascalCase to verify both work
+          dotnet new cleanarch-fullstack --Organization TestCompany --ProjectName TestProject
           
           # List files to verify creation
           dir
 
       - name: Test template package with organization
         run: |
-          dotnet new install ./nupkg/CleanArchitecture.FullStack.Template.${{ env.TEMPLATE_VERSION }}.nupkg
           mkdir test-project-with-org
           cd test-project-with-org
           
-          # Verify template installed correctly
-          dotnet new --list | findstr "cleanarch"
-          
           # Create project from template with organization parameter
-          dotnet new cleanarch --organization TestCompany --projectName TestProjectWithOrg
+          dotnet new cleanarch-fullstack --organization TestCompany --projectName TestProjectWithOrg
           
           # List files to verify creation
           dir
@@ -189,7 +215,7 @@ jobs:
           cd test-project-no-org
           
           # Create project from template without organization parameter
-          dotnet new cleanarch --projectName TestProjectNoOrg
+          dotnet new cleanarch-fullstack --projectName TestProjectNoOrg
           
           # List files to verify creation
           dir
@@ -200,7 +226,7 @@ jobs:
           cd test-project-no-angular
           
           # Create project from template without Angular
-          dotnet new cleanarch --organization TestCompany --projectName TestProjectNoAngular --includeAngular false
+          dotnet new cleanarch-fullstack --organization TestCompany --projectName TestProjectNoAngular --includeAngular false
           
           # Verify that frontend directory is not created
           if (Test-Path "./frontend") {
@@ -215,7 +241,7 @@ jobs:
         shell: pwsh
         run: |
           # Test with organization - should create folder YourCompany.TestProject
-          dotnet new cleanarch --organization YourCompany --projectName TestProject
+          dotnet new cleanarch-fullstack --Organization YourCompany --ProjectName TestProject
           
           if (Test-Path "YourCompany.TestProject") {
             Write-Host "✅ YourCompany.TestProject folder created successfully"
@@ -225,7 +251,7 @@ jobs:
           }
           
           # Test without organization - should create folder TestProjectNoOrg
-          dotnet new cleanarch --projectName TestProjectNoOrg
+          dotnet new cleanarch-fullstack --ProjectName TestProjectNoOrg
           
           if (Test-Path "TestProjectNoOrg") {
             Write-Host "✅ TestProjectNoOrg folder created successfully"
@@ -235,7 +261,7 @@ jobs:
           }
           
           # Test with explicit output folder
-          dotnet new cleanarch --organization YourCompany --projectName TestProject -o CustomFolder
+          dotnet new cleanarch-fullstack --Organization YourCompany --ProjectName TestProject -o CustomFolder
           
           if (Test-Path "CustomFolder") {
             Write-Host "✅ CustomFolder created successfully"

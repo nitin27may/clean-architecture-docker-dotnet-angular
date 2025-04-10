@@ -22,13 +22,13 @@ This template provides a starting point for creating a Clean Architecture soluti
 
    ```bash
    # Create with organization - output folder will be "YourCompany.MyApp"
-   dotnet new cleanarch --organization YourCompany --projectName MyApp
+   dotnet new cleanarch-fullstack --Organization YourCompany --ProjectName MyApp
 
    # Create without organization - output folder will be just "MyApp"
-   dotnet new cleanarch --projectName MyApp
+   dotnet new cleanarch-fullstack --ProjectName MyApp
 
    # Create in a specific folder (overrides default folder behavior)
-   dotnet new cleanarch --organization YourCompany --projectName MyApp -o CustomFolder
+   dotnet new cleanarch-fullstack --Organization YourCompany --ProjectName MyApp -o CustomFolder
    ```
 
 3. **Navigate to the project directory:**
@@ -56,48 +56,48 @@ This template provides a starting point for creating a Clean Architecture soluti
 
 ```bash
 # Full-stack application with organization name
-dotnet new cleanarch --organization Acme --projectName ECommerce
+dotnet new cleanarch-fullstack --Organization Acme --ProjectName ECommerce
 
 # Full-stack application without organization name
-dotnet new cleanarch --projectName ECommerce
+dotnet new cleanarch-fullstack --ProjectName ECommerce
 ```
 
 ### Backend-only Application
 
 ```bash
 # Create backend-only application (exclude Angular)
-dotnet new cleanarch --organization Acme --projectName ApiService --includeAngular false
+dotnet new cleanarch-fullstack --Organization Acme --ProjectName ApiService --includeAngular false
 
 # Backend-only application without organization name
-dotnet new cleanarch --projectName ApiService --includeAngular false
+dotnet new cleanarch-fullstack --ProjectName ApiService --includeAngular false
 ```
 
 ### Custom Output Location
 
 ```bash
 # Specify a custom output folder
-dotnet new cleanarch --organization Acme --projectName ECommerce -o ./projects/ecommerce-app
+dotnet new cleanarch --Organization Acme --ProjectName ECommerce -o ./projects/ecommerce-app
 
 # Specify output folder without organization name
-dotnet new cleanarch --projectName ECommerce -o ./projects/ecommerce-app
+dotnet new cleanarch --ProjectName ECommerce -o ./projects/ecommerce-app
 ```
 
 ### Combining Options
 
 ```bash
 # Backend-only application with custom output folder
-dotnet new cleanarch --organization Acme --projectName ApiService --includeAngular false -o ./apis/service
+dotnet new cleanarch --Organization Acme --ProjectName ApiService --includeAngular false -o ./apis/service
 
 # Full options example
-dotnet new cleanarch --organization Acme --projectName ECommerce --includeAngular true -o ./projects/ecommerce-app
+dotnet new cleanarch --Organization Acme --ProjectName ECommerce --includeAngular true -o ./projects/ecommerce-app
 ```
 
 ## Template Parameters
 
-- `--organization`: Optional organization or company name to be used in namespaces. If specified, namespaces will be formatted as `YourCompany.MyApp.Feature`. If not specified, namespaces will be formatted as `MyApp.Feature`.
-- `--projectName`: The name of the project. Default is `MyApp`.
+- `--Organization`: Optional organization or company name to be used in namespaces. If specified, namespaces will be formatted as `YourCompany.MyApp.Feature`. If not specified, namespaces will be formatted as `MyApp.Feature`.
+- `--ProjectName`: The name of the project. Default is `MyApp`.
 - `--includeAngular`: Boolean flag to indicate whether to include the Angular frontend project. Default is `true`.
-- `-o|--output`: Optional parameter to specify a custom output folder. If not specified, the output folder will be `<organization>.<projectName>` if organization is provided, or just `<projectName>` if it isn't.
+- `-o|--output`: Optional parameter to specify a custom output folder. If not specified, the output folder will be `<Organization>.<ProjectName>` if organization is provided, or just `<ProjectName>` if it isn't.
 
 ## Output Folder Naming
 
@@ -105,9 +105,9 @@ The template uses the following rules to determine the output folder name:
 
 | Command Parameters | Output Folder |
 | ------------------ | ------------- |
-| `--organization YourCompany --projectName MyApp` | `YourCompany.MyApp` |
-| `--projectName MyApp` (no organization) | `MyApp` |
-| `--organization YourCompany --projectName MyApp -o CustomFolder` | `CustomFolder` |
+| `--Organization YourCompany --ProjectName MyApp` | `YourCompany.MyApp` |
+| `--ProjectName MyApp` (no organization) | `MyApp` |
+| `--Organization YourCompany --ProjectName MyApp -o CustomFolder` | `CustomFolder` |
 
 ## Directory Structure
 
