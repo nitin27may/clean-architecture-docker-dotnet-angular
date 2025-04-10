@@ -63,3 +63,7 @@ collapse_inactive_chapters: true
 
 # Enable copy code button
 enable_copy_code_button: true
+
+# Google Analytics
+ga_tracking: G-BJBJ6TYVWF # Replace with your actual Google Analytics tracking ID
+ga_tracking_anonymize_ip: true

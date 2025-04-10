@@ -5,13 +5,25 @@ layout: table_wrappers
 <!DOCTYPE html>
 
 <html lang="{{ site.lang | default: 'en-US' }}">
-{% include head.html %}
+<head>
+  {% include head.html %}
+  <!-- Google Analytics tracking code -->
+  {% if site.ga_tracking != nil %}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.ga_tracking }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '{{ site.ga_tracking }}'{% unless site.ga_tracking_anonymize_ip == nil %}, { 'anonymize_ip': true }{% endunless %});
+    </script>
+  {% endif %}
+</head>
 <body>
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="svg-link" viewBox="0 0 24 24">
       <title>Link</title>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
-        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0-7.07 7.07l1.71-1.71"></path>
       </svg>
     </symbol>
     <symbol id="svg-search" viewBox="0 0 24 24">
