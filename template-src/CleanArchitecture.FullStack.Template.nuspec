@@ -16,5 +16,13 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <copyright>Copyright © Nitin Singh 2024</copyright>
     <summary>A full-stack template using Clean Architecture principles with .NET 9 API backend and Angular 19 frontend, containerized with Docker.</summary>
+    <readme>docs\README.md</readme>
   </metadata>
+  <files>
+    <!-- Include all template content files but exclude binaries and temp files -->
+    <file src="**\*" target="content" exclude="**\bin\**;**\obj\**;**\.git\**;**\.vs\**;**\.vscode\**;**\node_modules\**;**\.angular\**;**\docs\**" />
+    
+    <!-- Explicitly include the README for NuGet package display -->
+    <file src="docs\README.md" target="docs\" />
+  </files>
 </package>

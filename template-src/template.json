@@ -26,9 +26,34 @@
       "defaultValue": "MyApp",
       "replaces": "ProjectNamePlaceholder"
     },
+    "includeAngular": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "If specified, includes the Angular frontend project.",
+      "defaultValue": "true"
+    },
     "skipOrgPrefix": {
       "type": "computed",
       "value": "(organization == \"\")"
+    },
+    "defaultFolderName": {
+      "type": "generated",
+      "generator": "coalesce",
+      "parameters": {
+        "sourceVariableName": "organization",
+        "fallbackVariableName": "projectName",
+        "operations": [
+          {
+            "type": "conditional",
+            "configuration": {
+              "condition": "(organization != \"\")",
+              "value": "$(organization).$(projectName)",
+              "else": "$(projectName)"
+            }
+          }
+        ]
+      },
+      "replaces": "defaultFolderName"
     }
   },
   "forms": {
@@ -39,5 +64,15 @@
         "to": "$1.$2"
       }
     }
-  }
+  },
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "condition": "(!includeAngular)",
+          "exclude": [ "frontend/**/*" ]
+        }
+      ]
+    }
+  ]
 }

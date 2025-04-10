@@ -74,10 +74,20 @@ jobs:
       - name: Copy README template
         shell: pwsh
         run: |
-          # Copy the README template if it exists
+          # Ensure README is properly set up for NuGet package
+          Write-Host "Setting up README for NuGet package..."
+          
+          # Check if README template exists in template-src
           if (Test-Path "./template-src/README.template.md") {
+            # Copy as main README.md in the template output root
             Copy-Item -Path "./template-src/README.template.md" -Destination "./template-output/README.md"
-          }
+            
+            # Create docs directory for NuGet's readme reference
+            New-Item -Path "./template-output/docs" -ItemType Directory -Force
+            Copy-Item -Path "./template-src/README.template.md" -Destination "./template-output/docs/README.md"
+            
+            Write-Host "✅ README files set up successfully"
+          } 
 
       - name: Copy and update .nuspec file
         shell: pwsh
@@ -183,6 +193,56 @@ jobs:
           
           # List files to verify creation
           dir
+
+      - name: Test template package without Angular
+        run: |
+          mkdir test-project-no-angular
+          cd test-project-no-angular
+          
+          # Create project from template without Angular
+          dotnet new cleanarch --organization TestCompany --projectName TestProjectNoAngular --includeAngular false
+          
+          # Verify that frontend directory is not created
+          if (Test-Path "./frontend") {
+            Write-Error "Frontend directory should not exist when includeAngular is false"
+            exit 1
+          }
+          
+          # List files to verify creation
+          dir
+
+      - name: Test template package with default folder naming
+        shell: pwsh
+        run: |
+          # Test with organization - should create folder YourCompany.TestProject
+          dotnet new cleanarch --organization YourCompany --projectName TestProject
+          
+          if (Test-Path "YourCompany.TestProject") {
+            Write-Host "✅ YourCompany.TestProject folder created successfully"
+          } else {
+            Write-Error "❌ YourCompany.TestProject folder not created"
+            exit 1
+          }
+          
+          # Test without organization - should create folder TestProjectNoOrg
+          dotnet new cleanarch --projectName TestProjectNoOrg
+          
+          if (Test-Path "TestProjectNoOrg") {
+            Write-Host "✅ TestProjectNoOrg folder created successfully"
+          } else {
+            Write-Error "❌ TestProjectNoOrg folder not created"
+            exit 1
+          }
+          
+          # Test with explicit output folder
+          dotnet new cleanarch --organization YourCompany --projectName TestProject -o CustomFolder
+          
+          if (Test-Path "CustomFolder") {
+            Write-Host "✅ CustomFolder created successfully"
+          } else {
+            Write-Error "❌ CustomFolder not created"
+            exit 1
+          }
 
       - name: Upload package artifact
         uses: actions/upload-artifact@v4
