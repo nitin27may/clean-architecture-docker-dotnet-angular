@@ -229,6 +229,7 @@ jobs:
           }
 
       - name: Test template package
+        shell: pwsh
         run: |
           dotnet new install ./nupkg/CleanArchitecture.FullStack.Template.${{ env.TEMPLATE_VERSION }}.nupkg
           mkdir test-project
@@ -240,26 +241,29 @@ jobs:
           # Get full help to see available parameters
           dotnet new cleanarch-fullstack --help
           
-          # Try multiple parameter formats to see which one works
-          # First try with standard --param value format
-          dotnet new cleanarch-fullstack --Organization TestCompany --ProjectName TestProject || (
-            # If that fails, try with -p:param=value format (newer .NET SDK style)
-            echo "Standard parameter format failed, trying -p: format..."
+          # Try with standard format first
+          $result = dotnet new cleanarch-fullstack --Organization TestCompany --ProjectName TestProject
+          # If that fails, try with -p: format
+          if (-not $?) {
+            Write-Host "Standard parameter format failed, trying -p: format..."
             dotnet new cleanarch-fullstack -p:Organization=TestCompany -p:ProjectName=TestProject
-          )
+          }
           
           # List files to verify creation
           dir
 
       - name: Test template package with organization
+        shell: pwsh
         run: |
           mkdir test-project-with-org
           cd test-project-with-org
           
           # Create project with fallback options
-          dotnet new cleanarch-fullstack --organization TestCompany --projectName TestProjectWithOrg || (
+          dotnet new cleanarch-fullstack --organization TestCompany --projectName TestProjectWithOrg
+          if (-not $?) {
+            Write-Host "Trying alternative parameter format"
             dotnet new cleanarch-fullstack -p:Organization=TestCompany -p:ProjectName=TestProjectWithOrg
-          )
+          }
           
           # List files to verify creation
           dir
