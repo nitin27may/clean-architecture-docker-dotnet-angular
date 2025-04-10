@@ -89,11 +89,14 @@ jobs:
               $fileContent = Get-Content -Path "./template-output/README.md" -Raw
               $contentLength = $fileContent.Length
               Write-Host "README.md file size: $contentLength bytes"
-            } else {
+            } 
+            else {
               Write-Error "README.md was not copied correctly"
             }
-          } else {
+          } 
+          else {
             Write-Error "README.template.md not found in template-src directory"
+          }
 
       - name: Copy and update .nuspec file
         shell: pwsh
@@ -129,7 +132,8 @@ jobs:
             $filePath = "./template-output/$file"
             if (Test-Path $filePath) {
               Write-Host "✅ $file exists"
-            } else {
+            } 
+            else {
               Write-Host "❌ $file is missing"
               # Create empty file if missing to prevent template validation errors
               New-Item -Path $filePath -ItemType File -Force
@@ -146,7 +150,8 @@ jobs:
             $dirPath = "./template-output/$dir"
             if (Test-Path $dirPath) {
               Write-Host "✅ $dir directory exists"
-            } else {
+            } 
+            else {
               Write-Host "❌ $dir directory is missing"
               # Create directory if missing
               New-Item -Path $dirPath -ItemType Directory -Force
@@ -179,8 +184,10 @@ jobs:
           $readmePath = "$extractPath/CleanArchitecture.FullStack.Template/README.md"
           if (Test-Path $readmePath) {
             Write-Host "✅ README.md exists in the NuGet package"
-          } else {
+          } 
+          else {
             Write-Error "❌ README.md is missing from the NuGet package"
+          }
 
       - name: Test template package
         run: |
@@ -245,7 +252,8 @@ jobs:
           
           if (Test-Path "YourCompany.TestProject") {
             Write-Host "✅ YourCompany.TestProject folder created successfully"
-          } else {
+          } 
+          else {
             Write-Error "❌ YourCompany.TestProject folder not created"
             exit 1
           }
@@ -255,7 +263,8 @@ jobs:
           
           if (Test-Path "TestProjectNoOrg") {
             Write-Host "✅ TestProjectNoOrg folder created successfully"
-          } else {
+          } 
+          else {
             Write-Error "❌ TestProjectNoOrg folder not created"
             exit 1
           }
@@ -265,7 +274,8 @@ jobs:
           
           if (Test-Path "CustomFolder") {
             Write-Host "✅ CustomFolder created successfully"
-          } else {
+          } 
+          else {
             Write-Error "❌ CustomFolder not created"
             exit 1
           }
