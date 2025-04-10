@@ -31,7 +31,8 @@ Write-Host "[$timestamp] Template preparation process started"
 if (Test-Path $OutputDirectory) {
     Write-Host "[$timestamp] Cleaning existing output directory..."
     Remove-Item -Path "$OutputDirectory\*" -Recurse -Force -ErrorAction SilentlyContinue
-} else {
+} 
+else {
     Write-Host "[$timestamp] Creating output directory..."
     New-Item -Path $OutputDirectory -ItemType Directory | Out-Null
 }
