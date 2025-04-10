@@ -235,18 +235,13 @@ jobs:
           mkdir test-project
           cd test-project
           
-          # Verify template installed correctly
-          dotnet new --list | findstr "cleanarch"
-          
-          # Get full help to see available parameters
-          dotnet new cleanarch-fullstack --help
-          
           # Try with standard format first
-          $result = dotnet new cleanarch-fullstack --Organization TestCompany --ProjectName TestProject
-          # If that fails, try with -p: format
+          dotnet new cleanarch-fullstack --Organization TestCompany --ProjectName TestProject
+          # If that fails, try with alternative formats
           if (-not $?) {
-            Write-Host "Standard parameter format failed, trying -p: format..."
-            dotnet new cleanarch-fullstack -p:Organization=TestCompany -p:ProjectName=TestProject
+            Write-Host "Standard parameter format failed, trying alternative formats..."
+            # Try with no colon after -p
+            dotnet new cleanarch-fullstack -p Organization=TestCompany -p ProjectName=TestProject
           }
           
           # List files to verify creation
@@ -262,6 +257,7 @@ jobs:
           dotnet new cleanarch-fullstack --organization TestCompany --projectName TestProjectWithOrg
           if (-not $?) {
             Write-Host "Trying alternative parameter format"
+            # Use separate -p parameters, one for each property
             dotnet new cleanarch-fullstack -p:Organization=TestCompany -p:ProjectName=TestProjectWithOrg
           }
           
