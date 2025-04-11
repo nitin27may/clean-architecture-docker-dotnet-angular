@@ -33,6 +33,7 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddScoped<IUserRoleRepository,UserRoleRepository>();
         services.AddScoped<IGenericRepository<ContactPerson>, ContactPersonRepository>();
         services.AddScoped<IContactPersonRepository, ContactPersonRepository>();
+        services.AddScoped<IOperationRepository, OperationRepository>();
 
 
         services.AddScoped<IEmailService, EmailService>();
