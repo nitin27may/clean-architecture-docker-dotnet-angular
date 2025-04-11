@@ -12,6 +12,13 @@ public class RoleRepository : GenericRepository<Role>, IRoleRepository
     {
     }
 
+    public async Task<Role> GetRoleById(Guid id, IDbTransaction? transaction = null)
+    {
+        var parameters = new DynamicParameters();
+        parameters.Add("Id", id);
+        return await _dapperHelper.Get<Role>(@"SELECT * FROM ""Roles"" WHERE ""Id"" = @Id", parameters, CommandType.Text, transaction);
+    }
+
     public async Task<Role> GetRoleByName(string roleName, IDbTransaction? transaction = null)
     {
         var rolePara = new DynamicParameters();
@@ -31,7 +38,7 @@ public class RoleRepository : GenericRepository<Role>, IRoleRepository
             INSERT INTO ""Roles"" (""Name"", ""Description"", ""CreatedBy"", ""CreatedOn"")
             VALUES (@Name, @Description, @CreatedBy, @CreatedOn)
             RETURNING *",
-            dbPara, transaction);
+            dbPara, CommandType.Text, transaction);
     }
 
     public async Task<Role> UpdateRole(Role role, IDbTransaction? transaction = null)
@@ -52,7 +59,7 @@ public class RoleRepository : GenericRepository<Role>, IRoleRepository
                 ""UpdatedOn"" = @UpdatedOn
             WHERE ""Id"" = @Id
             RETURNING *",
-            dbPara, transaction);
+            dbPara, CommandType.Text, transaction);
     }
 
     public async Task<bool> DeleteRole(Guid id, IDbTransaction? transaction = null)
@@ -63,7 +70,7 @@ public class RoleRepository : GenericRepository<Role>, IRoleRepository
         var result = await _dapperHelper.Execute(@"
             DELETE FROM ""Roles"" 
             WHERE ""Id"" = @Id",
-            dbPara, transaction);
+            dbPara, CommandType.Text, transaction);
 
         return result > 0;
     }

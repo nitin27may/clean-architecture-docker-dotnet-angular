@@ -20,7 +20,7 @@ public class PermissionController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> AddPermission(CreatePermission createPermission)
     {
-        var response = await _permissionService.AddPermission(createPermission);
+        var response = await _permissionService.Add(createPermission);
         return Ok(response);
     }
 
@@ -28,7 +28,8 @@ public class PermissionController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> UpdatePermission(Guid id, UpdatePermission updatePermission)
     {
-        var response = await _permissionService.UpdatePermission(id, updatePermission);
+        updatePermission.Id = id;
+        var response = await _permissionService.Update(updatePermission);
         return Ok(response);
     }
 
@@ -36,7 +37,7 @@ public class PermissionController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetPermissions()
     {
-        var response = await _permissionService.GetPermissions();
+        var response = await _permissionService.FindAll();
         return Ok(response);
     }
 
@@ -44,7 +45,7 @@ public class PermissionController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeletePermission(Guid id)
     {
-        var response = await _permissionService.DeletePermission(id);
+        var response = await _permissionService.Delete(id);
         return Ok(response);
     }
 }

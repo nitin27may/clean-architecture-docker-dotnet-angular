@@ -1,14 +1,27 @@
 ﻿using Contact.Application.Interfaces;
 using Contact.Domain.Entities;
 using Contact.Domain.Interfaces;
+using Contact.Application.UseCases.RolePermissions;
+using AutoMapper;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Contact.Application.Services;
 
-public class RolePermissionService :  IRolePermissionService
+public class RolePermissionService : GenericService<RolePermission, RolePermissionResponse, CreateRolePermission, UpdateRolePermission>, IRolePermissionService
 {
+    private readonly IGenericRepository<RolePermission> _repository;
     private readonly IRolePermissionRepository _rolePermissionRepository;
-    public RolePermissionService(IRolePermissionRepository rolePermissionRepository)
+    
+    public RolePermissionService(
+        IGenericRepository<RolePermission> repository, 
+        IMapper mapper, 
+        IUnitOfWork unitOfWork,
+        IRolePermissionRepository rolePermissionRepository)
+        : base(repository, mapper, unitOfWork)
     {
+        _repository = repository;
         _rolePermissionRepository = rolePermissionRepository;
     }
 
@@ -24,7 +37,7 @@ public class RolePermissionService :  IRolePermissionService
                 CreatedBy = createdBy
             };
 
-            await _rolePermissionRepository.Add(rolePermission);
+            await _repository.Add(rolePermission);
         }
     }
 

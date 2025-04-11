@@ -20,7 +20,7 @@ public class RoleController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> AddRole(CreateRole createRole)
     {
-        var response = await _roleService.AddRole(createRole);
+        var response = await _roleService.Add(createRole);
         return Ok(response);
     }
 
@@ -28,7 +28,8 @@ public class RoleController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> UpdateRole(Guid id, UpdateRole updateRole)
     {
-        var response = await _roleService.UpdateRole(id, updateRole);
+        updateRole.Id = id;
+        var response = await _roleService.Update(updateRole);
         return Ok(response);
     }
 
@@ -36,15 +37,15 @@ public class RoleController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetRoles()
     {
-        var response = await _roleService.GetRoles();
+        var response = await _roleService.FindAll();
         return Ok(response);
     }
 
     [HttpDelete("{id}")]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteRole(Guid id)
-    {
-        var response = await _roleService.DeleteRole(id);
+    {;
+        var response = await _roleService.Delete(id);
         return Ok(response);
     }
 }

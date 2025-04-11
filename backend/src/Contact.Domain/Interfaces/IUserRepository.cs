@@ -10,4 +10,5 @@ public interface IUserRepository : IGenericRepository<User>
     Task<List<string>> FindRolesById(Guid id);
     Task<IEnumerable<User>> CheckUniqueUsers(string email, string username);
     Task<User> UpdatePassword(User item, IDbTransaction? transaction = null);
+    Task<IEnumerable<UserRole>> GetUserRoles(Guid userId, IDbTransaction? transaction = null);
 }

@@ -114,4 +114,18 @@ public class UserRepository : GenericRepository<User>, IUserRepository
             RETURNING *",
             dbPara);
     }
+
+    public async Task<IEnumerable<UserRole>> GetUserRoles(Guid userId, IDbTransaction? transaction = null)
+    {
+        var dbPara = new DynamicParameters();
+        dbPara.Add("UserId", userId);
+        
+        var sql = @"
+            SELECT *
+            FROM ""UserRoles""
+            WHERE ""UserId"" = @UserId";
+            
+        // Note: The GetAll method doesn't accept a transaction parameter
+        return await _dapperHelper.GetAll<UserRole>(sql, dbPara, CommandType.Text);
+    }
 }
