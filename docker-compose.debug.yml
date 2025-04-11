@@ -11,9 +11,19 @@ services:
       - ./backend:/app
       - backend-packages:/root/.nuget/packages  # Persist NuGet packages
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:5000
-      - AppSettings__ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=contacts;Username=contacts_admin;Password=YourStrongPassword123!
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+      - AppSettings__ConnectionStrings__DefaultConnection=Host=${POSTGRES_HOST};Port=${POSTGRES_PORT};Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
+      - AppSettings__Secret=${JWT_SECRET}
+      - AppSettings__Issuer=${JWT_ISSUER}
+      - AppSettings__Audience=${JWT_AUDIENCE}
+      - AppSettings__PasswordResetUrl=${PASSWORD_RESET_URL}
+      - SmtpSettings__SmtpServer=${SMTP_SERVER}
+      - SmtpSettings__Port=${SMTP_PORT}
+      - SmtpSettings__Username=${SMTP_USERNAME}
+      - SmtpSettings__Password=${SMTP_PASSWORD}
+      - SmtpSettings__FromEmail=${SMTP_FROM_EMAIL}
+      - SmtpSettings__EnableSsl=${SMTP_ENABLE_SSL}
     depends_on:
       - postgres
     command: dotnet watch run --project Contact.Api/Contact.Api.csproj
