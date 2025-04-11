@@ -1,6 +1,6 @@
 namespace Contact.Application.UseCases.Pages;
 
-public class UpdatePage
+public class PageResponse
 {
        public Guid Id { get; set; }
     public string Name { get; set; }

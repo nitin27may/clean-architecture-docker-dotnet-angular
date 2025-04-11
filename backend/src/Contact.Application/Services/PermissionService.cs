@@ -1,20 +1,28 @@
 using Contact.Application.Interfaces;
 using Contact.Domain.Entities;
 using Contact.Domain.Interfaces;
+using Contact.Application.UseCases.Permissions;
+using AutoMapper;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Contact.Application.Services;
 
-public class PermissionService : IPermissionService
+public class PermissionService : GenericService<Permission, PermissionResponse, CreatePermission, UpdatePermission>, IPermissionService
 {
-    private readonly IPermissionRepository _permissionRepository;
-    public PermissionService(IPermissionRepository permissionRepository)
+    private readonly IGenericRepository<Permission> _repository;
+    private readonly IGenericRepository<PageOperationMapping> _pageOperationMappingRepository;
+    
+    public PermissionService(
+        IGenericRepository<Permission> repository,
+        IGenericRepository<PageOperationMapping> pageOperationMappingRepository,
+        IMapper mapper, 
+        IUnitOfWork unitOfWork)
+        : base(repository, mapper, unitOfWork)
     {
-        _permissionRepository = permissionRepository;
-    }
-
-    public async Task<IEnumerable<PageOperationMapping>> GetAllPageOperationMappingsAsync()
-    {
-        return await _permissionRepository.GetPageOperationMappingsAsync();
+        _repository = repository;
+        _pageOperationMappingRepository = pageOperationMappingRepository;
     }
 
     public async Task<Permission> AddPermission(CreatePermission createPermission)
@@ -22,37 +30,41 @@ public class PermissionService : IPermissionService
         var permission = new Permission
         {
             PageId = createPermission.PageId,
+            Description = createPermission.Description,
             OperationId = createPermission.OperationId,
-            CreatedBy = createPermission.CreatedBy,
             CreatedOn = DateTime.UtcNow
         };
 
-        return await _permissionRepository.Add(permission);
+        return await _repository.Add(permission);
     }
 
     public async Task<Permission> UpdatePermission(Guid id, UpdatePermission updatePermission)
     {
-        var permission = await _permissionRepository.FindByID(id);
+        var permission = await _repository.FindByID(id);
         if (permission == null)
         {
-            throw new NotFoundException("Permission not found");
+            throw new Exception("Permission not found");
         }
 
         permission.PageId = updatePermission.PageId;
         permission.OperationId = updatePermission.OperationId;
-        permission.UpdatedBy = updatePermission.UpdatedBy;
         permission.UpdatedOn = DateTime.UtcNow;
 
-        return await _permissionRepository.Update(permission);
+        return await _repository.Update(permission);
     }
 
     public async Task<bool> DeletePermission(Guid id)
     {
-        return await _permissionRepository.Delete(id);
+        return await _repository.Delete(id);
     }
 
     public async Task<IEnumerable<Permission>> GetPermissions()
     {
-        return await _permissionRepository.FindAll();
+        return await _repository.FindAll();
+    }
+
+    public async Task<IEnumerable<PageOperationMapping>> GetAllPageOperationMappingsAsync()
+    {
+        return await _pageOperationMappingRepository.FindAll();
     }
 }

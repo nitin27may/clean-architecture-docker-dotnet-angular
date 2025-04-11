@@ -1,12 +1,9 @@
 ﻿using Contact.Domain.Entities;
+using Contact.Application.UseCases.Permissions;
 
 namespace Contact.Application.Interfaces;
 
-public interface IPermissionService
+public interface IPermissionService : IGenericService<Permission, PermissionResponse, CreatePermission, UpdatePermission>
 {
-    Task<IEnumerable<PageOperationMapping>> GetAllPageOperationMappingsAsync();
-    Task<Permission> AddPermission(CreatePermission createPermission);
-    Task<Permission> UpdatePermission(Guid id, UpdatePermission updatePermission);
-    Task<bool> DeletePermission(Guid id);
-    Task<IEnumerable<Permission>> GetPermissions();
+   Task<IEnumerable<PageOperationMapping>> GetAllPageOperationMappingsAsync();
 }

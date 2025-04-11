@@ -1,6 +1,8 @@
 ﻿using Contact.Domain.Entities;
 using Contact.Domain.Interfaces;
 using Contact.Infrastructure.Persistence.Helper;
+using Dapper;
+using System.Data;
 
 namespace Contact.Infrastructure.Persistence.Repositories
 {
@@ -20,7 +22,7 @@ namespace Contact.Infrastructure.Persistence.Repositories
             INNER JOIN ""Pages"" p ON perm.""PageId"" = p.""Id""
             INNER JOIN ""Operations"" o ON perm.""OperationId"" = o.""Id""
             ORDER BY p.""Name"", o.""Name"";";
-            return await _dapperHelper.GetAll<PageOperationMapping>(sql, null);
+            return await _dapperHelper.GetAll<PageOperationMapping>(sql, null, CommandType.Text);
         }
 
         public async Task<Permission> AddPermission(Permission permission)
@@ -36,7 +38,7 @@ namespace Contact.Infrastructure.Persistence.Repositories
                 INSERT INTO ""Permissions"" (""PageId"", ""OperationId"", ""Description"", ""CreatedBy"", ""CreatedOn"")
                 VALUES (@PageId, @OperationId, @Description, @CreatedBy, @CreatedOn)
                 RETURNING *",
-                dbPara);
+                dbPara, CommandType.Text);
         }
 
         public async Task<Permission> UpdatePermission(Permission permission)
@@ -59,7 +61,7 @@ namespace Contact.Infrastructure.Persistence.Repositories
                     ""UpdatedOn"" = @UpdatedOn
                 WHERE ""Id"" = @Id
                 RETURNING *",
-                dbPara);
+                dbPara, CommandType.Text);
         }
 
         public async Task<bool> DeletePermission(Guid id)
@@ -70,7 +72,7 @@ namespace Contact.Infrastructure.Persistence.Repositories
             var result = await _dapperHelper.Execute(@"
                 DELETE FROM ""Permissions"" 
                 WHERE ""Id"" = @Id",
-                dbPara);
+                dbPara, CommandType.Text);
 
             return result > 0;
         }

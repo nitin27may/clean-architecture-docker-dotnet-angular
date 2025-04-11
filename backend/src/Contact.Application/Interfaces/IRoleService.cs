@@ -3,10 +3,7 @@ using Contact.Domain.Entities;
 
 namespace Contact.Application.Interfaces;
 
-public interface IRoleService
+public interface IRoleService: IGenericService<Role, RoleResponse, CreateRole, UpdateRole>
 {
-    Task<Role> AddRole(CreateRole createRole);
-    Task<Role> UpdateRole(Guid id, UpdateRole updateRole);
-    Task<IEnumerable<Role>> GetRoles();
-    Task<bool> DeleteRole(Guid id);
+  
 }

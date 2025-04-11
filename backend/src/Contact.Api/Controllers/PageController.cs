@@ -20,7 +20,7 @@ public class PageController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> AddPage(CreatePage createPage)
     {
-        var response = await _pageService.AddPage(createPage);
+        var response = await _pageService.Add(createPage);
         return Ok(response);
     }
 
@@ -28,7 +28,8 @@ public class PageController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> UpdatePage(Guid id, UpdatePage updatePage)
     {
-        var response = await _pageService.UpdatePage(id, updatePage);
+        updatePage.Id = id;
+        var response = await _pageService.Update(updatePage);
         return Ok(response);
     }
 
@@ -36,7 +37,7 @@ public class PageController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetPages()
     {
-        var response = await _pageService.GetPages();
+        var response = await _pageService.FindAll();
         return Ok(response);
     }
 
@@ -44,7 +45,7 @@ public class PageController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeletePage(Guid id)
     {
-        var response = await _pageService.DeletePage(id);
+        var response = await _pageService.Delete(id);
         return Ok(response);
     }
 }
