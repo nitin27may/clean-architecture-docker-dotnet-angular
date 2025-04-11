@@ -9,7 +9,13 @@
   "customizations": {
     "vscode": {
       "settings": {
-        "terminal.integrated.defaultProfile.linux": "bash"
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "omnisharp.useModernNet": true,
+        "dotnet.server.useOmnisharp": true,
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.fixAll": "explicit"
+        }
       },
       "extensions": [
         "ms-dotnettools.csharp",
@@ -21,15 +27,25 @@
         "johnpapa.angular-essentials",
         "ms-azuretools.vscode-docker",
         "mohsen1.prettify-json",
-        "postgresql.pgsql"
+        "postgresql.pgsql",
+        "formulahendry.dotnet-test-explorer",
+        "editorconfig.editorconfig",
+        "vscode-icons-team.vscode-icons"
       ]
     }
   },
   "features": {
     "ghcr.io/devcontainers/features/node:1": {
-      "version": "none"
+      "version": "lts"
+    },
+    "ghcr.io/devcontainers/features/dotnet:2": {
+      "version": "9.0"
+    },
+    "ghcr.io/devcontainers/features/git:1": {
+      "version": "latest"
     }
   },
-  "postCreateCommand": "dotnet dev-certs https",
-  "remoteUser": "root"
+  "postCreateCommand": "dotnet dev-certs https && dotnet tool update -g dotnet-ef && cd /app/src && dotnet restore && cd /app && echo 'Development environment is ready!'",
+  "remoteUser": "root",
+  "shutdownAction": "stopCompose"
 }
