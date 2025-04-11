@@ -25,8 +25,15 @@ services:
       - SmtpSettings__FromEmail=${SMTP_FROM_EMAIL}
       - SmtpSettings__EnableSsl=${SMTP_ENABLE_SSL}
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     command: dotnet watch run --project Contact.Api/Contact.Api.csproj
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
 
   frontend:
     build:
@@ -41,21 +48,38 @@ services:
     environment:
       - NODE_ENV=development
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4200"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
 
   postgres:
     image: postgres:16-alpine
     environment:
-      - POSTGRES_USER=contacts_admin
-      - POSTGRES_PASSWORD=YourStrongPassword123!
-      - POSTGRES_DB=contacts
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./backend/scripts:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
   postgres_data:
   backend-packages:  # Persist NuGet packages
   frontend-packages:  # Persist node_modules
+
+networks:
+  default:
+    name: clean-architecture-network
+    driver: bridge
