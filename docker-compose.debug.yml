@@ -27,7 +27,7 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    command: dotnet watch run --project Contact.Api/Contact.Api.csproj
+    command: bash -c "cd /app/src && dotnet watch run --project Contact.Api/Contact.Api.csproj"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
       interval: 10s
