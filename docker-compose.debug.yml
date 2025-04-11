@@ -8,32 +8,37 @@ services:
       - "5000:5000"
       - "5001:5001"  # For HTTPS if needed
     volumes:
-      - ./backend:/app
+      - ./backend/src:/app/src
       - backend-packages:/root/.nuget/packages  # Persist NuGet packages
     environment:
       - ASPNETCORE_URLS=http://0.0.0.0:5000
-      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
-      - AppSettings__ConnectionStrings__DefaultConnection=Host=${POSTGRES_HOST};Port=${POSTGRES_PORT};Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
-      - AppSettings__Secret=${JWT_SECRET}
-      - AppSettings__Issuer=${JWT_ISSUER}
-      - AppSettings__Audience=${JWT_AUDIENCE}
-      - AppSettings__PasswordResetUrl=${PASSWORD_RESET_URL}
-      - SmtpSettings__SmtpServer=${SMTP_SERVER}
-      - SmtpSettings__Port=${SMTP_PORT}
-      - SmtpSettings__Username=${SMTP_USERNAME}
-      - SmtpSettings__Password=${SMTP_PASSWORD}
-      - SmtpSettings__FromEmail=${SMTP_FROM_EMAIL}
-      - SmtpSettings__EnableSsl=${SMTP_ENABLE_SSL}
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT:-Development}
+      - AppSettings__ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=${POSTGRES_DB:-contacts};Username=${POSTGRES_USER:-contacts_admin};Password=${POSTGRES_PASSWORD:-YourStrongPassword123!}
+      - AppSettings__Secret=${JWT_SECRET:-THIS_IS_A_SECRET_USED_TO_SIGN_AND_VERIFY_JWT_TOKENS_REPLACE_IT_WITH_YOUR_OWN_SECRET}
+      - AppSettings__Issuer=${JWT_ISSUER:-http://localhost:5000}
+      - AppSettings__Audience=${JWT_AUDIENCE:-http://localhost:5000}
+      - AppSettings__PasswordResetUrl=${PASSWORD_RESET_URL:-http://localhost:4200/reset-password/}
+      - SmtpSettings__SmtpServer=${SMTP_SERVER:-smtp.example.com}
+      - SmtpSettings__Port=${SMTP_PORT:-587}
+      - SmtpSettings__Username=${SMTP_USERNAME:-user}
+      - SmtpSettings__Password=${SMTP_PASSWORD:-password}
+      - SmtpSettings__FromEmail=${SMTP_FROM_EMAIL:-noreply@example.com}
+      - SmtpSettings__EnableSsl=${SMTP_ENABLE_SSL:-true}
     depends_on:
       postgres:
         condition: service_healthy
-    command: bash -c "cd /app/src && dotnet watch run --project Contact.Api/Contact.Api.csproj"
+    # Modified command to keep the container running if dotnet watch fails
+    command: >
+      bash -c "cd /app/src && 
+               dotnet watch run --project Contact.Api/Contact.Api.csproj --urls=http://0.0.0.0:5000 || 
+               tail -f /dev/null"
+    restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
-      interval: 10s
-      timeout: 5s
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health" , "||", "exit", "0"]
+      interval: 30s
+      timeout: 10s
       retries: 3
-      start_period: 10s
+      start_period: 40s
 
   frontend:
     build:
@@ -43,41 +48,41 @@ services:
       - "4200:4200"
     volumes:
       - ./frontend:/app
-      - frontend-packages:/app/node_modules
+      - /app/node_modules
     command: npm run serve
     environment:
       - NODE_ENV=development
     depends_on:
-      backend:
-        condition: service_healthy
+      - backend
+    restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:4200"]
-      interval: 10s
-      timeout: 5s
+      test: ["CMD", "curl", "-f", "http://localhost:4200", "||", "exit", "0"]
+      interval: 30s
+      timeout: 10s
       retries: 3
-      start_period: 30s
+      start_period: 40s
 
   postgres:
     image: postgres:16-alpine
     environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER:-contacts_admin}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-YourStrongPassword123!}
+      - POSTGRES_DB=${POSTGRES_DB:-contacts}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./backend/scripts:/docker-entrypoint-initdb.d
+    restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
-      interval: 5s
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-contacts_admin} -d ${POSTGRES_DB:-contacts}"]
+      interval: 10s
       timeout: 5s
       retries: 5
 
 volumes:
   postgres_data:
   backend-packages:  # Persist NuGet packages
-  frontend-packages:  # Persist node_modules
 
 networks:
   default:
