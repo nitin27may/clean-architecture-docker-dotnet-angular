@@ -1,4 +1,4 @@
-﻿using Contact.Api.Core.Attributes;
+using Contact.Api.Core.Attributes;
 using Contact.Application.Interfaces;
 using Contact.Application.UseCases.Users;
 using Microsoft.AspNetCore.Authorization;
@@ -20,10 +20,8 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost("register")]
-
     public async Task<IActionResult> Register(RegisterUser createUser)
     {
-        //var user = _mapper.Map<User>(createUser);
         var users = await _userService.CheckUniqueUsers(createUser.Email, createUser.Username);
         if (users.Any())
             return BadRequest(new { message = "User already exists" });
@@ -33,12 +31,12 @@ public class UsersController : ControllerBase
             return BadRequest(new { message = "User Details are not correct" });
         return CreatedAtAction(nameof(GetCurrentUser), response);
     }
+
     [HttpPost("create")]
     [ActivityLog("Creating new User")]
     [AuthorizePermission("Admin.Create")]
     public async Task<IActionResult> Create(CreateUser createUser)
     {
-        //var user = _mapper.Map<User>(createUser);
         var users = await _userService.CheckUniqueUsers(createUser.Email, createUser.Email);
         if (users.Any())
             return BadRequest(new { message = "User already exists" });
@@ -107,16 +105,14 @@ public class UsersController : ControllerBase
         return Ok(result);
     }
 
-[HttpGet("activity-logs")]
+    [HttpGet("activity-logs")]
     [Authorize]
     [AuthorizePermission("ActivityLog.Read")]
     public async Task<IActionResult> GetActivityLogs([FromQuery] string username = "", [FromQuery] string email = "")
     {
-        // Ensure parameters are not null
         username = username ?? "";
         email = email ?? "";
         
-        // Trim parameters to remove any whitespace
         username = username.Trim();
         email = email.Trim();
         

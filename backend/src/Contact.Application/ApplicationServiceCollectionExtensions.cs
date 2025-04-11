@@ -1,4 +1,4 @@
-﻿using Contact.Application.Interfaces;
+using Contact.Application.Interfaces;
 using Contact.Application.Mappings;
 using Contact.Application.Services;
 using Contact.Application.UseCases.Users;
@@ -25,6 +25,7 @@ public static class ApplicationServiceCollectionExtensions
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IPermissionService, PermissionService>();
         services.AddScoped<IRolePermissionService, RolePermissionService>();
+        
         services.AddScoped<IContactPersonService,ContactPersonService>();
         services.AddScoped<IActivityLogService,ActivityLogService>();
         return services;
