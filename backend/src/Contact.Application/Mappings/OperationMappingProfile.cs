@@ -1,6 +1,8 @@
 using AutoMapper;
 using Contact.Application.UseCases.Operations;
 using Contact.Domain.Entities;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Contact.Application.Mappings;
 
