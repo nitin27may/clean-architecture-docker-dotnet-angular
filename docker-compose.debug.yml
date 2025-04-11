@@ -48,8 +48,7 @@ services:
       - "4200:4200"
     volumes:
       - ./frontend:/app
-      - /app/node_modules
-    command: npm run serve
+      - frontend-node-modules:/app/node_modules
     environment:
       - NODE_ENV=development
     depends_on:
@@ -61,6 +60,8 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
+    # Command to run on startup - only install dependencies, don't start server yet
+    command: sh -c "npm install && tail -f /dev/null"
 
   postgres:
     image: postgres:16-alpine
