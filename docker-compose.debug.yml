@@ -1,69 +1,23 @@
+version: '3.8'
 services:
-  # frontend:
-  #   build:
-  #     context: ./frontend
-  #     dockerfile: debug.dockerfile
-  #   command: ["npm", "run", "start:debug"]
-  #   ports:
-  #     - 4200:4200
-  #     - 49153:49153
-  #   volumes:
-  #     - ./frontend:/app
-  #     - /app/node_modules
-  #   stdin_open: true
-  #   tty: true
-  #   depends_on:
-  #     - api
-  #   networks:
-  #     - postgres_network
- 
-  # api:
-  #   build:
-  #     context: ./backend/src
-  #     dockerfile: Debug.Dockerfile
-  #   command: ["dotnet", "watch", "--project", "Contact.Api/Contact.Api.csproj", "run", "--urls", "http://0.0.0.0:5000"] 
-  #   ports:
-  #     - 5000:5000
-  #   environment:
-  #     - ASPNETCORE__ENVIRONMENT=${ENVIRONMENT}
-  #     - DOTNET_SKIP_POLICY_LOADING=false
-  #     - AppSettings__ConnectionStrings__DefaultConnection=Host=${POSTGRES_HOST};Port=${POSTGRES_PORT};Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
-  #     - AppSettings__Secret=${JWT_SECRET}
-  #     - AppSettings__Issuer=${JWT_ISSUER}
-  #     - AppSettings__Audience=${JWT_AUDIENCE}
-  #     - AppSettings__PasswordResetUrl=${PASSWORD_RESET_URL}
-  #     - SmtpSettings__SmtpServer=${SMTP_SERVER}
-  #     - SmtpSettings__Port=${SMTP_PORT}
-  #     - SmtpSettings__Username=${SMTP_USERNAME}
-  #     - SmtpSettings__Password=${SMTP_PASSWORD}
-  #     - SmtpSettings__FromEmail=${SMTP_FROM_EMAIL}
-  #     - SmtpSettings__EnableSsl=${SMTP_ENABLE_SSL}
-  #   volumes:
-  #     - ./backend/src:/app
-  #     - ~/.vsdbg:/remote_debugger:rw
-  #   depends_on:
-  #     - postgres
-  #   networks:
-  #     - postgres_network
-      
-  postgres:
-    image: postgres:16-alpine
-    container_name: postgres_db
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./backend/scripts:/docker-entrypoint-initdb.d
-    networks:
-      - postgres_network
-
-volumes:
-  postgres_data:
-
-networks:
-  postgres_network:
-    driver: bridge
+ backend:
+   build:
+     context: ./backend/src
+     dockerfile: Debug.Dockerfile
+   command: dotnet watch run --urls=http://0.0.0.0:5000
+   volumes:
+     - ./backend:/app
+   environment:
+     - ASPNETCORE_ENVIRONMENT=Development
+   ports:
+     - "5000:5000"
+ frontend:
+   build:
+     context: ./frontend
+     dockerfile: debug.dockerfile
+   command: npm run start
+   volumes:
+     - ./frontend:/app
+     - /app/node_modules
+   ports:
+     - "4200:4200"
