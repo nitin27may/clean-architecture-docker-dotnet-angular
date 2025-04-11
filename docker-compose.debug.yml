@@ -14,7 +14,7 @@ services:
  frontend:
    build:
      context: ./frontend
-     dockerfile: debug.dockerfile
+     dockerfile: Debug.Dockerfile
    command: npm run start
    volumes:
      - ./frontend:/app
