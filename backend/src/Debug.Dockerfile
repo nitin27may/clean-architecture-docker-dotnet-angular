@@ -5,9 +5,14 @@ RUN apt-get update && apt-get install -y \
     curl \
     git \
     procps \
+    wget \
+    vim \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
+
+# Install dotnet dev certificates
+RUN dotnet dev-certs https
 
 # Copy a minimal set of files required for restoring dependencies
 COPY ["Contact.Api/Contact.Api.csproj", "Contact.Api/"]
