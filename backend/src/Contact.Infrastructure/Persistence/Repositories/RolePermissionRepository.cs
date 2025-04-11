@@ -52,4 +52,20 @@ public class RolePermissionRepository : GenericRepository<RolePermission>, IRole
             ORDER BY r.""Name"", p.""Name"", o.""Name"";";
         return await _dapperHelper.GetAll<RolePermissionMapping>(sql, dbPara);
     }
+
+    public async Task AssignPermissionsToRoleAsync(Guid roleId, IEnumerable<Guid> permissionIds, Guid createdBy)
+    {
+        foreach (var permissionId in permissionIds)
+        {
+            var rolePermission = new RolePermission
+            {
+                RoleId = roleId,
+                PermissionId = permissionId,
+                CreatedOn = DateTime.UtcNow,
+                CreatedBy = createdBy
+            };
+
+            await Add(rolePermission);
+        }
+    }
 }

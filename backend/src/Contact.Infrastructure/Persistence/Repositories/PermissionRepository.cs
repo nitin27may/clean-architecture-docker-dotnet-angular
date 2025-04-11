@@ -22,5 +22,57 @@ namespace Contact.Infrastructure.Persistence.Repositories
             ORDER BY p.""Name"", o.""Name"";";
             return await _dapperHelper.GetAll<PageOperationMapping>(sql, null);
         }
+
+        public async Task<Permission> AddPermission(Permission permission)
+        {
+            var dbPara = new DynamicParameters();
+            dbPara.Add("PageId", permission.PageId);
+            dbPara.Add("OperationId", permission.OperationId);
+            dbPara.Add("Description", permission.Description);
+            dbPara.Add("CreatedBy", permission.CreatedBy);
+            dbPara.Add("CreatedOn", permission.CreatedOn);
+
+            return await _dapperHelper.Insert<Permission>(@"
+                INSERT INTO ""Permissions"" (""PageId"", ""OperationId"", ""Description"", ""CreatedBy"", ""CreatedOn"")
+                VALUES (@PageId, @OperationId, @Description, @CreatedBy, @CreatedOn)
+                RETURNING *",
+                dbPara);
+        }
+
+        public async Task<Permission> UpdatePermission(Permission permission)
+        {
+            var dbPara = new DynamicParameters();
+            dbPara.Add("Id", permission.Id);
+            dbPara.Add("PageId", permission.PageId);
+            dbPara.Add("OperationId", permission.OperationId);
+            dbPara.Add("Description", permission.Description);
+            dbPara.Add("UpdatedBy", permission.UpdatedBy);
+            dbPara.Add("UpdatedOn", permission.UpdatedOn);
+
+            return await _dapperHelper.Update<Permission>(@"
+                UPDATE ""Permissions"" 
+                SET 
+                    ""PageId"" = @PageId,  
+                    ""OperationId"" = @OperationId, 
+                    ""Description"" = @Description, 
+                    ""UpdatedBy"" = @UpdatedBy,
+                    ""UpdatedOn"" = @UpdatedOn
+                WHERE ""Id"" = @Id
+                RETURNING *",
+                dbPara);
+        }
+
+        public async Task<bool> DeletePermission(Guid id)
+        {
+            var dbPara = new DynamicParameters();
+            dbPara.Add("Id", id);
+
+            var result = await _dapperHelper.Execute(@"
+                DELETE FROM ""Permissions"" 
+                WHERE ""Id"" = @Id",
+                dbPara);
+
+            return result > 0;
+        }
     }
 }
