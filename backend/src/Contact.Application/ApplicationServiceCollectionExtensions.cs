@@ -28,6 +28,7 @@ public static class ApplicationServiceCollectionExtensions
         
         services.AddScoped<IContactPersonService,ContactPersonService>();
         services.AddScoped<IActivityLogService,ActivityLogService>();
+        services.AddScoped<IOperationService, OperationService>();
         return services;
     }
 }
