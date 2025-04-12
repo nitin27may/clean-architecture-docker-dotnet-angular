@@ -45,12 +45,7 @@
       "version": "latest"
     }
   },
-  "postCreateCommand": "dotnet dev-certs https && dotnet tool update -g dotnet-ef && cd /workspace/backend/src && dotnet restore && echo 'Development environment is ready!'",
+  "postCreateCommand": "dotnet dev-certs https && dotnet tool update -g dotnet-ef && cd /app/src && dotnet restore && cd /app && echo 'Development environment is ready!'",
   "remoteUser": "root",
-  "shutdownAction": "stopCompose",
-  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
-  "mounts": [
-    "source=${localWorkspaceFolder}/backend,target=/workspace/backend,type=bind,consistency=cached",
-    "source=${localWorkspaceFolder}/frontend,target=/workspace/frontend,type=bind,consistency=cached"
-  ]
+  "shutdownAction": "stopCompose"
 }
