@@ -112,6 +112,26 @@ ALTER TABLE "Permissions" ADD CONSTRAINT "FK_Permissions_Operations"
 ALTER TABLE "Permissions" ADD CONSTRAINT "FK_Permissions_Pages" 
     FOREIGN KEY("PageId") REFERENCES "Pages"("Id");
 
+-- Add unique constraint for PageId and OperationId combination
+ALTER TABLE "Permissions" ADD CONSTRAINT "UQ_Permission_Page_Operation" 
+    UNIQUE ("PageId", "OperationId");
+
+-- Add unique constraint for Page Name
+ALTER TABLE "Pages" ADD CONSTRAINT "UQ_Page_Name" 
+    UNIQUE ("Name");
+
+-- Add unique constraint for Operation Name
+ALTER TABLE "Operations" ADD CONSTRAINT "UQ_Operation_Name" 
+    UNIQUE ("Name");
+
+-- Add unique constraint for Role Name
+ALTER TABLE "Roles" ADD CONSTRAINT "UQ_Role_Name" 
+    UNIQUE ("Name");
+
+-- Add unique constraint for RoleId and PermissionId combination
+ALTER TABLE "RolePermissions" ADD CONSTRAINT "UQ_RolePermission_Role_Permission" 
+    UNIQUE ("RoleId", "PermissionId");
+
 ALTER TABLE "RolePermissions" ADD CONSTRAINT "FK_RolePermissions_Permissions" 
     FOREIGN KEY("PermissionId") REFERENCES "Permissions"("Id");
 

@@ -7,11 +7,11 @@ namespace Contact.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class OperationController : ControllerBase
+public class OperationsController : ControllerBase
 {
     private readonly IOperationService _operationService;
 
-    public OperationController(IOperationService operationService)
+    public OperationsController(IOperationService operationService)
     {
         _operationService = operationService;
     }

@@ -1,0 +1,22 @@
+meta {
+  name: Add Page
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/Pages
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+body:json {
+  {
+    "name": "Pages",
+    "url": "admin/pages"
+  }
+}

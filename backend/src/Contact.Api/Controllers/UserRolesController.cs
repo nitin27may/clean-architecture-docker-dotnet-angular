@@ -7,11 +7,11 @@ namespace Contact.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class UserRoleController : ControllerBase
+public class UserRolesController : ControllerBase
 {
     private readonly IUserService _userService;
 
-    public UserRoleController(IUserService userService)
+    public UserRolesController(IUserService userService)
     {
         _userService = userService;
     }

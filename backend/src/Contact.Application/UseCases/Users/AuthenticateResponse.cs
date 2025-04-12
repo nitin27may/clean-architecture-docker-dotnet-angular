@@ -1,4 +1,6 @@
-﻿namespace Contact.Application.UseCases.Users;
+﻿using Contact.Application.UseCases.RolePermissions;
+
+namespace Contact.Application.UseCases.Users;
 
 public class AuthenticateResponse
 {

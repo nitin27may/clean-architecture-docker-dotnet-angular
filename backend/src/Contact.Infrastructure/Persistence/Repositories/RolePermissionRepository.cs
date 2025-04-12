@@ -2,6 +2,7 @@
 using Contact.Domain.Interfaces;
 using Contact.Infrastructure.Persistence.Helper;
 using Dapper;
+using System.Data;
 
 namespace Contact.Infrastructure.Persistence.Repositories;
 
@@ -16,9 +17,12 @@ public class RolePermissionRepository : GenericRepository<RolePermission>, IRole
         var dbPara = new DynamicParameters();
         var sql = @"
             SELECT
-                r.""Id"",
+                rp.""Id"",
                 r.""Name"" AS RoleName,
+                r.""Id"" AS RoleId,
+                perm.""Id"" AS PermissionId,
                 p.""Name"" AS PageName,
+                p.""Url"" as PageUrl,
                 o.""Name"" AS OperationName
             FROM ""RolePermissions"" rp
             INNER JOIN ""Roles"" r ON rp.""RoleId"" = r.""Id""
@@ -53,7 +57,7 @@ public class RolePermissionRepository : GenericRepository<RolePermission>, IRole
         return await _dapperHelper.GetAll<RolePermissionMapping>(sql, dbPara);
     }
 
-    public async Task AssignPermissionsToRoleAsync(Guid roleId, IEnumerable<Guid> permissionIds, Guid createdBy)
+    public async Task AssignPermissionsToRoleAsync(Guid roleId, IEnumerable<Guid> permissionIds, Guid createdBy, IDbTransaction? transaction = null)
     {
         foreach (var permissionId in permissionIds)
         {
@@ -65,7 +69,19 @@ public class RolePermissionRepository : GenericRepository<RolePermission>, IRole
                 CreatedBy = createdBy
             };
 
-            await Add(rolePermission);
+            await Add(rolePermission, transaction);
         }
+    }
+
+
+
+    public async Task DeletePermissionsByRoleId(Guid roleId, IDbTransaction? transaction = null)
+    {
+        var dbPara = new DynamicParameters();
+        dbPara.Add("@RoleId", roleId);
+        var sql = @"
+            Delete FROM ""RolePermissions""
+            WHERE ""RoleId"" = @RoleId;";
+        await _dapperHelper.Execute(sql, dbPara, CommandType.Text, transaction);
     }
 }

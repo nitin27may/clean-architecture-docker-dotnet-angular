@@ -1,0 +1,67 @@
+[
+  {
+    "roleName": "Admin",
+    "id": "d95d2348-1d79-4b93-96d4-e48e87fcb4b5",
+    "permissions": [
+      {
+        "pageName": "ActivityLog",
+        "pageUrl": "admin/activity-logs",
+        "operations": ["Read"]
+      },
+      {
+        "pageName": "Contacts",
+        "pageUrl": "/contacts",
+        "operations": ["Create", "Read", "Update", "Delete"]
+      },
+      {
+        "pageName": "Users",
+        "pageUrl": "admin/users",
+        "operations": ["Create", "Read", "Update", "Delete"]
+      }
+    ],
+    "createdOn": "0001-01-01T00:00:00+00:00",
+    "createdBy": "00000000-0000-0000-0000-000000000000",
+    "updatedOn": null,
+    "updatedBy": null
+  },
+  {
+    "roleName": "Editor",
+    "id": "104102f5-e0ec-4739-8fda-f05552b677c3",
+    "permissions": [
+      {
+        "pageName": "Contacts",
+        "pageUrl": "/contacts",
+        "operations": ["Create", "Read", "Update"]
+      },
+      {
+        "pageName": "Users",
+        "pageUrl": "admin/users",
+        "operations": ["Read"]
+      }
+    ],
+    "createdOn": "0001-01-01T00:00:00+00:00",
+    "createdBy": "00000000-0000-0000-0000-000000000000",
+    "updatedOn": null,
+    "updatedBy": null
+  },
+  {
+    "roleName": "Reader",
+    "id": "3a07551f-7473-44a6-a664-e6c7c834902b",
+    "permissions": [
+      {
+        "pageName": "Contacts",
+        "pageUrl": "/contacts",
+        "operations": ["Read"]
+      },
+      {
+        "pageName": "Users",
+        "pageUrl": "admin/users",
+        "operations": ["Read"]
+      }
+    ],
+    "createdOn": "0001-01-01T00:00:00+00:00",
+    "createdBy": "00000000-0000-0000-0000-000000000000",
+    "updatedOn": null,
+    "updatedBy": null
+  }
+]

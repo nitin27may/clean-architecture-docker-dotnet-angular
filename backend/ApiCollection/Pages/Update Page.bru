@@ -1,0 +1,23 @@
+meta {
+  name: Update Page
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{base_url}}/Pages/a8144440-dc22-486b-a6f9-e3d90b3388e0
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+body:json {
+  {
+    "id": "a8144440-dc22-486b-a6f9-e3d90b3388e0",
+    "name": "Pages",
+    "url": "admin/pages"
+  }
+}

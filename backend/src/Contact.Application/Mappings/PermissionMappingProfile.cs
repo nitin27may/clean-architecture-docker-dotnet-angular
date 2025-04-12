@@ -1,4 +1,3 @@
-using AutoMapper;
 using Contact.Application.UseCases.Permissions;
 using Contact.Domain.Entities;
 using Microsoft.AspNetCore.Http;
@@ -12,12 +11,13 @@ public class PermissionMappingProfile : BaseMappingProfile
         : base(httpContextAccessor)
     {
         CreateMap<Permission, PermissionResponse>();
+        CreateMap<PageOperationMapping, PermissionResponse>();
         CreateMap<CreatePermission, Permission>()
-         .AfterMap((src, dest) => SetAuditFields(src, dest)); 
+         .AfterMap((src, dest) => SetAuditFields(src, dest));
         CreateMap<UpdatePermission, Permission>()
          .AfterMap((src, dest) => SetAuditFields(src, dest, false)); // Set audit fields on update
     }
-    
+
     public PermissionMappingProfile()
         : this(ResolveHttpContextAccessor())
     {

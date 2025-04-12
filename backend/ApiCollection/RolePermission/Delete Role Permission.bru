@@ -1,0 +1,15 @@
+meta {
+  name: Delete Role Permission
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{base_url}}/RolePermissions/dfbab75e-89de-4fd2-bd4d-908e689e266e
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}

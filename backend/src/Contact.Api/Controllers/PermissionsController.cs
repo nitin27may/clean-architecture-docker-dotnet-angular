@@ -7,11 +7,11 @@ namespace Contact.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class PermissionController : ControllerBase
+public class PermissionsController : ControllerBase
 {
     private readonly IPermissionService _permissionService;
 
-    public PermissionController(IPermissionService permissionService)
+    public PermissionsController(IPermissionService permissionService)
     {
         _permissionService = permissionService;
     }
@@ -37,7 +37,7 @@ public class PermissionController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetPermissions()
     {
-        var response = await _permissionService.FindAll();
+        var response = await _permissionService.GetAllPageOperationMappingsAsync();
         return Ok(response);
     }
 
