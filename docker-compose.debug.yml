@@ -5,8 +5,8 @@ services:
       context: ./backend/src
       dockerfile: Debug.Dockerfile
     ports:
-      - "5000:5000"
-      - "5001:5001"  # For HTTPS if needed
+      - "5050:5000"  # Changed from 5000:5000 to use port 5050 on the host
+      - "5051:5001"  # Changed from 5001:5001 to use port 5051 on the host
     volumes:
       - ./backend/src:/app/src
       - backend-packages:/root/.nuget/packages  # Persist NuGet packages
@@ -15,8 +15,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT:-Development}
       - AppSettings__ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=${POSTGRES_DB:-contacts};Username=${POSTGRES_USER:-contacts_admin};Password=${POSTGRES_PASSWORD:-YourStrongPassword123!}
       - AppSettings__Secret=${JWT_SECRET:-THIS_IS_A_SECRET_USED_TO_SIGN_AND_VERIFY_JWT_TOKENS_REPLACE_IT_WITH_YOUR_OWN_SECRET}
-      - AppSettings__Issuer=${JWT_ISSUER:-http://localhost:5000}
-      - AppSettings__Audience=${JWT_AUDIENCE:-http://localhost:5000}
+      - AppSettings__Issuer=${JWT_ISSUER:-http://localhost:5050}  # Updated port reference
+      - AppSettings__Audience=${JWT_AUDIENCE:-http://localhost:5050}  # Updated port reference
       - AppSettings__PasswordResetUrl=${PASSWORD_RESET_URL:-http://localhost:4200/reset-password/}
       - SmtpSettings__SmtpServer=${SMTP_SERVER:-smtp.example.com}
       - SmtpSettings__Port=${SMTP_PORT:-587}
@@ -33,12 +33,6 @@ services:
                dotnet watch run --project Contact.Api/Contact.Api.csproj --urls=http://0.0.0.0:5000 || 
                tail -f /dev/null"
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/health" , "||", "exit", "0"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
 
   frontend:
     build:
@@ -51,6 +45,7 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development
+      - API_URL=http://localhost:5050  # Added to ensure frontend knows where to find the API
     depends_on:
       - backend
     restart: unless-stopped
@@ -60,8 +55,8 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
-    # Command to run on startup - only install dependencies, don't start server yet
-    command: sh -c "npm install && tail -f /dev/null"
+    # Command to run on startup - install dependencies and start the Angular dev server
+    command: sh -c "npm install && ng serve --host 0.0.0.0 --disable-host-check"
 
   postgres:
     image: postgres:16-alpine
