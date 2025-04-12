@@ -22,13 +22,15 @@ public static class ApplicationServiceCollectionExtensions
         services.AddValidatorsFromAssemblyContaining<RegisterUserValidator>();
         services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
 
-        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IActivityLogService,ActivityLogService>();
+        services.AddScoped<IContactPersonService,ContactPersonService>();
+        services.AddScoped<IOperationService, OperationService>();
+        services.AddScoped<IPageService, PageService>();
         services.AddScoped<IPermissionService, PermissionService>();
         services.AddScoped<IRolePermissionService, RolePermissionService>();
+        services.AddScoped<IRoleService, RoleService>();
+        services.AddScoped<IUserService, UserService>();    
         
-        services.AddScoped<IContactPersonService,ContactPersonService>();
-        services.AddScoped<IActivityLogService,ActivityLogService>();
-        services.AddScoped<IOperationService, OperationService>();
         return services;
     }
 }
