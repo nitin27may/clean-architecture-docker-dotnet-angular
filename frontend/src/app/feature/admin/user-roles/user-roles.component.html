@@ -1,0 +1,54 @@
+<div class="container mx-auto p-4">
+  <!-- Header -->
+  <div class="max-w-6xl mx-auto mb-6 bg-primary text-white rounded-lg shadow-sm overflow-hidden transition-all duration-300">
+    <div class="p-6 flex justify-between items-center">
+      <h1 class="text-2xl font-bold">User Roles Management</h1>
+      <button mat-raised-button color="accent" (click)="resetForm()">Assign Roles</button>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <div class="max-w-6xl mx-auto mb-6 bg-white rounded-lg shadow-sm overflow-hidden transition-all duration-300">
+    <form [formGroup]="userRoleForm" (ngSubmit)="saveUserRoles()" class="p-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <mat-form-field class="w-full">
+          <mat-label>User</mat-label>
+          <mat-select formControlName="userId" required>
+            <mat-option *ngFor="let user of users()" [value]="user.id">{{user.firstName}} {{user.lastName}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="userRoleForm.get('userId')?.hasError('required')">User is required</mat-error>
+        </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-label>Roles</mat-label>
+          <mat-select formControlName="roleIds" multiple required>
+            <mat-option *ngFor="let role of roles()" [value]="role.id">{{role.name}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="userRoleForm.get('roleIds')?.hasError('required')">At least one role is required</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="flex justify-end mt-4">
+        <button mat-raised-button color="primary" type="submit" [disabled]="userRoleForm.invalid">Save</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- User Roles List -->
+  <div class="max-w-6xl mx-auto bg-white rounded-lg shadow-sm overflow-hidden transition-all duration-300">
+    <table mat-table [dataSource]="selectedRoles()">
+      <!-- User Name Column -->
+      <ng-container matColumnDef="userName">
+        <th mat-header-cell *matHeaderCellDef> User Name </th>
+        <td mat-cell *matCellDef="let role"> {{role.userName}} </td>
+      </ng-container>
+
+      <!-- Role Name Column -->
+      <ng-container matColumnDef="roleName">
+        <th mat-header-cell *matHeaderCellDef> Role Name </th>
+        <td mat-cell *matCellDef="let role"> {{role.roleName}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="['userName', 'roleName']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['userName', 'roleName'];"></tr>
+    </table>
+  </div>
+</div>

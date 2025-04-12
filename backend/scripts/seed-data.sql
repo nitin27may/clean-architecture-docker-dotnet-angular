@@ -155,7 +155,12 @@ INSERT INTO "Operations" ("Id", "Name", "Description", "CreatedOn", "CreatedBy")
 INSERT INTO "Pages" ("Id", "Name", "Url", "CreatedOn", "CreatedBy") VALUES
 ('aa56a391-e880-4ac5-9f6f-6c8aa33454b8', 'Contacts', '/contacts', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
 ('c4943131-a642-4352-9725-e44ba5972b4b', 'Users', 'admin/users', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
-('c4943131-a642-4352-9725-e44ba5972b4c', 'ActivityLog', 'admin/activity-logs', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb');
+('c4943131-a642-4352-9725-e44ba5972b4c', 'ActivityLog', 'admin/activity-logs', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d4943131-a642-4352-9725-e44ba5972b4d', 'Pages', 'admin/pages', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('e4943131-a642-4352-9725-e44ba5972b4e', 'Operations', 'admin/operations', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('f4943131-a642-4352-9725-e44ba5972b4f', 'Permissions', 'admin/permissions', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('g4943131-a642-4352-9725-e44ba5972b4g', 'RolePermissions', 'admin/role-permissions', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('h4943131-a642-4352-9725-e44ba5972b4h', 'UserRoles', 'admin/user-roles', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb');
 
 -- Insert data into Roles table
 INSERT INTO "Roles" ("Id", "Name", "Description", "CreatedOn", "CreatedBy") VALUES
@@ -188,7 +193,19 @@ INSERT INTO "Permissions" ("Id", "PageId", "OperationId", "Description", "Create
 ('c94c23ad-59d4-4f80-91ee-39316140db17', 'c4943131-a642-4352-9725-e44ba5972b4b', 'dce8d805-df41-4549-be7b-6ed5647b09c3', 'User Update', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
 ('82755e66-b743-46e2-b612-efd2db6bcd75', 'c4943131-a642-4352-9725-e44ba5972b4b', '7493f274-5007-4e17-9840-88c9a096422f', 'User Read', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
 ('82755e66-b743-46e2-b612-efd2db6bce75', 'c4943131-a642-4352-9725-e44ba5972b4b', 'cef15d6f-25e4-422b-a7d6-405aaa2de2d5', 'User Delete', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
-('d35daa4e-fd02-4934-98d2-5b06e9b694b9', 'c4943131-a642-4352-9725-e44ba5972b4c', '7493f274-5007-4e17-9840-88c9a096422f', 'ActivityLog Read', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb');
+('d35daa4e-fd02-4934-98d2-5b06e9b694b9', 'c4943131-a642-4352-9725-e44ba5972b4c', '7493f274-5007-4e17-9840-88c9a096422f', 'ActivityLog Read', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d35daa4e-fd02-4934-98d2-5b06e9b694c0', 'd4943131-a642-4352-9725-e44ba5972b4d', '09be3f29-6429-4089-a2a9-a17efe46cd7b', 'Pages Create', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d35daa4e-fd02-4934-98d2-5b06e9b694c1', 'd4943131-a642-4352-9725-e44ba5972b4d', 'dce8d805-df41-4549-be7b-6ed5647b09c3', 'Pages Update', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d35daa4e-fd02-4934-98d2-5b06e9b694c2', 'd4943131-a642-4352-9725-e44ba5972b4d', '7493f274-5007-4e17-9840-88c9a096422f', 'Pages Read', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d35daa4e-fd02-4934-98d2-5b06e9b694c3', 'd4943131-a642-4352-9725-e44ba5972b4d', 'cef15d6f-25e4-422b-a7d6-405aaa2de2d5', 'Pages Delete', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d35daa4e-fd02-4934-98d2-5b06e9b694c4', 'e4943131-a642-4352-9725-e44ba5972b4e', '09be3f29-6429-4089-a2a9-a17efe46cd7b', 'Operations Create', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d35daa4e-fd02-4934-98d2-5b06e9b694c5', 'e4943131-a642-4352-9725-e44ba5972b4e', 'dce8d805-df41-4549-be7b-6ed5647b09c3', 'Operations Update', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d35daa4e-fd02-4934-98d2-5b06e9b694c6', 'e4943131-a642-4352-9725-e44ba5972b4e', '7493f274-5007-4e17-9840-88c9a096422f', 'Operations Read', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d35daa4e-fd02-4934-98d2-5b06e9b694c7', 'e4943131-a642-4352-9725-e44ba5972b4e', 'cef15d6f-25e4-422b-a7d6-405aaa2de2d5', 'Operations Delete', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d35daa4e-fd02-4934-98d2-5b06e9b694c8', 'f4943131-a642-4352-9725-e44ba5972b4f', '09be3f29-6429-4089-a2a9-a17efe46cd7b', 'Permissions Create', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d35daa4e-fd02-4934-98d2-5b06e9b694c9', 'f4943131-a642-4352-9725-e44ba5972b4f', 'dce8d805-df41-4549-be7b-6ed5647b09c3', 'Permissions Update', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d35daa4e-fd02-4934-98d2-5b06e9b694d0', 'f4943131-a642-4352-9725-e44ba5972b4f', '7493f274-5007-4e17-9840-88c9a096422f', 'Permissions Read', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d35daa4e-fd02-4934-98d2-5b06e9b694d1', 'f4943131-a642-4352-9725-e44ba5972b4f', 'cef15d6f-25e4-422b-a7d6-405aaa2de2d5', 'Permissions Delete', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb');
 
 -- Set up admin role permissions
 INSERT INTO "RolePermissions" ("RoleId", "PermissionId", "CreatedOn", "CreatedBy") VALUES
@@ -200,7 +217,19 @@ INSERT INTO "RolePermissions" ("RoleId", "PermissionId", "CreatedOn", "CreatedBy
 ('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', 'c94c23ad-59d4-4f80-91ee-39316140db17', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
 ('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', '82755e66-b743-46e2-b612-efd2db6bcd75', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
 ('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', '82755e66-b743-46e2-b612-efd2db6bce75', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
-('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', 'd35daa4e-fd02-4934-98d2-5b06e9b694b9', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb');
+('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', 'd35daa4e-fd02-4934-98d2-5b06e9b694b9', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', 'd35daa4e-fd02-4934-98d2-5b06e9b694c0', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', 'd35daa4e-fd02-4934-98d2-5b06e9b694c1', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', 'd35daa4e-fd02-4934-98d2-5b06e9b694c2', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', 'd35daa4e-fd02-4934-98d2-5b06e9b694c3', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', 'd35daa4e-fd02-4934-98d2-5b06e9b694c4', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', 'd35daa4e-fd02-4934-98d2-5b06e9b694c5', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', 'd35daa4e-fd02-4934-98d2-5b06e9b694c6', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', 'd35daa4e-fd02-4934-98d2-5b06e9b694c7', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', 'd35daa4e-fd02-4934-98d2-5b06e9b694c8', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', 'd35daa4e-fd02-4934-98d2-5b06e9b694c9', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', 'd35daa4e-fd02-4934-98d2-5b06e9b694d0', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', 'd35daa4e-fd02-4934-98d2-5b06e9b694d1', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb');
 
 -- Set up editor role permissions (can read, create and update)
 INSERT INTO "RolePermissions" ("RoleId", "PermissionId", "CreatedOn", "CreatedBy") VALUES

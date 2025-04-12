@@ -1,0 +1,60 @@
+<div class="container mx-auto p-4">
+  <!-- Header -->
+  <div class="max-w-6xl mx-auto mb-6 bg-primary text-white rounded-lg shadow-sm overflow-hidden transition-all duration-300">
+    <div class="p-6 flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Role Permissions Management</h1>
+      <button mat-raised-button color="accent" (click)="resetForm()">Assign Permissions</button>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <div class="max-w-6xl mx-auto mb-6 bg-white rounded-lg shadow-sm overflow-hidden transition-all duration-300">
+    <form [formGroup]="rolePermissionForm" (ngSubmit)="saveRolePermissions()" class="p-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <mat-form-field class="w-full">
+          <mat-label>Role</mat-label>
+          <mat-select formControlName="roleId" required>
+            <mat-option *ngFor="let role of roles()" [value]="role.id">{{role.name}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="rolePermissionForm.get('roleId')?.hasError('required')">Role is required</mat-error>
+        </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-label>Permissions</mat-label>
+          <mat-select formControlName="permissionIds" multiple required>
+            <mat-option *ngFor="let permission of permissions()" [value]="permission.id">{{permission.pageName}} - {{permission.operationName}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="rolePermissionForm.get('permissionIds')?.hasError('required')">At least one permission is required</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="flex justify-end mt-4">
+        <button mat-raised-button color="primary" type="submit" [disabled]="rolePermissionForm.invalid">Save</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Role Permissions List -->
+  <div class="max-w-6xl mx-auto bg-white rounded-lg shadow-sm overflow-hidden transition-all duration-300">
+    <table mat-table [dataSource]="selectedPermissions()">
+      <!-- Page Name Column -->
+      <ng-container matColumnDef="pageName">
+        <th mat-header-cell *matHeaderCellDef> Page Name </th>
+        <td mat-cell *matCellDef="let permission"> {{permission.pageName}} </td>
+      </ng-container>
+
+      <!-- Operation Name Column -->
+      <ng-container matColumnDef="operationName">
+        <th mat-header-cell *matHeaderCellDef> Operation Name </th>
+        <td mat-cell *matCellDef="let permission"> {{permission.operationName}} </td>
+      </ng-container>
+
+      <!-- Page URL Column -->
+      <ng-container matColumnDef="pageUrl">
+        <th mat-header-cell *matHeaderCellDef> Page URL </th>
+        <td mat-cell *matCellDef="let permission"> {{permission.pageUrl}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="['pageName', 'operationName', 'pageUrl']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['pageName', 'operationName', 'pageUrl'];"></tr>
+    </table>
+  </div>
+</div>
