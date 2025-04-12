@@ -1,0 +1,80 @@
+/* General container styling */
+.container {
+  @apply mx-auto p-4;
+}
+
+/* Card styling */
+.card {
+  @apply max-w-6xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden transition-all duration-300;
+}
+
+/* Header styling */
+.header {
+  @apply p-6 bg-primary text-white;
+}
+
+.header .icon {
+  @apply text-6xl;
+}
+
+.header .title {
+  @apply text-2xl font-bold;
+}
+
+.header .subtitle {
+  @apply text-base;
+}
+
+/* Form styling */
+.form {
+  @apply p-4 space-y-4;
+}
+
+.form .grid {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-6;
+}
+
+.form .form-field {
+  @apply w-full;
+}
+
+.form .form-field mat-form-field {
+  @apply w-full;
+}
+
+.form .form-field mat-error {
+  @apply text-red-500;
+}
+
+.form .actions {
+  @apply flex justify-end gap-2;
+}
+
+.form .actions button {
+  @apply hover:bg-surface-container-highest;
+}
+
+/* Table styling */
+.table {
+  @apply mt-8;
+}
+
+.table .title {
+  @apply text-xl font-bold mb-4;
+}
+
+.table mat-table {
+  @apply mat-elevation-z8 w-full;
+}
+
+.table th {
+  @apply font-bold;
+}
+
+.table td {
+  @apply p-2;
+}
+
+.table .actions button {
+  @apply m-1;
+}
