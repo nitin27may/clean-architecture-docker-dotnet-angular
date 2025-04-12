@@ -1,4 +1,5 @@
-﻿using Contact.Application.UseCases.Users;
+﻿using Contact.Application.UseCases.RolePermissions;
+using Contact.Application.UseCases.Users;
 using Contact.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;

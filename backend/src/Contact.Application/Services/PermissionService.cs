@@ -1,28 +1,26 @@
+using AutoMapper;
 using Contact.Application.Interfaces;
+using Contact.Application.UseCases.Permissions;
 using Contact.Domain.Entities;
 using Contact.Domain.Interfaces;
-using Contact.Application.UseCases.Permissions;
-using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Contact.Application.Services;
 
 public class PermissionService : GenericService<Permission, PermissionResponse, CreatePermission, UpdatePermission>, IPermissionService
 {
     private readonly IGenericRepository<Permission> _repository;
-    private readonly IGenericRepository<PageOperationMapping> _pageOperationMappingRepository;
-    
+    private readonly IPermissionRepository _permissionRepository;
+    private readonly IMapper _mapper;
     public PermissionService(
         IGenericRepository<Permission> repository,
-        IGenericRepository<PageOperationMapping> pageOperationMappingRepository,
-        IMapper mapper, 
+        IPermissionRepository permissionRepository,
+        IMapper mapper,
         IUnitOfWork unitOfWork)
         : base(repository, mapper, unitOfWork)
     {
         _repository = repository;
-        _pageOperationMappingRepository = pageOperationMappingRepository;
+        _permissionRepository = permissionRepository;
+        _mapper = mapper;
     }
 
     public async Task<Permission> AddPermission(CreatePermission createPermission)
@@ -63,8 +61,9 @@ public class PermissionService : GenericService<Permission, PermissionResponse, 
         return await _repository.FindAll();
     }
 
-    public async Task<IEnumerable<PageOperationMapping>> GetAllPageOperationMappingsAsync()
+    public async Task<IEnumerable<PermissionResponse>> GetAllPageOperationMappingsAsync()
     {
-        return await _pageOperationMappingRepository.FindAll();
+        return _mapper.Map<IEnumerable<PermissionResponse>>(await _permissionRepository.GetPageOperationMappingsAsync());
     }
+
 }

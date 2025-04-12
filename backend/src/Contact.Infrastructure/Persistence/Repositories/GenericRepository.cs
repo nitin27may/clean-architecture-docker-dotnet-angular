@@ -45,10 +45,10 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         return await _dapperHelper.Update<T>(query, entity, CommandType.Text, transaction);
     }
 
-    public async Task<bool> Delete(Guid id)
+    public async Task<bool> Delete(Guid id, IDbTransaction? transaction = null)
     {
         var query = $@"DELETE FROM ""{_tableName}"" WHERE ""Id"" = @Id;";
-        var result = await _dapperHelper.Execute(query, new { Id = id });
+        var result = await _dapperHelper.Execute(query, new { Id = id }, CommandType.Text, transaction);
         return result != 0;
     }
 

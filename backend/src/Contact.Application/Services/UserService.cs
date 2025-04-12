@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Contact.Application.Interfaces;
+using Contact.Application.UseCases.RolePermissions;
 using Contact.Application.UseCases.Users;
 using Contact.Domain.Entities;
 using Contact.Domain.Interfaces;
@@ -397,9 +398,9 @@ public class UserService : IUserService
         if (user == null) return null;
 
         var rolePermissions = await _rolePermissionService.GetRolePermissionMappingsAsync(userId);
-        user.RolePermissions = rolePermissions.ToList();
-        var userResponse = _mapper.Map<UserResponse>(user);
 
+        var userResponse = _mapper.Map<UserResponse>(user);
+        userResponse.RolePermissions = rolePermissions.ToList();
         return userResponse;
     }
 
@@ -420,7 +421,7 @@ public class UserService : IUserService
             var existingUserRoles = await _userRepository.GetUserRoles(userId, transaction);
             foreach (var userRole in existingUserRoles)
             {
-                await _userRoleRepository.Delete(userRole.Id);
+                await _userRoleRepository.Delete(userRole.Id, transaction);
             }
 
             // Add new user roles

@@ -1,11 +1,8 @@
-﻿using Contact.Application.Interfaces;
+﻿using AutoMapper;
+using Contact.Application.Interfaces;
+using Contact.Application.UseCases.RolePermissions;
 using Contact.Domain.Entities;
 using Contact.Domain.Interfaces;
-using Contact.Application.UseCases.RolePermissions;
-using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Contact.Application.Services;
 
@@ -13,20 +10,26 @@ public class RolePermissionService : GenericService<RolePermission, RolePermissi
 {
     private readonly IGenericRepository<RolePermission> _repository;
     private readonly IRolePermissionRepository _rolePermissionRepository;
-    
+    private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
     public RolePermissionService(
-        IGenericRepository<RolePermission> repository, 
-        IMapper mapper, 
+        IGenericRepository<RolePermission> repository,
+        IMapper mapper,
         IUnitOfWork unitOfWork,
         IRolePermissionRepository rolePermissionRepository)
         : base(repository, mapper, unitOfWork)
     {
         _repository = repository;
         _rolePermissionRepository = rolePermissionRepository;
+        _mapper = mapper;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task AssignPermissionsToRoleAsync(Guid roleId, IEnumerable<Guid> permissionIds, Guid createdBy)
     {
+        using var transaction = _unitOfWork.BeginTransaction();
+
+        await _rolePermissionRepository.DeletePermissionsByRoleId(roleId, transaction);
         foreach (var permissionId in permissionIds)
         {
             var rolePermission = new RolePermission
@@ -37,17 +40,18 @@ public class RolePermissionService : GenericService<RolePermission, RolePermissi
                 CreatedBy = createdBy
             };
 
-            await _repository.Add(rolePermission);
+            await _repository.Add(rolePermission, transaction);
         }
+        await _unitOfWork.CommitAsync();
     }
 
-    public async Task<IEnumerable<RolePermissionMapping>> GetRolePermissionMappingsAsync()
+    public async Task<IEnumerable<RolePermissionResponse>> GetRolePermissionMappingsAsync()
     {
-        return await _rolePermissionRepository.GetRolePermissionMappingsAsync();
+        return _mapper.Map<IEnumerable<RolePermissionResponse>>(await _rolePermissionRepository.GetRolePermissionMappingsAsync());
     }
 
-    public async Task<IEnumerable<RolePermissionMapping>> GetRolePermissionMappingsAsync(Guid userId)
+    public async Task<IEnumerable<RolePermissionResponse>> GetRolePermissionMappingsAsync(Guid userId)
     {
-        return await _rolePermissionRepository.GetRolePermissionMappingsAsync(userId);
+        return _mapper.Map<IEnumerable<RolePermissionResponse>>(await _rolePermissionRepository.GetRolePermissionMappingsAsync(userId));
     }
 }

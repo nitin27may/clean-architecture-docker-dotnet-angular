@@ -1,5 +1,4 @@
 using Contact.Application.Interfaces;
-using Contact.Application.UseCases.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,20 +6,27 @@ namespace Contact.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class RolePermissionController : ControllerBase
+public class RolePermissionsController : ControllerBase
 {
     private readonly IRolePermissionService _rolePermissionService;
 
-    public RolePermissionController(IRolePermissionService rolePermissionService)
+    public RolePermissionsController(IRolePermissionService rolePermissionService)
     {
         _rolePermissionService = rolePermissionService;
     }
 
     [HttpPost]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> AssignPermissionsToRole(Guid roleId, IEnumerable<Guid> permissionIds, Guid createdBy)
+    public async Task<IActionResult> AssignPermissionsToRole(Guid roleId, IEnumerable<Guid> permissionIds)
     {
-        await _rolePermissionService.AssignPermissionsToRoleAsync(roleId, permissionIds, createdBy);
+        var userIdClaim = User.FindFirst("Id")?.Value;
+        if (userIdClaim == null)
+        {
+            return Unauthorized(new { message = "User ID not found in token" });
+        }
+
+        var userId = Guid.Parse(userIdClaim);
+        await _rolePermissionService.AssignPermissionsToRoleAsync(roleId, permissionIds, userId);
         return Ok();
     }
 

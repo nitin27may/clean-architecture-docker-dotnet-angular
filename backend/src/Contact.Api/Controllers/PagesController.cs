@@ -7,11 +7,11 @@ namespace Contact.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class PageController : ControllerBase
+public class PagesController : ControllerBase
 {
     private readonly IPageService _pageService;
 
-    public PageController(IPageService pageService)
+    public PagesController(IPageService pageService)
     {
         _pageService = pageService;
     }

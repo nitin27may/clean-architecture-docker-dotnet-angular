@@ -1,0 +1,24 @@
+meta {
+  name: Add Role Permission
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/RolePermissions
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+body:json {
+   {
+       "id": "8713c198-416b-443f-b4bc-66db88f2f2a8",
+      "pageId": "a8144440-dc22-486b-a6f9-e3d90b3388e0",
+      "operationId": "dce8d805-df41-4549-be7b-6ed5647b09c3",
+       "description": "Admin Pages Write updating"
+    }
+}

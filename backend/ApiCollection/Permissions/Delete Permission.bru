@@ -1,0 +1,15 @@
+meta {
+  name: Delete Permission
+  type: http
+  seq: 3
+}
+
+delete {
+  url: {{base_url}}/Permissions/dfbab75e-89de-4fd2-bd4d-908e689e266e
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}

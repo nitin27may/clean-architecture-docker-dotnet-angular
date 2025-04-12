@@ -1,11 +1,11 @@
-﻿using Contact.Domain.Entities;
-using Contact.Application.UseCases.RolePermissions;
+﻿using Contact.Application.UseCases.RolePermissions;
+using Contact.Domain.Entities;
 
 namespace Contact.Application.Interfaces;
 
-public interface IRolePermissionService: IGenericService<RolePermission, RolePermissionResponse, CreateRolePermission, UpdateRolePermission>
+public interface IRolePermissionService : IGenericService<RolePermission, RolePermissionResponse, CreateRolePermission, UpdateRolePermission>
 {
-    Task<IEnumerable<RolePermissionMapping>> GetRolePermissionMappingsAsync();
+    Task<IEnumerable<RolePermissionResponse>> GetRolePermissionMappingsAsync();
     Task AssignPermissionsToRoleAsync(Guid roleId, IEnumerable<Guid> permissionIds, Guid createdBy);
-    Task<IEnumerable<RolePermissionMapping>> GetRolePermissionMappingsAsync(Guid userId);
+    Task<IEnumerable<RolePermissionResponse>> GetRolePermissionMappingsAsync(Guid userId);
 }
