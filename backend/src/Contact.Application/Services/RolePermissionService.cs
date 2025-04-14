@@ -12,6 +12,7 @@ public class RolePermissionService : GenericService<RolePermission, RolePermissi
     private readonly IRolePermissionRepository _rolePermissionRepository;
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
+
     public RolePermissionService(
         IGenericRepository<RolePermission> repository,
         IMapper mapper,
@@ -28,21 +29,29 @@ public class RolePermissionService : GenericService<RolePermission, RolePermissi
     public async Task AssignPermissionsToRoleAsync(Guid roleId, IEnumerable<Guid> permissionIds, Guid createdBy)
     {
         using var transaction = _unitOfWork.BeginTransaction();
-
-        await _rolePermissionRepository.DeletePermissionsByRoleId(roleId, transaction);
-        foreach (var permissionId in permissionIds)
+        try
         {
-            var rolePermission = new RolePermission
+            await _rolePermissionRepository.DeletePermissionsByRoleId(roleId, transaction);
+            foreach (var permissionId in permissionIds)
             {
-                RoleId = roleId,
-                PermissionId = permissionId,
-                CreatedOn = DateTime.UtcNow,
-                CreatedBy = createdBy
-            };
+                var rolePermission = new RolePermission
+                {
+                    RoleId = roleId,
+                    PermissionId = permissionId,
+                    CreatedOn = DateTime.UtcNow,
+                    CreatedBy = createdBy
+                };
 
-            await _repository.Add(rolePermission, transaction);
+                await _repository.Add(rolePermission, transaction);
+            }
+            await _unitOfWork.CommitAsync();
         }
-        await _unitOfWork.CommitAsync();
+        catch (Exception)
+        {
+            // Rollback the transaction if any error occurs
+            await _unitOfWork.RollbackAsync();
+            throw; // Re-throw the exception to be handled by the caller
+        }
     }
 
     public async Task<IEnumerable<RolePermissionResponse>> GetRolePermissionMappingsAsync()

@@ -1,3 +1,16 @@
+export interface Permission {
+  id: string;
+  pageId: string;
+  operationId: string;
+  description?: string | null;
+  pageName?: string;
+  operationName?: string;
+  createdOn: string;
+  createdBy: string;
+  updatedOn?: string | null;
+  updatedBy?: string | null;
+}
+
 export interface RolePermission {
     roleName: string;
     pageName: string;

@@ -9,6 +9,7 @@ import { OperationsComponent } from "./operations/operations.component";
 import { PermissionsComponent } from "./permissions/permissions.component";
 import { RolePermissionsComponent } from "./role-permissions/role-permissions.component";
 import { UserRolesComponent } from "./user-roles/user-roles.component";
+import { RolesComponent } from "./roles/roles.component";
 
 export default [
   {
@@ -37,6 +38,11 @@ export default [
         canActivate: [PermissionGuard('Operations', 'Read')]
       },
       {
+        path: 'roles',
+        component: RolesComponent,
+        canActivate: [PermissionGuard('Roles', 'Read')]
+      },
+      {
         path: 'permissions',
         component: PermissionsComponent,
         canActivate: [PermissionGuard('Permissions', 'Read')]
@@ -50,6 +56,11 @@ export default [
         path: 'user-roles',
         component: UserRolesComponent,
         canActivate: [PermissionGuard('UserRoles', 'Read')]
+      },
+      {
+        path: '',
+        redirectTo: 'users',
+        pathMatch: 'full'
       }
     ]
   }

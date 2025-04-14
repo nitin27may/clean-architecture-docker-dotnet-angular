@@ -14,13 +14,13 @@ public class UserRepository : GenericRepository<User>, IUserRepository
     {
         _appSettings = appSettings.Value;
     }
-    
+
     public async Task<User> AddUser(User item)
     {
         var dbPara = new DynamicParameters();
         dbPara.Add("FirstName", item.FirstName, DbType.String);
         dbPara.Add("LastName", item.LastName, DbType.String);
-        dbPara.Add("UserName", item.Username, DbType.String);
+        dbPara.Add("UserName", item.UserName, DbType.String);
         dbPara.Add("Email", item.Email, DbType.String);
         dbPara.Add("Mobile", item.Mobile, DbType.Int32);
         dbPara.Add("Password", item.Password, DbType.String);
@@ -77,7 +77,7 @@ public class UserRepository : GenericRepository<User>, IUserRepository
         dbPara.Add("Id", item.Id);
         dbPara.Add("FirstName", item.FirstName, DbType.String);
         dbPara.Add("LastName", item.LastName, DbType.String);
-        dbPara.Add("UserName", item.Username, DbType.String);
+        dbPara.Add("UserName", item.UserName, DbType.String);
         dbPara.Add("Email", item.Email, DbType.String);
         dbPara.Add("Mobile", item.Mobile);
         dbPara.Add("UpdatedBy", item.UpdatedBy, DbType.Guid);
@@ -119,12 +119,12 @@ public class UserRepository : GenericRepository<User>, IUserRepository
     {
         var dbPara = new DynamicParameters();
         dbPara.Add("UserId", userId);
-        
+
         var sql = @"
             SELECT *
             FROM ""UserRoles""
             WHERE ""UserId"" = @UserId";
-            
+
         // Note: The GetAll method doesn't accept a transaction parameter
         return await _dapperHelper.GetAll<UserRole>(sql, dbPara, CommandType.Text);
     }

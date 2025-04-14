@@ -1,16 +1,34 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, inject, signal } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { RoleService } from '@core/services/role.service';
-import { PermissionService } from '@core/services/permission.service';
-import { RolePermissionService } from '@core/services/role-permission.service';
-import { Role } from '@core/models/role.interface';
+import { RoleService } from '../roles/role.service';
+import { PermissionService } from '../permissions/permission.service';
+import { RolePermissionService } from './role-permission.service';
 import { Permission } from '@core/models/permission.interface';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
+import { Role } from "@core/models/role.interface";
 
 @Component({
   selector: 'app-role-permissions',
   templateUrl: './role-permissions.component.html',
-  styleUrls: ['./role-permissions.component.scss']
+  styleUrls: ['./role-permissions.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatButtonModule,
+    MatTableModule,
+    MatIconModule
+  ]
 })
 export class RolePermissionsComponent implements OnInit {
   private fb = inject(FormBuilder);
@@ -21,16 +39,14 @@ export class RolePermissionsComponent implements OnInit {
 
   roles = signal<Role[]>([]);
   permissions = signal<Permission[]>([]);
-  selectedRole = signal<Role | null>(null);
-  selectedPermissions = signal<string[]>([]);
-  rolePermissionForm: FormGroup;
-
-  constructor() {
-    this.rolePermissionForm = this.fb.group({
-      roleId: ['', Validators.required],
-      permissionIds: [[], Validators.required]
-    });
-  }
+  selectedPermissions = signal<Permission[]>([]);
+  
+  rolePermissionForm = this.fb.group({
+    roleId: ['', Validators.required],
+    permissionIds: [[] as string[], Validators.required]
+  });
+  
+  displayedColumns: string[] = ['pageName', 'operationName'];
 
   ngOnInit(): void {
     this.loadRoles();
@@ -51,15 +67,19 @@ export class RolePermissionsComponent implements OnInit {
     });
   }
 
-  selectRole(role: Role): void {
-    this.selectedRole.set(role);
-    this.rolePermissionForm.patchValue({ roleId: role.id });
-    this.loadRolePermissions(role.id);
-  }
-
-  loadRolePermissions(roleId: string): void {
+  onRoleChange(roleId: string): void {
+    if (!roleId) {
+      this.selectedPermissions.set([]);
+      return;
+    }
+    
     this.rolePermissionService.getRolePermissions(roleId).subscribe({
-      next: (permissions) => this.selectedPermissions.set(permissions.map(p => p.id)),
+      next: (permissions) => {
+        this.selectedPermissions.set(permissions);
+        this.rolePermissionForm.patchValue({
+          permissionIds: permissions.map(p => p.id)
+        });
+      },
       error: (err) => this.snackBar.open('Failed to load role permissions', 'Close', { duration: 3000 })
     });
   }
@@ -69,19 +89,14 @@ export class RolePermissionsComponent implements OnInit {
       return;
     }
 
-    const rolePermissionData = this.rolePermissionForm.value;
-    this.rolePermissionService.assignPermissionsToRole(rolePermissionData.roleId, rolePermissionData.permissionIds).subscribe({
+    const rolePermissionData = this.rolePermissionForm.value as { roleId: string; permissionIds: string[] };
+    
+    this.rolePermissionService.assignPermissionsToRole(rolePermissionData).subscribe({
       next: () => {
-        this.snackBar.open('Permissions assigned successfully', 'Close', { duration: 3000 });
-        this.resetForm();
+        this.snackBar.open('Role permissions updated successfully', 'Close', { duration: 3000 });
+        this.onRoleChange(rolePermissionData.roleId);
       },
-      error: (err) => this.snackBar.open('Failed to assign permissions', 'Close', { duration: 3000 })
+      error: (err) => this.snackBar.open('Failed to update role permissions', 'Close', { duration: 3000 })
     });
-  }
-
-  resetForm(): void {
-    this.selectedRole.set(null);
-    this.selectedPermissions.set([]);
-    this.rolePermissionForm.reset();
   }
 }
