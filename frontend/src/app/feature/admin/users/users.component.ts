@@ -1,19 +1,37 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '@core/services/user.service';
 import { User } from '@core/models/user.interface';
+import { CommonModule } from "@angular/common";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatSelectModule } from "@angular/material/select";
+import { MatInputModule } from "@angular/material/input";
+import { MatButtonModule } from "@angular/material/button";
+import { MatTableModule } from "@angular/material/table";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  styleUrls: ['./users.component.scss'],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatButtonModule,
+    MatTableModule,
+    MatIconModule
+  ]
+
 })
 export class UsersComponent implements OnInit {
   private fb = inject(FormBuilder);
   private userService = inject(UserService);
   private snackBar = inject(MatSnackBar);
-
+  displayedColumns: string[] = ['firstName', 'lastName', 'userName', 'email', 'mobile', 'actions'];
   users = signal<User[]>([]);
   selectedUser = signal<User | null>(null);
   userForm: FormGroup;

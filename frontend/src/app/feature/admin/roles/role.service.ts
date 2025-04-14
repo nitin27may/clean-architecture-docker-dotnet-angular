@@ -9,7 +9,7 @@ import { environment } from "@environments/environment";
 })
 export class RoleService {
   private http = inject(HttpClient);
-  private apiUrl = `${environment.apiEndpoint}/api/roles`;
+  private apiUrl = `${environment.apiEndpoint}/roles`;
 
   getRoles(): Observable<Role[]> {
     return this.http.get<Role[]>(this.apiUrl);

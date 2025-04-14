@@ -9,7 +9,7 @@ import { environment } from "@environments/environment";
 })
 export class OperationService {
   private http = inject(HttpClient);
-  private apiUrl = `${environment.apiEndpoint}/api/operations`;
+  private apiUrl = `${environment.apiEndpoint}/operations`;
 
   getOperations(): Observable<Operation[]> {
     return this.http.get<Operation[]>(this.apiUrl);
