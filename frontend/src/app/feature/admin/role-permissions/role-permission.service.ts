@@ -10,7 +10,7 @@ import { environment } from "@environments/environment";
 })
 export class RolePermissionService {
   private http = inject(HttpClient);
-  private apiUrl = `${environment.apiEndpoint}/api/rolepermissions`;
+  private apiUrl = `${environment.apiEndpoint}/rolepermissions`;
 
   getRolePermissions(roleId: string): Observable<Permission[]> {
     return this.http.get<Permission[]>(`${this.apiUrl}/${roleId}`);

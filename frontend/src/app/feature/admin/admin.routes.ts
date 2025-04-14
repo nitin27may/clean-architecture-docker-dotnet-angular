@@ -1,7 +1,6 @@
 import { Routes } from "@angular/router";
 import LayoutComponent from "@core/layout/layout.component";
 import { redirectToLoginIfNotAuthenticated } from "@core/guards";
-import { UserListComponent } from "./users/users-list/users-list.component";
 import { PermissionGuard } from "@core/guards/permission.guard";
 import { ActivityLogComponent } from "./activity-log/activity-log.component";
 import { PagesComponent } from "./pages/pages.component";
@@ -10,6 +9,7 @@ import { PermissionsComponent } from "./permissions/permissions.component";
 import { RolePermissionsComponent } from "./role-permissions/role-permissions.component";
 import { UserRolesComponent } from "./user-roles/user-roles.component";
 import { RolesComponent } from "./roles/roles.component";
+import { UsersComponent } from "./users/users.component";
 
 export default [
   {
@@ -19,7 +19,7 @@ export default [
     children: [
       {
         path: 'users',
-        component: UserListComponent,
+        component: UsersComponent,
         canActivate: [PermissionGuard('Users', 'Read')]
       },
       {

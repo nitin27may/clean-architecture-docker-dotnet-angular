@@ -11,7 +11,7 @@ export class UserService {
   constructor(private http: HttpClient,@Inject(DOCUMENT) private document: Document) {}
 
   getAll() {
-    return this.http.get<User[]>(environment.apiEndpoint + "/users").pipe(
+    return this.http.get<User[]>(environment.apiEndpoint + "/users/all").pipe(
       map((users: any) => {
         return users.data;
       })

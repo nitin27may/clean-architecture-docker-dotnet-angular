@@ -61,6 +61,15 @@ public class UsersController : ControllerBase
         var result = await _userService.GetUserWithPermissionsAsync(userId);
         return Ok(result);
     }
+    [HttpGet("all")]
+    [AuthorizePermission("Users.Read")]
+    [Authorize]
+    public async Task<IActionResult> GetAll()
+    {
+
+        var result = await _userService.FindAll();
+        return Ok(result);
+    }
 
     [HttpPut("{id}")]
     [Authorize]

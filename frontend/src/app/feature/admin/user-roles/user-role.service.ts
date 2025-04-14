@@ -10,7 +10,7 @@ import { environment } from "@environments/environment";
 })
 export class UserRoleService {
   private http = inject(HttpClient);
-  private apiUrl = `${environment.apiEndpoint}/api/userroles`;
+  private apiUrl = `${environment.apiEndpoint}/userroles`;
 
   getUserRoles(userId: string): Observable<Role[]> {
     return this.http.get<Role[]>(`${this.apiUrl}/${userId}`);

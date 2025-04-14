@@ -9,7 +9,7 @@ import { environment } from "@environments/environment";
 })
 export class PageService {
   private http = inject(HttpClient);
-  private apiUrl = `${environment.apiEndpoint}/api/pages`;
+  private apiUrl = `${environment.apiEndpoint}/pages`;
 
   getPages(): Observable<Page[]> {
     return this.http.get<Page[]>(this.apiUrl);
