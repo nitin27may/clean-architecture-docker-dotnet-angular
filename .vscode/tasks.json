@@ -16,7 +16,7 @@
     {
       "label": "npm-start",
       "type": "shell",
-      "command": "cd ${workspaceFolder}/frontend && ng serve",
+      "command": "cd ${workspaceFolder}/frontend && npm run dev",
       "isBackground": true,
       "problemMatcher": {
         "owner": "typescript",
