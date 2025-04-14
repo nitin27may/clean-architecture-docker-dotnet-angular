@@ -13,7 +13,7 @@ export class UserService {
   getAll() {
     return this.http.get<User[]>(environment.apiEndpoint + "/users/all").pipe(
       map((users: any) => {
-        return users.data;
+        return users;
       })
     );
   }
