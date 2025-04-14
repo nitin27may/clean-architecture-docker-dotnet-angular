@@ -34,7 +34,7 @@ public class UsersController : ControllerBase
 
     [HttpPost("create")]
     [ActivityLog("Creating new User")]
-    [AuthorizePermission("Admin.Create")]
+    [AuthorizePermission("Users.Create")]
     public async Task<IActionResult> Create(CreateUser createUser)
     {
         var users = await _userService.CheckUniqueUsers(createUser.Email, createUser.Email);
@@ -112,10 +112,10 @@ public class UsersController : ControllerBase
     {
         username = username ?? "";
         email = email ?? "";
-        
+
         username = username.Trim();
         email = email.Trim();
-        
+
         try
         {
             var logs = await _activityLogService.GetActivityLogsAsync(username, email);

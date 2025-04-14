@@ -1,14 +1,30 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { OperationService } from '@core/services/operation.service';
-import { Operation } from '@core/models/operation.interface';
+import { OperationService } from './operation.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
+import { Operation } from "@core/models/operation.interface";
 
 @Component({
   selector: 'app-operations',
   templateUrl: './operations.component.html',
-  styleUrls: ['./operations.component.scss']
+  styleUrls: ['./operations.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatTableModule,
+    MatIconModule
+  ]
 })
 export class OperationsComponent implements OnInit {
   private fb = inject(FormBuilder);
@@ -18,14 +34,12 @@ export class OperationsComponent implements OnInit {
 
   operations = signal<Operation[]>([]);
   selectedOperation = signal<Operation | null>(null);
-  operationForm: FormGroup;
-
-  constructor() {
-    this.operationForm = this.fb.group({
-      name: ['', Validators.required],
-      description: ['']
-    });
-  }
+  operationForm = this.fb.group({
+    name: ['', Validators.required],
+    description: ['']
+  });
+  
+  displayedColumns: string[] = ['name', 'description', 'actions'];
 
   ngOnInit(): void {
     this.loadOperations();

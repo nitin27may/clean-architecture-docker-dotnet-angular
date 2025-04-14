@@ -63,7 +63,7 @@ public class UserService : IUserService
             {
                 UserId = createdUser.Id,
                 RoleId = role.Id,
-                CreatedOn = DateTime.Now,
+                CreatedOn = DateTime.UtcNow,
                 CreatedBy = createdUser.Id
             };
             await _userRoleRepository.Add(userRole, transaction);
@@ -95,7 +95,7 @@ public class UserService : IUserService
             {
                 UserId = createdUser.Id,
                 RoleId = role.Id,
-                CreatedOn = DateTime.Now,
+                CreatedOn = DateTime.UtcNow,
                 CreatedBy = createdUser.Id
             };
             await _userRoleRepository.Add(userRole, transaction);

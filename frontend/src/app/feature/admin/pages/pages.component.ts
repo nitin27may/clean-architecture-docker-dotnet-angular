@@ -1,14 +1,30 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PageService } from '@core/services/page.service';
-import { Page } from '@core/models/page.interface';
+import { PageService } from './page.service';
+import { Page } from "@core/models/page.interface";
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-pages',
   templateUrl: './pages.component.html',
-  styleUrls: ['./pages.component.scss']
+  styleUrls: ['./pages.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatTableModule,
+    MatIconModule
+  ]
 })
 export class PagesComponent implements OnInit {
   private fb = inject(FormBuilder);
@@ -18,14 +34,12 @@ export class PagesComponent implements OnInit {
 
   pages = signal<Page[]>([]);
   selectedPage = signal<Page | null>(null);
-  pageForm: FormGroup;
-
-  constructor() {
-    this.pageForm = this.fb.group({
-      name: ['', Validators.required],
-      url: ['', Validators.required]
-    });
-  }
+  pageForm = this.fb.group({
+    name: ['', Validators.required],
+    url: ['', Validators.required]
+  });
+  
+  displayedColumns: string[] = ['name', 'url', 'actions'];
 
   ngOnInit(): void {
     this.loadPages();

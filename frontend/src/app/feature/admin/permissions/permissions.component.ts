@@ -1,17 +1,35 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PermissionService } from '@core/services/permission.service';
-import { PageService } from '@core/services/page.service';
-import { OperationService } from '@core/services/operation.service';
+import { PermissionService } from '../permissions/permission.service';
+import { PageService } from '../pages/page.service';
+import { OperationService } from '../operations/operation.service';
 import { Permission } from '@core/models/permission.interface';
-import { Page } from '@core/models/page.interface';
-import { Operation } from '@core/models/operation.interface';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
+import { Operation } from "@core/models/operation.interface";
+import { Page } from "@core/models/page.interface";
 
 @Component({
   selector: 'app-permissions',
   templateUrl: './permissions.component.html',
-  styleUrls: ['./permissions.component.scss']
+  styleUrls: ['./permissions.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatButtonModule,
+    MatTableModule,
+    MatIconModule
+  ]
 })
 export class PermissionsComponent implements OnInit {
   private fb = inject(FormBuilder);
@@ -24,15 +42,13 @@ export class PermissionsComponent implements OnInit {
   pages = signal<Page[]>([]);
   operations = signal<Operation[]>([]);
   selectedPermission = signal<Permission | null>(null);
-  permissionForm: FormGroup;
-
-  constructor() {
-    this.permissionForm = this.fb.group({
-      pageId: ['', Validators.required],
-      operationId: ['', Validators.required],
-      description: ['']
-    });
-  }
+  permissionForm = this.fb.group({
+    pageId: ['', Validators.required],
+    operationId: ['', Validators.required],
+    description: ['']
+  });
+  
+  displayedColumns: string[] = ['pageName', 'operationName', 'description', 'actions'];
 
   ngOnInit(): void {
     this.loadPermissions();
