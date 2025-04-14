@@ -7,9 +7,17 @@
         <mat-form-field class="w-full">
           <mat-label>Select User</mat-label>
           <mat-select formControlName="userId" (selectionChange)="onUserChange($event.value)">
-            <mat-option *ngFor="let user of users()" [value]="user.id">
-              {{ user.firstName }} {{ user.lastName }} ({{ user.email }})
-            </mat-option>
+            @if (loading()) {
+              <mat-option disabled>Loading users...</mat-option>
+            } @else if (users().length === 0) {
+              <mat-option disabled>No users available</mat-option>
+            } @else {
+              @for (user of users(); track user.id) {
+                <mat-option [value]="user.id">
+                  {{ user.firstName }} {{ user.lastName }} ({{ user.email }})
+                </mat-option>
+              }
+            }
           </mat-select>
           <mat-error *ngIf="userRoleForm.get('userId')?.hasError('required')">User is required</mat-error>
         </mat-form-field>
@@ -17,17 +25,27 @@
         <mat-form-field class="w-full">
           <mat-label>Assign Roles</mat-label>
           <mat-select formControlName="roleIds" multiple>
-            <mat-option *ngFor="let role of roles()" [value]="role.id">
-              {{ role.name }}
-            </mat-option>
+            @if (loadingRoles()) {
+              <mat-option disabled>Loading roles...</mat-option>
+            } @else if (roles().length === 0) {
+              <mat-option disabled>No roles available</mat-option>
+            } @else {
+              @for (role of roles(); track role.id) {
+                <mat-option [value]="role.id">{{ role.name }}</mat-option>
+              }
+            }
           </mat-select>
           <mat-error *ngIf="userRoleForm.get('roleIds')?.hasError('required')">At least one role is required</mat-error>
         </mat-form-field>
       </div>
       
       <div class="flex justify-end">
-        <button mat-raised-button color="primary" type="submit" [disabled]="userRoleForm.invalid">
-          Save User Roles
+        <button mat-raised-button color="primary" type="submit" [disabled]="userRoleForm.invalid || loading()">
+          @if (loading()) {
+            <mat-spinner diameter="20" class="inline-block mr-2"></mat-spinner> Saving...
+          } @else {
+            Save User Roles
+          }
         </button>
       </div>
     </form>
@@ -36,7 +54,11 @@
   <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mt-6">
     <h2 class="text-xl font-semibold mb-4">User Details</h2>
     
-    @if (selectedUser()) {
+    @if (loading() || loadingRoles()) {
+      <div class="flex justify-center py-8">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+    } @else if (selectedUser()) {
       <div class="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <h3 class="font-semibold">Name</h3>

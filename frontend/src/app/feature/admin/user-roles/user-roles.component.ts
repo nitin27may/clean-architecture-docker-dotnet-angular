@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
 import { Role } from "@core/models/role.interface";
 import { computed } from '@angular/core';
@@ -28,7 +29,8 @@ import { computed } from '@angular/core';
     MatInputModule,
     MatButtonModule,
     MatTableModule,
-    MatIconModule
+    MatIconModule,
+    MatProgressSpinnerModule
   ]
 })
 export class UserRolesComponent implements OnInit {
@@ -42,6 +44,8 @@ export class UserRolesComponent implements OnInit {
   roles = signal<Role[]>([]);
   selectedUser = signal<User | null>(null);
   selectedRoles = signal<string[]>([]);
+  loading = signal<boolean>(false);
+  loadingRoles = signal<boolean>(false);
   
   userRoleForm = this.fb.group({
     userId: ['', Validators.required],
@@ -54,16 +58,33 @@ export class UserRolesComponent implements OnInit {
   }
 
   loadUsers(): void {
+    this.loading.set(true);
     this.userService.getAll().subscribe({
-      next: (users) => this.users.set(users),
-      error: (err) => this.snackBar.open('Failed to load users', 'Close', { duration: 3000 })
+      next: (users) => {
+        console.log('Users loaded for dropdown:', users);
+        this.users.set(users);
+        this.loading.set(false);
+      },
+      error: (err) => {
+        console.error('Failed to load users:', err);
+        this.snackBar.open('Failed to load users', 'Close', { duration: 3000 });
+        this.loading.set(false);
+      }
     });
   }
 
   loadRoles(): void {
+    this.loadingRoles.set(true);
     this.roleService.getRoles().subscribe({
-      next: (roles) => this.roles.set(roles),
-      error: (err) => this.snackBar.open('Failed to load roles', 'Close', { duration: 3000 })
+      next: (roles) => {
+        this.roles.set(roles);
+        this.loadingRoles.set(false);
+      },
+      error: (err) => {
+        console.error('Failed to load roles:', err);
+        this.snackBar.open('Failed to load roles', 'Close', { duration: 3000 });
+        this.loadingRoles.set(false);
+      }
     });
   }
 
@@ -83,13 +104,19 @@ export class UserRolesComponent implements OnInit {
   }
   
   loadUserRoles(userId: string): void {
+    this.loadingRoles.set(true);
     this.userRoleService.getUserRoles(userId).subscribe({
       next: (roles) => {
         const roleIds = roles.map(r => r.id);
         this.selectedRoles.set(roleIds);
         this.userRoleForm.patchValue({ roleIds });
+        this.loadingRoles.set(false);
       },
-      error: (err) => this.snackBar.open('Failed to load user roles', 'Close', { duration: 3000 })
+      error: (err) => {
+        console.error('Failed to load user roles:', err);
+        this.snackBar.open('Failed to load user roles', 'Close', { duration: 3000 });
+        this.loadingRoles.set(false);
+      }
     });
   }
 
@@ -98,13 +125,19 @@ export class UserRolesComponent implements OnInit {
       return;
     }
 
+    this.loading.set(true);
     const userRoleData = this.userRoleForm.value;
     this.userRoleService.updateUserRoles(userRoleData.userId!, userRoleData.roleIds!).subscribe({
       next: () => {
         this.snackBar.open('Roles assigned successfully', 'Close', { duration: 3000 });
         this.resetForm();
+        this.loading.set(false);
       },
-      error: (err) => this.snackBar.open('Failed to assign roles', 'Close', { duration: 3000 })
+      error: (err) => {
+        console.error('Failed to assign roles:', err);
+        this.snackBar.open('Failed to assign roles', 'Close', { duration: 3000 });
+        this.loading.set(false);
+      }
     });
   }
 
