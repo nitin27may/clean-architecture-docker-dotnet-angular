@@ -14,9 +14,19 @@
       "problemMatcher": "$msCompile"
     },
     {
+      "label": "frontend-build",
+      "type": "shell",
+      "command": "cd ${workspaceFolder}/frontend && npm run build",
+      "problemMatcher": ["$tsc"],
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
+    },
+    {
       "label": "npm-start",
       "type": "shell",
-      "command": "cd ${workspaceFolder}/frontend && npm run dev",
+      "command": "cd ${workspaceFolder}/frontend && npm run serve",
       "isBackground": true,
       "problemMatcher": {
         "owner": "typescript",

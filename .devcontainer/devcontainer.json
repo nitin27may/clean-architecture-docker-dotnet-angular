@@ -1,45 +1,53 @@
 {
-    "name": "Clean Architecture Dev Container",
-    "dockerComposeFile": "docker-compose.yml",
-    "service": "app",
-    "workspaceFolder": "/workspaces/app",
-    "forwardPorts": [5000, 4200, 5432],
-    "customizations": {
-      "vscode": {
-        "settings": {
-          "terminal.integrated.defaultProfile.linux": "bash",
-          "omnisharp.useModernNet": true,
-          "dotnet.server.useOmnisharp": true,
-          "editor.formatOnSave": true,
-          "editor.codeActionsOnSave": {
-            "source.fixAll": "explicit"
-          }
+  "name": "Clean Architecture Dev Container",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/app",
+  "forwardPorts": [5000, 4200, 5432],
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "omnisharp.useModernNet": true,
+        "dotnet.server.useOmnisharp": true,
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.fixAll": "explicit"
         },
-        "extensions": [
-          "ms-dotnettools.csharp",
-          "ms-dotnettools.vs-kubernetes",
-          "ms-dotnettools.dotnet-interactive-vscode",
-          "angular.ng-template",
-          "dbaeumer.vscode-eslint",
-          "esbenp.prettier-vscode",
-          "johnpapa.angular-essentials",
-          "ms-azuretools.vscode-docker",
-          "mohsen1.prettify-json",
-          "formulahendry.dotnet-test-explorer",
-          "editorconfig.editorconfig",
-          "vscode-icons-team.vscode-icons",
-          "ms-ossdata.vscode-postgresql",
-          "ms-dotnettools.csdevkit",
-          "ms-dotnettools.vscodeintellicode-csharp",
-          "github.copilot-chat",
-          "github.copilot"
-        ]
-      }
-    },
-    "features": {
-      "ghcr.io/devcontainers/features/git:1": {},
-      "ghcr.io/devcontainers/features/github-cli:1": {}
-    },
-    "postCreateCommand": "cd backend/src && dotnet restore && cd ../../frontend && npm install && echo 'Development environment is ready!'",
-    "remoteUser": "root"
+        "files.watcherExclude": {
+          "**/.git/objects/**": true,
+          "**/node_modules/**": true
+        },
+        "search.exclude": {
+          "**/node_modules": true
+        }
+      },
+      "extensions": [
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.vs-kubernetes",
+        "ms-dotnettools.dotnet-interactive-vscode",
+        "angular.ng-template",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "johnpapa.angular-essentials",
+        "ms-azuretools.vscode-docker",
+        "mohsen1.prettify-json",
+        "formulahendry.dotnet-test-explorer",
+        "editorconfig.editorconfig",
+        "vscode-icons-team.vscode-icons",
+        "ms-ossdata.vscode-postgresql",
+        "ms-dotnettools.csdevkit",
+        "ms-dotnettools.vscodeintellicode-csharp",
+        "github.copilot-chat",
+        "github.copilot"
+      ]
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "postCreateCommand": "cd backend/src && dotnet restore && cd ../../frontend && npm install && npm run build && echo 'Development environment is ready!'",
+  "remoteUser": "root",
+  "mounts": ["source=${localWorkspaceFolderBasename}-node_modules,target=/workspaces/app/frontend/node_modules,type=volume"]
 }
