@@ -1,13 +1,13 @@
 <!-- Main Menu List -->
 <mat-nav-list class="flex flex-col gap-1">
-  <ng-container *ngFor="let item of menuItems">
-    <ng-container *ngIf="hasPermission(item.permission)">
+  @for(item of menuItems(); track item.label) {
+    @if(hasPermission(item.permission)) {
       <app-menu-item
         [item]="item"
-        [collapsed]="isCollapsed"
+        [collapsed]="isCollapsed()"
         routeHistory=""
         (activeStatusChanged)="onMenuItemActiveStatusChanged($event)">
       </app-menu-item>
-    </ng-container>
-  </ng-container>
+    }
+  }
 </mat-nav-list>
