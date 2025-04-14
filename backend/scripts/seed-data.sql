@@ -159,8 +159,8 @@ INSERT INTO "Pages" ("Id", "Name", "Url", "CreatedOn", "CreatedBy") VALUES
 ('d4943131-a642-4352-9725-e44ba5972b4d', 'Pages', 'admin/pages', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
 ('e4943131-a642-4352-9725-e44ba5972b4e', 'Operations', 'admin/operations', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
 ('f4943131-a642-4352-9725-e44ba5972b4f', 'Permissions', 'admin/permissions', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
-('g4943131-a642-4352-9725-e44ba5972b4g', 'RolePermissions', 'admin/role-permissions', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
-('h4943131-a642-4352-9725-e44ba5972b4h', 'UserRoles', 'admin/user-roles', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb');
+('84943131-a642-4352-9725-e44ba5972b48', 'RolePermissions', 'admin/role-permissions', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('94943131-a642-4352-9725-e44ba5972b49', 'UserRoles', 'admin/user-roles', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb');
 
 -- Insert data into Roles table
 INSERT INTO "Roles" ("Id", "Name", "Description", "CreatedOn", "CreatedBy") VALUES

@@ -27,7 +27,12 @@
           "mohsen1.prettify-json",
           "formulahendry.dotnet-test-explorer",
           "editorconfig.editorconfig",
-          "vscode-icons-team.vscode-icons"
+          "vscode-icons-team.vscode-icons",
+          "ms-ossdata.vscode-postgresql",
+          "ms-dotnettools.csdevkit",
+          "ms-dotnettools.vscodeintellicode-csharp",
+          "github.copilot-chat",
+          "github.copilot"
         ]
       }
     },
