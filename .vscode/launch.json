@@ -21,11 +21,8 @@
             "cwd": "${workspaceFolder}/backend/src/Contact.Api",
             "stopAtEntry": false,
             "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development",
-                "ASPNETCORE_URLS": "http://localhost:5000"
-            },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}/backend/src/Contact.Api/Views"
+              "ASPNETCORE_ENVIRONMENT": "Development",
+              "ASPNETCORE_URLS": "http://localhost:5000"
             }
         },
         {
