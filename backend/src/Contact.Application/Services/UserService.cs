@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contact.Application.Interfaces;
 using Contact.Application.UseCases.RolePermissions;
+using Contact.Application.UseCases.Roles;
 using Contact.Application.UseCases.Users;
 using Contact.Domain.Entities;
 using Contact.Domain.Interfaces;
@@ -189,7 +190,7 @@ public class UserService : IUserService
         };
         foreach (var role in roles)
         {
-            identityClaims.Add(new Claim(ClaimTypes.Role, role));
+            identityClaims.Add(new Claim(ClaimTypes.Role, role.Name));
         }
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.Secret));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -451,5 +452,25 @@ public class UserService : IUserService
             _logger.LogError(ex, "Error updating roles for user {userId}", userId);
             throw;
         }
+    }
+
+    public async Task<UserWithRolesResponse> GetUserWithRolesAsync(Guid userId)
+    {
+        var user = await _userRepository.FindByID(userId);
+        if (user == null) return null;
+
+        // Get role permissions
+        var rolePermissions = await _rolePermissionService.GetRolePermissionMappingsAsync(userId);
+
+        // Get role names
+        var roles = await _userRepository.FindRolesById(userId);
+
+        // Map to response
+        var userResponse = _mapper.Map<UserWithRolesResponse>(user);
+        userResponse.RolePermissions = rolePermissions.ToList();
+        var roleResponse = _mapper.Map<List<RoleResponse>>(user); // Updated to List<RoleResponse>
+        userResponse.Roles = roleResponse.ToList();
+
+        return userResponse;
     }
 }

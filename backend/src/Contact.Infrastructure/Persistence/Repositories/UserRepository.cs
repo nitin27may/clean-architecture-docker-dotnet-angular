@@ -51,17 +51,17 @@ public class UserRepository : GenericRepository<User>, IUserRepository
             dbPara);
     }
 
-    public async Task<List<string>> FindRolesById(Guid id)
+    public async Task<List<Role>> FindRolesById(Guid id)
     {
         var dbPara = new DynamicParameters();
         dbPara.Add("UserId", id);
         var sql = @"
-            SELECT r.""Name""
+            SELECT r.""*""
             FROM ""UserRoles"" ur
             INNER JOIN ""Roles"" r ON ur.""RoleId"" = r.""Id""
             INNER JOIN ""Users"" u ON u.""Id"" = ur.""UserId""
             WHERE ur.""UserId"" = @UserId";
-        return (List<string>)await _dapperHelper.GetAll<string>(sql, dbPara);
+        return (List<Role>)await _dapperHelper.GetAll<string>(sql, dbPara);
     }
 
     public async Task<User> FindByUserName(string userName)

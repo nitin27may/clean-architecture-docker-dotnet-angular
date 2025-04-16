@@ -16,6 +16,18 @@ public class UserRolesController : ControllerBase
         _userService = userService;
     }
 
+    [HttpGet("{userId}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> GetUserWithRoles(Guid userId)
+    {
+        var userWithRoles = await _userService.GetUserWithRolesAsync(userId);
+        if (userWithRoles == null)
+        {
+            return NotFound();
+        }
+        return Ok(userWithRoles);
+    }
+
     [HttpPut("{userId}/roles")]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> UpdateUserRoles(Guid userId, UpdateUserRoles updateUserRoles)

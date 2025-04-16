@@ -1,7 +1,7 @@
 ﻿using Dapper;
-using Npgsql;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Npgsql;
 using System.Data;
 
 namespace Contact.Infrastructure.Persistence.Helper
@@ -19,7 +19,7 @@ namespace Contact.Infrastructure.Persistence.Helper
 
         public NpgsqlConnection GetConnection()
         {
-            _logger.LogInformation("Connection String: {connectionString}", myConfig.ConnectionStrings.DefaultConnection);  
+            _logger.LogInformation("Connection String: {connectionString}", myConfig.ConnectionStrings.DefaultConnection);
             return new NpgsqlConnection(myConfig.ConnectionStrings.DefaultConnection);
         }
 
@@ -29,7 +29,7 @@ namespace Contact.Infrastructure.Persistence.Helper
         }
 
         public async Task<int> Execute(string sql, object parms, CommandType commandType = CommandType.Text, IDbTransaction? transaction = null)
-        { 
+        {
             var db = transaction?.Connection as NpgsqlConnection ?? GetConnection();
             try
             {
@@ -74,7 +74,7 @@ namespace Contact.Infrastructure.Persistence.Helper
             }
         }
 
-        public async Task<IEnumerable<T>> GetAll<T>(string sql, Object parms, CommandType commandType = CommandType.Text)
+        public async Task<IEnumerable<T>> GetAll<T>(string sql, Object parms, CommandType commandType = CommandType.Text, IDbTransaction? transaction = null)
         {
             try
             {

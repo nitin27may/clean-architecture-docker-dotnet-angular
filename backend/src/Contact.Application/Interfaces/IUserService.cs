@@ -25,4 +25,5 @@ public interface IUserService
     Task<bool> ResetPassword(ResetPassword resetPasswordRequest);
     Task<UserResponse> GetUserWithPermissionsAsync(Guid userId);
     Task<UserResponse> UpdateUserRoles(Guid userId, Contact.Application.UseCases.Users.UpdateUserRoles updateUserRoles);
+    Task<UserWithRolesResponse> GetUserWithRolesAsync(Guid userId);
 }
