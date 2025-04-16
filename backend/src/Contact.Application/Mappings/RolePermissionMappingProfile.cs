@@ -1,6 +1,6 @@
-using AutoMapper;
 using Contact.Application.UseCases.RolePermissions;
 using Contact.Domain.Entities;
+using Contact.Domain.Mappings;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,10 +12,15 @@ public class RolePermissionMappingProfile : BaseMappingProfile
         : base(httpContextAccessor)
     {
         CreateMap<RolePermission, RolePermissionResponse>();
+        CreateMap<RolePermissionMappingResponse, PermissionsByRoleMappings>();
         CreateMap<CreateRolePermission, RolePermission>()
             .AfterMap((src, dest) => SetAuditFields(src, dest));
         CreateMap<UpdateRolePermission, RolePermission>()
             .AfterMap((src, dest) => SetAuditFields(src, dest, false));
+        // Configure the mapping between PermissionsByRoleMappings and RolePermissionMappingResponse
+        CreateMap<PermissionsByRoleMappings, RolePermissionMappingResponse>();
+        CreateMap<PageOperationMappings, PageOperationResponse>();
+        CreateMap<OperationMappings, OperationResponse>();
     }
 
     public RolePermissionMappingProfile()
@@ -32,3 +37,4 @@ public class RolePermissionMappingProfile : BaseMappingProfile
         return serviceProvider.GetRequiredService<IHttpContextAccessor>();
     }
 }
+

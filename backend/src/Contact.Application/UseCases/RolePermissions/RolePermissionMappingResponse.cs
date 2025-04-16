@@ -4,14 +4,14 @@ public class RolePermissionMappingResponse
 {
     public Guid RoleId { get; set; }
     public string RoleName { get; set; }
-    public List<PageOperationResponse> Pages { get; set; } = new();
+    public List<PageOperationResponse> Pages { get; set; }
 }
 
 public class PageOperationResponse
 {
     public Guid PageId { get; set; }
     public string PageName { get; set; }
-    public List<OperationResponse> Operations { get; set; } = new();
+    public List<OperationResponse> Operations { get; set; }
 }
 
 public class OperationResponse
