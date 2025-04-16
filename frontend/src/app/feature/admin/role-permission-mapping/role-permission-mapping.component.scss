@@ -1,0 +1,62 @@
+:host {
+  display: block;
+}
+
+mat-card {
+  @reference bg-surface-container-low dark:bg-surface-container;
+}
+
+mat-expansion-panel {
+  @reference mb-2;
+}
+
+mat-checkbox {
+  @reference my-1;
+
+  &:hover {
+    .mdc-checkbox__background {
+      border-color: var(--md-sys-color-primary);
+    }
+  }
+}
+
+.mat-mdc-card-header {
+  @reference   pb-4;
+}
+
+.mat-expansion-panel-header {
+  @reference h-14;
+}
+
+// Styling for the role permission mapping component
+.mat-mdc-card {
+  border-radius: 8px;
+}
+
+.mat-spinner {
+  display: inline-block;
+}
+
+// Custom styling for expansion panel animation
+.mat-icon {
+  transition: transform 0.3s ease;
+}
+
+// Add hover effects to table rows
+tr.border-b:hover {
+  background-color: var(--md-sys-color-surface-container-high);
+}
+
+// Custom styles for the role selector
+mat-form-field {
+  .mat-mdc-form-field-subscript-wrapper {
+    height: 0;
+  }
+}
+
+// Responsive adjustments for smaller screens
+@media (max-width: 768px) {
+  .grid-cols-3 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
