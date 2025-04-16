@@ -12,10 +12,42 @@ export interface Permission {
 }
 
 export interface RolePermission {
+    roleId: string;
     roleName: string;
+    pageId: string;
     pageName: string;
     pageUrl: string;
+    operationId: string;
     operationName: string;
+    permissionId: string;
+}
+
+export interface RolePermissionMappingResponse {
+    roleId: string;
+    roleName: string;
+    pages: PageOperationResponse[];
+}
+
+export interface PageOperationResponse {
+    pageId: string;
+    pageName: string;
+    operations: OperationResponse[];
+}
+
+export interface OperationResponse {
+    operationId: string;
+    operationName: string;
+    isSelected: boolean;
+}
+
+export interface RolePermissionMappingRequest {
+    roleId: string;
+    permissions: PageOperationRequest[];
+}
+
+export interface PageOperationRequest {
+    pageId: string;
+    operationIds: string[];
 }
 
 export interface UserWithPermissions {

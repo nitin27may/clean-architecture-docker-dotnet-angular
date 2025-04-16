@@ -10,6 +10,7 @@ import { RolePermissionsComponent } from "./role-permissions/role-permissions.co
 import { UserRolesComponent } from "./user-roles/user-roles.component";
 import { RolesComponent } from "./roles/roles.component";
 import { UsersComponent } from "./users/users.component";
+import { RolePermissionMappingComponent } from "./role-permission-mapping/role-permission-mapping.component";
 
 export default [
   {
@@ -56,6 +57,11 @@ export default [
         path: 'user-roles',
         component: UserRolesComponent,
         canActivate: [PermissionGuard('UserRoles', 'Read')]
+      },
+      {
+        path: 'role-permission-mapping',
+        component: RolePermissionMappingComponent,
+        canActivate: [PermissionGuard('RolePermissions', 'Read')]
       },
       {
         path: '',
