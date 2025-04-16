@@ -161,7 +161,8 @@ INSERT INTO "Pages" ("Id", "Name", "Url", "CreatedOn", "CreatedBy") VALUES
 ('f4943131-a642-4352-9725-e44ba5972b4f', 'Permissions', 'admin/permissions', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
 ('84943131-a642-4352-9725-e44ba5972b48', 'RolePermissions', 'admin/role-permissions', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
 ('94943131-a642-4352-9725-e44ba5972b49', 'UserRoles', 'admin/user-roles', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
-('a4943131-a642-4352-9725-e44ba5972b47', 'Roles', 'admin/roles', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb');
+('a4943131-a642-4352-9725-e44ba5972b47', 'Roles', 'admin/roles', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('b4943131-a642-4352-9725-e44ba5972b46', 'RolePermissionMapping', 'admin/role-permission-mapping', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb');
 
 -- Insert data into Roles table
 INSERT INTO "Roles" ("Id", "Name", "Description", "CreatedOn", "CreatedBy") VALUES
@@ -221,7 +222,12 @@ INSERT INTO "Permissions" ("Id", "PageId", "OperationId", "Description", "Create
 ('635daa4e-fd02-4934-98d2-5b06e9b694e1', 'a4943131-a642-4352-9725-e44ba5972b47', '09be3f29-6429-4089-a2a9-a17efe46cd7b', 'Roles Create', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
 ('635daa4e-fd02-4934-98d2-5b06e9b694e2', 'a4943131-a642-4352-9725-e44ba5972b47', 'dce8d805-df41-4549-be7b-6ed5647b09c3', 'Roles Update', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
 ('635daa4e-fd02-4934-98d2-5b06e9b694e3', 'a4943131-a642-4352-9725-e44ba5972b47', '7493f274-5007-4e17-9840-88c9a096422f', 'Roles Read', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
-('635daa4e-fd02-4934-98d2-5b06e9b694e4', 'a4943131-a642-4352-9725-e44ba5972b47', 'cef15d6f-25e4-422b-a7d6-405aaa2de2d5', 'Roles Delete', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb');
+('635daa4e-fd02-4934-98d2-5b06e9b694e4', 'a4943131-a642-4352-9725-e44ba5972b47', 'cef15d6f-25e4-422b-a7d6-405aaa2de2d5', 'Roles Delete', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+-- Add permissions for RolePermissionMapping page
+('735daa4e-fd02-4934-98d2-5b06e9b694e5', 'b4943131-a642-4352-9725-e44ba5972b46', '09be3f29-6429-4089-a2a9-a17efe46cd7b', 'RolePermissionMapping Create', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('735daa4e-fd02-4934-98d2-5b06e9b694e6', 'b4943131-a642-4352-9725-e44ba5972b46', 'dce8d805-df41-4549-be7b-6ed5647b09c3', 'RolePermissionMapping Update', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('735daa4e-fd02-4934-98d2-5b06e9b694e7', 'b4943131-a642-4352-9725-e44ba5972b46', '7493f274-5007-4e17-9840-88c9a096422f', 'RolePermissionMapping Read', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+('735daa4e-fd02-4934-98d2-5b06e9b694e8', 'b4943131-a642-4352-9725-e44ba5972b46', 'cef15d6f-25e4-422b-a7d6-405aaa2de2d5', 'RolePermissionMapping Delete', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb');
 
 -- Set up admin role permissions
 INSERT INTO "RolePermissions" ("RoleId", "PermissionId", "CreatedOn", "CreatedBy") VALUES
@@ -260,7 +266,12 @@ INSERT INTO "RolePermissions" ("RoleId", "PermissionId", "CreatedOn", "CreatedBy
 ('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', '635daa4e-fd02-4934-98d2-5b06e9b694e1', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
 ('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', '635daa4e-fd02-4934-98d2-5b06e9b694e2', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
 ('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', '635daa4e-fd02-4934-98d2-5b06e9b694e3', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
-('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', '635daa4e-fd02-4934-98d2-5b06e9b694e4', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb');
+('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', '635daa4e-fd02-4934-98d2-5b06e9b694e4', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'),
+-- Assign RolePermissionMapping permissions to admin role
+('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', '735daa4e-fd02-4934-98d2-5b06e9b694e5', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'), -- Create
+('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', '735daa4e-fd02-4934-98d2-5b06e9b694e6', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'), -- Update
+('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', '735daa4e-fd02-4934-98d2-5b06e9b694e7', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'), -- Read
+('d95d2348-1d79-4b93-96d4-e48e87fcb4b5', '735daa4e-fd02-4934-98d2-5b06e9b694e8', NOW(), '26402b6c-ebdd-44c3-9188-659a134819cb'); -- Delete
 
 -- Set up editor role permissions (can read, create and update)
 INSERT INTO "RolePermissions" ("RoleId", "PermissionId", "CreatedOn", "CreatedBy") VALUES
