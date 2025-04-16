@@ -1,15 +1,11 @@
 using Contact.Api.Core.Attributes;
 using Contact.Application.Interfaces;
 using Contact.Application.UseCases.RolePermissions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace Contact.Api.Controllers;
-
-[Route("api/role-permission-mapping")]
+[Route("api/[controller]")]
 [ApiController]
-[Authorize(Roles = "Administrator")]
 public class RolePermissionMappingController : ControllerBase
 {
     private readonly IRolePermissionService _rolePermissionService;
@@ -82,10 +78,10 @@ public class RolePermissionMappingController : ControllerBase
 
         try
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = User.FindFirst("Id")?.Value;
             if (userId == null)
             {
-                return Unauthorized("User ID not found in token");
+                return Unauthorized(new { message = "User ID not found in token" });
             }
 
             await _rolePermissionService.SaveRolePermissionMappingAsync(request, Guid.Parse(userId));
