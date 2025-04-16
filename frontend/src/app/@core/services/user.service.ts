@@ -25,13 +25,14 @@ export class UserService {
       })
     );
   }
-  // getCurrentUser(): User {
-  //   const localStorage = this.document.defaultView?.localStorage;
-  //   if (localStorage && localStorage.getItem("currentUser")) {
-  //     const user = JSON.parse(localStorage.getItem("currentUser"));
-  //     return user;
-  //   }
-  // }
+
+  getUserWithRoles(userId: string) {
+    return this.http.get(`${environment.apiEndpoint}/UserRoles/${userId}`).pipe(
+      map((user: any) => {
+        return user;
+      })
+    );
+  }
 
   create(user: User) {
     user.email = user.userName;

@@ -26,7 +26,7 @@ public class RolePermissionsController : ControllerBase
         }
 
         var userId = Guid.Parse(userIdClaim);
-        await _rolePermissionService.AssignPermissionsToRoleAsync(roleId, permissionIds, userId);
+        //  await _rolePermissionService.AssignPermissionsToRoleAsync(roleId, permissionIds, userId);
         return Ok();
     }
 
