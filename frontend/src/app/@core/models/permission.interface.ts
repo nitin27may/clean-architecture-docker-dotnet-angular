@@ -17,6 +17,8 @@ export interface RolePermission {
     pageId: string;
     pageName: string;
     pageUrl: string;
+
+    pageOrder?: number; // Added for menu ordering
     operationId: string;
     operationName: string;
     permissionId: string;

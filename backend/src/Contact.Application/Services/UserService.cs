@@ -459,17 +459,13 @@ public class UserService : IUserService
         var user = await _userRepository.FindByID(userId);
         if (user == null) return null;
 
-        // Get role permissions
-        var rolePermissions = await _rolePermissionService.GetRolePermissionMappingsAsync(userId);
-
-        // Get role names
+        // Get the user's roles
         var roles = await _userRepository.FindRolesById(userId);
 
         // Map to response
         var userResponse = _mapper.Map<UserWithRolesResponse>(user);
-        userResponse.RolePermissions = rolePermissions.ToList();
-        var roleResponse = _mapper.Map<List<RoleResponse>>(user); // Updated to List<RoleResponse>
-        userResponse.Roles = roleResponse.ToList();
+        userResponse.RolePermissions = null; // Keep rolePermissions as null as requested
+        userResponse.Roles = _mapper.Map<List<RoleResponse>>(roles);
 
         return userResponse;
     }

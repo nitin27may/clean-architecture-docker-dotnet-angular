@@ -83,9 +83,9 @@ public class RolePermissionService : GenericService<RolePermission, RolePermissi
     public async Task<RolePermissionMappingResponse> GetRolePermissionMappingByRoleIdAsync(Guid roleId)
     {
         // Get the role
-        using var transaction = _unitOfWork.BeginTransaction();
-        var result = await _rolePermissionRepository.GetRolePermissionMappingByRoleIdAsync(roleId, transaction);
-        await _unitOfWork.CommitAsync();
+        //  using var transaction = _unitOfWork.BeginTransaction();
+        var result = await _rolePermissionRepository.GetRolePermissionMappingByRoleIdAsync(roleId);
+        //  await _unitOfWork.CommitAsync();
         return _mapper.Map<RolePermissionMappingResponse>(result);
     }
 

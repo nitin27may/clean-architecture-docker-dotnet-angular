@@ -1,51 +1,38 @@
+using Contact.Api.Core.Attributes;
 using Contact.Application.Interfaces;
 using Contact.Application.UseCases.Operations;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Contact.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class OperationsController : ControllerBase
+public class OperationsController(IOperationService operationService) : ControllerBase
 {
-    private readonly IOperationService _operationService;
-
-    public OperationsController(IOperationService operationService)
-    {
-        _operationService = operationService;
-    }
-
     [HttpPost]
-    [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> AddOperation(CreateOperation createOperation)
-    {
-        var response = await _operationService.Add(createOperation);
-        return Ok(response);
-    }
+    [AuthorizePermission("Operations.Create")]
+    [ActivityLog("Creating new Operation")]
+    public async Task<IActionResult> AddOperation(CreateOperation createOperation) =>
+        Ok(await operationService.Add(createOperation));
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "Admin")]
+    [AuthorizePermission("Operations.Update")]
+    [ActivityLog("Updating Operation")]
     public async Task<IActionResult> UpdateOperation(Guid id, UpdateOperation updateOperation)
     {
         updateOperation.Id = id;
-        var response = await _operationService.Update(updateOperation);
-        return Ok(response);
+        return Ok(await operationService.Update(updateOperation));
     }
 
     [HttpGet]
-    [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> GetOperations()
-    {
-        var response = await _operationService.FindAll();
-        return Ok(response);
-    }
+    [AuthorizePermission("Operations.Read")]
+    [ActivityLog("Fetching all Operations")]
+    public async Task<IActionResult> GetOperations() =>
+        Ok(await operationService.FindAll());
 
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> DeleteOperation(Guid id)
-    {
-        var response = await _operationService.Delete(id);
-        return Ok(response);
-    }
+    [AuthorizePermission("Operations.Delete")]
+    [ActivityLog("Deleting Operation")]
+    public async Task<IActionResult> DeleteOperation(Guid id) =>
+        Ok(await operationService.Delete(id));
 }
