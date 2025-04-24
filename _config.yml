@@ -63,3 +63,6 @@ collapse_inactive_chapters: true
 
 # Enable copy code button
 enable_copy_code_button: true
+
+ga_tracking: G-Z89Y3Z3K6Z
+ga_tracking_anonymize_ip: true 
