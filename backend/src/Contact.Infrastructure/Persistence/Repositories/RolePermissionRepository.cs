@@ -7,12 +7,10 @@ using System.Data;
 
 namespace Contact.Infrastructure.Persistence.Repositories;
 
-public class RolePermissionRepository : GenericRepository<RolePermission>, IRolePermissionRepository
+public class RolePermissionRepository(IDapperHelper dapperHelper) 
+    : GenericRepository<RolePermission>(dapperHelper, "RolePermissions"), 
+      IRolePermissionRepository
 {
-    public RolePermissionRepository(IDapperHelper dapperHelper) : base(dapperHelper, "RolePermissions")
-    {
-    }
-
     public async Task<IEnumerable<RolePermissionMapping>> GetRolePermissionMappingsAsync()
     {
         var sql = @"
@@ -68,7 +66,7 @@ public class RolePermissionRepository : GenericRepository<RolePermission>, IRole
             FROM role_permissions rp
             ORDER BY rp.""RoleName"", rp.""PageName"", rp.""OperationName""";
 
-        return await _dapperHelper.GetAll<RolePermissionMapping>(sql, new DynamicParameters());
+        return await dapperHelper.GetAll<RolePermissionMapping>(sql, new DynamicParameters());
     }
 
     public async Task<IEnumerable<RolePermissionMapping>> GetRolePermissionMappingsAsync(Guid userId)
@@ -83,6 +81,7 @@ public class RolePermissionRepository : GenericRepository<RolePermission>, IRole
                 p.""Id"" as PageId,
                 p.""Name"" AS PageName,
                 p.""Url"" as PageUrl,
+                p.""Order"" as PageOrder,
                 o.""Id"" as OperationId,
                 o.""Name"" AS OperationName,
                 perm.""Id"" as PermissionId
@@ -94,7 +93,7 @@ public class RolePermissionRepository : GenericRepository<RolePermission>, IRole
             INNER JOIN ""Operations"" o ON perm.""OperationId"" = o.""Id""
             WHERE ur.""UserId"" = @UserId
             ORDER BY r.""Name"", p.""Name"", o.""Name"";";
-        return await _dapperHelper.GetAll<RolePermissionMapping>(sql, dbPara);
+        return await dapperHelper.GetAll<RolePermissionMapping>(sql, dbPara);
     }
 
     public async Task AssignPermissionsToRoleAsync(Guid roleId, IEnumerable<Guid> permissionIds, Guid createdBy, IDbTransaction? transaction = null)
@@ -113,8 +112,6 @@ public class RolePermissionRepository : GenericRepository<RolePermission>, IRole
         }
     }
 
-
-
     public async Task DeletePermissionsByRoleId(Guid roleId, IDbTransaction? transaction = null)
     {
         var dbPara = new DynamicParameters();
@@ -122,7 +119,7 @@ public class RolePermissionRepository : GenericRepository<RolePermission>, IRole
         var sql = @"
             Delete FROM ""RolePermissions""
             WHERE ""RoleId"" = @RoleId;";
-        await _dapperHelper.Execute(sql, dbPara, CommandType.Text, transaction);
+        await dapperHelper.Execute(sql, dbPara, CommandType.Text, transaction);
     }
 
     public async Task<PermissionsByRoleMappings> GetRolePermissionMappingByRoleIdAsync(Guid roleId, IDbTransaction? transaction = null)
@@ -154,6 +151,7 @@ public class RolePermissionRepository : GenericRepository<RolePermission>, IRole
                     po.""PageName"",
                     po.""OperationId"",
                     po.""OperationName"",
+                    
                     -- Only mark as selected if both permission exists AND role has it assigned
                     CASE 
                         WHEN po.""PermissionId"" IS NOT NULL AND rp.""Id"" IS NOT NULL THEN TRUE
@@ -184,14 +182,14 @@ public class RolePermissionRepository : GenericRepository<RolePermission>, IRole
         var pagesDict = new Dictionary<Guid, PageOperationMappings>();
 
         // Create the response using Dapper's multi-mapping capabilities
-        var response = await _dapperHelper.GetAll<dynamic>(query, parameters, CommandType.Text, transaction);
+        var response = await dapperHelper.GetAll<dynamic>(query, parameters, CommandType.Text, transaction);
 
         // If no data found, return null
         if (!response.Any())
         {
             // Query just the role to check if it exists
             var roleQuery = "SELECT \"Id\" as \"RoleId\", \"Name\" as \"RoleName\" FROM \"Roles\" WHERE \"Id\" = @RoleId";
-            var role = await _dapperHelper.Get<dynamic>(roleQuery, parameters, CommandType.Text, transaction);
+            var role = await dapperHelper.Get<dynamic>(roleQuery, parameters, CommandType.Text, transaction);
 
             if (role == null)
                 return null; // Role not found
@@ -246,7 +244,7 @@ public class RolePermissionRepository : GenericRepository<RolePermission>, IRole
         return mappingResponse;
     }
 
-    private async Task<List<PageOperationMappings>> GetAllPagesWithOperations(IDbTransaction dbTransaction = null)
+    private async Task<List<PageOperationMappings>> GetAllPagesWithOperations(IDbTransaction? transaction = null)
     {
         // Get all pages with operations, but set IsSelected to false
         var query = @"
@@ -262,7 +260,7 @@ public class RolePermissionRepository : GenericRepository<RolePermission>, IRole
             -- Removed INNER JOIN to include all combinations
             ORDER BY p.""Name"", o.""Name""";
 
-        var result = await _dapperHelper.GetAll<dynamic>(query, dbTransaction);
+        var result = await dapperHelper.GetAll<dynamic>(query, null, CommandType.Text, transaction);
 
         var pagesDict = new Dictionary<Guid, PageOperationMappings>();
         var pagesList = new List<PageOperationMappings>();

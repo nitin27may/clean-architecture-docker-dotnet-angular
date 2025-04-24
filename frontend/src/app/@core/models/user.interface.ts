@@ -1,4 +1,5 @@
 import { RolePermission } from './permission.interface';
+import { Role } from "./role.interface";
 
 export interface User {
     id: string;
@@ -8,4 +9,5 @@ export interface User {
     mobile: string;
     email: string;
     rolePermissions?: RolePermission[];
+    roles?: Role[];
 }

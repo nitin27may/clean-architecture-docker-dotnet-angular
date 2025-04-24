@@ -1,3 +1,4 @@
+using Contact.Api.Core.Attributes;
 using Contact.Application.Interfaces;
 using Contact.Application.UseCases.Roles;
 using Microsoft.AspNetCore.Authorization;
@@ -7,46 +8,32 @@ namespace Contact.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class RolesController : ControllerBase
+public class RolesController(IRoleService roleService) : ControllerBase
 {
-    private readonly IRoleService _roleService;
-
-    public RolesController(IRoleService roleService)
-    {
-        _roleService = roleService;
-    }
-
     [HttpPost]
-    [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> AddRole(CreateRole createRole)
-    {
-        var response = await _roleService.Add(createRole);
-        return Ok(response);
-    }
+    [AuthorizePermission("Roles.Create")]
+    [ActivityLog("Creating new Role")]
+    public async Task<IActionResult> AddRole(CreateRole createRole) => 
+        Ok(await roleService.Add(createRole));
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "Admin")]
+    [AuthorizePermission("Roles.Update")]
+    [ActivityLog("Updating Role")]
     public async Task<IActionResult> UpdateRole(Guid id, UpdateRole updateRole)
     {
         updateRole.Id = id;
-        var response = await _roleService.Update(updateRole);
-        return Ok(response);
+        return Ok(await roleService.Update(updateRole));
     }
 
     [HttpGet]
-    [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> GetRoles()
-    {
-        var response = await _roleService.FindAll();
-        return Ok(response);
-    }
+    [AuthorizePermission("Roles.Read")]
+    [ActivityLog("Fetching all Roles")]
+    public async Task<IActionResult> GetRoles() => 
+        Ok(await roleService.FindAll());
 
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> DeleteRole(Guid id)
-    {
-        ;
-        var response = await _roleService.Delete(id);
-        return Ok(response);
-    }
+    [AuthorizePermission("Roles.Delete")]
+    [ActivityLog("Deleting Role")]
+    public async Task<IActionResult> DeleteRole(Guid id) => 
+        Ok(await roleService.Delete(id));
 }

@@ -1,3 +1,4 @@
+using Contact.Api.Core.Attributes;
 using Contact.Application.Interfaces;
 using Contact.Application.UseCases.Users;
 using Microsoft.AspNetCore.Authorization;
@@ -7,32 +8,20 @@ namespace Contact.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class UserRolesController : ControllerBase
+public class UserRolesController(IUserService userService) : ControllerBase
 {
-    private readonly IUserService _userService;
-
-    public UserRolesController(IUserService userService)
-    {
-        _userService = userService;
-    }
-
     [HttpGet("{userId}")]
-    [Authorize(Roles = "Admin")]
+    [AuthorizePermission("UserRoles.Read")]
+    [ActivityLog("Getting user roles")]
     public async Task<IActionResult> GetUserWithRoles(Guid userId)
     {
-        var userWithRoles = await _userService.GetUserWithRolesAsync(userId);
-        if (userWithRoles == null)
-        {
-            return NotFound();
-        }
-        return Ok(userWithRoles);
+        var userWithRoles = await userService.GetUserWithRolesAsync(userId);
+        return userWithRoles is null ? NotFound() : Ok(userWithRoles);
     }
 
     [HttpPut("{userId}/roles")]
-    [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> UpdateUserRoles(Guid userId, UpdateUserRoles updateUserRoles)
-    {
-        var response = await _userService.UpdateUserRoles(userId, updateUserRoles);
-        return Ok(response);
-    }
+    [AuthorizePermission("UserRoles.Update")]
+    [ActivityLog("Updating user roles")]
+    public async Task<IActionResult> UpdateUserRoles(Guid userId, UpdateUserRoles updateUserRoles) => 
+        Ok(await userService.UpdateUserRoles(userId, updateUserRoles));
 }

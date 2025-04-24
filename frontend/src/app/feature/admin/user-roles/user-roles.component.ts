@@ -106,8 +106,9 @@ export class UserRolesComponent implements OnInit {
   loadUserRoles(userId: string): void {
     this.loadingRoles.set(true);
     this.userRoleService.getUserRoles(userId).subscribe({
-      next: (roles) => {
-        const roleIds = roles.map(r => r.id);
+      next: (response) => {
+        // Handle the response properly - ensure we have an array of roles
+        const roleIds =  response?.roles.map(r => r.id);
         this.selectedRoles.set(roleIds);
         this.userRoleForm.patchValue({ roleIds });
         this.loadingRoles.set(false);
@@ -130,8 +131,8 @@ export class UserRolesComponent implements OnInit {
     this.userRoleService.updateUserRoles(userRoleData.userId!, userRoleData.roleIds!).subscribe({
       next: () => {
         this.snackBar.open('Roles assigned successfully', 'Close', { duration: 3000 });
-        this.resetForm();
         this.loading.set(false);
+        this.resetForm();
       },
       error: (err) => {
         console.error('Failed to assign roles:', err);
@@ -144,7 +145,20 @@ export class UserRolesComponent implements OnInit {
   resetForm(): void {
     this.selectedUser.set(null);
     this.selectedRoles.set([]);
+    
+    // Reset form with initial values to avoid validation errors
     this.userRoleForm.reset();
+    
+    // Mark the form as pristine and untouched to prevent validation errors
+    this.userRoleForm.markAsPristine();
+    this.userRoleForm.markAsUntouched();
+    
+    // // Update form controls to be pristine and untouched as well
+    // Object.keys(this.userRoleForm.controls).forEach(key => {
+    //   const control = this.userRoleForm.get(key);
+    //   control?.markAsPristine();
+    //   control?.markAsUntouched();
+    // });
   }
   
   getRoleName(roleId: string): string {

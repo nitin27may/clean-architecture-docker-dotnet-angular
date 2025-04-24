@@ -4,23 +4,22 @@ using System.Data;
 
 namespace Contact.Infrastructure.Persistence;
 
-public class UnitOfWork : IUnitOfWork
+public class UnitOfWork(IDapperHelper dapperHelper) : IUnitOfWork
 {
-    private readonly IDapperHelper _dapperHelper;
-    private IDbTransaction _transaction;
-    private IDbConnection _connection;
-
-    public UnitOfWork(IDapperHelper dapperHelper)
-    {
-        _dapperHelper = dapperHelper;
-        _connection = _dapperHelper.GetConnection();
-    }
+    private IDbTransaction? _transaction;
+    private IDbConnection? _connection;
+    private bool _disposed;
 
     public IDbTransaction BeginTransaction()
     {
-        if (_connection.State == ConnectionState.Closed)
+        _connection = dapperHelper.GetConnection();
+        
+        // Ensure the connection is open before starting a transaction
+        if (_connection.State != ConnectionState.Open)
+        {
             _connection.Open();
-
+        }
+        
         _transaction = _connection.BeginTransaction();
         return _transaction;
     }
@@ -30,12 +29,25 @@ public class UnitOfWork : IUnitOfWork
         try
         {
             _transaction?.Commit();
-            await Task.CompletedTask;
+        }
+        catch
+        {
+            _transaction?.Rollback();
+            throw;
         }
         finally
         {
-            Dispose();
+            _transaction?.Dispose();
+            _transaction = null;
+            
+            // Close the connection when transaction is committed
+            if (_connection?.State == ConnectionState.Open)
+            {
+                _connection.Close();
+            }
         }
+
+        await Task.CompletedTask;
     }
 
     public async Task RollbackAsync()
@@ -43,21 +55,38 @@ public class UnitOfWork : IUnitOfWork
         try
         {
             _transaction?.Rollback();
-            await Task.CompletedTask;
         }
         finally
         {
-            Dispose();
+            _transaction?.Dispose();
+            _transaction = null;
+            
+            // Close the connection when transaction is rolled back
+            if (_connection?.State == ConnectionState.Open)
+            {
+                _connection.Close();
+            }
         }
+
+        await Task.CompletedTask;
     }
 
     public void Dispose()
     {
-        _transaction?.Dispose();
-        if (_connection?.State == ConnectionState.Open)
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!_disposed)
         {
-            _connection.Close();
+            if (disposing)
+            {
+                _transaction?.Dispose();
+                _connection?.Dispose();
+            }
+            _disposed = true;
         }
-        _connection?.Dispose();
     }
 }

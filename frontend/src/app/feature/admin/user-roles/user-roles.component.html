@@ -40,7 +40,7 @@
       </div>
       
       <div class="flex justify-end">
-        <button mat-raised-button color="primary" type="submit" [disabled]="userRoleForm.invalid || loading()">
+        <button mat-flat-button color="primary" type="submit" [disabled]="userRoleForm.invalid || loading()">
           @if (loading()) {
             <mat-spinner diameter="20" class="inline-block mr-2"></mat-spinner> Saving...
           } @else {

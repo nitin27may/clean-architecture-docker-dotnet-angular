@@ -9,6 +9,7 @@ export interface MenuItem {
   exact?: boolean;
   permission?: string;
   subItems?: MenuItem[];
+  pageOrder?: number; // Added for explicit ordering
 }
 
 const defaultMenuItems: MenuItem[] = [
@@ -40,10 +41,10 @@ export class MenuService {
     }
 
     // Map to store unique page information grouped by parent path
-    const pageMap = new Map<string, { name: string, url: string, operations: string[] }>();
+    const pageMap = new Map<string, { name: string, url: string, operations: string[], pageOrder?: number }>();
     
     // Group pages by parent path
-    const groupedPages = new Map<string, Map<string, { name: string, url: string, operations: string[] }>>();
+    const groupedPages = new Map<string, Map<string, { name: string, url: string, operations: string[], pageOrder?: number }>>();
 
     // Process all role permissions to get unique pages with their URLs and operations
     user.rolePermissions.forEach(p => {
@@ -54,7 +55,8 @@ export class MenuService {
         pageMap.set(pageKey, {
           name: p.pageName,
           url: p.pageUrl,
-          operations: [p.operationName]
+          operations: [p.operationName],
+          pageOrder: p.pageOrder
         });
       } else {
         if (!pageMap.get(pageKey)?.operations.includes(p.operationName)) {
@@ -72,7 +74,8 @@ export class MenuService {
         pagesInGroup?.set(pageKey, {
           name: p.pageName,
           url: p.pageUrl,
-          operations: [p.operationName]
+          operations: [p.operationName],
+          pageOrder: p.pageOrder
         });
       } else {
         const pageInfo = pagesInGroup?.get(pageKey);
@@ -95,7 +98,8 @@ export class MenuService {
               label: this.formatLabel(pageName),
               route: pageInfo.url,
               exact: false,
-              permission: `${pageName}.Read`
+              permission: `${pageName}.Read`,
+              pageOrder: pageInfo.pageOrder || this.getDefaultPageOrder(pageName) // Use backend display order or fallback
             });
           }
         });
@@ -104,7 +108,8 @@ export class MenuService {
         const parentMenuItem: MenuItem = {
           icon: this.getIconForParent(parentPath),
           label: this.formatParentLabel(parentPath),
-          subItems: []
+          subItems: [],
+          pageOrder: this.getDefaultPageOrder(parentPath) // Add display order for parent menu items
         };
         
         // Add child items
@@ -115,13 +120,16 @@ export class MenuService {
               label: this.formatLabel(pageName),
               route: pageInfo.url,
               exact: false,
-              permission: `${pageName}.Read`
+              permission: `${pageName}.Read`,
+              pageOrder: pageInfo.pageOrder || this.getDefaultPageOrder(pageName) // Use backend display order or fallback
             });
           }
         });
         
         // Only add the parent if it has children
         if (parentMenuItem.subItems && parentMenuItem.subItems.length > 0) {
+          // Sort the subitems by display order
+          parentMenuItem.subItems = this.sortMenuItems(parentMenuItem.subItems);
           menuItems.push(parentMenuItem);
         }
       }
@@ -158,10 +166,10 @@ export class MenuService {
       'Roles': 'admin_panel_settings',
       'Contacts': 'contacts',
       'Permissions': 'security',
-      'RolePermissions': 'security',
+      'RolePermissions': 'shield',
       'UserRoles': 'manage_accounts',
-      'Pages': 'article',
-      'Operations': 'list_alt',
+      'Pages': 'web',
+      'Operations': 'api',
       'ActivityLog': 'history',
       'Settings': 'settings'
     };
@@ -175,16 +183,65 @@ export class MenuService {
   }
 
   private sortMenuItems(items: MenuItem[]): MenuItem[] {
-    const order = ['Dashboard', 'Admin', 'Contacts', 'User', 'Role', 'Permission'];
+    // Define default order for common menu items
+    const defaultOrderMap: Record<string, number> = {
+      'Dashboard': 10,
+      'Admin': 20,
+      'Contacts': 30,
+      'User': 40,
+      'Roles': 50,
+      'Pages': 60,
+      'Operations': 70, 
+      'RolePermissions': 80,
+      'Permissions': 90,
+      'UserRoles': 100,
+      'ActivityLog': 110,
+      'Settings': 900 // Settings usually go last
+    };
     
     return items.sort((a, b) => {
-      const indexA = order.indexOf(a.label);
-      const indexB = order.indexOf(b.label);
+      // Special case: Dashboard always comes first
+      if (a.label === 'Dashboard') return -1;
+      if (b.label === 'Dashboard') return 1;
       
-      if (indexA === -1 && indexB === -1) return a.label.localeCompare(b.label);
-      if (indexA === -1) return 1;
-      if (indexB === -1) return -1;
-      return indexA - indexB;
+      // First, use explicit pageOrder if available
+      if (a.pageOrder !== undefined && b.pageOrder !== undefined) {
+        return a.pageOrder - b.pageOrder;
+      }
+      
+      // If only one item has pageOrder, prioritize it
+      if (a.pageOrder !== undefined) return -1;
+      if (b.pageOrder !== undefined) return 1;
+      
+      // Otherwise, use the predefined order map
+      const orderA = defaultOrderMap[a.label] || 500;
+      const orderB = defaultOrderMap[b.label] || 500;
+      
+      if (orderA !== orderB) {
+        return orderA - orderB;
+      }
+      
+      // As a last resort, sort alphabetically
+      return a.label.localeCompare(b.label);
     });
+  }
+
+  private getDefaultPageOrder(label: string): number {
+    const defaultOrderMap: Record<string, number> = {
+      'Dashboard': 10,
+      'Admin': 20,
+      'Contacts': 30,
+      'User': 40,
+      'Roles': 50,
+      'Pages': 60,
+      'Operations': 70, 
+      'RolePermissions': 80,
+      'Permissions': 90,
+      'UserRoles': 100,
+      'ActivityLog': 110,
+      'Settings': 900 // Settings usually go last
+    };
+
+    return defaultOrderMap[label] || 500;
   }
 }

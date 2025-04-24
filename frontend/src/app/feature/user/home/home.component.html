@@ -9,7 +9,7 @@
       View on GitHub
     </button>
 
-    <button mat-stroked-button color="primary" class="dark:border-white dark:text-white">
+    <button mat-stroked-button color="primary" class="dark:border-white dark:text-white"  (click)="openDemo()">
       <mat-icon>play_arrow</mat-icon>
       Watch Demo
     </button>
@@ -111,11 +111,11 @@
   <p class="mb-6">Try out the contact management system today and experience the power of clean architecture.</p>
 
   <div class="flex flex-wrap justify-center gap-4">
-    <button mat-raised-button class="bg-white text-primary font-medium">
+    <button mat-raised-button class="bg-white text-primary font-medium" (click)="openDemo()">
       Try Demo
     </button>
 
-    <button mat-raised-button class="bg-white text-primary font-medium">
+    <button mat-raised-button class="bg-white text-primary font-medium" (click)="openDocumentation()">
       Learn More
     </button>
   </div>

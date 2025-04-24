@@ -99,4 +99,15 @@ export class HomeComponent implements OnInit {
       window.open(environment.repoLink, '_blank', 'noopener,noreferrer');
     }
   }
+  openDemo() {
+    if (isPlatformBrowser(this.platformId)) {
+      window.open("https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/blob/main/docs/clean-architecture-demo.gif", '_blank', 'noopener,noreferrer');
+    }
+  }
+
+  openDocumentation() { 
+    if (isPlatformBrowser(this.platformId)) {
+      window.open("https://nitinksingh.com/clean-architecture-docker-dotnet-angular/", '_blank', 'noopener,noreferrer');
+    }
+  }
 }

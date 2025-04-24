@@ -1,51 +1,38 @@
+using Contact.Api.Core.Attributes;
 using Contact.Application.Interfaces;
 using Contact.Application.UseCases.Pages;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Contact.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class PagesController : ControllerBase
+public class PagesController(IPageService pageService) : ControllerBase
 {
-    private readonly IPageService _pageService;
-
-    public PagesController(IPageService pageService)
-    {
-        _pageService = pageService;
-    }
-
     [HttpPost]
-    [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> AddPage(CreatePage createPage)
-    {
-        var response = await _pageService.Add(createPage);
-        return Ok(response);
-    }
+    [AuthorizePermission("Pages.Create")]
+    [ActivityLog("Creating new Page")]
+    public async Task<IActionResult> AddPage(CreatePage createPage) =>
+        Ok(await pageService.Add(createPage));
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "Admin")]
+    [AuthorizePermission("Pages.Update")]
+    [ActivityLog("Updating Page")]
     public async Task<IActionResult> UpdatePage(Guid id, UpdatePage updatePage)
     {
         updatePage.Id = id;
-        var response = await _pageService.Update(updatePage);
-        return Ok(response);
+        return Ok(await pageService.Update(updatePage));
     }
 
     [HttpGet]
-    [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> GetPages()
-    {
-        var response = await _pageService.FindAll();
-        return Ok(response);
-    }
+    [AuthorizePermission("Pages.Read")]
+    [ActivityLog("Fetching all Pages")]
+    public async Task<IActionResult> GetPages() =>
+        Ok(await pageService.FindAll());
 
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> DeletePage(Guid id)
-    {
-        var response = await _pageService.Delete(id);
-        return Ok(response);
-    }
+    [AuthorizePermission("pages.Delete")]
+    [ActivityLog("Deleting Page")]
+    public async Task<IActionResult> DeletePage(Guid id) =>
+        Ok(await pageService.Delete(id));
 }

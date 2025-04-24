@@ -1,5 +1,3 @@
-using System.Data;
-using System.Threading.Tasks;
 using Contact.Domain.Entities;
 using Contact.Domain.Interfaces;
 using Contact.Infrastructure.Persistence.Helper;

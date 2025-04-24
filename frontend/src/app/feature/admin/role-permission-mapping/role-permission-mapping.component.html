@@ -24,13 +24,13 @@
         
         <div class="flex-grow"></div>
         
-        <button mat-raised-button color="primary" (click)="saveMapping()" [disabled]="loading() || saving() || !mapping()">
+        <button mat-flat-button color="primary" (click)="saveMapping()" [disabled]="loading() || saving() || !mapping()">
           <div class="flex items-center gap-2">
             @if (saving()) {
               <mat-spinner [diameter]="20"></mat-spinner>
             }
             <mat-icon>save</mat-icon>
-            <span>Save Permissions</span>
+            <span>Save</span>
           </div>
         </button>
       </div>

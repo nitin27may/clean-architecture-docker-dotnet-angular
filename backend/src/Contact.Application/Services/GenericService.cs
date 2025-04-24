@@ -5,62 +5,75 @@ using Contact.Domain.Interfaces;
 
 namespace Contact.Application.Services;
 
-public class GenericService<TEntity, TResponse, TCreate, TUpdate>
+public class GenericService<TEntity, TResponse, TCreate, TUpdate>(
+    IGenericRepository<TEntity> repository,
+    IMapper mapper,
+    IUnitOfWork unitOfWork)
         : IGenericService<TEntity, TResponse, TCreate, TUpdate>
         where TEntity : BaseEntity
         where TResponse : class
         where TCreate : class
         where TUpdate : class
 {
-    private readonly IGenericRepository<TEntity> _repository;
-    private readonly IMapper _mapper;
-    private readonly IUnitOfWork _unitOfWork;
-
-    public GenericService(IGenericRepository<TEntity> repository, IMapper mapper, IUnitOfWork unitOfWork)
-    {
-        _repository = repository;
-        _mapper = mapper;
-        _unitOfWork = unitOfWork;
-    }
-
     public async Task<TResponse> Add(TCreate createDto)
     {
-        using var transaction = _unitOfWork.BeginTransaction();
+        using var transaction = unitOfWork.BeginTransaction();
         try
         {
-            var entity = _mapper.Map<TEntity>(createDto);
-            var createdEntity = await _repository.Add(entity, transaction);
-            await _unitOfWork.CommitAsync();
-            return _mapper.Map<TResponse>(createdEntity); // Map to clean response DTO
+            var entity = mapper.Map<TEntity>(createDto);
+            var createdEntity = await repository.Add(entity, transaction);
+            await unitOfWork.CommitAsync();
+            return mapper.Map<TResponse>(createdEntity);
         }
         catch
         {
-            await _unitOfWork.RollbackAsync();
+            await unitOfWork.RollbackAsync();
             throw;
         }
     }
 
     public async Task<TResponse> Update(TUpdate updateDto)
     {
-        var entity = _mapper.Map<TEntity>(updateDto);
-        var updatedEntity = await _repository.Update(entity);
-        return _mapper.Map<TResponse>(updatedEntity); // Map to clean response DTO
+        using var transaction = unitOfWork.BeginTransaction();
+        try
+        {
+            var entity = mapper.Map<TEntity>(updateDto);
+            var updatedEntity = await repository.Update(entity);
+            await unitOfWork.CommitAsync();
+            return mapper.Map<TResponse>(updatedEntity);
+        }
+        catch
+        {
+            await unitOfWork.RollbackAsync();
+            throw;
+        }
     }
 
     public async Task<bool> Delete(Guid id)
     {
-        return await _repository.Delete(id);
+        using var transaction = unitOfWork.BeginTransaction();
+        try
+        {
+            var result = await repository.Delete(id);
+            await unitOfWork.CommitAsync();
+            return result;
+        }
+        catch
+        {
+            await unitOfWork.RollbackAsync();
+            throw;
+        }
     }
 
     public async Task<TResponse> FindByID(Guid id)
     {
-        var entity = await _repository.FindByID(id);
-        return _mapper.Map<TResponse>(entity); // Map to clean response DTO
+        var entity = await repository.FindByID(id);
+        return mapper.Map<TResponse>(entity);
     }
 
     public async Task<IEnumerable<TResponse>> FindAll()
     {
-        var entities = await _repository.FindAll();
-        return _mapper.Map<IEnumerable<TResponse>>(entities); // Map to clean response DTOs
+        var entities = await repository.FindAll();
+        return mapper.Map<IEnumerable<TResponse>>(entities);
     }
 }

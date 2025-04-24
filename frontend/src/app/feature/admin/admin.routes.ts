@@ -5,8 +5,6 @@ import { PermissionGuard } from "@core/guards/permission.guard";
 import { ActivityLogComponent } from "./activity-log/activity-log.component";
 import { PagesComponent } from "./pages/pages.component";
 import { OperationsComponent } from "./operations/operations.component";
-import { PermissionsComponent } from "./permissions/permissions.component";
-import { RolePermissionsComponent } from "./role-permissions/role-permissions.component";
 import { UserRolesComponent } from "./user-roles/user-roles.component";
 import { RolesComponent } from "./roles/roles.component";
 import { UsersComponent } from "./users/users.component";
@@ -44,16 +42,6 @@ export default [
         canActivate: [PermissionGuard('Roles', 'Read')]
       },
       {
-        path: 'permissions',
-        component: PermissionsComponent,
-        canActivate: [PermissionGuard('Permissions', 'Read')]
-      },
-      {
-        path: 'role-permissions',
-        component: RolePermissionsComponent,
-        canActivate: [PermissionGuard('RolePermissions', 'Read')]
-      },
-      {
         path: 'user-roles',
         component: UserRolesComponent,
         canActivate: [PermissionGuard('UserRoles', 'Read')]
@@ -61,7 +49,7 @@ export default [
       {
         path: 'role-permission-mapping',
         component: RolePermissionMappingComponent,
-        canActivate: [PermissionGuard('RolePermissions', 'Read')]
+        canActivate: [PermissionGuard('RolePermissionMapping', 'Read')]
       },
       {
         path: '',

@@ -3,22 +3,13 @@ using System.Text.Json;
 
 namespace Contact.Api.Core.Middleware;
 
-public class ExceptionMiddleware
+public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
 {
-    private readonly RequestDelegate _next;
-    private readonly ILogger<ExceptionMiddleware> _logger;
-
-    public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
-    {
-        _next = next;
-        _logger = logger;
-    }
-
     public async Task InvokeAsync(HttpContext context)
     {
         try
         {
-            await _next(context);  // Process the request
+            await next(context);  // Process the request
         }
         catch (Exception ex)
         {
@@ -40,11 +31,11 @@ public class ExceptionMiddleware
             _ => StatusCodes.Status500InternalServerError
         };
 
-        _logger.LogError(exception, exception.Message);
+        logger.LogError(exception, exception.Message);
         
         // Handle JWT cryptography errors specifically
         string errorMessage = exception.Message;
-        if (exception is ArgumentOutOfRangeException argEx && 
+        if (exception is ArgumentOutOfRangeException && 
             errorMessage.Contains("KeyedHashAlgorithm") && 
             errorMessage.Contains("key size"))
         {

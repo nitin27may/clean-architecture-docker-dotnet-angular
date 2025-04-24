@@ -8,28 +8,20 @@ namespace Contact.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class UsersController : ControllerBase
+public class UsersController(IUserService userService, IActivityLogService activityLogService) : ControllerBase
 {
-    private IUserService _userService;
-    private readonly IActivityLogService _activityLogService;
-
-    public UsersController(IUserService userService, IActivityLogService activityLogService)
-    {
-        _userService = userService;
-        _activityLogService = activityLogService;
-    }
-
     [HttpPost("register")]
+   // [ActivityLog("User registration")]
     public async Task<IActionResult> Register(RegisterUser createUser)
     {
-        var users = await _userService.CheckUniqueUsers(createUser.Email, createUser.Username);
+        var users = await userService.CheckUniqueUsers(createUser.Email, createUser.Username);
         if (users.Any())
             return BadRequest(new { message = "User already exists" });
-        var response = await _userService.Add(createUser);
-
-        if (response == null)
-            return BadRequest(new { message = "User Details are not correct" });
-        return CreatedAtAction(nameof(GetCurrentUser), response);
+            
+        var response = await userService.Add(createUser);
+        return response is null 
+            ? BadRequest(new { message = "User Details are not correct" }) 
+            : CreatedAtAction(nameof(GetCurrentUser), response);
     }
 
     [HttpPost("create")]
@@ -37,97 +29,87 @@ public class UsersController : ControllerBase
     [AuthorizePermission("Users.Create")]
     public async Task<IActionResult> Create(CreateUser createUser)
     {
-        var users = await _userService.CheckUniqueUsers(createUser.Email, createUser.Email);
+        var users = await userService.CheckUniqueUsers(createUser.Email, createUser.Email);
         if (users.Any())
             return BadRequest(new { message = "User already exists" });
-        var response = await _userService.Create(createUser);
-
-        if (response == null)
-            return BadRequest(new { message = "User Details are not correct" });
-        return CreatedAtAction(nameof(GetCurrentUser), response);
+            
+        var response = await userService.Create(createUser);
+        return response is null 
+            ? BadRequest(new { message = "User Details are not correct" }) 
+            : CreatedAtAction(nameof(GetCurrentUser), response);
     }
 
     [HttpGet]
     [Authorize]
+    [ActivityLog("Fetching current user details")]
     public async Task<IActionResult> GetCurrentUser()
     {
         var userIdClaim = User.FindFirst("Id")?.Value;
-        if (userIdClaim == null)
-        {
+        if (userIdClaim is null)
             return Unauthorized(new { message = "User ID not found in token" });
-        }
 
         var userId = Guid.Parse(userIdClaim);
-        var result = await _userService.GetUserWithPermissionsAsync(userId);
+        var result = await userService.GetUserWithPermissionsAsync(userId);
         return Ok(result);
     }
+
     [HttpGet("all")]
     [AuthorizePermission("Users.Read")]
     [Authorize]
-    public async Task<IActionResult> GetAll()
-    {
-
-        var result = await _userService.FindAll();
-        return Ok(result);
-    }
+    [ActivityLog("Fetching all users")]
+    public async Task<IActionResult> GetAll() => 
+        Ok(await userService.FindAll());
 
     [HttpPut("{id}")]
     [Authorize]
+    [ActivityLog("Updating user details")]
     public async Task<IActionResult> UpdateUser(Guid id, UpdateUser updateUser)
     {
-        var user = await _userService.FindByID(id);
-        if (user == null) return NotFound();
-        var result = await _userService.Update(updateUser);
+        var user = await userService.FindByID(id);
+        if (user is null) return NotFound();
+        
+        var result = await userService.Update(updateUser);
         return Ok(result);
     }
 
     [HttpPost("authenticate")]
+  //  [ActivityLog("User authentication")]
     public async Task<IActionResult> Authenticate(AuthenticateRequest model)
     {
-        var response = await _userService.Authenticate(model);
-
-        if (response.Authenticate == false)
-            return Unauthorized(new { message = "Username or password is incorrect" });
-
-        return Ok(response);
+        var response = await userService.Authenticate(model);
+        return response.Authenticate == false
+            ? Unauthorized(new { message = "Username or password is incorrect" })
+            : Ok(response);
     }
 
     [HttpPost("reset-password")]
-    public async Task<IActionResult> ForgetPassword(string email)
-    {
-        var result = await _userService.ForgotPassword(email);
-        return Ok(result);
-    }
+   // [ActivityLog("Password reset request")]
+    public async Task<IActionResult> ForgetPassword(string email) => 
+        Ok(await userService.ForgotPassword(email));
 
     [HttpPost("confirm-reset-password")]
-    public async Task<IActionResult> ResetPassword(ResetPassword resetPassword)
-    {
-        var result = await _userService.ResetPassword(resetPassword);
-        return Ok(result);
-    }
+   // [ActivityLog("Confirming password reset")]
+    public async Task<IActionResult> ResetPassword(ResetPassword resetPassword) => 
+        Ok(await userService.ResetPassword(resetPassword));
 
     [HttpPut("change-password")]
     [Authorize]
-    public async Task<IActionResult> ChangePassword(ChangePassword changePassword)
-    {
-        var result = await _userService.ChangePassword(changePassword);
-        return Ok(result);
-    }
+    [ActivityLog("Changing user password")]
+    public async Task<IActionResult> ChangePassword(ChangePassword changePassword) => 
+        Ok(await userService.ChangePassword(changePassword));
 
     [HttpGet("activity-logs")]
     [Authorize]
     [AuthorizePermission("ActivityLog.Read")]
+    [ActivityLog("Retrieving activity logs")]
     public async Task<IActionResult> GetActivityLogs([FromQuery] string username = "", [FromQuery] string email = "")
     {
-        username = username ?? "";
-        email = email ?? "";
-
-        username = username.Trim();
-        email = email.Trim();
+        username = username?.Trim() ?? "";
+        email = email?.Trim() ?? "";
 
         try
         {
-            var logs = await _activityLogService.GetActivityLogsAsync(username, email);
+            var logs = await activityLogService.GetActivityLogsAsync(username, email);
             return Ok(logs);
         }
         catch (Exception ex)
