@@ -9,6 +9,35 @@ permalink: /visual-feature-guide
 
 This document provides a visual overview of the key features implemented in the Clean Architecture Full-Stack starter.
 
+## Landing Page
+
+<div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 30px;">
+  <div style="flex: 1; min-width: 300px; border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
+    <h3>🏠 Welcome Dashboard</h3>
+    <p>The application features a modern, responsive landing page that welcomes users and provides easy access to key features. The landing page includes:</p>
+    <ul>
+      <li>Clean, intuitive user interface with Material Design components</li>
+      <li>Dynamic welcome message based on user role and permissions</li>
+      <li>Quick access cards to frequently used features</li>
+      <li>Responsive layout that adapts to various screen sizes</li>
+      <li>Theme-aware design with full light and dark mode support</li>
+    </ul>
+    <img src="/clean-architecture-docker-dotnet-angular/img/screenshots/landing-page.png" alt="Light Mode Landing Page" style="width: 100%; border-radius: 4px;">
+  </div>
+  <div style="flex: 1; min-width: 300px; border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
+    <h3>🌙 Dark Mode Experience</h3>
+    <p>The landing page fully supports dark mode, providing users with a comfortable viewing experience in low-light environments. The dark theme:</p>
+    <ul>
+      <li>Automatically detects system preferences for theme selection</li>
+      <li>Allows manual toggle between light and dark modes</li>
+      <li>Preserves user theme preference between sessions</li>
+      <li>Maintains excellent contrast and readability</li>
+      <li>Uses consistent color palette across all UI elements</li>
+    </ul>
+    <img src="/clean-architecture-docker-dotnet-angular/img/screenshots/landing-page-drak.png" alt="Dark Mode Landing Page" style="width: 100%; border-radius: 4px;">
+  </div>
+</div>
+
 ## Authentication & Authorization
 
 <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 30px;">
@@ -18,8 +47,10 @@ This document provides a visual overview of the key features implemented in the 
     <ul>
       <li>Secure password storage with bcrypt hashing</li>
       <li>JWT token with configurable expiration</li>
+      <li>Remember me functionality</li>
+      <li>Form validation with immediate feedback</li>
     </ul>
-    <!-- <img src="docs/images/login-screen.png" alt="Login Screen" style="width: 100%; border-radius: 4px;"> -->
+    <img src="/clean-architecture-docker-dotnet-angular/img/screenshots/login-page.png" alt="Login Screen" style="width: 100%; border-radius: 4px;">
   </div>
   <div style="flex: 1; min-width: 300px; border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
     <h3>🛡️ Role-Based Access</h3>
@@ -31,7 +62,7 @@ This document provides a visual overview of the key features implemented in the 
       <li>API-level authorization checks</li>
       <li>Permission-based action buttons that only appear for authorized users</li>
     </ul>
-    <!-- <img src="docs/images/permission-system.png" alt="Permissions System" style="width: 100%; border-radius: 4px;"> -->
+    <img src="/clean-architecture-docker-dotnet-angular/img/screenshots/role-permission-mapping.png" alt="Permissions System" style="width: 100%; border-radius: 4px;">
   </div>
 </div>
 
@@ -48,7 +79,7 @@ This document provides a visual overview of the key features implemented in the 
       <li>Consistent color palette across all components</li>
       <li>Material Design theming integration with TailwindCSS</li>
     </ul>
-    <!-- <img src="docs/images/dark-mode.png" alt="Dark Mode" style="width: 100%; border-radius: 4px;"> -->
+    <img src="/clean-architecture-docker-dotnet-angular/img/screenshots/landing-page-drak.png" alt="Dark Mode" style="width: 100%; border-radius: 4px;">
   </div>
   <div style="flex: 1; min-width: 300px; border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
     <h3>📱 Responsive Design</h3>
@@ -61,7 +92,7 @@ This document provides a visual overview of the key features implemented in the 
       <li>Optimized form layouts for different screen sizes</li>
       <li>TailwindCSS utilities for consistent breakpoints</li>
     </ul>
-    <!-- <img src="docs/images/responsive-design.png" alt="Responsive Design" style="width: 100%; border-radius: 4px;"> -->
+    <img src="/clean-architecture-docker-dotnet-angular/img/screenshots/contact-list-page.png" alt="Responsive Design" style="width: 100%; border-radius: 4px;">
   </div>
 </div>
 
@@ -77,8 +108,9 @@ This document provides a visual overview of the key features implemented in the 
       <li>Quick search functionality</li>
       <li>Bulk actions for efficient management</li>
       <li>Responsive design that works on all devices</li>
+      <li>Role-based action buttons</li>
     </ul>
-    <!-- <img src="docs/images/contact-list.png" alt="Contact List" style="width: 100%; border-radius: 4px;"> -->
+    <img src="/clean-architecture-docker-dotnet-angular/img/screenshots/contact-list-page.png" alt="Contact List" style="width: 100%; border-radius: 4px;">
   </div>
   <div style="flex: 1; min-width: 300px; border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
     <h3>✏️ Contact Form</h3>
@@ -87,8 +119,9 @@ This document provides a visual overview of the key features implemented in the 
       <li>Real-time validation feedback</li>
       <li>Custom validation rules for emails, phone numbers, etc.</li>
       <li>Conditional form fields based on selection</li>
+      <li>Modern Material Design inputs with TailwindCSS styling</li>
     </ul>
-    <!-- <img src="docs/images/contact-form.png" alt="Contact Form" style="width: 100%; border-radius: 4px;"> -->
+    <img src="/clean-architecture-docker-dotnet-angular/img/screenshots/Contacnt-form.png" alt="Contact Form" style="width: 100%; border-radius: 4px;">
   </div>
 </div>
 
@@ -96,23 +129,78 @@ This document provides a visual overview of the key features implemented in the 
 
 <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 30px;">
   <div style="flex: 1; min-width: 300px; border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
-    <h3>👤 User Profile</h3>
-    <p>The user profile system allows users to manage their personal information securely. The profile management includes:</p>
+    <h3>👤 User Management</h3>
+    <p>The comprehensive user management system allows administrators to create, edit, and manage user accounts. Features include:</p>
     <ul>
-      <li>Personal information management (name, email, etc.)</li>
-      <li>Activity history and audit log</li>
+      <li>User listing with search and filter capabilities</li>
+      <li>User role assignment</li>
+      <li>Account status management (active/inactive)</li>
+      <li>User detail view with complete information</li>
     </ul>
-    <!-- <img src="docs/images/user-profile.png" alt="User Profile" style="width: 100%; border-radius: 4px;"> -->
+    <img src="/clean-architecture-docker-dotnet-angular/img/screenshots/user-managment.png" alt="User Management" style="width: 100%; border-radius: 4px;">
   </div>
   <div style="flex: 1; min-width: 300px; border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
-    <h3>🔑 Password Management</h3>
-    <p>Our comprehensive password management system ensures security while providing a smooth user experience. Features include:</p>
+    <h3>🔄 User Role Mapping</h3>
+    <p>Our role management system provides an easy interface for assigning roles to users and managing permissions. The system includes:</p>
     <ul>
-      <li>Secure password change workflow</li>
-      <li>Password reset via email with secure tokens</li>
-      <li>Account recovery options</li>
+      <li>Visual role assignment interface</li>
+      <li>Role-based permission inheritance</li>
+      <li>Bulk role operations</li>
+      <li>Audit logging of role changes</li>
     </ul>
-    <!-- <img src="docs/images/password-management.png" alt="Password Management" style="width: 100%; border-radius: 4px;"> -->
+    <img src="/clean-architecture-docker-dotnet-angular/img/screenshots/user-role-mapping.png" alt="User Role Mapping" style="width: 100%; border-radius: 4px;">
+  </div>
+</div>
+
+## System Administration
+
+<div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 30px;">
+  <div style="flex: 1; min-width: 300px; border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
+    <h3>📄 Page Management</h3>
+    <p>The page management module allows administrators to control access to different areas of the application:</p>
+    <ul>
+      <li>Page registration and management</li>
+      <li>Page visibility control</li>
+      <li>Integration with permission system</li>
+      <li>Hierarchical page organization</li>
+    </ul>
+    <img src="/clean-architecture-docker-dotnet-angular/img/screenshots/page-master.png" alt="Page Management" style="width: 100%; border-radius: 4px;">
+  </div>
+  <div style="flex: 1; min-width: 300px; border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
+    <h3>⚙️ Operation Management</h3>
+    <p>The operation management system provides granular control over specific actions within the application:</p>
+    <ul>
+      <li>Operation registration and configuration</li>
+      <li>Permission assignment for operations</li>
+      <li>API endpoint security mapping</li>
+      <li>UI action integration</li>
+    </ul>
+    <img src="/clean-architecture-docker-dotnet-angular/img/screenshots/operation-master.png" alt="Operation Management" style="width: 100%; border-radius: 4px;">
+  </div>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 30px;">
+  <div style="flex: 1; min-width: 300px; border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
+    <h3>👑 Role Management</h3>
+    <p>The role management module allows administrators to define custom roles with specific permissions:</p>
+    <ul>
+      <li>Role creation and editing</li>
+      <li>Permission assignment to roles</li>
+      <li>Role hierarchy management</li>
+      <li>Default role configuration</li>
+    </ul>
+    <img src="/clean-architecture-docker-dotnet-angular/img/screenshots/role-master.png" alt="Role Management" style="width: 100%; border-radius: 4px;">
+  </div>
+  <div style="flex: 1; min-width: 300px; border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
+    <h3>📝 User Activity Logging</h3>
+    <p>The activity logging system provides a comprehensive audit trail of user actions throughout the application:</p>
+    <ul>
+      <li>Detailed activity records with timestamps</li>
+      <li>User identification and session tracking</li>
+      <li>Action categorization and filtering</li>
+      <li>Security event highlighting</li>
+    </ul>
+    <img src="/clean-architecture-docker-dotnet-angular/img/screenshots/User-activity-log.png" alt="User Activity Log" style="width: 100%; border-radius: 4px;">
   </div>
 </div>
 
@@ -131,7 +219,7 @@ This document provides a visual overview of the key features implemented in the 
       <li>Structured exception handling with meaningful responses</li>
       <li>Proper separation of cross-cutting concerns</li>
     </ul>
-    <!-- <img src="docs/images/backend-architecture.png" alt="Backend Architecture" style="width: 100%; border-radius: 4px;"> -->
+    <img src="/clean-architecture-docker-dotnet-angular/img/screenshots/CleanArchitecture.png" alt="Backend Architecture" style="width: 100%; border-radius: 4px;">
   </div>
   <div style="flex: 1; min-width: 300px; border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
     <h3>🔄 Frontend Architecture</h3>
@@ -146,7 +234,7 @@ This document provides a visual overview of the key features implemented in the 
       <li>Component-based design with clear responsibilities</li>
       <li>Shared UI component library for consistency</li>
     </ul>
-    <!-- <img src="docs/images/frontend-architecture.png" alt="Frontend Architecture" style="width: 100%; border-radius: 4px;"> -->
+    <img src="/clean-architecture-docker-dotnet-angular/img/screenshots/architecture.png" alt="Frontend Architecture" style="width: 100%; border-radius: 4px;">
   </div>
 </div>
 
@@ -165,7 +253,7 @@ This document provides a visual overview of the key features implemented in the 
       <li>Optimized caching for faster builds</li>
       <li>Container orchestration ready configuration</li>
     </ul>
-    <!-- <img src="docs/images/docker-containers.png" alt="Docker Containers" style="width: 100%; border-radius: 4px;"> -->
+    <p><em>See our complete <a href="docker-guide.md">Docker Guide</a> for full details on the containerization approach.</em></p>
   </div>
   <div style="flex: 1; min-width: 300px; border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
     <h3>📊 API Documentation</h3>
@@ -179,7 +267,7 @@ This document provides a visual overview of the key features implemented in the 
       <li>Performance expectations and rate limiting details</li>
       <li>Downloadable OpenAPI specification</li>
     </ul>
-    <!-- <img src="docs/images/swagger-docs.png" alt="Swagger Documentation" style="width: 100%; border-radius: 4px;"> -->
+    <p><em>Available at <code>/swagger</code> endpoint when running the application.</em></p>
   </div>
 </div>
 
@@ -204,17 +292,6 @@ This document provides a visual overview of the key features implemented in the 
 - Log filtering and search capabilities
 - Performance impact monitoring
 
-
-
-## Coming Soon Features
-
-For upcoming features, please refer to our [roadmap document](./docs/roadmap.md), which includes:
-
-- Enhanced RBAC & UI Modernization
-- Activity Logging & Admin View
-- Application Logs & Monitoring
-- Real-Time Notifications
-- Social Media Login
 ### 🔔 Notification System
 
 - Toast notifications for user feedback
@@ -233,6 +310,23 @@ For upcoming features, please refer to our [roadmap document](./docs/roadmap.md)
 - Automatic language detection
 - Dynamic content translation
 
+## Live Demo
+
+<div style="text-align: center; margin: 40px 0;">
+  <img src="/clean-architecture-docker-dotnet-angular/img/screenshots/clean-architecture-demo.gif" alt="Application Demo" style="max-width: 800px; width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+  <p style="margin-top: 15px; font-style: italic;">A demonstration of the key features and workflows in the application.</p>
+</div>
+
+## Coming Soon Features
+
+For upcoming features, please refer to our [roadmap document](roadmap.md), which includes:
+
+- Enhanced RBAC & UI Modernization
+- Application Logs & Monitoring
+- Real-Time Notifications
+- Social Media Login
+- Mobile Application
+
 ---
 
-*Note: Screenshots will be added as they become available. This document currently focuses on feature descriptions.*
+*Note: For more detailed technical information on implementing features, see our [Development Guide](development-guide.md).*

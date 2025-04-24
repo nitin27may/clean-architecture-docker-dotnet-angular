@@ -1,0 +1,68 @@
+title: Clean Architecture Full-Stack
+description: A production-ready full-stack starter kit with .NET 9, Angular 19, and PostgreSQL using Clean Architecture principles.
+remote_theme: just-the-docs/just-the-docs
+
+url: https://nitin27may.github.io/clean-architecture-docker-dotnet-angular
+
+# Enable support for hyphenated search keywords
+search_tokenizer_separator: /[\s/]+/
+
+# Aux links for the upper right navigation
+aux_links:
+  "View on GitHub":
+    - "//github.com/nitin27may/clean-architecture-docker-dotnet-angular"
+
+# Footer content
+footer_content: "Copyright &copy; 2025 Nitin Singh. Distributed by an MIT license."
+
+# Color scheme supports "light" (default) and "dark"
+color_scheme: light
+
+# Add spacing to fix title cropping issue
+heading_anchors: true
+
+# Fixed spacing configuration
+callouts_level: quiet # or loud
+callouts:
+  highlight:
+    color: yellow
+  important:
+    color: blue
+  new:
+    color: green
+  note:
+    color: purple
+  warning:
+    color: red
+
+# Set the proper spacing
+kramdown:
+  syntax_highlighter_opts:
+    block:
+      line_numbers: false
+  
+# Add custom CSS for spacing
+gh_edit_link: true
+gh_edit_link_text: "Edit this page on GitHub"
+gh_edit_repository: "https://github.com/nitin27may/clean-architecture-docker-dotnet-angular"
+gh_edit_branch: "main"
+gh_edit_view_mode: "tree"
+
+# Enable navigation structure
+nav_external_links:
+  - title: Clean Architecture on GitHub
+    url: https://github.com/nitin27may/clean-architecture-docker-dotnet-angular
+    hide_icon: false
+
+# Back to top link
+back_to_top: true
+back_to_top_text: "Back to top"
+
+# Enable collapsible navigation
+collapse_inactive_chapters: true
+
+# Enable copy code button
+enable_copy_code_button: true
+
+ga_tracking: G-Z89Y3Z3K6Z
+ga_tracking_anonymize_ip: true 

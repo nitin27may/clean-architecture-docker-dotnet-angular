@@ -1,26 +1,71 @@
-# Use modern dependency injection syntax
+# GitHub Copilot Instructions for Angular
 
-- Whenever you have to inject a dependency using Angular DI system, use the `inject` function instead of constructor based injection.
-   - this will apply to injecting services, tokens and parent components e.g. in directives as well
+Generate code following these modern Angular 19+ best practices:
 
+## Dependency Injection
+- Always use functional injection with `inject()` instead of constructor-based injection
+- Example: `private userService = inject(UserService);` instead of constructor injection
+- Apply this for services, tokens, and parent component references
 
+## State Management
+- Use signals for component state instead of class properties
+  - Example: `counter = signal<number>(0);`
+- Use computed signals for derived state
+  - Example: `doubleCounter = computed(() => this.counter() * 2);`
+- Prefer signals over RxJS observables for component-level state
 
-# For all state in components and directives, use a signal instead of a class property
-- For example:
+## Component Structure
+- Use standalone components as the default approach
+- Use the modern control flow syntax (`@if`, `@for`, etc.)
+- Implement OnPush change detection strategy for better performance
+- Always use separte html and scss file for view and styling
 
-` counter = signal<number>(0); `
+## Services & HTTP
+- For service calls using subscribe, use the next syntax:
+  this.userService.getUsers().subscribe({
+    next: (users) => this.users.set(users),
+    error: (error) => this.errorMessage.set(error)
+  });
 
-- For derived state from an existing signal, use computeds as follows.
+## Routing & Guards
+- Use functional syntax for guards and resolvers
+- Example:
+  export const authGuard = () => {
+    const router = inject(Router);
+    const authService = inject(AuthService);
+    
+    if (authService.isAuthenticated()) {
+      return true;
+    }
+    
+    return router.parseUrl('/login');
+  };
 
-` doubleCounter = computed(() => this.counter() * 2); `
+## HTTP Interceptors
+- Use functional interceptors
+- Example:
+  export const authInterceptor: HttpInterceptorFn = (req, next) => {
+    const authService = inject(AuthService);
+    const token = authService.getToken();
+    
+    if (token) {
+      const authReq = req.clone({
+        headers: req.headers.set('Authorization', `Bearer ${token}`)
+      });
+      return next(authReq);
+    }
+    
+    return next(req);
+  };
 
+## Styling
+- Use Angular Material 19 with proper theming
+- Implement TailwindCSS v4 for utility-first styling
+- Ensure components support theme switching
+- Apply consistent color tokens from design system
 
-- Use function style for guard, interceptors
-
-- for the service call if using subscribe use  next: 
-
-# For styling use Angular Material 19 with theming and tailwind v4 
- - TailwindCSS for utility-first styling
- - make sure everything supporting the theme
-
-# backend use .Net 9 clean architecture but not CQRS, plase refer the existing coding patterns for the Generic Repostiory and Generic Service as much possible
+## Input/Output Handling
+- Use strongly typed inputs and outputs
+- Example:
+  @Input({ required: true }) id!: string;
+  @Output() saved = new EventEmitter<User>();
