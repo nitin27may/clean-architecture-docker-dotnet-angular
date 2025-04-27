@@ -5,50 +5,40 @@ using System.Data;
 
 namespace Contact.Infrastructure.Persistence.Repositories;
 
-public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
+public class GenericRepository<T>(IDapperHelper dapperHelper, string tableName) : IGenericRepository<T> 
+    where T : BaseEntity
 {
-    protected readonly IDapperHelper _dapperHelper;
-    protected readonly string _tableName;
-
-    public GenericRepository(IDapperHelper dapperHelper, string tableName)
+    public async Task<IEnumerable<T>> FindAll(IDbTransaction? transaction = null)
     {
-        _dapperHelper = dapperHelper;
-        _tableName = tableName;
+        var query = $@"SELECT * FROM ""{tableName}"";";
+        return await dapperHelper.GetAll<T>(query, null, CommandType.Text, transaction);
     }
 
-    public async Task<IEnumerable<T>> FindAll()
+    public async Task<T> FindByID(Guid id, IDbTransaction? transaction = null)
     {
-        var query = $@"SELECT * FROM ""{_tableName}"";";
-        return await _dapperHelper.GetAll<T>(query, null);
+        var query = $@"SELECT * FROM ""{tableName}"" WHERE ""Id"" = @Id;";
+        return await dapperHelper.Get<T>(query, new { Id = id }, CommandType.Text, transaction);
     }
 
-    public async Task<T> FindByID(Guid id)
-    {
-        var query = $@"SELECT * FROM ""{_tableName}"" WHERE ""Id"" = @Id;";
-        return await _dapperHelper.Get<T>(query, new { Id = id });
-    }
+    public async Task<IEnumerable<T>> Find(string query, object? parameters = null, IDbTransaction? transaction = null) =>
+        await dapperHelper.GetAll<T>(query, parameters, CommandType.Text, transaction);
 
-    public async Task<IEnumerable<T>> Find(string query, object? parameters = null)
-    {
-        return await _dapperHelper.GetAll<T>(query, parameters);
-    }
-
-    public async Task<T> Add(T entity, System.Data.IDbTransaction? transaction = null)
+    public async Task<T> Add(T entity, IDbTransaction? transaction = null)
     {
         var query = GenerateInsertQuery();
-        return await _dapperHelper.Insert<T>(query, entity, CommandType.Text, transaction);
+        return await dapperHelper.Insert<T>(query, entity, CommandType.Text, transaction);
     }
 
-    public async Task<T> Update(T entity, System.Data.IDbTransaction? transaction = null)
+    public async Task<T> Update(T entity, IDbTransaction? transaction = null)
     {
         var query = GenerateUpdateQuery();
-        return await _dapperHelper.Update<T>(query, entity, CommandType.Text, transaction);
+        return await dapperHelper.Update<T>(query, entity, CommandType.Text, transaction);
     }
 
-    public async Task<bool> Delete(Guid id)
+    public async Task<bool> Delete(Guid id, IDbTransaction? transaction = null)
     {
-        var query = $@"DELETE FROM ""{_tableName}"" WHERE ""Id"" = @Id;";
-        var result = await _dapperHelper.Execute(query, new { Id = id });
+        var query = $@"DELETE FROM ""{tableName}"" WHERE ""Id"" = @Id;";
+        var result = await dapperHelper.Execute(query, new { Id = id }, CommandType.Text, transaction);
         return result != 0;
     }
 
@@ -62,7 +52,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         var values = string.Join(", ", properties.Select(p => $"@{p}"));
 
         return $@"
-            INSERT INTO ""{_tableName}"" ({columns})
+            INSERT INTO ""{tableName}"" ({columns})
             VALUES ({values})
             RETURNING *;";
     }
@@ -76,7 +66,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         var setClause = string.Join(", ", properties);
 
         return $@"
-            UPDATE ""{_tableName}""
+            UPDATE ""{tableName}""
             SET {setClause}
             WHERE ""Id"" = @Id
             RETURNING *;";

@@ -1,0 +1,133 @@
+<div class="container mx-auto p-4">
+  <div class="max-w-6xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden transition-all duration-300">
+    <!-- Header -->
+    <div class="p-6 bg-primary text-white">
+      <div class="flex flex-col md:flex-row items-center">
+        <div class="flex-shrink-0 mb-4 md:mb-0 md:mr-4">
+          <mat-icon class="text-6xl">account_circle</mat-icon>
+        </div>
+        <div>
+          <h1 class="text-2xl font-bold">User Management</h1>
+          <p>Manage users in the system</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-4">
+      <form [formGroup]="userForm" (ngSubmit)="saveUser()" class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- First Name -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName">
+            <mat-error *ngIf="userForm.get('firstName')?.invalid">First name is required</mat-error>
+          </mat-form-field>
+
+          <!-- Last Name -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName">
+            <mat-error *ngIf="userForm.get('lastName')?.invalid">Last name is required</mat-error>
+          </mat-form-field>
+
+          <!-- Username -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="userName">
+            <mat-error *ngIf="userForm.get('userName')?.invalid">Username is required</mat-error>
+          </mat-form-field>
+
+          <!-- Email -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email">
+            <mat-error *ngIf="userForm.get('email')?.invalid">Please enter a valid email</mat-error>
+          </mat-form-field>
+
+          <!-- Mobile -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Mobile</mat-label>
+            <input matInput formControlName="mobile">
+            <mat-error *ngIf="userForm.get('mobile')?.invalid">Mobile number is required</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="flex justify-end gap-2">
+          <button mat-stroked-button type="button" (click)="resetForm()" class="hover:bg-surface-container-highest">
+            Cancel
+          </button>
+          <button mat-flat-button color="primary" type="submit" [disabled]="userForm.invalid || loading()">
+            <span *ngIf="!loading()">Save User</span>
+            <mat-spinner diameter="20" *ngIf="loading()" class="inline-block"></mat-spinner>
+          </button>
+        </div>
+      </form>
+
+      <div class="mt-8">
+        <h2 class="text-xl font-bold mb-4">User List</h2>
+        
+        @if (loading()) {
+          <div class="flex justify-center p-8">
+            <mat-spinner diameter="40"></mat-spinner>
+          </div>
+        } @else {
+          @if (users().length === 0) {
+            <div class="text-center p-4 bg-gray-100 dark:bg-gray-700 rounded">
+              <p>No users found.</p>
+            </div>
+          } @else {
+            <div class="overflow-x-auto">
+              <table mat-table [dataSource]="users()" class="mat-elevation-z2 w-full">
+                <!-- First Name Column -->
+                <ng-container matColumnDef="firstName">
+                  <th mat-header-cell *matHeaderCellDef> First Name </th>
+                  <td mat-cell *matCellDef="let user"> {{user.firstName}} </td>
+                </ng-container>
+    
+                <!-- Last Name Column -->
+                <ng-container matColumnDef="lastName">
+                  <th mat-header-cell *matHeaderCellDef> Last Name </th>
+                  <td mat-cell *matCellDef="let user"> {{user.lastName}} </td>
+                </ng-container>
+    
+                <!-- Username Column -->
+                <ng-container matColumnDef="userName">
+                  <th mat-header-cell *matHeaderCellDef> Username </th>
+                  <td mat-cell *matCellDef="let user"> {{user.userName}} </td>
+                </ng-container>
+    
+                <!-- Email Column -->
+                <ng-container matColumnDef="email">
+                  <th mat-header-cell *matHeaderCellDef> Email </th>
+                  <td mat-cell *matCellDef="let user"> {{user.email}} </td>
+                </ng-container>
+    
+                <!-- Mobile Column -->
+                <ng-container matColumnDef="mobile">
+                  <th mat-header-cell *matHeaderCellDef> Mobile </th>
+                  <td mat-cell *matCellDef="let user"> {{user.mobile}} </td>
+                </ng-container>
+    
+                <!-- Actions Column -->
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef> Actions </th>
+                  <td mat-cell *matCellDef="let user">
+                    <button mat-icon-button color="primary" (click)="selectUser(user)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="deleteUser(user)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
+    
+                <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns();"></tr>
+              </table>
+            </div>
+          }
+        }
+      </div>
+    </div>
+  </div>
+</div>

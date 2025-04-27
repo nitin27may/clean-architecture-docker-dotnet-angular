@@ -1,0 +1,68 @@
+<div class="container mx-auto p-6">
+  <h1 class="text-2xl font-semibold mb-6">Operations Management</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+      <h2 class="text-xl font-semibold mb-4">{{ selectedOperation() ? 'Edit Operation' : 'Add New Operation' }}</h2>
+      
+      <form [formGroup]="operationForm" (ngSubmit)="saveOperation()" class="space-y-4">
+        <mat-form-field class="w-full">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" placeholder="Operation name">
+          <mat-error *ngIf="operationForm.get('name')?.hasError('required')">Name is required</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field class="w-full">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description" placeholder="Operation description"></textarea>
+        </mat-form-field>
+
+        <div class="flex justify-between">
+          <button mat-flat-button color="primary" type="submit" [disabled]="operationForm.invalid">
+            {{ selectedOperation() ? 'Update' : 'Create' }}
+          </button>
+          
+          <button mat-button type="button" (click)="resetForm()" *ngIf="selectedOperation()">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+    
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+      <h2 class="text-xl font-semibold mb-4">Operations List</h2>
+      
+      @if (operations().length === 0) {
+        <p class="text-center py-4">No operations available</p>
+      } @else {
+        <table mat-table [dataSource]="operations()" class="w-full">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let operation">{{ operation.name }}</td>
+          </ng-container>
+          
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell *matCellDef="let operation">{{ operation.description }}</td>
+          </ng-container>
+          
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let operation" class="space-x-2">
+              <button mat-icon-button color="primary" (click)="selectOperation(operation)" aria-label="Edit">
+                <mat-icon>edit</mat-icon>
+              </button>
+              
+              <button mat-icon-button color="warn" (click)="deleteOperation(operation)" aria-label="Delete">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      }
+    </div>
+  </div>
+</div>

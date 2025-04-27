@@ -1,0 +1,15 @@
+meta {
+  name: Add Role
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/Roles
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}

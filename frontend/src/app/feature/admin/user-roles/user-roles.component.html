@@ -1,0 +1,94 @@
+<div class="container mx-auto p-6">
+  <h1 class="text-2xl font-semibold mb-6">User Roles Management</h1>
+  
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+    <form [formGroup]="userRoleForm" (ngSubmit)="saveUserRoles()" class="space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <mat-form-field class="w-full">
+          <mat-label>Select User</mat-label>
+          <mat-select formControlName="userId" (selectionChange)="onUserChange($event.value)">
+            @if (loading()) {
+              <mat-option disabled>Loading users...</mat-option>
+            } @else if (users().length === 0) {
+              <mat-option disabled>No users available</mat-option>
+            } @else {
+              @for (user of users(); track user.id) {
+                <mat-option [value]="user.id">
+                  {{ user.firstName }} {{ user.lastName }} ({{ user.email }})
+                </mat-option>
+              }
+            }
+          </mat-select>
+          <mat-error *ngIf="userRoleForm.get('userId')?.hasError('required')">User is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label>Assign Roles</mat-label>
+          <mat-select formControlName="roleIds" multiple>
+            @if (loadingRoles()) {
+              <mat-option disabled>Loading roles...</mat-option>
+            } @else if (roles().length === 0) {
+              <mat-option disabled>No roles available</mat-option>
+            } @else {
+              @for (role of roles(); track role.id) {
+                <mat-option [value]="role.id">{{ role.name }}</mat-option>
+              }
+            }
+          </mat-select>
+          <mat-error *ngIf="userRoleForm.get('roleIds')?.hasError('required')">At least one role is required</mat-error>
+        </mat-form-field>
+      </div>
+      
+      <div class="flex justify-end">
+        <button mat-flat-button color="primary" type="submit" [disabled]="userRoleForm.invalid || loading()">
+          @if (loading()) {
+            <mat-spinner diameter="20" class="inline-block mr-2"></mat-spinner> Saving...
+          } @else {
+            Save User Roles
+          }
+        </button>
+      </div>
+    </form>
+  </div>
+  
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mt-6">
+    <h2 class="text-xl font-semibold mb-4">User Details</h2>
+    
+    @if (loading() || loadingRoles()) {
+      <div class="flex justify-center py-8">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+    } @else if (selectedUser()) {
+      <div class="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <h3 class="font-semibold">Name</h3>
+          <p>{{ selectedUser()?.firstName }} {{ selectedUser()?.lastName }}</p>
+        </div>
+        <div>
+          <h3 class="font-semibold">Email</h3>
+          <p>{{ selectedUser()?.email }}</p>
+        </div>
+        <div>
+          <h3 class="font-semibold">Username</h3>
+          <p>{{ selectedUser()?.userName }}</p>
+        </div>
+      </div>
+      
+      <h3 class="text-lg font-semibold mb-2">Current Roles</h3>
+      
+      @if (selectedRoles().length > 0) {
+        <div class="flex flex-wrap gap-2">
+          @for (roleId of selectedRoles(); track roleId) {
+            <div class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 px-3 py-1 rounded">
+              {{ getRoleName(roleId) }}
+            </div>
+          }
+        </div>
+      } @else {
+        <p>No roles assigned</p>
+      }
+    } @else {
+      <p class="text-center py-4">Please select a user to view details</p>
+    }
+  </div>
+</div>

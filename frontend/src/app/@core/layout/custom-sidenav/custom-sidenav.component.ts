@@ -18,17 +18,18 @@ import { MenuItemComponent } from '@core/layout/custom-sidenav/menu-item/menu-it
 })
 export class CustomSidenavComponent implements OnInit {
   @Input() set collapsed(value: boolean) {
-    this.isCollapsed = value;
+    this.isCollapsed.set(value);
   }
-  isCollapsed = false;
-
+  
   private menuService = inject(MenuService);
   private permissionService = inject(PermissionService);
   private authState = inject(AuthStateService);
   private destroyRef = inject(DestroyRef);
   private router = inject(Router);
 
-  menuItems = this.menuService.getMenuItems();
+  // Convert class properties to signals
+  isCollapsed = signal<boolean>(false);
+  menuItems = signal<MenuItem[]>([]);
 
   constructor() {
     // Create the effect in the constructor (injection context)
@@ -36,7 +37,7 @@ export class CustomSidenavComponent implements OnInit {
       // Access the signal to establish dependency
       const user = this.authState.getCurrentUser()();
       // Update menu items whenever user changes
-      this.menuItems = this.menuService.getMenuItems();
+      this.menuItems.set(this.menuService.getMenuItems());
     });
   }
 

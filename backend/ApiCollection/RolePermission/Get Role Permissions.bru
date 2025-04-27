@@ -1,0 +1,15 @@
+meta {
+  name: Get Role Permissions
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/RolePermissions
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}

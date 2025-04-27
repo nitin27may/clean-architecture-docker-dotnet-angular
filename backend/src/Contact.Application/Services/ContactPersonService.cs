@@ -6,13 +6,12 @@ using Contact.Domain.Interfaces;
 
 namespace Contact.Application.Services;
 
-
-public class ContactPersonService : GenericService<ContactPerson, ContactPersonResponse, CreateContactPerson, UpdateContactPerson>, IContactPersonService
+public class ContactPersonService(
+    IGenericRepository<ContactPerson> repository, 
+    IMapper mapper, 
+    IUnitOfWork unitOfWork)
+    : GenericService<ContactPerson, ContactPersonResponse, CreateContactPerson, UpdateContactPerson>(repository, mapper, unitOfWork), 
+      IContactPersonService
 {
-    public ContactPersonService(IGenericRepository<ContactPerson> repository, IMapper mapper, IUnitOfWork unitOfWork)
-        : base(repository, mapper, unitOfWork)
-    {
-    }
-
     // Additional methods specific to Contact Person Entity can go here if needed
 }

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Contact.Application.Interfaces;
+using Contact.Application.UseCases.RolePermissions;
+using Contact.Application.UseCases.Roles;
 using Contact.Application.UseCases.Users;
 using Contact.Domain.Entities;
 using Contact.Domain.Interfaces;
@@ -62,7 +64,7 @@ public class UserService : IUserService
             {
                 UserId = createdUser.Id,
                 RoleId = role.Id,
-                CreatedOn = DateTime.Now,
+                CreatedOn = DateTime.UtcNow,
                 CreatedBy = createdUser.Id
             };
             await _userRoleRepository.Add(userRole, transaction);
@@ -94,7 +96,7 @@ public class UserService : IUserService
             {
                 UserId = createdUser.Id,
                 RoleId = role.Id,
-                CreatedOn = DateTime.Now,
+                CreatedOn = DateTime.UtcNow,
                 CreatedBy = createdUser.Id
             };
             await _userRoleRepository.Add(userRole, transaction);
@@ -109,7 +111,6 @@ public class UserService : IUserService
             throw;
         }
     }
-
 
     public async Task<bool> Delete(Guid id)
     {
@@ -182,15 +183,14 @@ public class UserService : IUserService
         var tokenHandler = new JwtSecurityTokenHandler();
         var roles = await _userRepository.FindRolesById(user.Id);
         var identityClaims = new List<Claim>
-    {
-        new Claim(ClaimTypes.Name, user.FirstName + " "+ user.LastName),
-        new Claim(ClaimTypes.Email, user.Email),
-
-        new Claim("Id", user.Id.ToString()),
-    };
+        {
+            new Claim(ClaimTypes.Name, user.FirstName + " "+ user.LastName),
+            new Claim(ClaimTypes.Email, user.Email),
+            new Claim("Id", user.Id.ToString()),
+        };
         foreach (var role in roles)
         {
-            identityClaims.Add(new Claim(ClaimTypes.Role, role));
+            identityClaims.Add(new Claim(ClaimTypes.Role, role.Name));
         }
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.Secret));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -210,7 +210,6 @@ public class UserService : IUserService
     {
         return Guid.Parse(user.FindFirst("Id")?.Value);
     }
-
 
     public async Task<IEnumerable<string>> GetUserRolesAsync(ClaimsPrincipal user)
     {
@@ -350,8 +349,8 @@ public class UserService : IUserService
             audience: _appSettings.Audience,
             claims: new[]
             {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-            new Claim("Email", user.Email)
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim("Email", user.Email)
             },
             expires: DateTime.UtcNow.AddHours(1), // Token valid for 1 hour
             signingCredentials: creds
@@ -359,6 +358,7 @@ public class UserService : IUserService
 
         return tokenHandler.WriteToken(token);
     }
+
     private async Task<bool> CompleteRegistration(User user)
     {
         var resetLink = await GenerateLink(user);
@@ -371,9 +371,9 @@ public class UserService : IUserService
         _logger.LogInformation("Password reset email sent to {email}.", user.Email);
         return true;
     }
+
     private async Task<string> GenerateLink(User user)
     {
-
         // Step 2: Generate a password reset token (e.g., JWT token with expiration)
         var token = GeneratePasswordResetToken(user);
 
@@ -381,15 +381,16 @@ public class UserService : IUserService
         var resetLink = $"{_appSettings.PasswordResetUrl}?token={token}";
         return resetLink;
     }
+
     private static PasswordHasher<string> PasswordHash()
     {
         return new PasswordHasher<string>(
-        new OptionsWrapper<PasswordHasherOptions>(
-             new PasswordHasherOptions()
-             {
-                 CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV2
-             })
-                );
+            new OptionsWrapper<PasswordHasherOptions>(
+                new PasswordHasherOptions()
+                {
+                    CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV2
+                })
+        );
     }
 
     public async Task<UserResponse> GetUserWithPermissionsAsync(Guid userId)
@@ -398,8 +399,73 @@ public class UserService : IUserService
         if (user == null) return null;
 
         var rolePermissions = await _rolePermissionService.GetRolePermissionMappingsAsync(userId);
-        user.RolePermissions = rolePermissions.ToList();
+
         var userResponse = _mapper.Map<UserResponse>(user);
+        userResponse.RolePermissions = rolePermissions.ToList();
+        return userResponse;
+    }
+
+    public async Task<UserResponse> UpdateUserRoles(Guid userId, UpdateUserRoles updateUserRoles)
+    {
+        using var transaction = _unitOfWork.BeginTransaction();
+        try
+        {
+            // Get the current user
+            var user = await _userRepository.FindByID(userId);
+            if (user == null)
+            {
+                _logger.LogWarning("User with ID {userId} not found.", userId);
+                return null;
+            }
+
+            // Delete all existing user roles
+            var existingUserRoles = await _userRepository.GetUserRoles(userId, transaction);
+            foreach (var userRole in existingUserRoles)
+            {
+                await _userRoleRepository.Delete(userRole.Id, transaction);
+            }
+
+            // Add new user roles
+            foreach (var roleId in updateUserRoles.RoleIds)
+            {
+                if (Guid.TryParse(roleId, out Guid parsedRoleId))
+                {
+                    var userRole = new UserRole
+                    {
+                        UserId = userId,
+                        RoleId = parsedRoleId,
+                        CreatedOn = DateTime.UtcNow,
+                        CreatedBy = userId // Using the user's own ID as creator
+                    };
+                    await _userRoleRepository.Add(userRole, transaction);
+                }
+            }
+
+            await _unitOfWork.CommitAsync();
+
+            // Return updated user with permissions
+            return await GetUserWithPermissionsAsync(userId);
+        }
+        catch (Exception ex)
+        {
+            await _unitOfWork.RollbackAsync();
+            _logger.LogError(ex, "Error updating roles for user {userId}", userId);
+            throw;
+        }
+    }
+
+    public async Task<UserWithRolesResponse> GetUserWithRolesAsync(Guid userId)
+    {
+        var user = await _userRepository.FindByID(userId);
+        if (user == null) return null;
+
+        // Get the user's roles
+        var roles = await _userRepository.FindRolesById(userId);
+
+        // Map to response
+        var userResponse = _mapper.Map<UserWithRolesResponse>(user);
+        userResponse.RolePermissions = null; // Keep rolePermissions as null as requested
+        userResponse.Roles = _mapper.Map<List<RoleResponse>>(roles);
 
         return userResponse;
     }

@@ -4,9 +4,9 @@ using Contact.Infrastructure.Persistence.Helper;
 
 namespace Contact.Infrastructure.Persistence.Repositories;
 
-public class ContactPersonRepository : GenericRepository<ContactPerson>, IContactPersonRepository
+public class ContactPersonRepository(IDapperHelper dapperHelper) 
+    : GenericRepository<ContactPerson>(dapperHelper, "Contacts"), 
+      IContactPersonRepository
 {
-    public ContactPersonRepository(IDapperHelper dapperHelper) : base(dapperHelper, "Contacts") 
-    { 
-    }
+    // Additional specific methods can be implemented here if needed
 }

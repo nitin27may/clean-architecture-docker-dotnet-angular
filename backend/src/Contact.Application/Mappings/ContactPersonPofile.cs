@@ -11,12 +11,12 @@ public class ContactPersonPofile : BaseMappingProfile
         : base(httpContextAccessor)
     {
         CreateMap<ContactPerson, ContactPersonResponse>();
+        
         CreateMap<CreateContactPerson, ContactPerson>()
-                   .AfterMap((src, dest) => SetAuditFields(src, dest)); // Set audit fields on creation
+            .AfterMap((src, dest) => SetAuditFields(src, dest));
+            
         CreateMap<UpdateContactPerson, ContactPerson>()
-            .AfterMap((src, dest) => SetAuditFields(src, dest, false)); // Set audit fields on update
-
-
+            .AfterMap((src, dest) => SetAuditFields(src, dest, false));
     }
 
     public ContactPersonPofile()
@@ -24,12 +24,9 @@ public class ContactPersonPofile : BaseMappingProfile
     {
     }
 
-    private static IHttpContextAccessor ResolveHttpContextAccessor()
-    {
-        var serviceProvider = new ServiceCollection()
+    private static IHttpContextAccessor ResolveHttpContextAccessor() => 
+        new ServiceCollection()
             .AddHttpContextAccessor()
-            .BuildServiceProvider();
-
-        return serviceProvider.GetRequiredService<IHttpContextAccessor>();
-    }
+            .BuildServiceProvider()
+            .GetRequiredService<IHttpContextAccessor>();
 }

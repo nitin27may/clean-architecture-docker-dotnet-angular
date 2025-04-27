@@ -1,0 +1,69 @@
+<div class="container mx-auto p-6">
+  <h1 class="text-2xl font-semibold mb-6">Pages Management</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+      <h2 class="text-xl font-semibold mb-4">{{ selectedPage() ? 'Edit Page' : 'Add New Page' }}</h2>
+      
+      <form [formGroup]="pageForm" (ngSubmit)="savePage()" class="space-y-4">
+        <mat-form-field class="w-full">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" placeholder="Page name">
+          <mat-error *ngIf="pageForm.get('name')?.hasError('required')">Name is required</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field class="w-full">
+          <mat-label>URL</mat-label>
+          <input matInput formControlName="url" placeholder="/path/to/page">
+          <mat-error *ngIf="pageForm.get('url')?.hasError('required')">URL is required</mat-error>
+        </mat-form-field>
+
+        <div class="flex justify-between">
+          <button mat-flat-button color="primary" type="submit" [disabled]="pageForm.invalid">
+            {{ selectedPage() ? 'Update' : 'Create' }}
+          </button>
+          
+          <button mat-button type="button" (click)="resetForm()" *ngIf="selectedPage()">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+    
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+      <h2 class="text-xl font-semibold mb-4">Pages List</h2>
+      
+      @if (pages().length === 0) {
+        <p class="text-center py-4">No pages available</p>
+      } @else {
+        <table mat-table [dataSource]="pages()" class="w-full">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let page">{{ page.name }}</td>
+          </ng-container>
+          
+          <ng-container matColumnDef="url">
+            <th mat-header-cell *matHeaderCellDef>URL</th>
+            <td mat-cell *matCellDef="let page">{{ page.url }}</td>
+          </ng-container>
+          
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let page" class="space-x-2">
+              <button mat-icon-button color="primary" (click)="selectPage(page)" aria-label="Edit">
+                <mat-icon>edit</mat-icon>
+              </button>
+              
+              <button mat-icon-button color="warn" (click)="deletePage(page)" aria-label="Delete">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+meta {
+  name: Update Role
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{base_url}}/Roles
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+body:json {
+    {
+      "id": "60a0360d-ac15-42b2-a24d-cb726874c00c",
+      "name": "Admin 3434",
+      "description": "This is Admin Role"
+    }
+}

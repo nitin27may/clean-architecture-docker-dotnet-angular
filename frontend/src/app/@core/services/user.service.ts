@@ -11,9 +11,9 @@ export class UserService {
   constructor(private http: HttpClient,@Inject(DOCUMENT) private document: Document) {}
 
   getAll() {
-    return this.http.get<User[]>(environment.apiEndpoint + "/users").pipe(
+    return this.http.get<User[]>(environment.apiEndpoint + "/users/all").pipe(
       map((users: any) => {
-        return users.data;
+        return users;
       })
     );
   }
@@ -25,13 +25,14 @@ export class UserService {
       })
     );
   }
-  // getCurrentUser(): User {
-  //   const localStorage = this.document.defaultView?.localStorage;
-  //   if (localStorage && localStorage.getItem("currentUser")) {
-  //     const user = JSON.parse(localStorage.getItem("currentUser"));
-  //     return user;
-  //   }
-  // }
+
+  getUserWithRoles(userId: string) {
+    return this.http.get(`${environment.apiEndpoint}/UserRoles/${userId}`).pipe(
+      map((user: any) => {
+        return user;
+      })
+    );
+  }
 
   create(user: User) {
     user.email = user.userName;

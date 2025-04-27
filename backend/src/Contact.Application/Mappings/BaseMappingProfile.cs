@@ -6,7 +6,7 @@ namespace Contact.Application.Mappings;
 
 public abstract class BaseMappingProfile : Profile
 {
-    private IHttpContextAccessor _httpContextAccessor;
+    private readonly IHttpContextAccessor? _httpContextAccessor;
 
     // Parameterless constructor for AutoMapper
     protected BaseMappingProfile()
@@ -21,8 +21,9 @@ public abstract class BaseMappingProfile : Profile
     protected void SetAuditFields<TSource, TEntity>(TSource dto, TEntity entity, bool isCreate = true)
         where TEntity : BaseEntity
     {
-        Guid userId = GetCurrentUserId();
+        var userId = GetCurrentUserId();
         var currentTime = DateTimeOffset.UtcNow;
+        
         if (isCreate)
         {
             entity.CreatedOn = currentTime;
@@ -35,10 +36,8 @@ public abstract class BaseMappingProfile : Profile
         }
     }
 
-    private Guid GetCurrentUserId()
-    {
-        var user = _httpContextAccessor?.HttpContext?.User;
-        var userIdClaim = user?.FindFirst("Id");
-        return userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
-    }
+    private Guid GetCurrentUserId() => 
+        _httpContextAccessor?.HttpContext?.User?.FindFirst("Id") is { } userIdClaim 
+            ? Guid.Parse(userIdClaim.Value) 
+            : Guid.Empty;
 }

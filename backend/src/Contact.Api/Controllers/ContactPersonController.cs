@@ -9,32 +9,26 @@ namespace Contact.Api.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class ContactPersonController : ControllerBase
+public class ContactPersonController(IContactPersonService contactPersonService) : ControllerBase
 {
-    private readonly IContactPersonService _contactPersonService;
-
-    public ContactPersonController(IContactPersonService contactPersonService)
-    {
-        _contactPersonService = contactPersonService;
-    }
-
     [HttpPost]
     [ActivityLog("Creating new Contact")]
     [AuthorizePermission("Contacts.Create")]
     public async Task<IActionResult> Add(CreateContactPerson createContactPerson)
     {
-        var createdContactPerson = await _contactPersonService.Add(createContactPerson);
+        var createdContactPerson = await contactPersonService.Add(createContactPerson);
         return CreatedAtAction(nameof(GetById), new { id = createdContactPerson.Id }, createdContactPerson);
     }
 
     [HttpPut("{id}")]
     [ActivityLog("Updating Contact")]
     [AuthorizePermission("Contacts.Update")]
-    public async Task<IActionResult> Update(Guid id,UpdateContactPerson updateContactPerson)
+    public async Task<IActionResult> Update(Guid id, UpdateContactPerson updateContactPerson)
     {
-        var contactPerson = await _contactPersonService.FindByID(id);
-        if (contactPerson == null) return NotFound();
-        var updatedContactPerson = await _contactPersonService.Update(updateContactPerson);
+        var contactPerson = await contactPersonService.FindByID(id);
+        if (contactPerson is null) return NotFound();
+        
+        var updatedContactPerson = await contactPersonService.Update(updateContactPerson);
         return Ok(updatedContactPerson);
     }
 
@@ -43,9 +37,8 @@ public class ContactPersonController : ControllerBase
     [AuthorizePermission("Contacts.Delete")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        var deleted = await _contactPersonService.Delete(id);
-        if (!deleted) return NotFound();
-        return NoContent();
+        var deleted = await contactPersonService.Delete(id);
+        return deleted ? NoContent() : NotFound();
     }
 
     [HttpGet("{id}")]
@@ -53,9 +46,8 @@ public class ContactPersonController : ControllerBase
     [AuthorizePermission("Contacts.Read")]
     public async Task<IActionResult> GetById(Guid id)
     {
-        var contactPerson = await _contactPersonService.FindByID(id);
-        if (contactPerson == null) return NotFound();
-        return Ok(contactPerson);
+        var contactPerson = await contactPersonService.FindByID(id);
+        return contactPerson is null ? NotFound() : Ok(contactPerson);
     }
 
     [HttpGet]
@@ -63,7 +55,7 @@ public class ContactPersonController : ControllerBase
     [AuthorizePermission("Contacts.Read")]
     public async Task<IActionResult> GetAll()
     {
-        var contactPersons = await _contactPersonService.FindAll();
+        var contactPersons = await contactPersonService.FindAll();
         return Ok(contactPersons);
     }
 }

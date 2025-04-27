@@ -3,7 +3,44 @@
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
+    "compounds": [
+        {
+            "name": "Full Stack: Angular + .NET",
+            "configurations": ["Angular Frontend", ".NET Core Backend"],
+            "stopAll": true
+        }
+    ],
     "configurations": [
+        {
+            "name": ".NET Core Backend",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-backend",
+            "program": "${workspaceFolder}/backend/src/Contact.Api/bin/Debug/net9.0/Contact.Api.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/backend/src/Contact.Api",
+            "stopAtEntry": false,
+            "env": {
+              "ASPNETCORE_ENVIRONMENT": "Development",
+              "ASPNETCORE_URLS": "http://localhost:5000"
+            }
+        },
+        {
+            "name": "Angular Frontend",
+            "type": "chrome",
+            "request": "launch",
+            "preLaunchTask": "npm-start",
+            "url": "http://localhost:4200",
+            "webRoot": "${workspaceFolder}/frontend",
+            "sourceMapPathOverrides": {
+                "webpack:/*": "${webRoot}/*",
+                "/./*": "${webRoot}/*",
+                "/src/*": "${webRoot}/src/*",
+                "/app/*": "${webRoot}/src/app/*",
+                "/*": "*",
+                "/./~/*": "${webRoot}/node_modules/*"
+            }
+        },
         {
             "name": "Docker .NET Core Attach (Preview)",
             "type": "coreclr",
@@ -11,7 +48,7 @@
             "sourceFileMap": {
                 "/src": "${workspaceFolder}/WebApi"
             },
-            "processId" : "${command:pickRemoteProcess}",
+            "processId": "${command:pickRemoteProcess}",
             "pipeTransport": {
                 "debuggerPath": "/vsdbg/vsdbg",
                 "pipeProgram": "docker",
@@ -20,8 +57,7 @@
                 "pipeArgs": [
                     "exec -i angular-dotnet_api_1"
                 ]
-             }
+            }
         }
-
     ]
 }

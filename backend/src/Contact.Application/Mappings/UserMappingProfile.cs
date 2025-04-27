@@ -1,4 +1,5 @@
-﻿using Contact.Application.UseCases.Users;
+﻿using Contact.Application.UseCases.RolePermissions;
+using Contact.Application.UseCases.Users;
 using Contact.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,7 @@ public class UserMappingProfile : BaseMappingProfile
         CreateMap<UpdateUser, User>()
             .AfterMap((src, dest) => SetAuditFields(src, dest, false)); // Set audit fields on update
         CreateMap<User, UserResponse>();
+        CreateMap<User, UserWithRolesResponse>();
         CreateMap<RolePermissionMapping, RolePermissionResponse>();
         CreateMap<ChangePassword, UpdatePassword>()
           .AfterMap((src, dest) => SetAuditFields(src, dest, false)); // Set audit fields on update

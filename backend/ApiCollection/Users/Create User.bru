@@ -1,0 +1,26 @@
+meta {
+  name: Create User
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{base_url}}/Users/Create
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+body:json {
+  {
+    "firstName": "Ram",
+    "lastName": "Singh",
+    "mobile": "+91989833364",
+    "email": "singhknitin@hotmail.com",
+      "userName": "singhknitin@hotmail.com",
+    "role": "Admin"
+  }
+}
