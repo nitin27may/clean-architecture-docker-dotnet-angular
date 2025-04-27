@@ -21,7 +21,9 @@ A production-ready full-stack application with Angular 19, .NET 9, and PostgreSQ
 
 
 <p align="center">
-  <img src="screenshots/clean-architecture-demo.gif" alt="Application Demo" width="700">
+  <a href="screenshots/clean-architecture-demo.gif" target="_blank">
+    <img src="screenshots/clean-architecture-demo.gif" alt="Application Demo" width="700">
+  </a>
 </p>
 
 A modern, full-stack contact management system built with Angular 19, .NET 9, and PostgreSQL following Clean Architecture principles. This project demonstrates how to structure enterprise applications for maintainability, testability, and scalability while providing a complete development workflow with Docker containerization.
@@ -75,7 +77,9 @@ That's it! Visit [http://localhost](http://localhost) in your browser.
 ## 🏗️ System Architecture
 
 <p align="center">
-  <img src="screenshots/architecture.png" alt="Architecture Diagram" width="700">
+  <a href="screenshots/architecture.png" target="_blank">
+    <img src="screenshots/architecture.png" alt="Architecture Diagram" width="700">
+  </a>
 </p>
 
 ### Container Architecture
@@ -90,7 +94,9 @@ The application is structured into multiple containers that work together:
 ## 📐 Clean Architecture Explained
 
 <p align="center">
-  <img src="screenshots/CleanArchitecture.png" alt="Clean Architecture Diagram" width="500">
+  <a href="screenshots/clean-architecture.png" target="_blank">
+    <img src="screenshots/clean-architecture.png" alt="Clean Architecture Diagram" width="500">
+  </a>
 </p>
 
 ### Why Choose Clean Architecture?

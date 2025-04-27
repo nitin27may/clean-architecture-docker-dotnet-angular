@@ -11,7 +11,9 @@ permalink: /backend
 The backend of this project is built with .NET 9, following Clean Architecture principles. It provides a robust API layer for the Angular frontend, using Dapper for efficient data access and PostgreSQL as the database.
 
 <div style="text-align: center; margin: 30px 0;">
-  <img src="screenshots/CleanArchitecture.png" alt="Clean Architecture Diagram" style="width: 90%; max-width: 600px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+  <a href="screenshots/clean-architecture.png" target="_blank">
+    <img src="screenshots/clean-architecture.png" alt="Clean Architecture Diagram" style="width: 90%; max-width: 600px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+  </a>
   <p style="font-style: italic; margin-top: 10px;">Clean Architecture implementation in the .NET 9 backend</p>
 </div>
 
@@ -405,7 +407,9 @@ public class UnitOfWork : IUnitOfWork
 The application uses JWT-based authentication with role-based authorization:
 
 <div style="text-align: center; margin: 30px 0;">
-  <img src="screenshots/landing-page.png" alt="Login Page" style="width: 70%; max-width: 600px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+  <a href="screenshots/landing-page.png" target="_blank">
+    <img src="screenshots/landing-page.png" alt="Login Page" style="width: 70%; max-width: 600px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+  </a>
   <p style="font-style: italic; margin-top: 10px;">Login page that connects to the JWT authentication system</p>
 </div>
 
@@ -490,11 +494,15 @@ The backend implements a flexible permission system:
 
 <div style="display: flex; gap: 20px; margin: 20px 0; flex-wrap: wrap;">
   <div style="flex: 1; min-width: 300px;">
-    <img src="screenshots/role-master.png" alt="Role Management" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+    <a href="screenshots/role-master.png" target="_blank">
+      <img src="screenshots/role-master.png" alt="Role Management" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+    </a>
     <p style="font-style: italic; text-align: center;">Role Management System</p>
   </div>
   <div style="flex: 1; min-width: 300px;">
-    <img src="screenshots/role-permission-mapping.png" alt="Role Permission Mapping" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+    <a href="screenshots/role-permission-mapping.png" target="_blank">
+      <img src="screenshots/role-permission-mapping.png" alt="Role Permission Mapping" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+    </a>
     <p style="font-style: italic; text-align: center;">Role Permission Mapping</p>
   </div>
 </div>
@@ -635,7 +643,9 @@ public class ExceptionMiddleware
 Comprehensive activity tracking:
 
 <div style="text-align: center; margin: 30px 0;">
-  <img src="screenshots/User-activity-log.png" alt="User Activity Log" style="width: 90%; max-width: 800px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+  <a href="screenshots/User-activity-log.png" target="_blank">
+    <img src="screenshots/User-activity-log.png" alt="User Activity Log" style="width: 90%; max-width: 800px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+  </a>
   <p style="font-style: italic; margin-top: 10px;">User Activity Logging System</p>
 </div>
 
@@ -707,7 +717,9 @@ public class ActivityLoggingMiddleware
 Complete CRUD operations:
 
 <div style="text-align: center; margin: 30px 0;">
-  <img src="screenshots/contact-list-page.png" alt="Contact List" style="width: 90%; max-width: 800px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+  <a href="screenshots/contact-list-page.png" target="_blank">
+    <img src="screenshots/contact-list-page.png" alt="Contact List" style="width: 90%; max-width: 800px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+  </a>
   <p style="font-style: italic; margin-top: 10px;">Contact Management System powered by the API</p>
 </div>
 
