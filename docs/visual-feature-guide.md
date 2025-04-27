@@ -2,7 +2,7 @@
 layout: default
 title: Feature Showcase
 nav_order: 2
-permalink: /visual-feature-guide
+permalink: /visual-feature-guide/
 ---
 
 # Feature Showcase
@@ -22,7 +22,9 @@ This document provides a visual overview of the key features implemented in the 
       <li>Responsive layout that adapts to various screen sizes</li>
       <li>Theme-aware design with full light and dark mode support</li>
     </ul>
-    <img src="screenshots/landing-page.png" alt="Light Mode Landing Page" style="width: 100%; border-radius: 4px;">
+    <a href="screenshots/landing-page.png" target="_blank" title="View full size image">
+      <img src="screenshots/landing-page.png" alt="Light Mode Landing Page" style="width: 100%; border-radius: 4px; cursor: pointer;">
+    </a>
   </div>
   <div style="flex: 1; min-width: 300px; border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
     <h3>🌙 Dark Mode Experience</h3>
@@ -34,7 +36,9 @@ This document provides a visual overview of the key features implemented in the 
       <li>Maintains excellent contrast and readability</li>
       <li>Uses consistent color palette across all UI elements</li>
     </ul>
-    <img src="screenshots/landing-page-drak.png" alt="Dark Mode Landing Page" style="width: 100%; border-radius: 4px;">
+    <a href="screenshots/landing-page-dark.png" target="_blank" title="View full size image">
+      <img src="screenshots/landing-page-dark.png" alt="Dark Mode Landing Page" style="width: 100%; border-radius: 4px; cursor: pointer;">
+    </a>
   </div>
 </div>
 
@@ -50,7 +54,9 @@ This document provides a visual overview of the key features implemented in the 
       <li>Remember me functionality</li>
       <li>Form validation with immediate feedback</li>
     </ul>
-    <img src="screenshots/login-page.png" alt="Login Screen" style="width: 100%; border-radius: 4px;">
+    <a href="screenshots/login-page.png" target="_blank" title="View full size image">
+      <img src="screenshots/login-page.png" alt="Login Screen" style="width: 100%; border-radius: 4px; cursor: pointer;">
+    </a>
   </div>
   <div style="flex: 1; min-width: 300px; border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
     <h3>🛡️ Role-Based Access</h3>
@@ -62,7 +68,9 @@ This document provides a visual overview of the key features implemented in the 
       <li>API-level authorization checks</li>
       <li>Permission-based action buttons that only appear for authorized users</li>
     </ul>
-    <img src="screenshots/role-permission-mapping.png" alt="Permissions System" style="width: 100%; border-radius: 4px;">
+    <a href="screenshots/role-permission-mapping.png" target="_blank" title="View full size image">
+      <img src="screenshots/role-permission-mapping.png" alt="Permissions System" style="width: 100%; border-radius: 4px; cursor: pointer;">
+    </a>
   </div>
 </div>
 
@@ -79,7 +87,9 @@ This document provides a visual overview of the key features implemented in the 
       <li>Consistent color palette across all components</li>
       <li>Material Design theming integration with TailwindCSS</li>
     </ul>
-    <img src="screenshots/landing-page-drak.png" alt="Dark Mode" style="width: 100%; border-radius: 4px;">
+    <a href="screenshots/landing-page-dark.png" target="_blank" title="View full size image">
+      <img src="screenshots/landing-page-dark.png" alt="Dark Mode" style="width: 100%; border-radius: 4px; cursor: pointer;">
+    </a>
   </div>
   <div style="flex: 1; min-width: 300px; border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
     <h3>📱 Responsive Design</h3>
@@ -92,7 +102,9 @@ This document provides a visual overview of the key features implemented in the 
       <li>Optimized form layouts for different screen sizes</li>
       <li>TailwindCSS utilities for consistent breakpoints</li>
     </ul>
-    <img src="screenshots/contact-list-page.png" alt="Responsive Design" style="width: 100%; border-radius: 4px;">
+    <a href="screenshots/contact-list-page.png" target="_blank" title="View full size image">
+      <img src="screenshots/contact-list-page.png" alt="Responsive Design" style="width: 100%; border-radius: 4px; cursor: pointer;">
+    </a>
   </div>
 </div>
 
@@ -110,7 +122,9 @@ This document provides a visual overview of the key features implemented in the 
       <li>Responsive design that works on all devices</li>
       <li>Role-based action buttons</li>
     </ul>
-    <img src="screenshots/contact-list-page.png" alt="Contact List" style="width: 100%; border-radius: 4px;">
+    <a href="screenshots/contact-list-page.png" target="_blank" title="View full size image">
+      <img src="screenshots/contact-list-page.png" alt="Contact List" style="width: 100%; border-radius: 4px; cursor: pointer;">
+    </a>
   </div>
   <div style="flex: 1; min-width: 300px; border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
     <h3>✏️ Contact Form</h3>
@@ -121,7 +135,9 @@ This document provides a visual overview of the key features implemented in the 
       <li>Conditional form fields based on selection</li>
       <li>Modern Material Design inputs with TailwindCSS styling</li>
     </ul>
-    <img src="screenshots/Contacnt-form.png" alt="Contact Form" style="width: 100%; border-radius: 4px;">
+    <a href="screenshots/contact-form.png" target="_blank" title="View full size image">
+      <img src="screenshots/contact-form.png" alt="Contact Form" style="width: 100%; border-radius: 4px; cursor: pointer;">
+    </a>
   </div>
 </div>
 
@@ -137,7 +153,9 @@ This document provides a visual overview of the key features implemented in the 
       <li>Account status management (active/inactive)</li>
       <li>User detail view with complete information</li>
     </ul>
-    <img src="screenshots/user-managment.png" alt="User Management" style="width: 100%; border-radius: 4px;">
+    <a href="screenshots/user-management.png" target="_blank" title="View full size image">
+      <img src="screenshots/user-management.png" alt="User Management" style="width: 100%; border-radius: 4px; cursor: pointer;">
+    </a>
   </div>
   <div style="flex: 1; min-width: 300px; border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
     <h3>🔄 User Role Mapping</h3>
@@ -148,7 +166,9 @@ This document provides a visual overview of the key features implemented in the 
       <li>Bulk role operations</li>
       <li>Audit logging of role changes</li>
     </ul>
-    <img src="screenshots/user-role-mapping.png" alt="User Role Mapping" style="width: 100%; border-radius: 4px;">
+    <a href="screenshots/user-role-mapping.png" target="_blank" title="View full size image">
+      <img src="screenshots/user-role-mapping.png" alt="User Role Mapping" style="width: 100%; border-radius: 4px; cursor: pointer;">
+    </a>
   </div>
 </div>
 
@@ -164,7 +184,9 @@ This document provides a visual overview of the key features implemented in the 
       <li>Integration with permission system</li>
       <li>Hierarchical page organization</li>
     </ul>
-    <img src="screenshots/page-master.png" alt="Page Management" style="width: 100%; border-radius: 4px;">
+    <a href="screenshots/page-master.png" target="_blank" title="View full size image">
+      <img src="screenshots/page-master.png" alt="Page Management" style="width: 100%; border-radius: 4px; cursor: pointer;">
+    </a>
   </div>
   <div style="flex: 1; min-width: 300px; border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
     <h3>⚙️ Operation Management</h3>
@@ -175,7 +197,9 @@ This document provides a visual overview of the key features implemented in the 
       <li>API endpoint security mapping</li>
       <li>UI action integration</li>
     </ul>
-    <img src="screenshots/operation-master.png" alt="Operation Management" style="width: 100%; border-radius: 4px;">
+    <a href="screenshots/operation-master.png" target="_blank" title="View full size image">
+      <img src="screenshots/operation-master.png" alt="Operation Management" style="width: 100%; border-radius: 4px; cursor: pointer;">
+    </a>
   </div>
 </div>
 
@@ -189,7 +213,9 @@ This document provides a visual overview of the key features implemented in the 
       <li>Role hierarchy management</li>
       <li>Default role configuration</li>
     </ul>
-    <img src="screenshots/role-master.png" alt="Role Management" style="width: 100%; border-radius: 4px;">
+    <a href="screenshots/role-master.png" target="_blank" title="View full size image">
+      <img src="screenshots/role-master.png" alt="Role Management" style="width: 100%; border-radius: 4px; cursor: pointer;">
+    </a>
   </div>
   <div style="flex: 1; min-width: 300px; border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
     <h3>📝 User Activity Logging</h3>
@@ -200,7 +226,9 @@ This document provides a visual overview of the key features implemented in the 
       <li>Action categorization and filtering</li>
       <li>Security event highlighting</li>
     </ul>
-    <img src="screenshots/User-activity-log.png" alt="User Activity Log" style="width: 100%; border-radius: 4px;">
+    <a href="screenshots/user-activity-log.png" target="_blank" title="View full size image">
+      <img src="screenshots/user-activity-log.png" alt="User Activity Log" style="width: 100%; border-radius: 4px; cursor: pointer;">
+    </a>
   </div>
 </div>
 
@@ -219,7 +247,9 @@ This document provides a visual overview of the key features implemented in the 
       <li>Structured exception handling with meaningful responses</li>
       <li>Proper separation of cross-cutting concerns</li>
     </ul>
-    <img src="screenshots/CleanArchitecture.png" alt="Backend Architecture" style="width: 100%; border-radius: 4px;">
+    <a href="screenshots/clean-architecture.png" target="_blank" title="View full size image">
+      <img src="screenshots/clean-architecture.png" alt="Backend Architecture" style="width: 100%; border-radius: 4px; cursor: pointer;">
+    </a>
   </div>
   <div style="flex: 1; min-width: 300px; border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
     <h3>🔄 Frontend Architecture</h3>
@@ -234,7 +264,9 @@ This document provides a visual overview of the key features implemented in the 
       <li>Component-based design with clear responsibilities</li>
       <li>Shared UI component library for consistency</li>
     </ul>
-    <img src="screenshots/architecture.png" alt="Frontend Architecture" style="width: 100%; border-radius: 4px;">
+    <a href="screenshots/architecture.png" target="_blank" title="View full size image">
+      <img src="screenshots/architecture.png" alt="Frontend Architecture" style="width: 100%; border-radius: 4px; cursor: pointer;">
+    </a>
   </div>
 </div>
 
@@ -253,7 +285,7 @@ This document provides a visual overview of the key features implemented in the 
       <li>Optimized caching for faster builds</li>
       <li>Container orchestration ready configuration</li>
     </ul>
-    <p><em>See our complete <a href="docker-guide.md">Docker Guide</a> for full details on the containerization approach.</em></p>
+    <p><em>See our complete <a href="{{ '/docker-guide/' | relative_url }}">Docker Guide</a> for full details on the containerization approach.</em></p>
   </div>
   <div style="flex: 1; min-width: 300px; border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
     <h3>📊 API Documentation</h3>
@@ -313,13 +345,15 @@ This document provides a visual overview of the key features implemented in the 
 ## Live Demo
 
 <div style="text-align: center; margin: 40px 0;">
-  <img src="screenshots/clean-architecture-demo.gif" alt="Application Demo" style="max-width: 800px; width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+  <a href="screenshots/clean-architecture-demo.gif" target="_blank" title="View full size demo">
+    <img src="screenshots/clean-architecture-demo.gif" alt="Application Demo" style="max-width: 800px; width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;">
+  </a>
   <p style="margin-top: 15px; font-style: italic;">A demonstration of the key features and workflows in the application.</p>
 </div>
 
 ## Coming Soon Features
 
-For upcoming features, please refer to our [roadmap document](roadmap.md), which includes:
+For upcoming features, please refer to our [roadmap document]({{ '/roadmap/' | relative_url }}), which includes:
 
 - Enhanced RBAC & UI Modernization
 - Application Logs & Monitoring
@@ -329,4 +363,4 @@ For upcoming features, please refer to our [roadmap document](roadmap.md), which
 
 ---
 
-*Note: For more detailed technical information on implementing features, see our [Development Guide](development-guide.md).*
+*Note: For more detailed technical information on implementing features, see our [Development Guide]({{ '/development-guide/' | relative_url }}).*
