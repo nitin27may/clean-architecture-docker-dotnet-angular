@@ -4,6 +4,10 @@ remote_theme: just-the-docs/just-the-docs
 
 url: https://nitin27may.github.io/clean-architecture-docker-dotnet-angular
 
+# Version information
+version: "2.1.0"
+last_updated: "2023-06-15"
+
 # Enable search
 search_enabled: true
 
@@ -17,6 +21,10 @@ aux_links:
 
 # Footer content
 footer_content: "Copyright &copy; 2025 Nitin Kumar. Distributed under the MIT License."
+
+# Footer version display
+footer_version_display: true
+footer_version_text: "Version"
 
 # Color scheme supports "light" (default) and "dark"
 color_scheme: light
