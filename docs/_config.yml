@@ -1,8 +1,11 @@
-title: Clean Architecture Full-Stack
-description: A production-ready full-stack starter kit with .NET 9, Angular 19, and PostgreSQL using Clean Architecture principles.
+title: Clean Architecture Docker .NET Angular
+description: Documentation for the Clean Architecture project
 remote_theme: just-the-docs/just-the-docs
 
 url: https://nitin27may.github.io/clean-architecture-docker-dotnet-angular
+
+# Enable search
+search_enabled: true
 
 # Enable support for hyphenated search keywords
 search_tokenizer_separator: /[\s/]+/
@@ -13,7 +16,7 @@ aux_links:
     - "//github.com/nitin27may/clean-architecture-docker-dotnet-angular"
 
 # Footer content
-footer_content: "Copyright &copy; 2025 Nitin Singh. Distributed by an MIT license."
+footer_content: "Copyright &copy; 2025 Nitin Kumar. Distributed under the MIT License."
 
 # Color scheme supports "light" (default) and "dark"
 color_scheme: light
@@ -64,5 +67,6 @@ collapse_inactive_chapters: true
 # Enable copy code button
 enable_copy_code_button: true
 
-ga_tracking: G-Z89Y3Z3K6Z
-ga_tracking_anonymize_ip: true 
+# Google Analytics tracking
+ga_tracking: G-BJBJ6TYVWF
+ga_tracking_anonymize_ip: true
