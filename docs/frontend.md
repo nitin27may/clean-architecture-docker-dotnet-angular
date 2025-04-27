@@ -11,7 +11,7 @@ permalink: /Frontend
 The frontend of this project is built with Angular 19, leveraging modern Angular features including standalone components, signals for state management, the inject() function for dependency injection, and a powerful combination of Angular Material and TailwindCSS for styling.
 
 <div style="text-align: center; margin: 30px 0;">
-  <img src="/clean-architecture-docker-dotnet-angular/img/screenshots/contact-list-page.png" alt="Contact List Page" style="width: 90%; max-width: 800px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+  <img src="img//screenshots/contact-list-page.png" alt="Contact List Page" style="width: 90%; max-width: 800px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
   <p style="font-style: italic; margin-top: 10px;">The Contact List page demonstrating the clean UI design with Angular Material and TailwindCSS</p>
 </div>
 
@@ -331,11 +331,11 @@ Authentication is implemented using JWT tokens with automatic refresh capability
 
 <div style="display: flex; gap: 20px; margin: 20px 0; flex-wrap: wrap;">
   <div style="flex: 1; min-width: 300px;">
-    <img src="/clean-architecture-docker-dotnet-angular/img/screenshots/landing-page.png" alt="Login Page" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+    <img src="img//screenshots/landing-page.png" alt="Login Page" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
     <p style="font-style: italic; text-align: center;">Login Page with Material Design components</p>
   </div>
   <div style="flex: 1; min-width: 300px;">
-    <img src="/clean-architecture-docker-dotnet-angular/img/screenshots/landing-page-drak.png" alt="Login Page (Dark Mode)" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+    <img src="img//screenshots/landing-page-drak.png" alt="Login Page (Dark Mode)" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
     <p style="font-style: italic; text-align: center;">Login Page in Dark Mode</p>
   </div>
 </div>
@@ -466,7 +466,7 @@ The application includes a complete authentication system with:
 ### Role-Based Access Control
 
 <div style="text-align: center; margin: 30px 0;">
-  <img src="/clean-architecture-docker-dotnet-angular/img/screenshots/role-permission-mapping.png" alt="Role Permission Mapping" style="width: 90%; max-width: 800px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+  <img src="img//screenshots/role-permission-mapping.png" alt="Role Permission Mapping" style="width: 90%; max-width: 800px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
   <p style="font-style: italic; margin-top: 10px;">Role Permission Mapping interface for administrators</p>
 </div>
 
@@ -524,11 +524,11 @@ export class HasPermissionDirective {
 
 <div style="display: flex; gap: 20px; margin: 20px 0; flex-wrap: wrap;">
   <div style="flex: 1; min-width: 300px;">
-    <img src="/clean-architecture-docker-dotnet-angular/img/screenshots/contact-list-page.png" alt="Contact List View" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+    <img src="img//screenshots/contact-list-page.png" alt="Contact List View" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
     <p style="font-style: italic; text-align: center;">Contact List View with filtering and sorting</p>
   </div>
   <div style="flex: 1; min-width: 300px;">
-    <img src="/clean-architecture-docker-dotnet-angular/img/screenshots/Contacnt-form.png" alt="Contact Form" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+    <img src="img//screenshots/Contacnt-form.png" alt="Contact Form" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
     <p style="font-style: italic; text-align: center;">Contact Form with validation</p>
   </div>
 </div>
@@ -537,11 +537,11 @@ export class HasPermissionDirective {
 
 <div style="display: flex; gap: 20px; margin: 20px 0; flex-wrap: wrap;">
   <div style="flex: 1; min-width: 300px;">
-    <img src="/clean-architecture-docker-dotnet-angular/img/screenshots/role-master.png" alt="Role Management" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+    <img src="img//screenshots/role-master.png" alt="Role Management" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
     <p style="font-style: italic; text-align: center;">Role Management</p>
   </div>
   <div style="flex: 1; min-width: 300px;">
-    <img src="/clean-architecture-docker-dotnet-angular/img/screenshots/operation-master.png" alt="Operation Management" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+    <img src="img//screenshots/operation-master.png" alt="Operation Management" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
     <p style="font-style: italic; text-align: center;">Operation Management</p>
   </div>
 </div>
