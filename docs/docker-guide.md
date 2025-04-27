@@ -21,7 +21,7 @@ This guide explains the Docker setup for the Clean Architecture Full-Stack appli
 The application uses Docker to containerize all services for consistent development and deployment. This containerization approach ensures that the application runs the same way in all environments, from development to production.
 
 <div style="text-align: center; margin: 30px 0;">
-  <img src="img//screenshots/architecture.png" alt="Docker Architecture" style="width: 90%; max-width: 800px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+  <img src="screenshots/architecture.png" alt="Docker Architecture" style="width: 90%; max-width: 800px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
   <p style="font-style: italic; margin-top: 10px;">Architecture diagram showing the containerized application components</p>
 </div>
 
