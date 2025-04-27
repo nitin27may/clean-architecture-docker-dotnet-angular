@@ -536,8 +536,8 @@ export class HasPermissionDirective {
     <p style="font-style: italic; text-align: center;">Contact List View with filtering and sorting</p>
   </div>
   <div style="flex: 1; min-width: 300px;">
-    <a href="screenshots/Contacnt-form.png" target="_blank">
-      <img src="screenshots/Contacnt-form.png" alt="Contact Form" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+    <a href="screenshots/contact-form.png" target="_blank">
+      <img src="screenshots/contact-form.png" alt="Contact Form" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
     </a>
     <p style="font-style: italic; text-align: center;">Contact Form with validation</p>
   </div>
