@@ -18,32 +18,37 @@ on:
         required: true
         default: 'main'
         type: string
+      workflow_ref:
+        description: 'Branch containing workflow definitions'
+        required: true
+        default: 'main'
+        type: string
 
 jobs:
   call-workflow-1-in-local-repo:
     name: API Build
-    uses: nitin27may/clean-architecture-docker-dotnet-angular/.github/workflows/api-build.yml@main
+    uses: nitin27may/clean-architecture-docker-dotnet-angular/.github/workflows/api-build.yml@${{ github.event.inputs.workflow_ref }}
     with:
       ref: ${{ github.event.inputs.api_branch }}
     secrets: inherit
   
   call-workflow-2-in-local-repo:
     name: Frontend Build
-    uses: nitin27may/clean-architecture-docker-dotnet-angular/.github/workflows/angular-build.yml@main
+    uses: nitin27may/clean-architecture-docker-dotnet-angular/.github/workflows/angular-build.yml@${{ github.event.inputs.workflow_ref }}
     with:
       ref: ${{ github.event.inputs.frontend_branch }}
     secrets: inherit
 
   call-workflow-3-in-local-repo:
     name: Loadbalancer Build
-    uses: nitin27may/clean-architecture-docker-dotnet-angular/.github/workflows/loadbalancer.build.yml@main
+    uses: nitin27may/clean-architecture-docker-dotnet-angular/.github/workflows/loadbalancer.build.yml@${{ github.event.inputs.workflow_ref }}
     with:
       ref: ${{ github.event.inputs.loadbalancer_branch }}
     secrets: inherit
 
   # call-workflow-4-in-local-repo:
   #   name: AKS Deployment
-  #   uses: nitin27may/clean-architecture-docker-dotnet-angular/.github/workflows/deployment.yml@main
+  #   uses: nitin27may/clean-architecture-docker-dotnet-angular/.github/workflows/deployment.yml@${{ github.event.inputs.workflow_ref }}
   #   if: ${{ always() }}
   #   needs: [call-workflow-1-in-local-repo, call-workflow-2-in-local-repo, call-workflow-3-in-local-repo]
   #   secrets: inherit
