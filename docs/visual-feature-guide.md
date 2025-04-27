@@ -36,8 +36,8 @@ This document provides a visual overview of the key features implemented in the 
     <li>Maintains excellent contrast and readability</li>
     <li>Uses consistent color palette across all UI elements</li>
   </ul>
-  <a href="screenshots/landing-page-dark.png" target="_blank" title="View full size image">
-    <img src="screenshots/landing-page-dark.png" alt="Dark Mode Landing Page" style="width: 100%; max-width: 1000px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;">
+  <a href="screenshots/landing-page-drak.png" target="_blank" title="View full size image">
+    <img src="screenshots/landing-page-drak.png" alt="Dark Mode Landing Page" style="width: 100%; max-width: 1000px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;">
   </a>
 </div>
 
@@ -84,8 +84,8 @@ This document provides a visual overview of the key features implemented in the 
     <li>Consistent color palette across all components</li>
     <li>Material Design theming integration with TailwindCSS</li>
   </ul>
-  <a href="screenshots/landing-page-dark.png" target="_blank" title="View full size image">
-    <img src="screenshots/landing-page-dark.png" alt="Dark Mode" style="width: 100%; max-width: 1000px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;">
+  <a href="screenshots/landing-page-drak.png" target="_blank" title="View full size image">
+    <img src="screenshots/landing-page-drak.png" alt="Dark Mode" style="width: 100%; max-width: 1000px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;">
   </a>
 </div>
 
