@@ -2,7 +2,7 @@
 layout: default
 title: Feature Showcase
 nav_order: 2
-permalink: /visual-feature-guide/
+permalink: /visual-feature-guide
 ---
 
 # Feature Showcase
