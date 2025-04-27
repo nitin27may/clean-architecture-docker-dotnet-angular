@@ -220,8 +220,8 @@ This document provides a visual overview of the key features implemented in the 
     <li>Action categorization and filtering</li>
     <li>Security event highlighting</li>
   </ul>
-  <a href="screenshots/user-activity-log.png" target="_blank" title="View full size image">
-    <img src="screenshots/user-activity-log.png" alt="User Activity Log" style="width: 100%; max-width: 1000px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;">
+  <a href="screenshots/activity.png" target="_blank" title="View full size image">
+    <img src="screenshots/activity.png" alt="User Activity Log" style="width: 100%; max-width: 1000px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;">
   </a>
 </div>
 
