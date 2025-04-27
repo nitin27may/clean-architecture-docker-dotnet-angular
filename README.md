@@ -23,7 +23,7 @@
 
 <p align="center">
   
-![Application Demo](docs/clean-architecture-demo.gif)
+![Application Demo](docs/screenshots/clean-architecture-demo.gif)
   
 <em>Contact Management Application with Role-Based Access Control</em>
 </p>
@@ -42,7 +42,7 @@ Perfect for developers who want to **focus on business logic** instead of config
 ## 🏗️ Why Clean Architecture?
 
 <p align="center">
-  <img src="docs/CleanArchitecture.png" alt="Clean Architecture Diagram" width="60%">
+  <img src="docs/screenshots/clean-architecture.png" alt="Clean Architecture Diagram" width="60%">
 </p>
 
 Clean Architecture provides **significant benefits** for your application:
@@ -124,7 +124,7 @@ docker-compose up
 ## 🧩 Architecture
 
 <p align="center">
-  <img src="docs/architecture.png" alt="Container Architecture" width="80%">
+  <img src="docs/screenshots/architecture.png" alt="Container Architecture" width="80%">
   <br>
   <em>Container Architecture Overview</em>
 </p>
