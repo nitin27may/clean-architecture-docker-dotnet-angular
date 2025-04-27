@@ -1,0 +1,49 @@
+name: Master Trigger
+
+on:
+  workflow_dispatch:
+    inputs:
+      api_branch:
+        description: 'Branch to use for API build'
+        required: true
+        default: 'main'
+        type: string
+      frontend_branch:
+        description: 'Branch to use for Frontend build'
+        required: true
+        default: 'main'
+        type: string
+      loadbalancer_branch:
+        description: 'Branch to use for Loadbalancer build'
+        required: true
+        default: 'main'
+        type: string
+
+jobs:
+  call-workflow-1-in-local-repo:
+    name: API Build
+    uses: nitin27may/clean-architecture-docker-dotnet-angular/.github/workflows/api-build.yml@main
+    with:
+      ref: ${{ github.event.inputs.api_branch }}
+    secrets: inherit
+  
+  call-workflow-2-in-local-repo:
+    name: Frontend Build
+    uses: nitin27may/clean-architecture-docker-dotnet-angular/.github/workflows/angular-build.yml@main
+    with:
+      ref: ${{ github.event.inputs.frontend_branch }}
+    secrets: inherit
+
+  call-workflow-3-in-local-repo:
+    name: Loadbalancer Build
+    uses: nitin27may/clean-architecture-docker-dotnet-angular/.github/workflows/loadbalancer.build.yml@main
+    with:
+      ref: ${{ github.event.inputs.loadbalancer_branch }}
+    secrets: inherit
+
+  # call-workflow-4-in-local-repo:
+  #   name: AKS Deployment
+  #   uses: nitin27may/clean-architecture-docker-dotnet-angular/.github/workflows/deployment.yml@main
+  #   if: ${{ always() }}
+  #   needs: [call-workflow-1-in-local-repo, call-workflow-2-in-local-repo, call-workflow-3-in-local-repo]
+  #   secrets: inherit
