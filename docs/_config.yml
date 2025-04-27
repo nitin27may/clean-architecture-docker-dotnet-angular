@@ -7,6 +7,11 @@ url: https://nitin27may.github.io/clean-architecture-docker-dotnet-angular
 # Version information
 version: "2.1.0"
 last_updated: "2023-06-15"
+build_timestamp: <%= Time.now.to_i %>
+
+# Cache busting settings
+cache_bust: true
+asset_version_query: <%= Time.now.to_i %>
 
 # Enable search
 search_enabled: true
@@ -78,3 +83,19 @@ enable_copy_code_button: true
 # Google Analytics tracking
 ga_tracking: G-BJBJ6TYVWF
 ga_tracking_anonymize_ip: true
+
+# Force browser to reload CSS and JS
+assets:
+  source_maps: true
+  destination: "/assets"
+  compression: true
+  gzip: false
+  defaults:
+    integrity:
+      {css,js}: true
+  caching:
+    enabled: true
+    path: ".jekyll-cache/assets"
+    type: file
+  # Apply cache busting to assets
+  cache_bust_strategy: hard
