@@ -33,6 +33,14 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Generate build timestamp
+        id: timestamp
+        run: echo "timestamp=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
+      - name: Create cache-busting file
+        run: |
+          mkdir -p ./docs/assets
+          echo "// Cache busting timestamp: ${{ steps.timestamp.outputs.timestamp }}" > ./docs/assets/cache-buster.js
+          echo "Cache-Control: no-cache, no-store, must-revalidate" > ./docs/assets/.htaccess
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
@@ -40,6 +48,8 @@ jobs:
           destination: ./_site
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
 
   # Deployment job
   deploy:
@@ -52,3 +62,11 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          # Add cache control headers
+          headers: |
+            Cache-Control: no-cache, no-store, must-revalidate
+      - name: Purge GitHub Pages cache
+        run: |
+          curl -X PURGE ${{ steps.deployment.outputs.page_url }}
+          echo "Attempted to purge GitHub Pages cache"
