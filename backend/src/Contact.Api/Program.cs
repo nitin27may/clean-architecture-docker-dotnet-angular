@@ -12,7 +12,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddInfrastrcutureServices(builder.Configuration);
-builder.Services.AddApplicationServices(builder.Configuration);
 
 var appSettings = builder.Configuration.GetSection("AppSettings").Get<Contact.Application.AppSettings>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
