@@ -1,5 +1,5 @@
-import { DOCUMENT } from '@angular/common';
-import { Injectable, computed, effect, inject, signal } from '@angular/core';
+
+import { Injectable, computed, effect, inject, signal, DOCUMENT } from '@angular/core';
 
 export type ThemeName = 'light' | 'dark';
 export type ThemeColor = 'azure' | 'indigo' | 'purple' | 'teal' | 'green' | 'amber' | 'red';

@@ -16,7 +16,7 @@
       width: 100%;
 
       .mdc-text-field--outlined {
-        --mdc-outlined-text-field-container-shape: 0.5rem;
+        --mat-form-field-outlined-container-shape: 0.5rem;
       }
 
       .mat-mdc-form-field-subscript-wrapper {
@@ -38,8 +38,8 @@
     /* Fix Material button colors */
     .mat-mdc-raised-button.mat-primary,
     .mat-mdc-flat-button.mat-primary {
-      --mdc-filled-button-container-color: var(--sys-primary);
-      --mdc-filled-button-label-text-color: var(--sys-on-primary);
+      --mat-button-filled-container-color: var(--sys-primary);
+      --mat-button-filled-label-text-color: var(--sys-on-primary);
     }
 
     /* Specific fixes for errors */
@@ -79,8 +79,8 @@
 
     /* Fix checkbox in dark mode */
     .mat-mdc-checkbox {
-      --mdc-checkbox-unselected-icon-color: var(--sys-on-surface-variant);
-      --mdc-checkbox-unselected-hover-icon-color: var(--sys-on-surface);
+      --mat-checkbox-unselected-icon-color: var(--sys-on-surface-variant);
+      --mat-checkbox-unselected-hover-icon-color: var(--sys-on-surface);
     }
   }
 }

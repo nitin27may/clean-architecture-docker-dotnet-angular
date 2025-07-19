@@ -80,7 +80,7 @@ import { filter } from 'rxjs/operators';
       }
 
       .mat-mdc-list-item {
-        --mdc-list-list-item-container-shape: 6px;
+        --mat-list-list-item-container-shape: 6px;
       }
     }
   `,

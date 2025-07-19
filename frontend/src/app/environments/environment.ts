@@ -1,7 +1,7 @@
 export const environment = {
     production: false,
     apiEndpoint: '/api',
-    angular: 'Angular 19.2.8',
+    angular: 'Angular 20.1.2',
     bootstrap: 'Tailwind CSS 4 & Angular Material 19.2.8',
     dotnet: '.NET 9',
     mssql : 'PostgreSQL',

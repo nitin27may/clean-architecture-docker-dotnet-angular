@@ -105,41 +105,41 @@ mat-toolbar {
 
 // Fix button styling
 .mat-mdc-raised-button.mat-primary {
-  --mdc-filled-button-container-color: var(--mat-sys-primary);
-  --mdc-filled-button-label-text-color: white;
+  --mat-button-filled-container-color: var(--mat-sys-primary);
+  --mat-button-filled-label-text-color: white;
 }
 
 .mat-mdc-unelevated-button.mat-primary {
-  --mdc-filled-button-container-color: var(--mat-sys-primary);
-  --mdc-filled-button-label-text-color: white;
+  --mat-button-filled-container-color: var(--mat-sys-primary);
+  --mat-button-filled-label-text-color: white;
 }
 
 .mat-mdc-outlined-button.mat-primary {
-  --mdc-outlined-button-label-text-color: var(--mat-sys-primary);
-  --mdc-outlined-button-outline-color: var(--mat-sys-primary);
+  --mat-button-outlined-label-text-color: var(--mat-sys-primary);
+  --mat-button-outlined-outline-color: var(--mat-sys-primary);
 }
 
 // Snackbar styling
 .success-snackbar {
-  --mdc-snackbar-container-color: #4caf50;
-  --mdc-snackbar-supporting-text-color: white;
+  --mat-snackbar-container-color: #4caf50;
+  --mat-snackbar-supporting-text-color: white;
   --mat-mdc-snack-bar-button-color: white;
 }
 
 .error-snackbar {
-  --mdc-snackbar-container-color: #f44336;
-  --mdc-snackbar-supporting-text-color: white;
+  --mat-snackbar-container-color: #f44336;
+  --mat-snackbar-supporting-text-color: white;
   --mat-mdc-snack-bar-button-color: white;
 }
 
 .warning-snackbar {
-  --mdc-snackbar-container-color: #ff9800;
-  --mdc-snackbar-supporting-text-color: white;
+  --mat-snackbar-container-color: #ff9800;
+  --mat-snackbar-supporting-text-color: white;
   --mat-mdc-snack-bar-button-color: white;
 }
 
 .info-snackbar {
-  --mdc-snackbar-container-color: #2196f3;
-  --mdc-snackbar-supporting-text-color: white;
+  --mat-snackbar-container-color: #2196f3;
+  --mat-snackbar-supporting-text-color: white;
   --mat-mdc-snack-bar-button-color: white;
 }

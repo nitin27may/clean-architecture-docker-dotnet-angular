@@ -16,7 +16,7 @@
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT License">
   </a>
-  <img src="https://img.shields.io/badge/Angular-19-DD0031.svg" alt="Angular 19">
+  <img src="https://img.shields.io/badge/Angular-19-DD0031.svg" alt="Angular 20">
   <img src="https://img.shields.io/badge/.NET-9-512BD4.svg" alt=".NET 9">
   <img src="https://img.shields.io/badge/PostgreSQL-16-336791.svg" alt="PostgreSQL 16">
 </p>
@@ -32,7 +32,7 @@
 
 A production-ready **full-stack starter kit** built with modern technologies and best practices:
 
-- **Frontend**: Angular 19 with signals, Material Design, and TailwindCSS
+- **Frontend**: Angular 20 with signals, Material Design, and TailwindCSS
 - **Backend**: .NET 9 API with Clean Architecture
 - **Database**: PostgreSQL with Dapper
 - **DevOps**: Docker, GitHub Actions, NGINX
@@ -88,7 +88,7 @@ docker-compose up
     <td width="33%">
       <h3>📱 Modern Frontend</h3>
       <ul>
-        <li>Angular 19 with standalone components</li>
+        <li>Angular 20 with standalone components</li>
         <li>Signal-based state management</li>
         <li>Material Design + TailwindCSS</li>
         <li>Dark/light theme support</li>

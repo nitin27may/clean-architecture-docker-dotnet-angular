@@ -1,9 +1,9 @@
-import { Inject, Injectable } from "@angular/core";
+import { Inject, Injectable, DOCUMENT } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import { User } from "@core/models/user.interface";
 
-import { DOCUMENT } from "@angular/common";
+
 import { environment } from "@environments/environment";
 
 @Injectable({providedIn: 'root'})

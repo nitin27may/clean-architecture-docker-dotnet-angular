@@ -27,7 +27,7 @@ The application uses Docker to containerize all services for consistent developm
 
 The Docker setup includes:
 
-- Frontend container (Angular 19)
+- Frontend container (Angular 20)
 - Backend API container (.NET 9)
 - Database container (PostgreSQL)
 - Nginx container (Reverse proxy/Load balancer)

@@ -9,7 +9,7 @@ permalink: /
 # Clean Architecture Full-Stack Starter
 {: .fs-9 }
 
-A production-ready full-stack application with Angular 19, .NET 9, and PostgreSQL using Clean Architecture principles
+A production-ready full-stack application with Angular 20, .NET 9, and PostgreSQL using Clean Architecture principles
 {: .fs-6 .fw-300 }
 
 [Get Started](#-quick-start-in-60-seconds){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
@@ -26,12 +26,12 @@ A production-ready full-stack application with Angular 19, .NET 9, and PostgreSQ
   </a>
 </p>
 
-A modern, full-stack contact management system built with Angular 19, .NET 9, and PostgreSQL following Clean Architecture principles. This project demonstrates how to structure enterprise applications for maintainability, testability, and scalability while providing a complete development workflow with Docker containerization.
+A modern, full-stack contact management system built with Angular 20, .NET 9, and PostgreSQL following Clean Architecture principles. This project demonstrates how to structure enterprise applications for maintainability, testability, and scalability while providing a complete development workflow with Docker containerization.
 
 ## 🌟 What You'll Learn
 
 - **Clean Architecture** principles and implementation
-- **Angular 19** with signals, standalone components, and Material Design
+- **Angular 20** with signals, standalone components, and Material Design
 - **.NET 9** with dependency injection and repository pattern
 - **PostgreSQL** with Dapper for efficient data access
 - **JWT Authentication** with role-based permissions
@@ -86,7 +86,7 @@ That's it! Visit [http://localhost](http://localhost) in your browser.
 
 The application is structured into multiple containers that work together:
 
-- **Frontend Container**: Angular 19 with Material Design and TailwindCSS
+- **Frontend Container**: Angular 20 with Material Design and TailwindCSS
 - **API Container**: .NET 9 RESTful API built with Clean Architecture
 - **Database Container**: PostgreSQL for data persistence
 - **NGINX Container**: Reverse proxy that routes requests to the appropriate service

@@ -1,6 +1,6 @@
 # GitHub Copilot Instructions for Angular
 
-Generate code following these modern Angular 19+ best practices:
+Generate code following these modern Angular 20+ best practices:
 
 ## Dependency Injection
 - Always use functional injection with `inject()` instead of constructor-based injection

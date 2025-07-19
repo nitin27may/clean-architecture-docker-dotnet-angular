@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
   private platformId = inject(PLATFORM_ID);
 
-  // Updated to use input/output using the Angular 19 signals API
+  // Updated to use input/output using the Angular 20 signals API
   collapsed = input.required<boolean>();
   toggleCollapsed = output<void>();
 

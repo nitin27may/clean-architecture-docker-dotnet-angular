@@ -44,8 +44,8 @@
 
   // Enhanced button styles
   .mat-mdc-raised-button.mat-primary {
-    --mdc-filled-button-container-color: var(--sys-primary);
-    --mdc-filled-button-label-text-color: var(--sys-on-primary);
+    --mat-button-filled-container-color: var(--sys-primary);
+    --mat-button-filled-label-text-color: var(--sys-on-primary);
 
     &:hover {
       filter: brightness(1.1);

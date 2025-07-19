@@ -53,8 +53,8 @@ export class HomeComponent implements OnInit {
     {
       icon: 'web',
       iconType: 'material',
-      title: 'Angular 19',
-      description: 'Front end interfaces built with Angular 19 using signals and functional components.'
+      title: 'Angular 20',
+      description: 'Front end interfaces built with Angular 20 using signals and functional components.'
     },
     {
       icon: 'palette',
@@ -101,7 +101,7 @@ export class HomeComponent implements OnInit {
   }
   openDemo() {
     if (isPlatformBrowser(this.platformId)) {
-      window.open("https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/blob/main/docs/clean-architecture-demo.gif", '_blank', 'noopener,noreferrer');
+      window.open("https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/blob/main/docs/screenshots/clean-architecture-demo.gif", '_blank', 'noopener,noreferrer');
     }
   }
 
