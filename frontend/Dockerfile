@@ -21,14 +21,14 @@ RUN npm run build
 # Use official nginx image as the base image
 FROM nginx:alpine
 
-# Remove default Nginx website
-RUN rm -rf /usr/share/nginx/html/*
+# Remove default Nginx website and configuration
+RUN rm -rf /usr/share/nginx/html/* /etc/nginx/conf.d/default.conf
 
 # Copy the build output to replace the default nginx contents.
 COPY --from=builder /app/dist/contact-portal/browser /usr/share/nginx/html
 
 # Copy the nginx file to fix fallback issue on refreshing.
-COPY /nginx.conf /etc/nginx/conf.d/default.conf
+COPY /nginx.conf /etc/nginx/nginx.conf
 
 # Expose port 80
 EXPOSE 8080
