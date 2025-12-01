@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\aspire\ServiceDefaults\Contact.ServiceDefaults.csproj" />
     <ProjectReference Include="..\Contact.Application\Contact.Application.csproj" />
     <ProjectReference Include="..\Contact.Infrastructure\Contact.Infrastructure.csproj" />
   </ItemGroup>

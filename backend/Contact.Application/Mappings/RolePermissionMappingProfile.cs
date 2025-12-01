@@ -12,7 +12,6 @@ public class RolePermissionMappingProfile : BaseMappingProfile
         : base(httpContextAccessor)
     {
         CreateMap<RolePermission, RolePermissionResponse>();
-        CreateMap<RolePermissionMappingResponse, PermissionsByRoleMappings>();
         CreateMap<CreateRolePermission, RolePermission>()
             .AfterMap((src, dest) => SetAuditFields(src, dest));
         CreateMap<UpdateRolePermission, RolePermission>()

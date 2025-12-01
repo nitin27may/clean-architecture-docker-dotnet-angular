@@ -11,15 +11,17 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 ARG DOTNET_SKIP_POLICY_LOADING=true
 WORKDIR /src
-COPY ["Contact.Api/Contact.Api.csproj", "Contact.Api/"]
-COPY ["Contact.Application/Contact.Application.csproj", "Contact.Application/"]
-COPY ["Contact.Domain/Contact.Domain.csproj", "Contact.Domain/"]
-COPY ["Contact.Infrastructure/Contact.Infrastructure.csproj", "Contact.Infrastructure/"]
-COPY ["Contact.Common/Contact.Common.csproj", "Contact.Common/"]
+COPY ["backend/Contact.Api/Contact.Api.csproj", "backend/Contact.Api/"]
+COPY ["backend/Contact.Application/Contact.Application.csproj", "backend/Contact.Application/"]
+COPY ["backend/Contact.Domain/Contact.Domain.csproj", "backend/Contact.Domain/"]
+COPY ["backend/Contact.Infrastructure/Contact.Infrastructure.csproj", "backend/Contact.Infrastructure/"]
+COPY ["backend/Contact.Common/Contact.Common.csproj", "backend/Contact.Common/"]
+COPY ["aspire/ServiceDefaults/Contact.ServiceDefaults.csproj", "aspire/ServiceDefaults/"]
 
-RUN dotnet restore "./Contact.Api/Contact.Api.csproj"
-COPY . .
-WORKDIR "/src/Contact.Api"
+RUN dotnet restore "./backend/Contact.Api/Contact.Api.csproj"
+COPY backend/ backend/
+COPY aspire/ServiceDefaults/ aspire/ServiceDefaults/
+WORKDIR "/src/backend/Contact.Api"
 RUN dotnet build "./Contact.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 RUN ls /app/build

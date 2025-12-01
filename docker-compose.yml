@@ -10,8 +10,8 @@ services:
 
   api:
     build:
-      context: ./backend/src
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.api
       args:
         - configuration=Release
     environment:
@@ -43,7 +43,7 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./backend/scripts:/docker-entrypoint-initdb.d
+      - ./scripts:/docker-entrypoint-initdb.d
     networks:
       - postgres_network
   
