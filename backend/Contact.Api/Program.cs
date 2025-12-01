@@ -8,7 +8,6 @@ using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using System.Text;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();

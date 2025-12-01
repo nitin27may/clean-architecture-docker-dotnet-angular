@@ -32,6 +32,7 @@ public class CreateContactPersonValidator : AbstractValidator<CreateContactPerso
             .MaximumLength(10).WithMessage("Postal code cannot exceed 10 characters");
             
         RuleFor(x => x.DateOfBirth)
-            .LessThanOrEqualTo(DateTime.UtcNow).WithMessage("Date of birth cannot be in the future");
+            .Must(date => date <= DateOnly.FromDateTime(DateTime.UtcNow))
+            .WithMessage("Date of birth cannot be in the future");
     }
 }
