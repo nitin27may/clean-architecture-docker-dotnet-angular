@@ -9,7 +9,8 @@
 *.user
 *.userosscache
 *.sln.docstates
-
+.vs
+.playwright-mcp
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 .env
