@@ -5,6 +5,7 @@ using Contact.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
+using Scalar.AspNetCore;
 using System.Text;
 
 
@@ -32,40 +33,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidAudience = appSettings.Audience,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.Secret))
         };
-        //options.Events = new JwtBearerEvents()
-        //{
-        //    OnAuthenticationFailed = c =>
-        //    {
-        //        c.NoResult();
-        //        c.Response.StatusCode = 500;
-        //        c.Response.ContentType = "text/plain";
-        //        return c.Response.WriteAsync(c.Exception.ToString());
-        //    },
-        //    OnChallenge = context =>
-        //    {
-        //        context.HandleResponse();
-        //        context.Response.StatusCode = 401;
-        //        context.Response.ContentType = "application/json";
-        //        var result = JsonSerializer.Serialize(new { Message = "You are not Authorized" });
-        //        return context.Response.WriteAsync(result);
-        //    },
-        //    OnForbidden = context =>
-        //    {
-        //        context.Response.StatusCode = 403;
-        //        context.Response.ContentType = "application/json";
-        //        var result = JsonSerializer.Serialize(new { Message = "You are not authorized to access this resource" });
-        //        return context.Response.WriteAsync(result);
-        //    },
-        //};
     });
 
 builder.Services.AddSingleton<IAuthorizationPolicyProvider, CustomAuthorizationPolicyProvider>();
 builder.Services.AddScoped<IAuthorizationHandler, PermissionHandler>();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+// Configure OpenAPI
+builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
@@ -74,9 +50,20 @@ app.MapDefaultEndpoints();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.MapOpenApi();
+    app.MapScalarApiReference(options =>
+    {
+        options.WithTitle("Contact API")
+               .WithTheme(ScalarTheme.BluePlanet)
+               .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient)
+               .WithPreferredScheme("Bearer")
+               .WithHttpBearerAuthentication(bearer =>
+               {
+                   bearer.Token = "";
+               });
+    });
 }
+
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseMiddleware<ActivityLoggingMiddleware>();
 app.UseHttpsRedirection();

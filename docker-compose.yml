@@ -33,7 +33,7 @@ services:
       - postgres_network
       
   postgres:
-    image: postgres:16-alpine
+    image: postgres:17-alpine
     container_name: postgres_db
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
@@ -47,6 +47,19 @@ services:
     networks:
       - postgres_network
   
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL:-admin@admin.com}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD:-admin}
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    networks:
+      - postgres_network
+
   nginx:
     build: loadbalancer
     container_name: nginx
