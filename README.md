@@ -83,8 +83,8 @@ dotnet run --project aspire/AppHost
 🔗 Then access:
 - **Aspire Dashboard**: https://localhost:17178 (see all services, logs, traces)
 - **Frontend**: http://localhost:4200
-- **API**: http://localhost:5217
-- **Scalar API Docs**: http://localhost:5217/scalar/v1
+- **API**: https://localhost:7224
+- **Scalar API Docs**: https://localhost:7224/scalar/v1
 - **pgAdmin**: Check Aspire dashboard for the assigned port
 
 ### Option 2: Using Docker Compose (Production-like)
