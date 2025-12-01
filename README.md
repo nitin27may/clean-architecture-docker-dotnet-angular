@@ -1,4 +1,4 @@
-# 🚀 Clean Architecture Full-Stack Starter: .NET, Angular, and PostgreSQL
+# Clean Architecture Full-Stack Starter: .NET, Angular, and PostgreSQL
 
 <p align="center">
   <a href="https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/actions/workflows/angular-build.yml">
@@ -101,7 +101,7 @@ cp .env.example .env
 docker-compose up
 ```
 
-🔗 Then access:
+Then access:
 - Frontend: http://localhost
 - API: http://localhost/api
 - Scalar API Docs: http://localhost/scalar/v1
@@ -114,12 +114,12 @@ docker-compose up
 | editor@gmail.com | P@ssword#321 | Editor |
 | reader@gmail.com | P@ssword#321 | Reader |
 
-## 🔥 Key Features
+## Key Features
 
 <table>
   <tr>
     <td width="33%">
-      <h3>📱 Modern Frontend</h3>
+      <h3>Modern Frontend</h3>
       <ul>
         <li>Angular 21 with standalone components</li>
         <li>Signal-based state management</li>
@@ -131,7 +131,7 @@ docker-compose up
       </ul>
     </td>
     <td width="33%">
-      <h3>🔒 Secure Backend</h3>
+      <h3>Secure Backend</h3>
       <ul>
         <li>Clean Architecture implementation</li>
         <li>Generic Repository pattern</li>
@@ -144,7 +144,7 @@ docker-compose up
       </ul>
     </td>
     <td width="33%">
-      <h3>🚢 DevOps Ready</h3>
+      <h3>DevOps Ready</h3>
       <ul>
         <li>.NET Aspire orchestration</li>
         <li>Docker containerization</li>
@@ -158,7 +158,7 @@ docker-compose up
   </tr>
 </table>
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 clean-architecture-docker-dotnet-angular/
@@ -187,7 +187,7 @@ clean-architecture-docker-dotnet-angular/
 └── Dockerfile.api               # API Dockerfile
 ```
 
-## 🧩 Architecture
+## Architecture
 
 <p align="center">
   <img src="docs/screenshots/architecture.png" alt="Container Architecture" width="80%">
@@ -195,9 +195,9 @@ clean-architecture-docker-dotnet-angular/
   <em>Container Architecture Overview</em>
 </p>
 
-## 📚 Documentation
+## Documentation
 
-📖 Comprehensive documentation is available:
+Comprehensive documentation is available:
 
 - [Aspire Guide](./docs/aspire-guide.md) - Running with .NET Aspire
 - [Development Guide](./docs/development-guide.md) - Get started with development
@@ -208,7 +208,7 @@ clean-architecture-docker-dotnet-angular/
 - [Clean Architecture Series](./docs/architecture-series.md) - In-depth articles
 - [Roadmap](./docs/roadmap.md) - Upcoming features
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 | Layer | Technology | Version |
 |-------|------------|---------|
@@ -226,14 +226,14 @@ clean-architecture-docker-dotnet-angular/
 
 We welcome contributions! See our [contributing guide](./CONTRIBUTING.md) for details on how to get involved.
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 📧 Contact
+## Contact
 
 For questions or support, please contact Nitin Singh at nitin27may@gmail.com.
 
-## 🌟 Star the Repository
+## Star the Repository
 
 If you find this project useful, please consider giving it a star on GitHub to show your support!
