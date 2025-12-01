@@ -1,10 +1,10 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
+import { MatSelectModule, MatSelectChange } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
@@ -23,12 +23,14 @@ import {
   RolePermissionMappingRequest,
   PageOperationRequest 
 } from '@core/models/role-permission-mapping.model';
+import { PageHeaderComponent, EmptyStateComponent, SkeletonComponent } from '@core/components';
 
 @Component({
   selector: 'app-role-permission-mapping',
   templateUrl: './role-permission-mapping.component.html',
   styleUrls: ['./role-permission-mapping.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     FormsModule,
@@ -44,7 +46,10 @@ import {
     MatTableModule,
     MatExpansionModule,
     MatDividerModule,
-    MatListModule
+    MatListModule,
+    PageHeaderComponent,
+    EmptyStateComponent,
+    SkeletonComponent
   ]
 })
 export class RolePermissionMappingComponent implements OnInit {
@@ -221,9 +226,8 @@ export class RolePermissionMappingComponent implements OnInit {
   /**
    * Handle role selection change
    */
-  onRoleChange(event: Event): void {
-    const select = event.target as HTMLSelectElement;
-    const roleId = select.value;
+  onRoleChange(event: MatSelectChange): void {
+    const roleId = event.value;
     if (roleId) {
       this.selectedRoleId.set(roleId);
       this.loadRolePermissions(roleId);

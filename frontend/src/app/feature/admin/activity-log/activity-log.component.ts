@@ -1,13 +1,16 @@
-import { Component, ViewChild, AfterViewInit, signal, computed, effect, inject, OnInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, signal, computed, effect, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { UserService } from "@core/services/user.service";
-import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { DatePipe, NgFor, NgIf } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { DatePipe, NgFor, NgIf, CommonModule } from '@angular/common';
+import { PageHeaderComponent, EmptyStateComponent, SkeletonComponent } from '@core/components';
 
 // Define the ActivityLog interface
 interface ActivityLog {
@@ -22,15 +25,22 @@ interface ActivityLog {
   selector: 'app-activity-log',
   templateUrl: './activity-log.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
     MatFormFieldModule,
     MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
     DatePipe,
-    NgIf
+    PageHeaderComponent,
+    EmptyStateComponent,
+    SkeletonComponent
   ]
 })
 export class ActivityLogComponent implements AfterViewInit, OnInit {
