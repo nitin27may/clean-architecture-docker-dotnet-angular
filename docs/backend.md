@@ -8,7 +8,7 @@ permalink: /backend
 
 ## Overview
 
-The backend of this project is built with .NET 9, following Clean Architecture principles. It provides a robust API layer for the Angular frontend, using Dapper for efficient data access and PostgreSQL as the database.
+The backend of this project is built with **.NET 10**, following Clean Architecture principles. It provides a robust API layer for the Angular frontend, using Dapper for efficient data access and PostgreSQL 17 as the database. API documentation is provided via **Scalar** (replacing Swagger/Swashbuckle).
 
 <div style="text-align: center; margin: 30px 0;">
   <a href="screenshots/clean-architecture.png" target="_blank">
@@ -19,15 +19,16 @@ The backend of this project is built with .NET 9, following Clean Architecture p
 
 ## Technology Stack
 
-- **.NET 9**
+- **.NET 10**
   - ASP.NET Core Web API
   - Minimal API approach where applicable
   - Modern dependency injection system
   - Middleware pipeline
+  - .NET Aspire 9.5 for orchestration
   
 - **Data Access**
   - Dapper for efficient data access
-  - PostgreSQL database
+  - PostgreSQL 17 database
   - Generic Repository pattern
   - Unit of Work for transaction management
   
@@ -187,55 +188,33 @@ namespace Contact.Api.Controllers
 }
 ```
 
-## API Documentation with Swagger
+## API Documentation with Scalar
 
-The API is fully documented using Swagger/OpenAPI:
+The API is documented using **Scalar**, a modern API documentation tool that replaces Swagger UI:
 
 <div style="text-align: center; margin: 30px 0;">
-  <p style="font-style: italic; margin-top: 10px;">API documentation with Swagger UI available at /swagger endpoint</p>
+  <p style="font-style: italic; margin-top: 10px;">API documentation with Scalar available at /scalar/v1 endpoint</p>
 </div>
 
 ```csharp
-// Swagger Configuration in Program.cs
-builder.Services.AddSwaggerGen(c =>
+// Scalar Configuration in Program.cs
+builder.Services.AddOpenApi();
+
+// In the middleware pipeline
+if (app.Environment.IsDevelopment())
 {
-    c.SwaggerDoc("v1", new OpenApiInfo 
-    { 
-        Title = "Contact API", 
-        Version = "v1",
-        Description = "API for managing contacts in Clean Architecture"
-    });
-    
-    // Security Definition for JWT
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    app.MapOpenApi();
+    app.MapScalarApiReference(options =>
     {
-        Description = "JWT Authorization header using the Bearer scheme",
-        Name = "Authorization",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.Http,
-        Scheme = "bearer"
-    });
-    
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
+        options
+            .WithTitle("Contact API")
+            .WithPreferredScheme("Bearer")
+            .WithHttpBearerAuthentication(bearer =>
             {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            Array.Empty<string>()
-        }
+                bearer.Token = "your-jwt-token";
+            });
     });
-    
-    // Include XML Comments
-    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    c.IncludeXmlComments(xmlPath);
-});
+}
 ```
 
 ## Key Design Patterns
@@ -841,7 +820,7 @@ The backend is containerized with Docker for both production and development env
 
 ```dockerfile
 # Production Dockerfile
-FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
 WORKDIR /app
 EXPOSE 8000
 ENV ASPNETCORE_URLS=http://+:8000
@@ -850,7 +829,7 @@ RUN groupadd -g 2000 dotnet \
 USER dotnet
 
 # Build stage
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 ARG DOTNET_SKIP_POLICY_LOADING=true
 WORKDIR /src

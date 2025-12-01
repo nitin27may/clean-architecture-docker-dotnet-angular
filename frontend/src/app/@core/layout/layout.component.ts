@@ -51,7 +51,7 @@ export default class LayoutComponent {
     return this.collapsed() ? '65px' : '250px';
   });
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   onResize() {
     if (isPlatformBrowser(this.platformId)) {
       // Add debounce to avoid multiple rapid calls

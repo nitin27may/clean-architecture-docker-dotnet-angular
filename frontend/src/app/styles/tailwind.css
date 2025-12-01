@@ -6,6 +6,66 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
+  /* ============================================
+     Fluent 2 Design System Tokens
+     ============================================ */
+
+  /* Fluent 2 Neutral Color Ramp */
+  --color-neutral-2: #050505;
+  --color-neutral-4: #0a0a0a;
+  --color-neutral-6: #0f0f0f;
+  --color-neutral-8: #141414;
+  --color-neutral-10: #1a1a1a;
+  --color-neutral-12: #1f1f1f;
+  --color-neutral-14: #242424;
+  --color-neutral-16: #292929;
+  --color-neutral-20: #333333;
+  --color-neutral-24: #3d3d3d;
+  --color-neutral-28: #474747;
+  --color-neutral-30: #525252;
+  --color-neutral-36: #5c5c5c;
+  --color-neutral-40: #666666;
+  --color-neutral-44: #707070;
+  --color-neutral-48: #7a7a7a;
+  --color-neutral-52: #858585;
+  --color-neutral-56: #8f8f8f;
+  --color-neutral-60: #999999;
+  --color-neutral-64: #a3a3a3;
+  --color-neutral-68: #adadad;
+  --color-neutral-72: #b8b8b8;
+  --color-neutral-76: #c2c2c2;
+  --color-neutral-80: #cccccc;
+  --color-neutral-84: #d6d6d6;
+  --color-neutral-88: #e0e0e0;
+  --color-neutral-92: #ebebeb;
+  --color-neutral-94: #f0f0f0;
+  --color-neutral-96: #f5f5f5;
+  --color-neutral-98: #fafafa;
+
+  /* Fluent 2 Brand Colors (Azure Blue theme) */
+  --color-brand-10: #061724;
+  --color-brand-20: #0a2e4a;
+  --color-brand-30: #0f4578;
+  --color-brand-40: #115ea3;
+  --color-brand-50: #0f6cbd;
+  --color-brand-60: #2886de;
+  --color-brand-70: #479ef5;
+  --color-brand-80: #62abf5;
+  --color-brand-90: #96c6fa;
+  --color-brand-100: #c7e0f9;
+  --color-brand-110: #e8f3fc;
+  --color-brand-120: #f3f9fd;
+
+  /* Fluent 2 Status Colors */
+  --color-success-primary: #0e7a0d;
+  --color-success-background: #f1faf1;
+  --color-warning-primary: #c4730c;
+  --color-warning-background: #fff9f5;
+  --color-danger-primary: #b10e1c;
+  --color-danger-background: #fdf3f4;
+  --color-info-primary: #0078d4;
+  --color-info-background: #f0f9ff;
+
   /* Map Tailwind variables to Angular Material theme variables */
   --color-primary: var(--mat-sys-primary);
   --color-on-primary: var(--mat-sys-on-primary);
@@ -62,6 +122,75 @@
   --color-blue-800: #1e40af;
   --color-blue-900: #1e3a8a;
   --color-blue-950: #172554;
+
+  /* Fluent 2 Elevation Shadows */
+  --shadow-2: 0 1px 2px rgba(0, 0, 0, 0.14), 0 0 2px rgba(0, 0, 0, 0.12);
+  --shadow-4: 0 2px 4px rgba(0, 0, 0, 0.14), 0 0 2px rgba(0, 0, 0, 0.12);
+  --shadow-8: 0 4px 8px rgba(0, 0, 0, 0.14), 0 0 2px rgba(0, 0, 0, 0.12);
+  --shadow-16: 0 8px 16px rgba(0, 0, 0, 0.14), 0 0 2px rgba(0, 0, 0, 0.12);
+  --shadow-28: 0 14px 28px rgba(0, 0, 0, 0.24), 0 0 8px rgba(0, 0, 0, 0.12);
+  --shadow-64: 0 32px 64px rgba(0, 0, 0, 0.24), 0 0 8px rgba(0, 0, 0, 0.12);
+
+  /* Fluent 2 Border Radius */
+  --radius-none: 0;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-circular: 9999px;
+
+  /* Fluent 2 Typography */
+  --font-family-base: "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-family-mono: "Cascadia Code", "Consolas", monospace;
+
+  --font-size-caption-2: 10px;
+  --font-size-caption-1: 12px;
+  --font-size-body-1: 14px;
+  --font-size-body-2: 16px;
+  --font-size-subtitle-2: 16px;
+  --font-size-subtitle-1: 20px;
+  --font-size-title-3: 20px;
+  --font-size-title-2: 24px;
+  --font-size-title-1: 28px;
+  --font-size-large-title: 40px;
+  --font-size-display: 68px;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-caption: 1.33;
+  --line-height-body: 1.43;
+  --line-height-subtitle: 1.5;
+  --line-height-title: 1.25;
+  --line-height-display: 1.1;
+
+  /* Fluent 2 Motion/Animation */
+  --duration-ultra-fast: 50ms;
+  --duration-faster: 100ms;
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+  --duration-slower: 400ms;
+  --duration-ultra-slow: 500ms;
+
+  --easing-accelerate: cubic-bezier(0.9, 0.1, 1, 0.2);
+  --easing-decelerate: cubic-bezier(0.1, 0.9, 0.2, 1);
+  --easing-linear: cubic-bezier(0, 0, 1, 1);
+  --easing-ease-in-out: cubic-bezier(0.33, 0, 0.67, 1);
+
+  /* Fluent 2 Spacing Scale */
+  --spacing-xxs: 2px;
+  --spacing-xs: 4px;
+  --spacing-s-nudge: 6px;
+  --spacing-s: 8px;
+  --spacing-m-nudge: 10px;
+  --spacing-m: 12px;
+  --spacing-l: 16px;
+  --spacing-xl: 20px;
+  --spacing-xxl: 24px;
+  --spacing-xxxl: 32px;
 }
 
 /*
@@ -76,6 +205,169 @@
   ::backdrop,
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
+  }
+
+  /* Fluent Typography Base */
+  html {
+    font-family: var(--font-family-base);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Fluent 2 Elevation Utility Classes */
+@layer utilities {
+  .shadow-fluent-2 {
+    box-shadow: var(--shadow-2);
+  }
+  .shadow-fluent-4 {
+    box-shadow: var(--shadow-4);
+  }
+  .shadow-fluent-8 {
+    box-shadow: var(--shadow-8);
+  }
+  .shadow-fluent-16 {
+    box-shadow: var(--shadow-16);
+  }
+  .shadow-fluent-28 {
+    box-shadow: var(--shadow-28);
+  }
+  .shadow-fluent-64 {
+    box-shadow: var(--shadow-64);
+  }
+
+  /* Fluent Motion Transitions */
+  .transition-fluent-fast {
+    transition-duration: var(--duration-fast);
+    transition-timing-function: var(--easing-ease-in-out);
+  }
+  .transition-fluent-normal {
+    transition-duration: var(--duration-normal);
+    transition-timing-function: var(--easing-ease-in-out);
+  }
+  .transition-fluent-slow {
+    transition-duration: var(--duration-slow);
+    transition-timing-function: var(--easing-ease-in-out);
+  }
+
+  /* Fluent Typography Classes */
+  .text-caption-2 {
+    font-size: var(--font-size-caption-2);
+    line-height: var(--line-height-caption);
+  }
+  .text-caption-1 {
+    font-size: var(--font-size-caption-1);
+    line-height: var(--line-height-caption);
+  }
+  .text-body-1 {
+    font-size: var(--font-size-body-1);
+    line-height: var(--line-height-body);
+  }
+  .text-body-2 {
+    font-size: var(--font-size-body-2);
+    line-height: var(--line-height-body);
+  }
+  .text-subtitle-2 {
+    font-size: var(--font-size-subtitle-2);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-subtitle);
+  }
+  .text-subtitle-1 {
+    font-size: var(--font-size-subtitle-1);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-subtitle);
+  }
+  .text-title-3 {
+    font-size: var(--font-size-title-3);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-title);
+  }
+  .text-title-2 {
+    font-size: var(--font-size-title-2);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-title);
+  }
+  .text-title-1 {
+    font-size: var(--font-size-title-1);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-title);
+  }
+  .text-large-title {
+    font-size: var(--font-size-large-title);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-title);
+  }
+  .text-display {
+    font-size: var(--font-size-display);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-display);
+  }
+
+  /* Fluent Card Styles */
+  .fluent-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-4);
+    transition: box-shadow var(--duration-fast) var(--easing-ease-in-out);
+  }
+  .fluent-card:hover {
+    box-shadow: var(--shadow-8);
+  }
+  .dark .fluent-card {
+    background-color: var(--color-neutral-12);
+  }
+
+  /* Fluent Surface Styles */
+  .fluent-surface {
+    background-color: var(--color-neutral-96);
+  }
+  .dark .fluent-surface {
+    background-color: var(--color-neutral-8);
+  }
+
+  /* Fluent Focus Ring */
+  .fluent-focus:focus-visible {
+    outline: 2px solid var(--color-brand-70);
+    outline-offset: 2px;
+  }
+
+  /* Fluent Button Base */
+  .fluent-button {
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-body-1);
+    padding: var(--spacing-s) var(--spacing-m);
+    transition: all var(--duration-fast) var(--easing-ease-in-out);
+  }
+  .fluent-button-primary {
+    background-color: var(--color-brand-80);
+    color: var(--color-white);
+  }
+  .fluent-button-primary:hover {
+    background-color: var(--color-brand-70);
+  }
+  .fluent-button-outline {
+    background-color: transparent;
+    border: 1px solid var(--color-neutral-72);
+    color: var(--color-neutral-14);
+  }
+  .fluent-button-outline:hover {
+    background-color: var(--color-neutral-94);
+  }
+  .dark .fluent-button-outline {
+    border-color: var(--color-neutral-48);
+    color: var(--color-neutral-88);
+  }
+  .dark .fluent-button-outline:hover {
+    background-color: var(--color-neutral-20);
+  }
+
+  /* Fluent Divider */
+  .fluent-divider {
+    border-color: var(--color-neutral-88);
+  }
+  .dark .fluent-divider {
+    border-color: var(--color-neutral-28);
   }
 }
 
