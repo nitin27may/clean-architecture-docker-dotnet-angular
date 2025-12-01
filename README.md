@@ -23,7 +23,7 @@
 <em>Contact Management Application with Role-Based Access Control</em>
 </p>
 
-## ✨ What is this?
+## What is this?
 
 A production-ready **full-stack starter kit** built with modern technologies and best practices:
 
@@ -35,7 +35,7 @@ A production-ready **full-stack starter kit** built with modern technologies and
 
 Perfect for developers who want to **focus on business logic** instead of configuring infrastructure.
 
-## 🏗️ Why Clean Architecture?
+## Why Clean Architecture?
 
 <p align="center">
   <img src="docs/screenshots/clean-architecture.png" alt="Clean Architecture Diagram" width="60%">
@@ -50,7 +50,7 @@ Clean Architecture provides **significant benefits** for your application:
 
 [Clean Architecture Series](./docs/architecture-series.md) - Read more about it!
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Option 1: Using .NET Aspire (Recommended for Development)
 
@@ -58,7 +58,7 @@ Clean Architecture provides **significant benefits** for your application:
 
 #### Prerequisites
 
-> ⚠️ **Important**: Make sure you have the correct versions installed before proceeding.
+> **Important**: Make sure you have the correct versions installed before proceeding.
 
 - [.NET SDK 10.0](https://dotnet.microsoft.com/download/dotnet/10.0) or later
 - [Node.js 22 LTS](https://nodejs.org/) (**not** Node 23 - use LTS version only)
