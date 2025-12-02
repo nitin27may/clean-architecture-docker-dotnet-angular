@@ -1,5 +1,5 @@
 # Clean Architecture Full-Stack Starter: .NET, Angular, and PostgreSQL
-
+> Clean Architecture with RBAC implementation for API (.Net) and UI (Angular)
 <p align="center">
   <a href="https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/actions/workflows/angular-build.yml">
     <img src="https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/actions/workflows/angular-build.yml/badge.svg" alt="Angular Build">
@@ -10,7 +10,7 @@
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT License">
   </a>
-  <img src="https://img.shields.io/badge/Angular-21-DD0031.svg" alt="Angular 21">
+  <img src="https://img.shields.io/badge/Angular-21-512BD4.svg" alt="Angular 21">
   <img src="https://img.shields.io/badge/.NET-10-512BD4.svg" alt=".NET 10">
   <img src="https://img.shields.io/badge/PostgreSQL-17-336791.svg" alt="PostgreSQL 17">
   <img src="https://img.shields.io/badge/Aspire-9.5-6C3483.svg" alt=".NET Aspire 9.5">
@@ -83,8 +83,8 @@ dotnet run --project aspire/AppHost
 🔗 Then access:
 - **Aspire Dashboard**: https://localhost:17178 (see all services, logs, traces)
 - **Frontend**: http://localhost:4200
-- **API**: https://localhost:7224
-- **Scalar API Docs**: https://localhost:7224/scalar/v1
+- **API**: Check Aspire dashboard for the assigned port
+- **Scalar API Docs**: `{API_URL}/scalar/v1`
 - **pgAdmin**: Check Aspire dashboard for the assigned port
 
 ### Option 2: Using Docker Compose (Production-like)
