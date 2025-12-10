@@ -9,7 +9,7 @@ permalink: /
 # Clean Architecture Full-Stack Starter
 {: .fs-9 }
 
-A production-ready full-stack application with Angular 20, .NET 9, and PostgreSQL using Clean Architecture principles
+A production-ready full-stack application with Angular 21, .NET 10, and PostgreSQL 17 using Clean Architecture principles, orchestrated with .NET Aspire
 {: .fs-6 .fw-300 }
 
 [Get Started](#-quick-start-in-60-seconds){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
@@ -26,45 +26,57 @@ A production-ready full-stack application with Angular 20, .NET 9, and PostgreSQ
   </a>
 </p>
 
-A modern, full-stack contact management system built with Angular 20, .NET 9, and PostgreSQL following Clean Architecture principles. This project demonstrates how to structure enterprise applications for maintainability, testability, and scalability while providing a complete development workflow with Docker containerization.
+A modern, full-stack contact management system built with **Angular 21**, **.NET 10**, and **PostgreSQL 17** following Clean Architecture principles. This project demonstrates how to structure enterprise applications for maintainability, testability, and scalability while providing a complete development workflow with **.NET Aspire** orchestration and Docker containerization.
 
 ## 🌟 What You'll Learn
 
 - **Clean Architecture** principles and implementation
-- **Angular 20** with signals, standalone components, and Material Design
-- **.NET 9** with dependency injection and repository pattern
-- **PostgreSQL** with Dapper for efficient data access
+- **Angular 21** with signals, standalone components, and Fluent Design
+- **.NET 10** with dependency injection and repository pattern
+- **PostgreSQL 17** with Dapper for efficient data access
+- **.NET Aspire 9.5** for local development orchestration
+- **Scalar** for modern API documentation
 - **JWT Authentication** with role-based permissions
 - **Docker** containerization for development and production
 - **NGINX** as a reverse proxy and API gateway
 - **CI/CD** with GitHub Actions
 
-## 🚀 Quick Start in 60 Seconds
+## 🚀 Quick Start
 
-### Prerequisites
+### Option 1: Using .NET Aspire (Recommended for Development)
 
-- [Docker](https://www.docker.com/products/docker-desktop){:target="_blank"} and Docker Compose
-- [Git](https://git-scm.com/downloads){:target="_blank"}
+**Prerequisites:**
+- [.NET SDK 10.0](https://dotnet.microsoft.com/download/dotnet/10.0){:target="_blank"} or later
+- [Node.js 22 LTS](https://nodejs.org/){:target="_blank"} (not Node 23)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop){:target="_blank"}
 
-### Launch Commands
-
-Clone the repository:
 ```bash
 git clone https://github.com/nitin27may/clean-architecture-docker-dotnet-angular.git clean-app
 cd clean-app
+
+# Install frontend dependencies
+cd frontend && npm install && cd ..
+
+# Run with Aspire
+dotnet run --project aspire/AppHost
 ```
 
-Create environment file:
+Access the Aspire Dashboard at `https://localhost:17178` to see all services.
+
+### Option 2: Using Docker Compose (Production-like)
+
+**Prerequisites:**
+- [Docker](https://www.docker.com/products/docker-desktop){:target="_blank"} and Docker Compose
+- [Git](https://git-scm.com/downloads){:target="_blank"}
+
 ```bash
+git clone https://github.com/nitin27may/clean-architecture-docker-dotnet-angular.git clean-app
+cd clean-app
 cp .env.example .env
-```
-
-Start the application:
-```bash
 docker-compose up
 ```
 
-That's it! Visit [http://localhost](http://localhost) in your browser.
+Visit [http://localhost](http://localhost) in your browser.
 
 ## 👤 Default Users
 
@@ -84,12 +96,15 @@ That's it! Visit [http://localhost](http://localhost) in your browser.
 
 ### Container Architecture
 
-The application is structured into multiple containers that work together:
+The application is structured into multiple services that work together:
 
-- **Frontend Container**: Angular 20 with Material Design and TailwindCSS
-- **API Container**: .NET 9 RESTful API built with Clean Architecture
-- **Database Container**: PostgreSQL for data persistence
-- **NGINX Container**: Reverse proxy that routes requests to the appropriate service
+- **Frontend**: Angular 21 with Material Design, TailwindCSS, and Fluent Design
+- **API**: .NET 10 RESTful API built with Clean Architecture and Scalar docs
+- **Database**: PostgreSQL 17 for data persistence
+- **pgAdmin**: Database management interface
+- **NGINX**: Reverse proxy that routes requests to the appropriate service
+
+When using **.NET Aspire**, all services are orchestrated automatically with service discovery and health monitoring.
 
 ## 📐 Clean Architecture Explained
 
@@ -119,16 +134,18 @@ Clean Architecture provides **significant benefits** for your application:
 
 ### Modern Angular Frontend
 
-- **Signals-based state management**
-- **Material Design with TailwindCSS** for responsive UI
+- **Signals-based state management** with Angular 21
+- **Material Design with TailwindCSS v4** for responsive UI
+- **Fluent Design System 2** tokens and styling
 - **Role-based routing and permissions**
 - **Dark/light theme support**
 
 ### Secure .NET Backend
 
-- **Clean Architecture implementation**
-- **Generic Repository pattern**
-- **JWT authentication**
+- **Clean Architecture implementation** with .NET 10
+- **Generic Repository pattern** with Dapper
+- **JWT authentication** with role-based permissions
+- **Scalar API documentation** (replacing Swagger)
 - **Global exception handling**
 
 ### Contact Management
@@ -142,13 +159,14 @@ Clean Architecture provides **significant benefits** for your application:
 
 For more detailed information, explore these documentation pages:
 
-- [Development Guide](development-guide.md)
-- [Clean Architecture Series](architecture-series.md)
-- [Frontend Documentation](frontend.md)
-- [Backend Documentation](backend.md)
-- [Feature List](visual-feature-guide.md)
-- [Roadmap](roadmap.md)
-- [Visual Feature Guide](visual-feature-guide.md)
+- [Aspire Guide](aspire-guide.md) - Running with .NET Aspire
+- [Development Guide](development-guide.md) - Setting up your environment
+- [Clean Architecture Series](architecture-series.md) - Architecture deep dives
+- [Frontend Documentation](frontend.md) - Angular 21 implementation
+- [Backend Documentation](backend.md) - .NET 10 API details
+- [Docker Guide](docker-guide.md) - Container configuration
+- [Feature List](visual-feature-guide.md) - Visual feature breakdown
+- [Roadmap](roadmap.md) - Upcoming features
 
 ## 🤝 Contributing
 

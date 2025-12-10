@@ -27,10 +27,13 @@ The application uses Docker to containerize all services for consistent developm
 
 The Docker setup includes:
 
-- Frontend container (Angular 20)
-- Backend API container (.NET 9)
-- Database container (PostgreSQL)
+- Frontend container (Angular 21)
+- Backend API container (.NET 10)
+- Database container (PostgreSQL 17)
+- pgAdmin container (Database management)
 - Nginx container (Reverse proxy/Load balancer)
+
+> **Tip**: For local development, consider using [.NET Aspire](./aspire-guide.md) which provides a streamlined experience with automatic service discovery and an integrated dashboard.
 
 ## Dockerfiles
 
@@ -40,7 +43,7 @@ Located at `frontend/Dockerfile`, this file builds the Angular application:
 
 ```dockerfile
 # Build stage
-FROM node:20-alpine AS build
+FROM node:22-alpine AS build
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci
@@ -77,7 +80,7 @@ This is a multi-stage build that:
 Located at `backend/src/Dockerfile`, this file builds the .NET API:
 
 ```dockerfile
-FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
 WORKDIR /app
 EXPOSE 8000
 ENV ASPNETCORE_URLS=http://+:8000
@@ -86,7 +89,7 @@ RUN groupadd -g 2000 dotnet \
 USER dotnet
 
 # Build stage
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 ARG DOTNET_SKIP_POLICY_LOADING=true
 WORKDIR /src
@@ -209,7 +212,7 @@ services:
       - db
 
   db:
-    image: postgres:16-alpine
+    image: postgres:17-alpine
     container_name: db
     restart: always
     environment:

@@ -1,91 +1,174 @@
 <div class="container mx-auto p-4">
-  <div class="max-w-6xl mx-auto mb-6 bg-primary text-white rounded-lg shadow-sm overflow-hidden transition-all duration-300">
-    <div class="p-6 flex justify-between items-center">
-      <h1 class="text-2xl font-bold">Activity Logs</h1>
-    </div>
-  </div>
+  <div class="max-w-6xl mx-auto">
+    <!-- Page Header -->
+    <app-page-header
+      title="Activity Logs"
+      subtitle="Monitor user activities and system events"
+      icon="history">
+    </app-page-header>
 
-  <div class="max-w-6xl mx-auto mb-6 bg-white rounded-lg shadow-sm overflow-hidden transition-all duration-300">
-    <div class="p-6">
-      <form [formGroup]="filterForm" (ngSubmit)="onFilter()">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-            <input type="text" id="username" formControlName="username" placeholder="Enter username to filter" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-          </div>
-          <div>
-            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-            <input type="email" id="email" formControlName="email" placeholder="Enter email address to filter" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-          </div>
-        </div>
-        <div class="mt-4">
-          <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-            Filter
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <div *ngIf="dataSource().data.length > 0" class="max-w-6xl mx-auto bg-white rounded-lg shadow-sm overflow-hidden transition-all duration-300">
-    <div class="p-6">
-      <div class="mb-4">
-        <mat-form-field appearance="outline" class="w-full" floatLabel="always">
-          <mat-label>Filter</mat-label>
-          <input matInput (keyup)="applyFilter($event)" placeholder="Type to filter data" #input>
-          <mat-hint>Search across all columns</mat-hint>
-        </mat-form-field>
+    <!-- Filter Card -->
+    <mat-card class="mb-6 overflow-hidden">
+      <div class="bg-surface-container-high px-6 py-4 border-b border-outline-variant">
+        <h2 class="text-lg font-semibold m-0 flex items-center gap-2">
+          <mat-icon class="text-primary">filter_list</mat-icon>
+          Filter Logs
+        </h2>
       </div>
+      
+      <mat-card-content style="padding: 0;">
+        <div class="p-6 pt-8">
+          <form [formGroup]="filterForm" (ngSubmit)="onFilter()">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Username</mat-label>
+                <input matInput formControlName="username" placeholder="Enter username to filter">
+                <mat-icon matPrefix class="mr-2">person</mat-icon>
+              </mat-form-field>
+              
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email" placeholder="Enter email address to filter">
+                <mat-icon matPrefix class="mr-2">email</mat-icon>
+              </mat-form-field>
+            </div>
+            
+            <div class="flex justify-end gap-3 pt-6 mt-6 border-t border-outline-variant">
+              <button mat-stroked-button type="button" (click)="filterForm.reset(); loadActivityLogs()">
+                Clear
+              </button>
+              <button mat-flat-button color="primary" type="submit">
+                <mat-icon class="mr-1">search</mat-icon>
+                Filter
+              </button>
+            </div>
+          </form>
+        </div>
+      </mat-card-content>
+    </mat-card>
 
-      <div class="mat-elevation-z1 overflow-hidden">
-        <table mat-table [dataSource]="dataSource()" matSort class="w-full">
-          <!-- Username Column -->
-          <ng-container matColumnDef="username">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
-            <td mat-cell *matCellDef="let log">{{log.username}}</td>
-          </ng-container>
+    <!-- Loading State -->
+    @if (loading()) {
+      <mat-card class="overflow-hidden">
+        <mat-card-content class="p-6">
+          <app-skeleton type="table" [rows]="5" [columns]="5" />
+        </mat-card-content>
+      </mat-card>
+    }
 
-          <!-- Email Column -->
-          <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-            <td mat-cell *matCellDef="let log">{{log.email}}</td>
-          </ng-container>
+    <!-- Data Table -->
+    @if (!loading() && dataSource().data.length > 0) {
+      <mat-card class="overflow-hidden">
+        <div class="bg-surface-container-high px-6 py-4 border-b border-outline-variant">
+          <h2 class="text-lg font-semibold m-0 flex items-center gap-2">
+            <mat-icon class="text-primary">list</mat-icon>
+            Log Entries
+          </h2>
+        </div>
+        
+        <mat-card-content class="p-0">
+          <div class="p-4 border-b border-outline-variant">
+            <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+              <mat-label>Quick Search</mat-label>
+              <input matInput (keyup)="applyFilter($event)" placeholder="Type to filter data" #input>
+              <mat-icon matPrefix class="mr-2">search</mat-icon>
+              <mat-hint>Search across all columns</mat-hint>
+            </mat-form-field>
+          </div>
 
-          <!-- Activity Column -->
-          <ng-container matColumnDef="activity">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Activity</th>
-            <td mat-cell *matCellDef="let log">{{log.activity}}</td>
-          </ng-container>
+          <div class="overflow-x-auto">
+            <table mat-table [dataSource]="dataSource()" matSort class="w-full">
+              <!-- Username Column -->
+              <ng-container matColumnDef="username">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="font-semibold">Username</th>
+                <td mat-cell *matCellDef="let log">{{ log.username }}</td>
+              </ng-container>
 
-          <!-- Endpoint Column -->
-          <ng-container matColumnDef="endpoint">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Endpoint</th>
-            <td mat-cell *matCellDef="let log">{{log.endpoint}}</td>
-          </ng-container>
+              <!-- Email Column -->
+              <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="font-semibold">Email</th>
+                <td mat-cell *matCellDef="let log">{{ log.email }}</td>
+              </ng-container>
 
-          <!-- Timestamp Column -->
-          <ng-container matColumnDef="timestamp">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Timestamp</th>
-            <td mat-cell *matCellDef="let log">{{log.timestamp | date: 'short'}}</td>
-          </ng-container>
+              <!-- Activity Column -->
+              <ng-container matColumnDef="activity">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="font-semibold">Activity</th>
+                <td mat-cell *matCellDef="let log">
+                  <span class="inline-flex items-center px-2 py-1 rounded text-sm bg-surface-container">
+                    {{ log.activity }}
+                  </span>
+                </td>
+              </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              <!-- Endpoint Column -->
+              <ng-container matColumnDef="endpoint">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="font-semibold">Endpoint</th>
+                <td mat-cell *matCellDef="let log">
+                  <code class="text-sm bg-surface-container px-2 py-1 rounded">{{ log.endpoint }}</code>
+                </td>
+              </ng-container>
 
-          <!-- Row shown when there is no matching data -->
-          <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="5">No data matching the filter "{{input.value}}"</td>
-          </tr>
-        </table>
+              <!-- Timestamp Column -->
+              <ng-container matColumnDef="timestamp">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="font-semibold">Timestamp</th>
+                <td mat-cell *matCellDef="let log">{{ log.timestamp | date: 'medium' }}</td>
+              </ng-container>
 
-        <mat-paginator
-          [pageSizeOptions]="[5, 10, 25, 100]"
-          [pageSize]="5"
-          [length]="totalRecords()"
-          (page)="handlePageEvent($event)"
-          showFirstLastButtons
-          aria-label="Select page of activity logs"></mat-paginator>
-      </div>
-    </div>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns" class="bg-surface-container"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
+                  class="hover:bg-surface-container-highest transition-colors"></tr>
+
+              <!-- Row shown when there is no matching data -->
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell text-center py-8 text-on-surface-variant" colspan="5">
+                  No data matching the filter "{{ input.value }}"
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <mat-paginator
+            [pageSizeOptions]="[5, 10, 25, 100]"
+            [pageSize]="5"
+            [length]="totalRecords()"
+            (page)="handlePageEvent($event)"
+            showFirstLastButtons
+            aria-label="Select page of activity logs">
+          </mat-paginator>
+        </mat-card-content>
+      </mat-card>
+    }
+
+    <!-- Empty State -->
+    @if (!loading() && dataSource().data.length === 0) {
+      <mat-card class="overflow-hidden">
+        <mat-card-content class="p-0">
+          <app-empty-state
+            icon="history"
+            title="No activity logs found"
+            description="There are no activity logs matching your filter criteria.">
+          </app-empty-state>
+        </mat-card-content>
+      </mat-card>
+    }
+
+    <!-- Error State -->
+    @if (error()) {
+      <mat-card class="overflow-hidden border-l-4 border-error">
+        <mat-card-content class="p-6">
+          <div class="flex items-center gap-4">
+            <mat-icon class="text-error text-3xl">error</mat-icon>
+            <div>
+              <p class="font-semibold text-error">Error Loading Logs</p>
+              <p class="text-on-surface-variant">{{ error() }}</p>
+            </div>
+            <button mat-stroked-button color="primary" (click)="loadActivityLogs()" class="ml-auto">
+              <mat-icon class="mr-1">refresh</mat-icon>
+              Retry
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
   </div>
 </div>

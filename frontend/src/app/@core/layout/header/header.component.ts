@@ -39,7 +39,7 @@ export class HeaderComponent implements OnInit {
   isDarkMode = this.themeService.isDarkMode;
   isMobile = signal<boolean>(false);
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   onResize() {
     this.checkScreenSize();
   }

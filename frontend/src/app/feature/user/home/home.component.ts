@@ -47,32 +47,32 @@ export class HomeComponent implements OnInit {
     {
       icon: 'code',
       iconType: 'material',
-      title: '.NET 9',
-      description: 'Authentication and all REST services are developed using .NET 9 with Clean Architecture.'
+      title: '.NET 10',
+      description: 'Authentication and all REST services are developed using .NET 10 with Clean Architecture.'
     },
     {
       icon: 'web',
       iconType: 'material',
-      title: 'Angular 20',
-      description: 'Front end interfaces built with Angular 20 using signals and functional components.'
+      title: 'Angular 21',
+      description: 'Front end interfaces built with Angular 21 using signals and functional components.'
+    },
+    {
+      icon: 'hub',
+      iconType: 'material',
+      title: '.NET Aspire',
+      description: 'Cloud-ready orchestration with service discovery, health monitoring, and integrated dashboard.'
     },
     {
       icon: 'palette',
       iconType: 'material',
       title: 'Material Design',
-      description: 'UI components from Angular Material with custom theming for consistent look and feel.'
+      description: 'Material Design System with TailwindCSS v4 for modern, consistent UI.'
     },
     {
       icon: 'integration_instructions',
       iconType: 'material',
       title: 'Docker',
       description: 'Containerized application for consistent development, testing, and production environments.'
-    },
-    {
-      icon: 'published_with_changes',
-      iconType: 'material',
-      title: 'CI/CD',
-      description: 'Automated testing, building, and deployment of the application using GitHub Actions.'
     }
   ]);
 

@@ -1,6 +1,7 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 import { UserService } from '@core/services/user.service';
 import { User } from '@core/models/user.interface';
 import { CommonModule } from "@angular/common";
@@ -11,12 +12,19 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatTableModule } from "@angular/material/table";
 import { MatIconModule } from "@angular/material/icon";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatCardModule } from "@angular/material/card";
+import { PageHeaderComponent } from '@core/components/page-header';
+import { EmptyStateComponent } from '@core/components/empty-state';
+import { SkeletonComponent } from '@core/components/skeleton';
+import { ConfirmDialogComponent, ConfirmDialogData } from '@core/components/confirm-dialog';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -26,13 +34,19 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
     MatButtonModule,
     MatTableModule,
     MatIconModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTooltipModule,
+    MatCardModule,
+    PageHeaderComponent,
+    EmptyStateComponent,
+    SkeletonComponent
   ]
 })
 export class UsersComponent implements OnInit {
   private fb = inject(FormBuilder);
   private userService = inject(UserService);
   private snackBar = inject(MatSnackBar);
+  private dialog = inject(MatDialog);
   
   displayedColumns = signal<string[]>(['firstName', 'lastName', 'userName', 'email', 'mobile', 'actions']);
   users = signal<User[]>([]);
@@ -56,7 +70,6 @@ export class UsersComponent implements OnInit {
     this.loading.set(true);
     this.userService.getAll().subscribe({
       next: (users) => {
-        console.log('Users loaded:', users);
         this.users.set(users);
         this.loading.set(false);
       },
@@ -120,20 +133,32 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(user: User): void {
-    if (confirm(`Are you sure you want to delete ${user.firstName} ${user.lastName}?`)) {
-      this.loading.set(true);
-      this.userService.delete(user.id).subscribe({
-        next: () => {
-          this.snackBar.open('User deleted successfully', 'Close', { duration: 3000 });
-          this.loadUsers();
-        },
-        error: (err) => {
-          console.error('Failed to delete user:', err);
-          this.snackBar.open('Failed to delete user', 'Close', { duration: 3000 });
-          this.loading.set(false);
-        }
-      });
-    }
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Delete User',
+        message: `Are you sure you want to delete ${user.firstName} ${user.lastName}?`,
+        confirmText: 'Delete',
+        confirmColor: 'warn',
+        icon: 'delete'
+      } as ConfirmDialogData
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loading.set(true);
+        this.userService.delete(user.id).subscribe({
+          next: () => {
+            this.snackBar.open('User deleted successfully', 'Close', { duration: 3000 });
+            this.loadUsers();
+          },
+          error: (err) => {
+            console.error('Failed to delete user:', err);
+            this.snackBar.open('Failed to delete user', 'Close', { duration: 3000 });
+            this.loading.set(false);
+          }
+        });
+      }
+    });
   }
 
   resetForm(): void {

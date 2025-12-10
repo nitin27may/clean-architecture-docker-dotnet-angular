@@ -15,8 +15,12 @@ Before you begin, ensure you have the following installed:
 - [Docker Desktop](https://www.docker.com/products/docker-desktop) (latest version)
 - [Git](https://git-scm.com/downloads)
 - [Visual Studio Code](https://code.visualstudio.com/) (recommended) or another IDE
-- [.NET 9 SDK](https://dotnet.microsoft.com/download) (for local development without Docker)
-- [Node.js](https://nodejs.org/) (LTS version, for local development without Docker)
+- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) (for local development without Docker)
+- [Node.js 22 LTS](https://nodejs.org/) (**Not** Node 23 - use LTS version only)
+
+> ⚠️ **Important**: When running with .NET Aspire, ensure you have the correct versions installed:
+> - .NET SDK 10.0 or later
+> - Node.js 22 LTS (not Node 23)
 
 ## Getting the Code
 
@@ -29,10 +33,45 @@ cd clean-architecture-docker-dotnet-angular
 
 ## Development Options
 
-You have two primary options for development:
+You have three primary options for development:
 
-1. **Docker-based development** (recommended)
-2. Local development (separate setup for frontend and backend)
+1. **.NET Aspire** (recommended for local development)
+2. **Docker-based development** (recommended for production-like environment)
+3. Local development (separate setup for frontend and backend)
+
+## .NET Aspire Development (Recommended)
+
+.NET Aspire provides the best local development experience with automatic service discovery, integrated dashboard, and easy debugging.
+
+### Starting with Aspire
+
+```bash
+# Install frontend dependencies first
+cd frontend
+npm install
+cd ..
+
+# Run with Aspire
+dotnet run --project aspire/AppHost
+```
+
+### Aspire Dashboard
+
+Once started, access the Aspire Dashboard (typically at `https://localhost:17178`) to:
+- View all running services and their status
+- Access aggregated logs from all services
+- View distributed traces
+- Monitor service health
+
+### Aspire URLs
+
+- **Aspire Dashboard**: https://localhost:17178
+- **Frontend**: http://localhost:4200
+- **API**: http://localhost:5217
+- **API Docs (Scalar)**: http://localhost:5217/scalar/v1
+- **pgAdmin**: Check Aspire dashboard for assigned port
+
+For more details, see the [Aspire Guide](./aspire-guide.md).
 
 ## Docker-based Development
 
@@ -69,7 +108,8 @@ This will start the following services:
 ### Development URLs
 
 - **Frontend**: http://localhost:4200
-- **API**: http://localhost:5000/swagger
+- **API**: http://localhost:5217
+- **API Docs (Scalar)**: http://localhost:5217/scalar/v1
 - **API through NGINX**: http://localhost/api
 
 ### Rebuilding Containers
