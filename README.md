@@ -87,7 +87,9 @@ dotnet run --project aspire/AppHost
 - **Scalar API Docs**: `{API_URL}/scalar/v1`
 - **pgAdmin**: Check Aspire dashboard for the assigned port
 
-### Option 2: Using Docker Compose (Production-like)
+### Option 2: Using Pre-built Images (Fastest)
+
+Run the application instantly using pre-built images from GitHub Container Registry - **no build required**:
 
 ```bash
 # Clone the repository
@@ -97,14 +99,33 @@ cd clean-app
 # Create .env file (required)
 cp .env.example .env
 
-# Start all services with Docker Compose
-docker-compose up
+# Run with pre-built images from GHCR
+docker compose -f docker-compose.ghcr.yml up -d
 ```
 
-Then access:
+> 💡 **Tip**: Use `docker compose -f docker-compose.ghcr.yml pull` to fetch the latest images before starting.
+
+### Option 3: Using Docker Compose (Build Locally)
+
+Build and run all services locally:
+
+```bash
+# Clone the repository
+git clone https://github.com/nitin27may/clean-architecture-docker-dotnet-angular.git clean-app
+cd clean-app
+
+# Create .env file (required)
+cp .env.example .env
+
+# Build and start all services
+docker-compose up --build
+```
+
+🔗 Then access (for both Option 2 & 3):
 - Frontend: http://localhost
 - API: http://localhost/api
 - Scalar API Docs: http://localhost/scalar/v1
+- pgAdmin: http://localhost:5050
 
 ### 👤 Default Users
 
@@ -183,7 +204,8 @@ clean-architecture-docker-dotnet-angular/
 ├── docs/                        # Documentation
 ├── loadbalancer/                # NGINX configuration
 ├── Contact.Api.sln              # .NET Solution file
-├── docker-compose.yml           # Docker Compose configuration
+├── docker-compose.yml           # Docker Compose (build locally)
+├── docker-compose.ghcr.yml      # Docker Compose (pre-built GHCR images)
 └── Dockerfile.api               # API Dockerfile
 ```
 

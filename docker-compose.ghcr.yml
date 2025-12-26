@@ -1,0 +1,77 @@
+# Docker Compose file using pre-built images from GitHub Container Registry
+# Run with: docker compose -f docker-compose.ghcr.yml up -d
+
+services:
+  frontend:
+    image: ghcr.io/nitin27may/clean-architecture-docker-dotnet-angular/frontend:latest
+    depends_on:
+      - api
+    networks:
+      - postgres_network
+
+  api:
+    image: ghcr.io/nitin27may/clean-architecture-docker-dotnet-angular/api:latest
+    environment:
+      - ASPNETCORE__ENVIRONMENT=${ENVIRONMENT}
+      - AppSettings__ConnectionStrings__DefaultConnection=Host=${POSTGRES_HOST};Port=${POSTGRES_PORT};Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
+      - AppSettings__Secret=${JWT_SECRET}
+      - AppSettings__Issuer=${JWT_ISSUER}
+      - AppSettings__Audience=${JWT_AUDIENCE}
+      - AppSettings__PasswordResetUrl=${PASSWORD_RESET_URL}
+      - SmtpSettings__SmtpServer=${SMTP_SERVER}
+      - SmtpSettings__Port=${SMTP_PORT}
+      - SmtpSettings__Username=${SMTP_USERNAME}
+      - SmtpSettings__Password=${SMTP_PASSWORD}
+      - SmtpSettings__FromEmail=${SMTP_FROM_EMAIL}
+      - SmtpSettings__EnableSsl=${SMTP_ENABLE_SSL}
+    depends_on:
+      - postgres
+    networks:
+      - postgres_network
+
+  postgres:
+    image: postgres:17-alpine
+    container_name: postgres_db
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts:/docker-entrypoint-initdb.d
+    networks:
+      - postgres_network
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL:-admin@admin.com}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD:-admin}
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    networks:
+      - postgres_network
+
+  nginx:
+    image: ghcr.io/nitin27may/clean-architecture-docker-dotnet-angular/loadbalancer:latest
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - api
+    networks:
+      - postgres_network
+
+volumes:
+  postgres_data:
+
+networks:
+  postgres_network:
+    driver: bridge

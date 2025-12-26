@@ -273,71 +273,55 @@ This configuration:
    - Ensures data survives container restarts
    - Preloads the database with seed data
 
-## Development Docker Compose
+## Pre-built Images (GHCR) Docker Compose
 
-For development, there's a `docker-compose.development.yml` that enhances the developer experience:
+For quick deployment without building locally, use `docker-compose.ghcr.yml` which pulls pre-built images from GitHub Container Registry:
 
 ```yaml
-version: '3.8'
-
 services:
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile.development
-    container_name: frontend-dev
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-    ports:
-      - "4200:4200"
-    command: npm run serve
-    environment:
-      - NODE_ENV=development
+    image: ghcr.io/nitin27may/clean-architecture-docker-dotnet-angular/frontend:latest
+    depends_on:
+      - api
+    networks:
+      - postgres_network
 
   api:
-    build:
-      context: ./backend/src
-      dockerfile: Dockerfile.development
-    container_name: api-dev
-    volumes:
-      - ./backend/src:/src
+    image: ghcr.io/nitin27may/clean-architecture-docker-dotnet-angular/api:latest
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - DOTNET_WATCH=1
-    ports:
-      - "8000:8000"
-    command: dotnet watch run --urls="http://+:8000"
+      - ASPNETCORE__ENVIRONMENT=${ENVIRONMENT}
+      - AppSettings__ConnectionStrings__DefaultConnection=Host=${POSTGRES_HOST};Port=${POSTGRES_PORT};Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
+      # ... other environment variables
+    depends_on:
+      - postgres
+    networks:
+      - postgres_network
 
-  db:
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_dev_data:/var/lib/postgresql/data
-      - ./backend/scripts/seed-data.sql:/docker-entrypoint-initdb.d/seed-data.sql
+  postgres:
+    image: postgres:17-alpine
+    # ... configuration
 
-volumes:
-  postgres_dev_data:
+  nginx:
+    image: ghcr.io/nitin27may/clean-architecture-docker-dotnet-angular/loadbalancer:latest
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - api
+    networks:
+      - postgres_network
 ```
 
-This development configuration provides several enhancements:
+This configuration provides:
 
-1. Volume mappings for live code updates
-   - Local code directories are mounted into containers
-   - Changes to source code are immediately reflected
+1. **Instant startup** - No build time required
+2. **Consistent images** - Same images used in CI/CD
+3. **Easy updates** - Just pull latest images and restart
 
-2. Development-specific commands
-   - `npm run serve` for the Angular development server with hot reload
-   - `dotnet watch run` for automatic .NET recompilation
-
-3. Exposed development ports
-   - Frontend available on port 4200
-   - API available on port 8000
-   - Database available on port 5432
-
-4. Development environment variables
-   - Sets NODE_ENV and ASPNETCORE_ENVIRONMENT to "Development"
-   - Enables development-specific features and logging
+Available images on GHCR:
+- `ghcr.io/nitin27may/clean-architecture-docker-dotnet-angular/frontend:latest`
+- `ghcr.io/nitin27may/clean-architecture-docker-dotnet-angular/api:latest`
+- `ghcr.io/nitin27may/clean-architecture-docker-dotnet-angular/loadbalancer:latest`
 
 ## Environment Variables (.env file)
 
@@ -370,9 +354,24 @@ These variables configure:
 
 ## Running the Application with Docker
 
-### Production Mode
+### Option 1: Using Pre-built Images (Fastest)
 
-To run the application in production mode:
+Run the application instantly using pre-built images from GitHub Container Registry:
+
+```bash
+# Copy the example environment file
+cp .env.example .env
+
+# Pull and start all services
+docker compose -f docker-compose.ghcr.yml pull
+docker compose -f docker-compose.ghcr.yml up -d
+```
+
+The application will be available at http://localhost.
+
+### Option 2: Build Locally
+
+To build and run the application locally:
 
 ```bash
 # Copy the example environment file
@@ -381,25 +380,20 @@ cp .env.example .env
 # Customize environment variables if needed
 # vim .env
 
-# Start all services in detached mode
-docker-compose up -d
+# Build and start all services
+docker-compose up --build -d
 ```
 
 The application will be available at http://localhost.
 
 ### Development Mode
 
-For development with hot reload:
+For development, we recommend using **.NET Aspire** instead of Docker Compose. See the [Aspire Guide](./aspire-guide.md) for details.
 
-```bash
-# Start using the development configuration
-docker-compose -f docker-compose.yml -f docker-compose.development.yml up
-```
-
-This will start the application with:
-- Frontend available at http://localhost:4200
-- API available at http://localhost:8000
-- PostgreSQL available at localhost:5432
+Aspire provides:
+- Hot reload for both frontend and backend
+- Integrated dashboard with logs and traces
+- Automatic service discovery
 
 ### Useful Docker Commands
 
