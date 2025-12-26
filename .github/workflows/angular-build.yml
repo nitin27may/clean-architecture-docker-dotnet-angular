@@ -1,30 +1,33 @@
 name: Angular Build
+
 on:
   push:
-    branches: main
-    paths: 
-    - 'frontend/**'
+    branches: [main]
+    paths:
+      - 'frontend/**'
 
 jobs:
-  main:
-    runs-on: Ubuntu-24.04
+  build:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+
     steps:
-      -
-        name: Checkout
-        uses: actions/checkout@v2
-      - 
-        name: Login to GHCR
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login to GHCR
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - 
-        name: Build and push
+      - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: frontend/.
+          context: ./frontend
+          file: ./frontend/Dockerfile
           push: true
-          file: frontend/Dockerfile
           tags: ghcr.io/${{ github.repository }}/frontend:latest
