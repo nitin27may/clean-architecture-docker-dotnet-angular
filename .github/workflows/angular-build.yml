@@ -5,6 +5,13 @@ on:
     branches: [main]
     paths:
       - 'frontend/**'
+  workflow_call:
+    inputs:
+      ref:
+        description: 'Branch to build'
+        required: false
+        type: string
+        default: 'main'
 
 jobs:
   build:
