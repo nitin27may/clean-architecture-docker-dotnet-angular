@@ -23,7 +23,7 @@ var api = builder.AddProject<Projects.Contact_Api>("contact-api")
     });
 
 // Angular Frontend
-var frontend = builder.AddNpmApp("frontend", "../../frontend", "serve")
+var frontend = builder.AddJavaScriptApp("frontend", "../../frontend", "serve")
     .WithReference(api)
     .WaitFor(api)
     .WithHttpEndpoint(targetPort: 4200, env: "PORT")
