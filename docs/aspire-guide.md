@@ -89,7 +89,7 @@ When running with Aspire, the following services are orchestrated:
 | **postgres** | PostgreSQL 17 database | 5432 |
 | **pgadmin** | PostgreSQL admin interface | Dynamic |
 | **contact-api** | .NET 10 backend API | 5217 |
-| **frontend** | Angular 21 application | 4200 |
+| **frontend** | Angular 22 application | 4200 |
 
 ## Aspire Dashboard Features
 

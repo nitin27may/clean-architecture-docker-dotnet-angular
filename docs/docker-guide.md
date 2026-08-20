@@ -27,7 +27,7 @@ The application uses Docker to containerize all services for consistent developm
 
 The Docker setup includes:
 
-- Frontend container (Angular 21)
+- Frontend container (Angular 22)
 - Backend API container (.NET 10)
 - Database container (PostgreSQL 17)
 - pgAdmin container (Database management)
