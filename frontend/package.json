@@ -40,7 +40,7 @@
     "@tailwindcss/typography": "^0.5.16",
     "@types/express": "^5.0.0",
     "@types/jasmine": "~5.1.0",
-    "@types/node": "^22.0.0",
+    "@types/node": "^26.2.0",
     "istanbul-lib-instrument": "^6.0.3",
     "jasmine-core": "~5.5.0",
     "karma": "~6.4.0",
