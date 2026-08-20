@@ -5,8 +5,8 @@ remote_theme: just-the-docs/just-the-docs
 url: https://nitin27may.github.io/clean-architecture-docker-dotnet-angular
 
 # Version information
-version: "2.1.0"
-last_updated: "2023-06-15"
+version: "3.0.0"
+last_updated: "2026-08-20"
 build_timestamp: <%= Time.now.to_i %>
 
 # Cache busting settings
