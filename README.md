@@ -13,7 +13,7 @@
   <img src="https://img.shields.io/badge/Angular-22-512BD4.svg" alt="Angular 22">
   <img src="https://img.shields.io/badge/.NET-10-512BD4.svg" alt=".NET 10">
   <img src="https://img.shields.io/badge/PostgreSQL-17-336791.svg" alt="PostgreSQL 17">
-  <img src="https://img.shields.io/badge/Aspire-9.5-6C3483.svg" alt=".NET Aspire 9.5">
+  <img src="https://img.shields.io/badge/Aspire-13.4-6C3483.svg" alt=".NET Aspire 13.4">
 </p>
 
 <p align="center">
@@ -30,7 +30,7 @@ A production-ready **full-stack starter kit** built with modern technologies and
 - **Frontend**: Angular 22 with signals, Material Design, TailwindCSS v4, and Fluent Design
 - **Backend**: .NET 10 API with Clean Architecture and Scalar API documentation
 - **Database**: PostgreSQL 17 with pgAdmin and Dapper ORM
-- **Orchestration**: .NET Aspire 9.5 for local development with service discovery
+- **Orchestration**: .NET Aspire 13.4 for local development with service discovery
 - **DevOps**: Docker, GitHub Actions, NGINX
 
 Perfect for developers who want to **focus on business logic** instead of configuring infrastructure.
@@ -248,7 +248,7 @@ Comprehensive documentation is available:
 | API Docs | Scalar | 2.1 |
 | Database | PostgreSQL | 17 |
 | ORM | Dapper | 2.1 |
-| Orchestration | .NET Aspire | 9.5 |
+| Orchestration | .NET Aspire | 13.4 |
 | Containerization | Docker | Latest |
 
 ## 🤝 Contributing
