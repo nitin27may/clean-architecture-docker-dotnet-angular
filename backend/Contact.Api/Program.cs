@@ -64,13 +64,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseMiddleware<ExceptionMiddleware>();
-app.UseHttpsRedirection();
-
-// ActivityLoggingMiddleware reads context.GetEndpoint() to find the [ActivityLog]
-// attribute, which is only populated once routing has resolved the request to an
-// endpoint — hence UseRouting() before it, not after.
-app.UseRouting();
 app.UseMiddleware<ActivityLoggingMiddleware>();
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
