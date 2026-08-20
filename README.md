@@ -7,9 +7,19 @@
   <a href="https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/actions/workflows/api-build.yml">
     <img src="https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/actions/workflows/api-build.yml/badge.svg" alt="API Build">
   </a>
+  <a href="https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/actions/workflows/jekyll-gh-pages.yml">
+    <img src="https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/actions/workflows/jekyll-gh-pages.yml/badge.svg" alt="Docs">
+  </a>
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT License">
   </a>
+  <a href="CONTRIBUTING.md">
+    <img src="https://img.shields.io/badge/Contributions-Welcome-brightgreen.svg" alt="Contributions Welcome">
+  </a>
+  <a href="https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/stargazers">
+    <img src="https://img.shields.io/github/stars/nitin27may/clean-architecture-docker-dotnet-angular.svg?style=social" alt="GitHub stars">
+  </a>
+  <br>
   <img src="https://img.shields.io/badge/Angular-22-512BD4.svg" alt="Angular 22">
   <img src="https://img.shields.io/badge/.NET-10-512BD4.svg" alt=".NET 10">
   <img src="https://img.shields.io/badge/PostgreSQL-17-336791.svg" alt="PostgreSQL 17">
