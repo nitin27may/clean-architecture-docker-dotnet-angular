@@ -3,7 +3,7 @@ using Contact.Application.UseCases.Pages;
 using Contact.Domain.Entities;
 using Contact.Domain.Interfaces;
 using Contact.Application.UseCases.Pages;
-using AutoMapper;
+using Contact.Application.Mapping;
 
 namespace Contact.Application.Services;
 

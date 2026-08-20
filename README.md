@@ -35,6 +35,13 @@ A production-ready **full-stack starter kit** built with modern technologies and
 
 Perfect for developers who want to **focus on business logic** instead of configuring infrastructure.
 
+> **License policy:** this repo is MIT and is meant to be forked into your own project, so
+> every dependency here stays under a permissive license (MIT/Apache 2.0) with no commercial
+> tier or reciprocal obligation attached. When a library the project used moved to a dual
+> license — AutoMapper's shift to RPL-1.5/commercial in mid-2025 — it was replaced rather than
+> pinned or paid for. See [ADR 0001](docs/adr/0001-permissive-license-dependency-policy.md)
+> for the reasoning.
+
 ## Why Clean Architecture?
 
 <p align="center">
