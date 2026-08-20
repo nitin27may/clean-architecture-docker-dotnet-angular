@@ -1,4 +1,4 @@
-using AutoMapper;
+using Contact.Application.Mapping;
 using Contact.Application.Interfaces;
 using Contact.Application.UseCases.Roles;
 using Contact.Domain.Entities;

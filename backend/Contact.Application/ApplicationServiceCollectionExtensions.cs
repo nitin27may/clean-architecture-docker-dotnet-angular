@@ -1,5 +1,5 @@
 using Contact.Application.Interfaces;
-using Contact.Application.Mappings;
+using Contact.Application.Mapping;
 using Contact.Application.Services;
 using Contact.Application.UseCases.Users;
 using FluentValidation;
@@ -13,12 +13,10 @@ public static class ApplicationServiceCollectionExtensions
     public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddHttpContextAccessor();
-        // Register AutoMapper with all profiles in the assembly
-        services.AddAutoMapper(cfg =>
-        {
-            // If you prefer, you can also add individual profiles like this:
-            cfg.AddProfile<UserMappingProfile>();
-        }, typeof(UserMappingProfile).Assembly);
+        // Mapperly-backed replacement for AutoMapper — see
+        // docs/adr/0001-permissive-license-dependency-policy.md for why, and
+        // Mapping/ObjectMapper.cs for how the (source, destination) dispatch works.
+        services.AddScoped<IMapper, ObjectMapper>();
         services.AddValidatorsFromAssemblyContaining<RegisterUserValidator>();
         services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
 
