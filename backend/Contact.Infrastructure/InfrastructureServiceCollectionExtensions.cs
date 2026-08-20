@@ -5,6 +5,7 @@ using Contact.Infrastructure.ExternalServices;
 using Contact.Infrastructure.Persistence;
 using Contact.Infrastructure.Persistence.Helper;
 using Contact.Infrastructure.Persistence.Repositories;
+using Dapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,6 +15,10 @@ public static class InfrastructureServiceCollectionExtensions
 {
     public static IServiceCollection AddInfrastrcutureServices(this IServiceCollection services, IConfiguration configuration)
     {
+        // Dapper has no built-in DateOnly support (ContactPerson.DateOfBirth); see
+        // DateOnlyTypeHandler for why this is needed on every insert/update.
+        SqlMapper.AddTypeHandler(new DateOnlyTypeHandler());
+
         services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
         services.Configure<SmtpSettings>(configuration.GetSection("SmtpSettings"));
 
