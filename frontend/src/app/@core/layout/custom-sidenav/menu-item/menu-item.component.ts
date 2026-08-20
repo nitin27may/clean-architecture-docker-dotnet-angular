@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, input, signal, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, computed, input, signal, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLinkActive, RouterModule, Router, NavigationEnd } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
@@ -84,6 +84,7 @@ import { filter } from 'rxjs/operators';
       }
     }
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   animations: [
     trigger('expandContractMenu', [
       transition(':enter', [
@@ -171,21 +172,27 @@ export class MenuItemComponent implements OnInit {
   }
 
   hasSubItems(): boolean {
-    return !!this.item().subItems && this.item().subItems.length > 0;
+    // Cached in a local so TS can narrow `.subItems` across both checks — calling the
+    // item() signal twice in one expression makes each call an independent, unnarrowed
+    // read, since narrowing tracks variables, not repeated function invocations.
+    const item = this.item();
+    return !!item.subItems && item.subItems.length > 0;
   }
 
   makeRoutePath() {
-    if (!this.item().route) return undefined;
-    return this.item().route.startsWith('/')
-      ? this.item().route
-      : `${this.routeHistory()}/${this.item().route}`;
+    const item = this.item();
+    if (!item.route) return undefined;
+    return item.route.startsWith('/')
+      ? item.route
+      : `${this.routeHistory()}/${item.route}`;
   }
 
   makeBasePath() {
-    if (!this.item().route) return this.routeHistory();
-    return this.item().route.startsWith('/')
-      ? this.item().route
-      : `${this.routeHistory()}/${this.item().route}`;
+    const item = this.item();
+    if (!item.route) return this.routeHistory();
+    return item.route.startsWith('/')
+      ? item.route
+      : `${this.routeHistory()}/${item.route}`;
   }
 
   toggleNestedItems() {

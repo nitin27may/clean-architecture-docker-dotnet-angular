@@ -1,7 +1,7 @@
 import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter, withViewTransitions } from '@angular/router';
-import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { provideHttpClient, withInterceptors } from "@angular/common/http";
+import { BrowserModule, provideClientHydration, withEventReplay, withNoIncrementalHydration } from '@angular/platform-browser';
+import { provideHttpClient, withInterceptors, withXhr } from "@angular/common/http";
 import { JwtInterceptor } from "./@core/interceptors";
 import { provideErrorTailorConfig } from "./@core/components/validation";
 import { routes } from './app.routes';
@@ -12,9 +12,9 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     importProvidersFrom(BrowserModule),
-    provideHttpClient(withInterceptors([JwtInterceptor])),
+    provideHttpClient(withXhr(), withInterceptors([JwtInterceptor])),
     provideRouter(routes,withViewTransitions()),
-    provideClientHydration(withEventReplay()),
+    provideClientHydration(withEventReplay(), withNoIncrementalHydration()),
     provideAnimationsAsync(),
     provideNativeDateAdapter(),
     // {

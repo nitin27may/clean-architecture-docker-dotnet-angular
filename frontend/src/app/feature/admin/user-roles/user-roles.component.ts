@@ -115,7 +115,7 @@ export class UserRolesComponent implements OnInit {
     this.userRoleService.getUserRoles(userId).subscribe({
       next: (response) => {
         // Handle the response properly - ensure we have an array of roles
-        const roleIds =  response?.roles.map(r => r.id);
+        const roleIds = response?.roles?.map(r => r.id) ?? [];
         this.selectedRoles.set(roleIds);
         this.userRoleForm.patchValue({ roleIds });
         this.loadingRoles.set(false);

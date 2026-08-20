@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import {
     ReactiveFormsModule,
     UntypedFormBuilder,
@@ -40,6 +40,7 @@ import { NotificationService } from '@core/services/notification.service';
     ],
     templateUrl: './contact-form.component.html',
     styleUrl: './contact-form.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [ContactService]
 })
 export class ContactFormComponent implements OnInit {

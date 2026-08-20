@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ThemeService } from '@core/services/theme.service';
 
@@ -7,6 +7,7 @@ import { ThemeService } from '@core/services/theme.service';
   standalone: true,
   imports: [RouterOutlet],
   template: `<router-outlet />`,
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [ThemeService]
 })
 export class AppComponent {}

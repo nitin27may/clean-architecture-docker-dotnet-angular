@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import {
     ReactiveFormsModule,
     UntypedFormBuilder,
@@ -33,6 +33,7 @@ import { User } from "../../../@core/models/user.interface";
         MatProgressSpinnerModule
     ],
     templateUrl: './profile.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {

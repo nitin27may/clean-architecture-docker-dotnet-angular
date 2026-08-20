@@ -9,12 +9,12 @@ import {
 } from '@angular/core';
 import { ValidationErrors } from '@angular/forms';
 
-export type ErrorComponentTemplate = TemplateRef<{ $implicit: ValidationErrors; text: string }>;
+export type ErrorComponentTemplate = TemplateRef<{ $implicit: ValidationErrors | null | undefined; text: string | null }>;
 
 export interface ControlErrorComponent {
   customClass: string | string[];
   text: string | null;
-  createTemplate?(tpl: ErrorComponentTemplate, error: ValidationErrors, text: string): void;
+  createTemplate?(tpl: ErrorComponentTemplate, error: ValidationErrors | null | undefined, text: string | null): void;
 }
 
 @Component({
@@ -53,7 +53,7 @@ export interface ControlErrorComponent {
 })
 export class DefaultControlErrorComponent implements ControlErrorComponent {
   errorTemplate: ErrorComponentTemplate | undefined;
-  errorContext: { $implicit: ValidationErrors; text: string };
+  errorContext: { $implicit: ValidationErrors | null | undefined; text: string | null } | undefined;
   hideError = true;
 
   private cdr = inject(ChangeDetectorRef);
@@ -61,7 +61,7 @@ export class DefaultControlErrorComponent implements ControlErrorComponent {
   private _addClasses: string[] = [];
   private _text: string | null = null;
 
-  createTemplate(tpl: ErrorComponentTemplate, error: ValidationErrors, text: string) {
+  createTemplate(tpl: ErrorComponentTemplate, error: ValidationErrors | null | undefined, text: string | null) {
     this.errorTemplate = tpl;
     this.errorContext = { $implicit: error, text };
     this.cdr.markForCheck();

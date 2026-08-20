@@ -130,8 +130,10 @@ export class ActivityLogComponent implements AfterViewInit, OnInit {
   }
 
   onFilter() {
-    const usernameValue = this.filterForm.get('username')?.value;
-    const emailValue = this.filterForm.get('email')?.value;
+    // Typed reactive form controls resolve to `string | null`; getActivityLogs wants
+    // `string` (default '') for username and `string | null` for email.
+    const usernameValue = this.filterForm.get('username')?.value ?? '';
+    const emailValue = this.filterForm.get('email')?.value ?? null;
 
     this.loading.set(true);
     this.error.set(null);

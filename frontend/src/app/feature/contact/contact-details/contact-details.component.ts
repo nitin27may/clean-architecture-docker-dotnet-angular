@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ContactService } from "@features/contact/contact.service";
 import { CommonModule } from "@angular/common";
@@ -25,6 +25,7 @@ import { NotificationService } from '@core/services/notification.service';
     ],
     templateUrl: './contact-details.component.html',
     styleUrl: './contact-details.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [ContactService]
 })
 export class ContactDetailsComponent {
