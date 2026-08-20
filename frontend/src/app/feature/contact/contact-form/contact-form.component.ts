@@ -61,6 +61,14 @@ export class ContactFormComponent implements OnInit {
     onSubmit(): void {
         if (this.formValid()) {
             const contact = this.contactForm.value;
+            // matDatepicker stores a JS Date on the control; JSON.stringify would send
+            // a full ISO instant (e.g. "1990-01-15T05:00:00.000Z"), which the API's
+            // System.Text.Json DateOnly converter rejects (it wants a bare "yyyy-MM-dd").
+            // Format using local date components, not toISOString(), so a timezone whose
+            // offset crosses midnight doesn't shift the calendar day by one.
+            if (contact.dateOfBirth) {
+                contact.dateOfBirth = this.toDateOnlyString(contact.dateOfBirth);
+            }
             this.loading.set(true);
 
             if (this.isEditMode()) {
@@ -182,5 +190,13 @@ export class ContactFormComponent implements OnInit {
     private formatDate(jsonDate: string): string {
       const date = new Date(jsonDate);
       return date.toISOString().split('T')[0]; // yyyy-MM-dd format
+    }
+
+    private toDateOnlyString(value: Date | string): string {
+        const date = value instanceof Date ? value : new Date(value);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
     }
 }
