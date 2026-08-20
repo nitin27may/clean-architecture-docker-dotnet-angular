@@ -37,8 +37,13 @@ public class ActivityLogRepository : IActivityLogRepository
     public async Task<IEnumerable<ActivityLogEntry>> GetActivityLogsAsync(string username, string email)
     {
         var dbPara = new DynamicParameters();
-        dbPara.Add("Username", username);
-        dbPara.Add("Email", email);
+        // The "@X IS NULL" branches below are how each filter is made optional, but the
+        // controller passes "" (not null) when a query param is omitted — an empty string
+        // never satisfies "= @X" or "IS NULL", so with no filters supplied at all, every
+        // row failed to match and the endpoint always returned an empty list. Normalizing
+        // "" to null here restores the intended "no filter = show everything" behavior.
+        dbPara.Add("Username", string.IsNullOrWhiteSpace(username) ? null : username);
+        dbPara.Add("Email", string.IsNullOrWhiteSpace(email) ? null : email);
         var sql = @"
             SELECT * FROM ""ActivityLog""
             WHERE (""Username"" = @Username OR @Username IS NULL)
