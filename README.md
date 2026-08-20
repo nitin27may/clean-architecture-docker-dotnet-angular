@@ -10,7 +10,7 @@
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT License">
   </a>
-  <img src="https://img.shields.io/badge/Angular-21-512BD4.svg" alt="Angular 21">
+  <img src="https://img.shields.io/badge/Angular-22-512BD4.svg" alt="Angular 22">
   <img src="https://img.shields.io/badge/.NET-10-512BD4.svg" alt=".NET 10">
   <img src="https://img.shields.io/badge/PostgreSQL-17-336791.svg" alt="PostgreSQL 17">
   <img src="https://img.shields.io/badge/Aspire-9.5-6C3483.svg" alt=".NET Aspire 9.5">
@@ -27,7 +27,7 @@
 
 A production-ready **full-stack starter kit** built with modern technologies and best practices:
 
-- **Frontend**: Angular 21 with signals, Material Design, TailwindCSS v4, and Fluent Design
+- **Frontend**: Angular 22 with signals, Material Design, TailwindCSS v4, and Fluent Design
 - **Backend**: .NET 10 API with Clean Architecture and Scalar API documentation
 - **Database**: PostgreSQL 17 with pgAdmin and Dapper ORM
 - **Orchestration**: .NET Aspire 9.5 for local development with service discovery
@@ -149,7 +149,7 @@ docker-compose up --build
     <td width="33%">
       <h3>Modern Frontend</h3>
       <ul>
-        <li>Angular 21 with standalone components</li>
+        <li>Angular 22 with standalone components</li>
         <li>Signal-based state management</li>
         <li>Material Design + TailwindCSS v4</li>
         <li>Fluent Design System tokens</li>
@@ -200,7 +200,7 @@ clean-architecture-docker-dotnet-angular/
 │   ├── Contact.Domain/          # Domain Layer (Entities, Interfaces)
 │   ├── Contact.Infrastructure/  # Infrastructure Layer (Repositories)
 │   └── Contact.Common/          # Shared utilities
-├── frontend/                    # Angular 21 SPA
+├── frontend/                    # Angular 22 SPA
 │   ├── src/app/@core/           # Core module (guards, interceptors, layout)
 │   ├── src/app/feature/         # Feature modules (contact, user, admin)
 │   └── src/app/styles/          # Global styles, Tailwind config
@@ -241,8 +241,8 @@ Comprehensive documentation is available:
 
 | Layer | Technology | Version |
 |-------|------------|---------|
-| Frontend | Angular | 21.0 |
-| UI Components | Angular Material | 21.0 |
+| Frontend | Angular | 22.1 |
+| UI Components | Angular Material | 22.1 |
 | CSS Framework | TailwindCSS | 4.1 |
 | Backend | .NET | 10.0 |
 | API Docs | Scalar | 2.1 |

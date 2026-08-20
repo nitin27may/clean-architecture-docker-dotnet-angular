@@ -8,7 +8,7 @@ permalink: /Frontend
 
 ## Overview
 
-The frontend of this project is built with **Angular 21**, leveraging modern Angular features including standalone components, signals for state management, the inject() function for dependency injection, and a powerful combination of Angular Material 21 and TailwindCSS v4 with **Fluent Design System** tokens for styling.
+The frontend of this project is built with **Angular 22**, leveraging modern Angular features including standalone components, signals for state management, the inject() function for dependency injection, and a powerful combination of Angular Material 22 and TailwindCSS v4 with **Fluent Design System** tokens for styling.
 
 <div style="text-align: center; margin: 30px 0;">
   <a href="screenshots/contact-list-page.png" target="_blank">
@@ -19,14 +19,14 @@ The frontend of this project is built with **Angular 21**, leveraging modern Ang
 
 ## Technology Stack
 
-- **Angular 21**
+- **Angular 22**
   - Standalone components architecture
   - Modern dependency injection with `inject()`
   - Signal-based state management
   - Reactive programming with RxJS
   - Lazy-loaded routes for optimized performance
 
-- **Angular Material 21**
+- **Angular Material 22**
   - Comprehensive UI component library
   - Custom theme configuration
   - Dark mode support

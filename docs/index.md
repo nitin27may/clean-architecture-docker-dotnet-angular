@@ -9,7 +9,7 @@ permalink: /
 # Clean Architecture Full-Stack Starter
 {: .fs-9 }
 
-A production-ready full-stack application with Angular 21, .NET 10, and PostgreSQL 17 using Clean Architecture principles, orchestrated with .NET Aspire
+A production-ready full-stack application with Angular 22, .NET 10, and PostgreSQL 17 using Clean Architecture principles, orchestrated with .NET Aspire
 {: .fs-6 .fw-300 }
 
 [Get Started](#-quick-start-in-60-seconds){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
@@ -26,12 +26,12 @@ A production-ready full-stack application with Angular 21, .NET 10, and PostgreS
   </a>
 </p>
 
-A modern, full-stack contact management system built with **Angular 21**, **.NET 10**, and **PostgreSQL 17** following Clean Architecture principles. This project demonstrates how to structure enterprise applications for maintainability, testability, and scalability while providing a complete development workflow with **.NET Aspire** orchestration and Docker containerization.
+A modern, full-stack contact management system built with **Angular 22**, **.NET 10**, and **PostgreSQL 17** following Clean Architecture principles. This project demonstrates how to structure enterprise applications for maintainability, testability, and scalability while providing a complete development workflow with **.NET Aspire** orchestration and Docker containerization.
 
 ## 🌟 What You'll Learn
 
 - **Clean Architecture** principles and implementation
-- **Angular 21** with signals, standalone components, and Fluent Design
+- **Angular 22** with signals, standalone components, and Fluent Design
 - **.NET 10** with dependency injection and repository pattern
 - **PostgreSQL 17** with Dapper for efficient data access
 - **.NET Aspire 9.5** for local development orchestration
@@ -98,7 +98,7 @@ Visit [http://localhost](http://localhost) in your browser.
 
 The application is structured into multiple services that work together:
 
-- **Frontend**: Angular 21 with Material Design, TailwindCSS, and Fluent Design
+- **Frontend**: Angular 22 with Material Design, TailwindCSS, and Fluent Design
 - **API**: .NET 10 RESTful API built with Clean Architecture and Scalar docs
 - **Database**: PostgreSQL 17 for data persistence
 - **pgAdmin**: Database management interface
@@ -134,7 +134,7 @@ Clean Architecture provides **significant benefits** for your application:
 
 ### Modern Angular Frontend
 
-- **Signals-based state management** with Angular 21
+- **Signals-based state management** with Angular 22
 - **Material Design with TailwindCSS v4** for responsive UI
 - **Fluent Design System 2** tokens and styling
 - **Role-based routing and permissions**
@@ -162,7 +162,7 @@ For more detailed information, explore these documentation pages:
 - [Aspire Guide](aspire-guide.md) - Running with .NET Aspire
 - [Development Guide](development-guide.md) - Setting up your environment
 - [Clean Architecture Series](architecture-series.md) - Architecture deep dives
-- [Frontend Documentation](frontend.md) - Angular 21 implementation
+- [Frontend Documentation](frontend.md) - Angular 22 implementation
 - [Backend Documentation](backend.md) - .NET 10 API details
 - [Docker Guide](docker-guide.md) - Container configuration
 - [Feature List](visual-feature-guide.md) - Visual feature breakdown
