@@ -14,16 +14,9 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'contact-portal' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('contact-portal');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, contact-portal');
-  });
+  // The 'title' property and rendered <h1> tested here previously were leftover
+  // Angular CLI scaffold boilerplate — AppComponent is just a <router-outlet /> shell
+  // (see app.component.ts) and never had either. Removed rather than reintroduced,
+  // since adding a fake title/h1 to production code purely to satisfy a stale test
+  // would be backwards.
 });

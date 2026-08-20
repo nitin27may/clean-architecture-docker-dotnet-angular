@@ -1,4 +1,4 @@
-import { Component, DestroyRef, effect, inject, input, OnInit, output, signal, PLATFORM_ID, HostListener } from '@angular/core';
+import { Component, DestroyRef, effect, inject, input, OnInit, output, signal, PLATFORM_ID, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatToolbar } from '@angular/material/toolbar';
@@ -21,6 +21,7 @@ interface UserProfile {
   standalone: true,
   imports: [CommonModule, MatToolbar, MatIcon, MatButtonModule, MatMenuModule],
   templateUrl: './header.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {

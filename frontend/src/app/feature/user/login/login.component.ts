@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import {
     ReactiveFormsModule,
     UntypedFormBuilder,
@@ -21,6 +21,7 @@ import { NotificationService } from '@core/services/notification.service';
     templateUrl: './login.component.html',
     styleUrl: './login.component.scss',
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         RouterModule,
         ReactiveFormsModule,

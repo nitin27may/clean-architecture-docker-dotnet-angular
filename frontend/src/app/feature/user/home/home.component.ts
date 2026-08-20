@@ -1,4 +1,4 @@
-import { Component, inject, signal, PLATFORM_ID, OnInit } from '@angular/core';
+import { Component, inject, signal, PLATFORM_ID, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -27,6 +27,7 @@ interface TechnologyCard {
     RouterModule
   ],
   templateUrl: './home.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {

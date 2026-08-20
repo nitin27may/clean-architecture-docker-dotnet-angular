@@ -15,7 +15,7 @@
         </button>
         <button mat-raised-button
                 color="accent"
-                [routerLink]="['/contacts/edit', contact()?.id]"
+                [routerLink]="['/contacts/edit', $safeNavigationMigration(contact()?.id)]"
                 *hasPermission="{ page: 'Contacts', operation: 'Update' }">
           <mat-icon>edit</mat-icon>
           Edit Contact
@@ -60,7 +60,7 @@
         <div class="space-y-2">
           <div class="text-sm text-gray-500 dark:text-gray-400">Date of Birth</div>
           <div class="text-on-surface">
-            {{contact()?.dateOfBirth ? (contact()?.dateOfBirth | date:'mediumDate') : 'Not provided'}}
+            {{contact()?.dateOfBirth ? ($safeNavigationMigration(contact()?.dateOfBirth) | date:'mediumDate') : 'Not provided'}}
           </div>
         </div>
 

@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit, signal, DestroyRef, effect } from '@angular/core';
+import { Component, inject, Input, OnInit, signal, DestroyRef, effect, ChangeDetectionStrategy } from '@angular/core';
 import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,6 +14,7 @@ import { MenuItemComponent } from '@core/layout/custom-sidenav/menu-item/menu-it
   templateUrl: './custom-sidenav.component.html',
   styleUrls: ['./custom-sidenav.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, RouterModule, MatListModule, MatIconModule, MenuItemComponent]
 })
 export class CustomSidenavComponent implements OnInit {

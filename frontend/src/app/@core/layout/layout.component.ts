@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal, PLATFORM_ID, HostListener, ViewChild } from '@angular/core';
+import { Component, computed, inject, signal, PLATFORM_ID, HostListener, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -17,6 +17,7 @@ import { ThemeService } from '@core/services/theme.service';
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     RouterOutlet,

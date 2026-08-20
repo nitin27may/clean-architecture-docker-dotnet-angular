@@ -37,6 +37,16 @@ import { ErrorsMap } from './types';
 
 const errorTailorClass = 'error-tailor-has-error';
 
+// buildConfig() (below) always fills in controlErrorsOn/blurPredicate/controlErrorComponent,
+// even though all three are optional on the general-purpose ErrorTailorConfig type callers
+// provide. This narrower type reflects what mergedConfig is actually guaranteed to contain
+// after ngOnInit runs.
+type ResolvedErrorTailorConfig = ErrorTailorConfig & {
+  blurPredicate: NonNullable<ErrorTailorConfig['blurPredicate']>;
+  controlErrorComponent: NonNullable<ErrorTailorConfig['controlErrorComponent']>;
+  controlErrorsOn: Required<NonNullable<ErrorTailorConfig['controlErrorsOn']>>;
+};
+
 @Directive({
   standalone: true,
   selector:
@@ -52,22 +62,30 @@ export class ControlErrorsDirective implements OnInit, OnDestroy {
   @Input() controlErrorsOnBlur: boolean | undefined;
   @Input() controlErrorsOnChange: boolean | undefined;
   @Input() controlErrorsOnStatusChange: boolean | undefined;
-  @Input() controlErrorAnchor: ControlErrorAnchorDirective;
+  @Input() controlErrorAnchor: ControlErrorAnchorDirective | undefined;
 
-  private ref: ComponentRef<ControlErrorComponent>;
-  private submit$: Observable<Event>;
+  // buildConfig() always returns controlErrorsOn/blurPredicate/controlErrorComponent
+  // populated (see its implementation below) — this type captures that guarantee so the
+  // rest of the class doesn't have to null-check fields that are never actually absent.
+  private mergedConfig!: ResolvedErrorTailorConfig;
+
+  private ref: ComponentRef<ControlErrorComponent> | null = null;
+  private submit$: Observable<Event | null>;
   private reset$: Observable<Event>;
-  private control: AbstractControl;
+  // Set at the very start of ngOnInit, before anything else in this directive runs —
+  // Angular guarantees the control is already registered by the time this directive's
+  // ngOnInit fires, since its selector only matches elements with formControlName/
+  // formControl/ngModel etc. already bound.
+  private control!: AbstractControl;
   private destroy = new Subject<void>();
-  private mergedConfig: ErrorTailorConfig = {};
-  private customAnchorDestroyFn: () => void;
+  private customAnchorDestroyFn: (() => void) | null = null;
   private host: HTMLElement;
 
   constructor(
     private vcr: ViewContainerRef,
     elementRef: ElementRef,
     @Inject(ErrorTailorConfigProvider) private config: ErrorTailorConfig,
-    @Inject(FORM_ERRORS) private globalErrors,
+    @Inject(FORM_ERRORS) private globalErrors: ErrorsMap,
     @Optional() private controlErrorAnchorParent: ControlErrorAnchorDirective,
     @Optional() private form: FormActionDirective,
     @Optional() @Self() private ngControl: NgControl,
@@ -81,7 +99,7 @@ export class ControlErrorsDirective implements OnInit, OnDestroy {
   ngOnInit() {
     this.mergedConfig = this.buildConfig();
 
-    this.control = (this.controlContainer || this.ngControl).control;
+    this.control = (this.controlContainer || this.ngControl).control!;
     const hasAsyncValidator = !!this.control.asyncValidator;
 
     const statusChanges$ = this.control.statusChanges.pipe(distinctUntilChanged());
@@ -152,7 +170,7 @@ export class ControlErrorsDirective implements OnInit, OnDestroy {
       });
   }
 
-  private setError(text: string, error?: ValidationErrors) {
+  private setError(text: string | null, error?: ValidationErrors) {
     if (this.mergedConfig.controlClassOnly) {
       return;
     }
@@ -163,7 +181,9 @@ export class ControlErrorsDirective implements OnInit, OnDestroy {
 
     // Set content
     if (this.controlErrorsTpl) {
-      instance.createTemplate(this.controlErrorsTpl, error, text);
+      // createTemplate is optional on ControlErrorComponent — a custom component may only
+      // support the plain-text mode, in which case this is a no-op rather than a throw.
+      instance.createTemplate?.(this.controlErrorsTpl, error, text);
     } else {
       instance.text = text;
     }
@@ -255,7 +275,7 @@ export class ControlErrorsDirective implements OnInit, OnDestroy {
     return this.vcr;
   }
 
-  private buildConfig(): ErrorTailorConfig {
+  private buildConfig(): ResolvedErrorTailorConfig {
     return {
       ...{
         blurPredicate(element) {
@@ -277,7 +297,7 @@ export class ControlErrorsDirective implements OnInit, OnDestroy {
 
   private addCustomClass() {
     if (this.isInput) {
-      this.host.parentElement.classList.add(errorTailorClass);
+      this.host.parentElement?.classList.add(errorTailorClass);
       if (this.controlCustomClass) {
         this.host.classList.add(...this.customClasses);
       }
@@ -286,7 +306,7 @@ export class ControlErrorsDirective implements OnInit, OnDestroy {
 
   private removeCustomClass() {
     if (this.isInput) {
-      this.host.parentElement.classList.remove(errorTailorClass);
+      this.host.parentElement?.classList.remove(errorTailorClass);
       if (this.controlCustomClass) {
         this.host.classList.remove(...this.customClasses);
       }

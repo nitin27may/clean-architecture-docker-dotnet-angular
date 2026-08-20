@@ -1,5 +1,5 @@
 import { DecimalPipe, CommonModule } from '@angular/common';
-import { Component, ViewChild, OnInit, inject, signal, computed, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, OnInit, inject, signal, computed, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
@@ -35,6 +35,7 @@ import { NotificationService } from '@core/services/notification.service';
     ],
     templateUrl: './contact-list.component.html',
     styleUrl: './contact-list.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [DecimalPipe, ContactService]
 })
 export class ContactListComponent implements OnInit, AfterViewInit {
@@ -44,7 +45,7 @@ export class ContactListComponent implements OnInit, AfterViewInit {
 
     contacts = signal<any[]>([]);
     filteredContacts = signal<any[]>([]);
-    dataSource = signal<MatTableDataSource<any>>(new MatTableDataSource([]));
+    dataSource = signal<MatTableDataSource<any>>(new MatTableDataSource<any>([]));
     displayedColumns = ['name', 'email', 'phone', 'city', 'actions'];
     loading = signal<boolean>(false);
 
@@ -73,7 +74,7 @@ export class ContactListComponent implements OnInit, AfterViewInit {
         this.loading.set(true);
         this.contactService.getAll().subscribe({
             next: (data) => {
-                const sortedData = data.sort((a, b) =>
+                const sortedData = data.sort((a: any, b: any) =>
                     new Date(b.create_date).getTime() - new Date(a.create_date).getTime()
                 );
                 this.contacts.set(sortedData);
@@ -105,7 +106,7 @@ export class ContactListComponent implements OnInit, AfterViewInit {
 
         // Reset to first page when filtering
         if (this.dataSource().paginator) {
-            this.dataSource().paginator.firstPage();
+            this.dataSource().paginator?.firstPage();
         }
     }
 
