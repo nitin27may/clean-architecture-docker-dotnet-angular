@@ -40,6 +40,11 @@ search_tokenizer_separator: /[\s/]+/
 aux_links:
   "View on GitHub":
     - "//github.com/nitin27may/clean-architecture-docker-dotnet-angular"
+  # This site had no link out of it anywhere -- not to the blog it is published
+  # under, not to its sibling doc sites. That is the real reason Search Console
+  # reported it as never crawled: nothing on the web pointed here.
+  "nitinksingh.com":
+    - "/"
 
 # Footer content
 footer_content: "Copyright &copy; 2026 Nitin Singh. Distributed under the MIT License."
@@ -81,6 +86,17 @@ gh_edit_view_mode: "tree"
 nav_external_links:
   - title: Clean Architecture on GitHub
     url: https://github.com/nitin27may/clean-architecture-docker-dotnet-angular
+    hide_icon: false
+  # The sibling doc sites, all published under the same domain. Trailing slashes
+  # are required: GitHub Pages 301s the unslashed form of a directory index.
+  - title: AI Knowledge Hub
+    url: https://nitinksingh.com/ai-resources/
+    hide_icon: false
+  - title: E-Commerce Agents
+    url: https://nitinksingh.com/e-commerce-agents/
+    hide_icon: false
+  - title: MEAN Stack with Docker
+    url: https://nitinksingh.com/mean-docker/
     hide_icon: false
 
 # Back to top link
