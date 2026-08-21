@@ -1,8 +1,12 @@
 ---
 layout: default
 title: Backend Guide
-nav_order: 7
+nav_order: 8
 permalink: /backend
+description: "The .NET 10 backend of the Clean Architecture starter - layer boundaries, Dapper data access, PostgreSQL 17 and Scalar API documentation."
+last_modified_at: 2026-08-21
+priority: "0.8"
+changefreq: monthly
 ---
 # Backend Documentation
 

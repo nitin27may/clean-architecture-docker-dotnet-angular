@@ -1,3 +1,17 @@
+---
+layout: default
+title: "ADR 0002: Mediator abstraction"
+parent: Architecture Decisions
+nav_order: 2
+permalink: /adr/mediator-abstraction
+redirect_from:
+  - /adr/0002-mediator-abstraction.html
+description: "Architecture decision record: why the backend uses its own mediator abstraction instead of taking a direct MediatR dependency."
+last_modified_at: 2026-08-21
+priority: "0.4"
+changefreq: yearly
+---
+
 # ADR 0002: In-repo mediator abstraction (no MediatR dependency)
 
 - **Status:** Proposed — written to give [issue #32](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/issues/32)

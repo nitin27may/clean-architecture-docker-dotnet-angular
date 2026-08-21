@@ -3,13 +3,17 @@ layout: default
 title: Roadmap
 nav_order: 9
 permalink: /roadmap
+description: "Planned features for the Clean Architecture .NET and Angular starter, organised by development phase, with what has already shipped."
+last_modified_at: 2026-08-21
+priority: "0.4"
+changefreq: yearly
 ---
 
 # Roadmap & Upcoming Features
 
 We have an ambitious roadmap to enhance this project with the following features, organized into development phases. This document outlines our planned improvements and future direction.
 
-## Phase 1: Enhanced RBAC & UI Modernization (✅ Completed)
+## Phase 1: Enhanced RBAC & UI Modernization (Completed)
 
 **Focus**: Establishing a robust security foundation and creating a polished, modern UI.
 
@@ -41,7 +45,7 @@ We have an ambitious roadmap to enhance this project with the following features
 - [x] Add categorization and organization features
 - [x] Implement advanced filtering and search
 
-## Phase 2: Activity Logging & Admin View (🔄 In Progress)
+## Phase 2: Activity Logging & Admin View (In Progress)
 
 **Focus**: Implementing comprehensive audit tracking and administrative oversight.
 
@@ -132,7 +136,7 @@ We have an ambitious roadmap to enhance this project with the following features
 
 ## Additional Planned Improvements
 
-### PostgreSQL Integration (✅ Completed)
+### PostgreSQL Integration (Completed)
 - [x] Update the Dapper helper to use PostgreSQL
 - [x] Update existing queries to leverage PostgreSQL features
 - [x] Implement PostgreSQL-specific optimizations
@@ -155,6 +159,6 @@ We welcome community input on our roadmap priorities. If you have suggestions or
 
 1. Check our [issue tracker](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/issues) for related issues
 2. Submit a [feature request](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=) with details
-3. Consider [contributing](../CONTRIBUTING.md) to the development effort
+3. Consider [contributing](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/blob/main/CONTRIBUTING.md){:target="_blank"} to the development effort
 
 This roadmap is subject to change based on community feedback and evolving priorities.

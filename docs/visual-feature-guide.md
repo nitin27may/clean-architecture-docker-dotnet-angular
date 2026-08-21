@@ -3,6 +3,10 @@ layout: default
 title: Feature Showcase
 nav_order: 2
 permalink: /visual-feature-guide
+description: "Screenshot tour of the Clean Architecture starter - landing page, RBAC, dark mode, contact management, and user, role and permission administration."
+last_modified_at: 2026-08-21
+priority: "0.8"
+changefreq: monthly
 ---
 
 # Feature Showcase
@@ -11,7 +15,7 @@ This document provides a visual overview of the key features implemented in the 
 
 ## Landing Page
 
-### 🏠 Welcome Dashboard
+### Welcome Dashboard
 
 The application features a modern, responsive landing page that welcomes users and provides easy access to key features. The landing page includes:
 
@@ -28,7 +32,7 @@ The application features a modern, responsive landing page that welcomes users a
   <p style="font-style: italic; margin-top: 10px;">Light Mode Landing Page with Material Design components</p>
 </div>
 
-### 🌙 Dark Mode Experience
+### Dark Mode Experience
 
 The landing page fully supports dark mode, providing users with a comfortable viewing experience in low-light environments. The dark theme:
 
@@ -47,7 +51,7 @@ The landing page fully supports dark mode, providing users with a comfortable vi
 
 ## Authentication & Authorization
 
-### 🔐 Secure Login
+### Secure Login
 
 Our authentication system implements industry-standard security practices with JWT token-based authentication. Users experience a clean, intuitive login interface with proper validation feedback. The system includes:
 
@@ -63,7 +67,7 @@ Our authentication system implements industry-standard security practices with J
   <p style="font-style: italic; margin-top: 10px;">Login screen with form validation and security features</p>
 </div>
 
-### 🛡️ Role-Based Access
+### Role-Based Access
 
 Our comprehensive role-based permission system ensures users can only access features appropriate to their role. The system implements:
 
@@ -82,7 +86,7 @@ Our comprehensive role-based permission system ensures users can only access fea
 
 ## Modern UI Components
 
-### 🌙 Dark Mode Support
+### Dark Mode Support
 
 Our application provides a fully implemented dark mode that respects user preferences and enhances accessibility. The theming system includes:
 
@@ -99,7 +103,7 @@ Our application provides a fully implemented dark mode that respects user prefer
   <p style="font-style: italic; margin-top: 10px;">Dark mode implementation enhancing accessibility and user comfort</p>
 </div>
 
-### 📱 Responsive Design
+### Responsive Design
 
 Our application is built with a mobile-first approach, ensuring an optimal experience across all devices. The responsive system features:
 
@@ -119,7 +123,7 @@ Our application is built with a mobile-first approach, ensuring an optimal exper
 
 ## Contact Management
 
-### 📋 Contact List
+### Contact List
 
 The contact management system provides a powerful, feature-rich interface for working with contact data. The list view includes:
 
@@ -137,7 +141,7 @@ The contact management system provides a powerful, feature-rich interface for wo
   <p style="font-style: italic; margin-top: 10px;">Contact list view with sorting, filtering, and search capabilities</p>
 </div>
 
-### ✏️ Contact Form
+### Contact Form
 
 The contact form provides an intuitive interface for creating and editing contact information with comprehensive validation. Features include:
 
@@ -155,7 +159,7 @@ The contact form provides an intuitive interface for creating and editing contac
 
 ## User Management
 
-### 👤 User Management
+### User Management
 
 The comprehensive user management system allows administrators to create, edit, and manage user accounts. Features include:
 
@@ -171,7 +175,7 @@ The comprehensive user management system allows administrators to create, edit, 
   <p style="font-style: italic; margin-top: 10px;">User management interface for administrators</p>
 </div>
 
-### 🔄 User Role Mapping
+### User Role Mapping
 
 Our role management system provides an easy interface for assigning roles to users and managing permissions. The system includes:
 
@@ -189,7 +193,7 @@ Our role management system provides an easy interface for assigning roles to use
 
 ## System Administration
 
-### 📄 Page Management
+### Page Management
 
 The page management module allows administrators to control access to different areas of the application:
 
@@ -205,7 +209,7 @@ The page management module allows administrators to control access to different 
   <p style="font-style: italic; margin-top: 10px;">Page management interface for controlling application sections</p>
 </div>
 
-### ⚙️ Operation Management
+### Operation Management
 
 The operation management system provides granular control over specific actions within the application:
 
@@ -221,7 +225,7 @@ The operation management system provides granular control over specific actions 
   <p style="font-style: italic; margin-top: 10px;">Operation management for controlling user actions</p>
 </div>
 
-### 👑 Role Management
+### Role Management
 
 The role management module allows administrators to define custom roles with specific permissions:
 
@@ -237,7 +241,7 @@ The role management module allows administrators to define custom roles with spe
   <p style="font-style: italic; margin-top: 10px;">Role management interface for permission control</p>
 </div>
 
-### 📝 User Activity Logging
+### User Activity Logging
 
 The activity logging system provides a comprehensive audit trail of user actions throughout the application:
 
@@ -255,7 +259,7 @@ The activity logging system provides a comprehensive audit trail of user actions
 
 ## Clean Architecture Implementation
 
-### 🏛️ Backend Architecture
+### Backend Architecture
 
 Our backend strictly follows Clean Architecture principles, providing a maintainable and testable codebase. Key architectural features include:
 
@@ -274,7 +278,7 @@ Our backend strictly follows Clean Architecture principles, providing a maintain
   <p style="font-style: italic; margin-top: 10px;">Clean Architecture implementation with clear separation of concerns</p>
 </div>
 
-### 🔄 Frontend Architecture
+### Frontend Architecture
 
 Our Angular implementation leverages the latest features for optimal performance and maintainability. The frontend architecture includes:
 
@@ -296,7 +300,7 @@ Our Angular implementation leverages the latest features for optimal performance
 
 ## DevOps & Infrastructure
 
-### 🐳 Docker Integration
+### Docker Integration
 
 Our application is fully containerized using Docker, providing a consistent environment across development and production. The Docker setup includes:
 
@@ -308,9 +312,9 @@ Our application is fully containerized using Docker, providing a consistent envi
 - Optimized caching for faster builds
 - Container orchestration ready configuration
 
-*See our complete [Docker Guide]({{ '/docker-guide/' | relative_url }}) for full details on the containerization approach.*
+*See our complete [Docker Guide]({{ '/docker-guide' | relative_url }}) for full details on the containerization approach.*
 
-### 📊 API Documentation
+### API Documentation
 
 Our API is thoroughly documented using Swagger/OpenAPI, making it easy for developers to understand and use. The documentation features:
 
@@ -326,7 +330,7 @@ Our API is thoroughly documented using Swagger/OpenAPI, making it easy for devel
 
 ## Additional Features
 
-### ✅ Form Validation
+### Form Validation
 
 - Client-side validation with reactive forms
 - Server-side validation with FluentValidation
@@ -336,7 +340,7 @@ Our API is thoroughly documented using Swagger/OpenAPI, making it easy for devel
 - Custom validators for complex business rules
 - Validation summary for form-wide errors
 
-### 📝 Activity Logging
+### Activity Logging
 
 - Comprehensive audit trail of user actions
 - Structured logging with contextual information
@@ -345,7 +349,7 @@ Our API is thoroughly documented using Swagger/OpenAPI, making it easy for devel
 - Log filtering and search capabilities
 - Performance impact monitoring
 
-### 🔔 Notification System
+### Notification System
 
 - Toast notifications for user feedback
 - Success/error/warning message types
@@ -355,7 +359,7 @@ Our API is thoroughly documented using Swagger/OpenAPI, making it easy for devel
 - Progress indicators for long-running operations
 - Notification history and management
 
-### 🌐 Internationalization
+### Internationalization
 
 - Support for multiple languages using i18n
 - Localization of dates, numbers, and currencies
@@ -374,7 +378,7 @@ Our API is thoroughly documented using Swagger/OpenAPI, making it easy for devel
 
 ## Coming Soon Features
 
-For upcoming features, please refer to our [roadmap document]({{ '/roadmap/' | relative_url }}), which includes:
+For upcoming features, please refer to our [roadmap document]({{ '/roadmap' | relative_url }}), which includes:
 
 - Enhanced RBAC & UI Modernization
 - Application Logs & Monitoring
@@ -384,4 +388,4 @@ For upcoming features, please refer to our [roadmap document]({{ '/roadmap/' | r
 
 ---
 
-*Note: For more detailed technical information on implementing features, see our [Development Guide]({{ '/development-guide/' | relative_url }}).*
+*Note: For more detailed technical information on implementing features, see our [Development Guide]({{ '/development-guide' | relative_url }}).*
