@@ -1,8 +1,12 @@
 ---
 layout: default
 title: Clean Architecture Series
-nav_order: 5
+nav_order: 6
 permalink: /architecture-series
+description: "An article series walking through the Clean Architecture implementation in this .NET 10 and Angular 22 solution, one layer and concern at a time."
+last_modified_at: 2026-08-21
+priority: "0.7"
+changefreq: monthly
 ---
 
 # Clean Architecture Series

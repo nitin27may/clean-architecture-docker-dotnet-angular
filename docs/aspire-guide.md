@@ -1,3 +1,14 @@
+---
+layout: default
+title: Aspire Guide
+nav_order: 5
+permalink: /aspire-guide
+description: "Run the Clean Architecture .NET and Angular stack with .NET Aspire - service discovery, orchestration and the Aspire dashboard for local development."
+last_modified_at: 2026-08-21
+priority: "0.8"
+changefreq: monthly
+---
+
 # .NET Aspire Guide
 
 This guide explains how to run the Clean Architecture application using .NET Aspire for local development.

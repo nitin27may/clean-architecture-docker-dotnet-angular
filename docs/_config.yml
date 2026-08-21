@@ -1,12 +1,38 @@
-title: Clean Architecture Docker .NET Angular
-description: Documentation for the Clean Architecture project
+title: Clean Architecture with .NET, Angular and Docker
+description: A production-ready full-stack starter - Angular 22, .NET 10 and PostgreSQL 17 built on Clean Architecture, orchestrated with .NET Aspire and Docker.
 remote_theme: just-the-docs/just-the-docs
 
-url: https://nitin27may.github.io/clean-architecture-docker-dotnet-angular
+lang: en-US
+
+plugins:
+  - jekyll-seo-tag
+  # Keeps the old capitalised /Frontend URL working after the lowercase fix.
+  - jekyll-redirect-from
+
+# `url` is the origin ONLY. The project path lives in `baseurl`.
+# Putting the path in `url` doubles it into every canonical/og:url that
+# jekyll-seo-tag emits, which canonicalised every page here to a 404 on a
+# domain (github.io) that is not even the one being submitted to Search Console.
+url: https://nitinksingh.com
+baseurl: /clean-architecture-docker-dotnet-angular
+
+# Social / structured-data identity used by jekyll-seo-tag.
+author:
+  name: Nitin Singh
+twitter:
+  username: nitin27may
+  card: summary_large_image
+
+# Give every page an og:image unless it overrides `image` itself.
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: /screenshots/landing-page.png
 
 # Version information
 version: "3.0.0"
-last_updated: "2026-08-20"
+last_updated: "2026-08-21"
 build_timestamp: <%= Time.now.to_i %>
 
 # Cache busting settings
@@ -81,7 +107,7 @@ collapse_inactive_chapters: true
 enable_copy_code_button: true
 
 # Google Analytics tracking
-ga_tracking: G-BJBJ6TYVWF
+ga_tracking: G-5Z8HS51RCP
 ga_tracking_anonymize_ip: true
 
 # Force browser to reload CSS and JS

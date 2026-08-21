@@ -3,6 +3,10 @@ layout: default
 title: Docker Guide
 nav_order: 3
 permalink: /docker-guide
+description: "Docker setup for the Clean Architecture .NET and Angular starter - every Dockerfile, the compose files, environment variables and container networking."
+last_modified_at: 2026-08-21
+priority: "0.9"
+changefreq: monthly
 ---
 
 # Docker Guide

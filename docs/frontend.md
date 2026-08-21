@@ -1,8 +1,14 @@
 ---
 layout: default
 title: Frontend Guide
-nav_order: 6
-permalink: /Frontend
+nav_order: 7
+permalink: /frontend
+redirect_from:
+  - /Frontend
+description: "The Angular 22 frontend of the Clean Architecture starter - standalone components, signals, Angular Material 22 and TailwindCSS v4 with Fluent Design tokens."
+last_modified_at: 2026-08-21
+priority: "0.8"
+changefreq: monthly
 ---
 # Frontend Documentation
 
@@ -77,6 +83,7 @@ export class ExampleComponent {}
 
 Instead of constructor-based dependency injection, this project uses the modern `inject()` function for cleaner code and better tree-shaking:
 
+{% raw %}
 ```typescript
 import { Component, inject, OnInit } from '@angular/core';
 import { UserService } from '@core/services/user.service';
@@ -132,11 +139,13 @@ export class UserProfileComponent implements OnInit {
   }
 }
 ```
+{% endraw %}
 
 ### Signal-Based State Management
 
 The project uses Angular's signals for state management, providing a reactive and efficient way to handle UI state:
 
+{% raw %}
 ```typescript
 import { Component, signal, computed, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -222,6 +231,7 @@ export class TaskManagerComponent {
   }
 }
 ```
+{% endraw %}
 
 ### Theming with Angular Material and TailwindCSS
 

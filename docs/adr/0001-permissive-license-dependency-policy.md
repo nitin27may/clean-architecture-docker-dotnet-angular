@@ -1,3 +1,17 @@
+---
+layout: default
+title: "ADR 0001: Permissive-licence dependency policy"
+parent: Architecture Decisions
+nav_order: 1
+permalink: /adr/permissive-license-dependency-policy
+redirect_from:
+  - /adr/0001-permissive-license-dependency-policy.html
+description: "Architecture decision record: why this repository only takes dependencies published under permissive licences."
+last_modified_at: 2026-08-21
+priority: "0.4"
+changefreq: yearly
+---
+
 # ADR 0001: Permissive-license-only dependency policy
 
 - **Status:** Accepted

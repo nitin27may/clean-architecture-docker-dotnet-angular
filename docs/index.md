@@ -2,8 +2,11 @@
 layout: default
 title: Home
 nav_order: 1
-description: "Clean Architecture Full-Stack documentation"
 permalink: /
+description: "A production-ready full-stack starter - Angular 22, .NET 10 and PostgreSQL 17 built on Clean Architecture, orchestrated with .NET Aspire and Docker."
+last_modified_at: 2026-08-21
+priority: "1.0"
+changefreq: weekly
 ---
 
 # Clean Architecture Full-Stack Starter
@@ -12,7 +15,7 @@ permalink: /
 A production-ready full-stack application with Angular 22, .NET 10, and PostgreSQL 17 using Clean Architecture principles, orchestrated with .NET Aspire
 {: .fs-6 .fw-300 }
 
-[Get Started](#-quick-start-in-60-seconds){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
+[Get Started](#quick-start){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [View on GitHub](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular){: .btn .fs-5 .mb-4 .mb-md-0 }
 [Feature List](visual-feature-guide.md){: .btn .btn-purple .fs-5 .mb-4 .mb-md-0 .ml-2 }
 
@@ -28,7 +31,7 @@ A production-ready full-stack application with Angular 22, .NET 10, and PostgreS
 
 A modern, full-stack contact management system built with **Angular 22**, **.NET 10**, and **PostgreSQL 17** following Clean Architecture principles. This project demonstrates how to structure enterprise applications for maintainability, testability, and scalability while providing a complete development workflow with **.NET Aspire** orchestration and Docker containerization.
 
-## 🌟 What You'll Learn
+## What You'll Learn
 
 - **Clean Architecture** principles and implementation
 - **Angular 22** with signals, standalone components, and Fluent Design
@@ -41,7 +44,7 @@ A modern, full-stack contact management system built with **Angular 22**, **.NET
 - **NGINX** as a reverse proxy and API gateway
 - **CI/CD** with GitHub Actions
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Option 1: Using .NET Aspire (Recommended for Development)
 
@@ -78,7 +81,7 @@ docker-compose up
 
 Visit [http://localhost](http://localhost) in your browser.
 
-## 👤 Default Users
+## Default Users
 
 | Username | Password | Role |
 |----------|----------|------|
@@ -86,7 +89,7 @@ Visit [http://localhost](http://localhost) in your browser.
 | editor@gmail.com | P@ssword#321 | Editor |
 | reader@gmail.com | P@ssword#321 | Reader |
 
-## 🏗️ System Architecture
+## System Architecture
 
 <p align="center">
   <a href="screenshots/architecture.png" target="_blank">
@@ -106,7 +109,7 @@ The application is structured into multiple services that work together:
 
 When using **.NET Aspire**, all services are orchestrated automatically with service discovery and health monitoring.
 
-## 📐 Clean Architecture Explained
+## Clean Architecture Explained
 
 <p align="center">
   <a href="screenshots/clean-architecture.png" target="_blank">
@@ -130,7 +133,7 @@ Clean Architecture provides **significant benefits** for your application:
 - **Abstraction**: Business rules are independent of UI, database, and external services
 - **Testability**: Core business logic can be tested without dependencies on external systems
 
-## 💻 Key Features
+## Key Features
 
 ### Modern Angular Frontend
 
@@ -155,7 +158,7 @@ Clean Architecture provides **significant benefits** for your application:
 - **Search, sort, and filter functionality**
 - **Form validation**
 
-## 📚 Documentation
+## Documentation
 
 For more detailed information, explore these documentation pages:
 
@@ -168,10 +171,10 @@ For more detailed information, explore these documentation pages:
 - [Feature List](visual-feature-guide.md) - Visual feature breakdown
 - [Roadmap](roadmap.md) - Upcoming features
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! Please check our [contributing guide](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/blob/main/CONTRIBUTING.md){:target="_blank"} for details on how to get involved.
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/blob/main/LICENSE){:target="_blank"} file for details.

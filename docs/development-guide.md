@@ -3,6 +3,10 @@ layout: default
 title: Development Guide
 nav_order: 4
 permalink: /development-guide
+description: "Set up a development environment for the Clean Architecture .NET 10 and Angular 22 starter - prerequisites, running locally, debugging and common tasks."
+last_modified_at: 2026-08-21
+priority: "0.9"
+changefreq: monthly
 ---
 # Development Guide
 
