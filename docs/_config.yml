@@ -30,15 +30,6 @@ defaults:
     values:
       image: /screenshots/landing-page.png
 
-# Version information
-version: "3.0.0"
-last_updated: "2026-08-21"
-build_timestamp: <%= Time.now.to_i %>
-
-# Cache busting settings
-cache_bust: true
-asset_version_query: <%= Time.now.to_i %>
-
 # Enable search
 search_enabled: true
 
@@ -51,11 +42,7 @@ aux_links:
     - "//github.com/nitin27may/clean-architecture-docker-dotnet-angular"
 
 # Footer content
-footer_content: "Copyright &copy; 2025 Nitin Kumar. Distributed under the MIT License."
-
-# Footer version display
-footer_version_display: true
-footer_version_text: "Version"
+footer_content: "Copyright &copy; 2026 Nitin Singh. Distributed under the MIT License."
 
 # Color scheme supports "light" (default) and "dark"
 color_scheme: light
@@ -100,9 +87,6 @@ nav_external_links:
 back_to_top: true
 back_to_top_text: "Back to top"
 
-# Enable collapsible navigation
-collapse_inactive_chapters: true
-
 # Enable copy code button
 enable_copy_code_button: true
 
@@ -110,18 +94,3 @@ enable_copy_code_button: true
 ga_tracking: G-5Z8HS51RCP
 ga_tracking_anonymize_ip: true
 
-# Force browser to reload CSS and JS
-assets:
-  source_maps: true
-  destination: "/assets"
-  compression: true
-  gzip: false
-  defaults:
-    integrity:
-      {css,js}: true
-  caching:
-    enabled: true
-    path: ".jekyll-cache/assets"
-    type: file
-  # Apply cache busting to assets
-  cache_bust_strategy: hard
