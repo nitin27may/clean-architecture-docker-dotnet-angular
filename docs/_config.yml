@@ -47,19 +47,31 @@ aux_links:
     - "/"
 
 # Footer content
-# Site-wide footer. The blog back-link lives here rather than only in aux_links
-# because footer_content renders on EVERY page, while aux_links reads as chrome.
-# Raw HTML is safe here: just-the-docs interpolates footer_content without
-# escaping (verified against live output -- `&copy;` arrives as an entity, not
+# Site-wide footer. Identical on all four doc sites by design, so the family
+# reads as one property rather than four unrelated microsites. It lives in the
+# footer rather than only in aux_links/nav because the footer renders on EVERY
+# page, while aux_links reads as chrome and is easy to miss.
+#
+# Raw HTML is safe here: the theme interpolates this value without escaping
+# (verified against live output -- `&copy;` arrives as an entity, not
 # `&amp;copy;`).
 #
-# The second link is topical, not another homepage link -- the blog carries a
-# 12-post series about this exact repo, so it is the single most relevant
-# destination on the domain, and the anchor text names it.
+# Each site links to itself as well as its siblings. That is deliberate: it is
+# what keeps the string byte-identical across all four repos, so the footer can
+# be copied between them without a per-site diff to reconcile.
+#
+# NOTE: an earlier revision carried a per-repo TOPICAL deep link here (e.g. the
+# Clean Architecture series for that repo), which carries more ranking signal
+# than a homepage link. That is incompatible with a uniform footer and was
+# dropped on purpose. If those are wanted back, nav_external_links is the place
+# -- it is already per-site, so it can differ without breaking this.
 footer_content: >-
   &copy; 2026 Nitin Singh &middot; MIT License
   &middot; <a href="https://nitinksingh.com/">nitinksingh.com</a>
-  &middot; <a href="https://nitinksingh.com/series/clean-architecture-contact-management-application/">Clean Architecture series</a>
+  &middot; <a href="https://nitinksingh.com/ai-resources/">AI Knowledge Hub</a>
+  &middot; <a href="https://nitinksingh.com/e-commerce-agents/">E-Commerce Agents</a>
+  &middot; <a href="https://nitinksingh.com/clean-architecture-docker-dotnet-angular/">Clean Architecture</a>
+  &middot; <a href="https://nitinksingh.com/mean-docker/">MEAN Stack</a>
 
 # Color scheme supports "light" (default) and "dark"
 color_scheme: light
