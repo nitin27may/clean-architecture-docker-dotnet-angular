@@ -47,7 +47,19 @@ aux_links:
     - "/"
 
 # Footer content
-footer_content: "Copyright &copy; 2026 Nitin Singh. Distributed under the MIT License."
+# Site-wide footer. The blog back-link lives here rather than only in aux_links
+# because footer_content renders on EVERY page, while aux_links reads as chrome.
+# Raw HTML is safe here: just-the-docs interpolates footer_content without
+# escaping (verified against live output -- `&copy;` arrives as an entity, not
+# `&amp;copy;`).
+#
+# The second link is topical, not another homepage link -- the blog carries a
+# 12-post series about this exact repo, so it is the single most relevant
+# destination on the domain, and the anchor text names it.
+footer_content: >-
+  Copyright &copy; 2026 Nitin Singh. Distributed under the MIT License.
+  &middot; Part of <a href="https://nitinksingh.com/">nitinksingh.com</a>
+  &middot; <a href="https://nitinksingh.com/series/clean-architecture-contact-management-application/">Clean Architecture series on the blog</a>
 
 # Color scheme supports "light" (default) and "dark"
 color_scheme: light
