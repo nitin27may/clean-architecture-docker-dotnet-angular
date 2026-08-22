@@ -57,9 +57,9 @@ aux_links:
 # 12-post series about this exact repo, so it is the single most relevant
 # destination on the domain, and the anchor text names it.
 footer_content: >-
-  Copyright &copy; 2026 Nitin Singh. Distributed under the MIT License.
-  &middot; Part of <a href="https://nitinksingh.com/">nitinksingh.com</a>
-  &middot; <a href="https://nitinksingh.com/series/clean-architecture-contact-management-application/">Clean Architecture series on the blog</a>
+  &copy; 2026 Nitin Singh &middot; MIT License
+  &middot; <a href="https://nitinksingh.com/">nitinksingh.com</a>
+  &middot; <a href="https://nitinksingh.com/series/clean-architecture-contact-management-application/">Clean Architecture series</a>
 
 # Color scheme supports "light" (default) and "dark"
 color_scheme: light
