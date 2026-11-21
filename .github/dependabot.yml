@@ -1,8 +1,9 @@
 version: 2
 updates:
-  # Backend — Contact.Api, Contact.Application, Contact.Infrastructure, Contact.Domain, Contact.Common
+  # .NET — the solution and Directory.Packages.props (Central Package Management) live at the
+  # repo root, so one entry covers backend/ and aspire/.
   - package-ecosystem: "nuget"
-    directory: "/backend"
+    directory: "/"
     schedule:
       interval: "weekly"
     groups:
@@ -10,20 +11,11 @@ updates:
         update-types:
           - "minor"
           - "patch"
+      # Aspire packages must move together, majors included.
+      aspire:
+        patterns:
+          - "Aspire.*"
     open-pull-requests-limit: 10
-
-  # .NET Aspire host + service defaults — kept separate so a major Aspire bump doesn't
-  # get grouped in with routine backend patch updates.
-  - package-ecosystem: "nuget"
-    directory: "/aspire"
-    schedule:
-      interval: "weekly"
-    groups:
-      aspire-minor-patch:
-        update-types:
-          - "minor"
-          - "patch"
-    open-pull-requests-limit: 5
 
   # Frontend — Angular
   - package-ecosystem: "npm"
@@ -35,10 +27,32 @@ updates:
         update-types:
           - "minor"
           - "patch"
+    ignore:
+      # Angular pins the TypeScript range it supports; take TypeScript upgrades with Angular.
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      # Tracks the Node.js runtime in .nvmrc / frontend/Dockerfile, not the newest Node.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
     open-pull-requests-limit: 10
 
-  # Docker base images
+  # Docker base images (Dockerfile.api, frontend/Dockerfile, loadbalancer/Dockerfile)
   - package-ecosystem: "docker"
+    directories:
+      - "/"
+      - "/frontend"
+      - "/loadbalancer"
+    schedule:
+      interval: "weekly"
+    groups:
+      # sdk and aspnet images have to change together with the TargetFramework.
+      dotnet-images:
+        patterns:
+          - "dotnet/*"
+    open-pull-requests-limit: 5
+
+  # Images referenced from the compose files (postgres, pgadmin)
+  - package-ecosystem: "docker-compose"
     directory: "/"
     schedule:
       interval: "weekly"
@@ -50,8 +64,7 @@ updates:
     schedule:
       interval: "weekly"
     groups:
-      actions-minor-patch:
-        update-types:
-          - "minor"
-          - "patch"
+      actions:
+        patterns:
+          - "*"
     open-pull-requests-limit: 5

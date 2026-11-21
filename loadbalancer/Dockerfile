@@ -1,5 +1,5 @@
-# Use the standard Nginx image from Docker Hub
-FROM nginx
+# Nginx stable, pinned to a minor line so Dependabot can propose upgrades
+FROM nginx:1.30-alpine
 # Copy the main nginx.conf
 COPY nginx.conf /etc/nginx/nginx.conf
 
