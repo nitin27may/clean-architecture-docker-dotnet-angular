@@ -1,11 +1,11 @@
-# Create image based off of the official Node 22 image
-FROM node:22-alpine as builder
+# Build stage: Node 26 LTS
+FROM node:26-alpine AS builder
 
 # Copy dependency definitions
 COPY package*.json ./
 
 ## installing and Storing node modules on a separate layer will prevent unnecessary npm installs at each build
-RUN npm install && mkdir /app && mv ./node_modules /app/node_modules
+RUN npm ci && mkdir /app && mv ./node_modules /app/node_modules
 
 # Change directory so that our commands run inside this new directory
 WORKDIR /app
@@ -19,7 +19,7 @@ RUN npm run build
 # Stage 2: Serve app with nginx server
 
 # Use official nginx image as the base image
-FROM nginx:alpine
+FROM nginx:1.30-alpine
 
 # Remove default Nginx website and configuration
 RUN rm -rf /usr/share/nginx/html/* /etc/nginx/conf.d/default.conf

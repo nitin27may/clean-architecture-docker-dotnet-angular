@@ -29,26 +29,26 @@ Before running the application with Aspire, ensure you have:
 
 | Requirement | Version | Download |
 |-------------|---------|----------|
-| .NET SDK | 10.0+ | [Download](https://dotnet.microsoft.com/download/dotnet/10.0) |
-| Node.js | 22 LTS | [Download](https://nodejs.org/) |
+| .NET SDK | 11.0+ | [Download](https://dotnet.microsoft.com/download/dotnet/11.0) |
+| Node.js | 26 LTS (or 24 LTS) | [Download](https://nodejs.org/) |
 | Docker Desktop | Latest | [Download](https://www.docker.com/products/docker-desktop) |
 
-> ⚠️ **Important**: Use Node.js 22 LTS, not Node.js 23. Odd-numbered Node.js versions are not LTS and may have compatibility issues with Angular.
+> ⚠️ **Important**: Use Node.js 26 LTS (or 24 LTS). Odd-numbered Node.js versions are not LTS and may have compatibility issues with Angular.
 
 ### Verify Installations
 
 ```powershell
 # Check .NET version
 dotnet --version
-# Should output: 10.0.x or higher
+# Should output: 11.0.x or higher
 
 # Check Node.js version
 node --version
-# Should output: v22.x.x
+# Should output: v26.x.x (or v24.x.x)
 
 # Check npm version
 npm --version
-# Should output: 10.x.x or higher
+# Should output: 11.x.x or higher
 
 # Check Docker is running
 docker --version
@@ -97,9 +97,9 @@ When running with Aspire, the following services are orchestrated:
 
 | Service | Description | Default Port |
 |---------|-------------|--------------|
-| **postgres** | PostgreSQL 17 database | 5432 |
+| **postgres** | PostgreSQL 18 database | 5432 |
 | **pgadmin** | PostgreSQL admin interface | Dynamic |
-| **contact-api** | .NET 10 backend API | 5217 |
+| **contact-api** | .NET 11 backend API | 5217 |
 | **frontend** | Angular 22 application | 4200 |
 
 ## Aspire Dashboard Features
@@ -151,7 +151,7 @@ var postgres = builder.AddPostgres("postgres")
 var contactsDb = postgres.AddDatabase("contacts");
 
 // .NET API with reference to database
-var api = builder.AddProject<Projects.Contact_Api>("contact-api")
+var api = builder.AddDotnetProject("contact-api", "../../backend/Contact.Api/Contact.Api.csproj")
     .WithReference(contactsDb);
 
 // Angular frontend with reference to API
@@ -211,7 +211,7 @@ taskkill /PID <process_id> /F
 
 **Solution**: Check Node.js version:
 ```bash
-node --version  # Should be v22.x.x
+node --version  # Should be v26.x.x (or v24.x.x)
 ```
 
 If using nvm:

@@ -3,7 +3,7 @@ layout: default
 title: Development Guide
 nav_order: 4
 permalink: /development-guide
-description: "Set up a development environment for the Clean Architecture .NET 10 and Angular 22 starter - prerequisites, running locally, debugging and common tasks."
+description: "Set up a development environment for the Clean Architecture .NET 11 and Angular 22 starter - prerequisites, running locally, debugging and common tasks."
 last_modified_at: 2026-08-21
 priority: "0.9"
 changefreq: monthly
@@ -19,12 +19,12 @@ Before you begin, ensure you have the following installed:
 - [Docker Desktop](https://www.docker.com/products/docker-desktop) (latest version)
 - [Git](https://git-scm.com/downloads)
 - [Visual Studio Code](https://code.visualstudio.com/) (recommended) or another IDE
-- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) (for local development without Docker)
-- [Node.js 22 LTS](https://nodejs.org/) (**Not** Node 23 - use LTS version only)
+- [.NET 11 SDK](https://dotnet.microsoft.com/download/dotnet/11.0) (for local development without Docker)
+- [Node.js 26 LTS](https://nodejs.org/) (Node.js 24 LTS also works; avoid odd-numbered, non-LTS releases)
 
 > ⚠️ **Important**: When running with .NET Aspire, ensure you have the correct versions installed:
-> - .NET SDK 10.0 or later
-> - Node.js 22 LTS (not Node 23)
+> - .NET SDK 11.0 or later
+> - Node.js 26 LTS (or 24 LTS)
 
 ## Getting the Code
 

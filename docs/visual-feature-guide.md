@@ -316,7 +316,7 @@ Our application is fully containerized using Docker, providing a consistent envi
 
 ### API Documentation
 
-Our API is thoroughly documented using Swagger/OpenAPI, making it easy for developers to understand and use. The documentation features:
+Our API is thoroughly documented using OpenAPI with the Scalar UI, making it easy for developers to understand and use. The documentation features:
 
 - Interactive API explorer with try-it-now functionality
 - Detailed request and response schemas

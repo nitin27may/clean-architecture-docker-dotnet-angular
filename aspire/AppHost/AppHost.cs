@@ -14,7 +14,7 @@ var postgres = builder.AddPostgres("postgres", password: postgresPassword)
 var contactsDb = postgres.AddDatabase("contactsdb", "contacts");
 
 // Backend API - reference the PostgreSQL database
-var api = builder.AddProject<Projects.Contact_Api>("contact-api")
+var api = builder.AddDotnetProject("contact-api", "../../backend/Contact.Api/Contact.Api.csproj")
     .WithReference(contactsDb)
     .WaitFor(contactsDb)
     .WithEnvironment(context =>

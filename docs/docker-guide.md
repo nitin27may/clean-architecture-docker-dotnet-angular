@@ -32,8 +32,8 @@ The application uses Docker to containerize all services for consistent developm
 The Docker setup includes:
 
 - Frontend container (Angular 22)
-- Backend API container (.NET 10)
-- Database container (PostgreSQL 17)
+- Backend API container (.NET 11)
+- Database container (PostgreSQL 18)
 - pgAdmin container (Database management)
 - Nginx container (Reverse proxy/Load balancer)
 
@@ -47,7 +47,7 @@ Located at `frontend/Dockerfile`, this file builds the Angular application:
 
 ```dockerfile
 # Build stage
-FROM node:22-alpine AS build
+FROM node:26-alpine AS build
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci
@@ -55,7 +55,7 @@ COPY . .
 RUN npm run build
 
 # Production stage
-FROM nginx:alpine
+FROM nginx:1.30-alpine
 COPY --from=build /app/dist/browser /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
@@ -65,7 +65,7 @@ CMD ["nginx", "-g", "daemon off;"]
 This is a multi-stage build that:
 
 1. Uses Node.js to build the Angular application
-   - The `node:20-alpine` image provides a lightweight environment for building
+   - The `node:26-alpine` image provides a lightweight environment for building
    - `npm ci` ensures exact dependency versions are installed
    - Angular build process creates optimized production assets
 
@@ -84,7 +84,7 @@ This is a multi-stage build that:
 Located at `backend/src/Dockerfile`, this file builds the .NET API:
 
 ```dockerfile
-FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:11.0 AS base
 WORKDIR /app
 EXPOSE 8000
 ENV ASPNETCORE_URLS=http://+:8000
@@ -93,7 +93,7 @@ RUN groupadd -g 2000 dotnet \
 USER dotnet
 
 # Build stage
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:11.0 AS build
 ARG BUILD_CONFIGURATION=Release
 ARG DOTNET_SKIP_POLICY_LOADING=true
 WORKDIR /src
@@ -140,7 +140,7 @@ This uses a multi-stage build to:
 Located at `loadbalancer/Dockerfile`, this serves as the entry point for all requests:
 
 ```dockerfile
-FROM nginx:alpine
+FROM nginx:1.30-alpine
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 ```
 
@@ -216,7 +216,7 @@ services:
       - db
 
   db:
-    image: postgres:17-alpine
+    image: postgres:18-alpine
     container_name: db
     restart: always
     environment:
@@ -226,7 +226,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres18_data:/var/lib/postgresql
       - ./backend/scripts/seed-data.sql:/docker-entrypoint-initdb.d/seed-data.sql
     networks:
       - cleanarch-network
@@ -250,7 +250,7 @@ networks:
     driver: bridge
 
 volumes:
-  postgres_data:
+  postgres18_data:
 ```
 
 This configuration:
@@ -293,7 +293,7 @@ services:
   api:
     image: ghcr.io/nitin27may/clean-architecture-docker-dotnet-angular/api:latest
     environment:
-      - ASPNETCORE__ENVIRONMENT=${ENVIRONMENT}
+      - ASPNETCORE_ENVIRONMENT=${ENVIRONMENT}
       - AppSettings__ConnectionStrings__DefaultConnection=Host=${POSTGRES_HOST};Port=${POSTGRES_PORT};Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
       # ... other environment variables
     depends_on:
@@ -302,7 +302,7 @@ services:
       - postgres_network
 
   postgres:
-    image: postgres:17-alpine
+    image: postgres:18-alpine
     # ... configuration
 
   nginx:

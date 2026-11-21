@@ -1,5 +1,5 @@
 title: Clean Architecture with .NET, Angular and Docker
-description: A production-ready full-stack starter - Angular 22, .NET 10 and PostgreSQL 17 built on Clean Architecture, orchestrated with .NET Aspire and Docker.
+description: A production-ready full-stack starter - Angular 22, .NET 11 and PostgreSQL 18 built on Clean Architecture, orchestrated with .NET Aspire and Docker.
 remote_theme: just-the-docs/just-the-docs
 
 lang: en-US

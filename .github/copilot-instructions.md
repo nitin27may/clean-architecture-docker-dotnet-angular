@@ -1,6 +1,6 @@
 # GitHub Copilot Instructions for Angular
 
-Generate code following these modern Angular 20+ best practices:
+Generate code following these modern Angular 22 best practices:
 
 ## Dependency Injection
 - Always use functional injection with `inject()` instead of constructor-based injection
@@ -59,7 +59,7 @@ Generate code following these modern Angular 20+ best practices:
   };
 
 ## Styling
-- Use Angular Material 19 with proper theming
+- Use Angular Material 22 with proper theming
 - Implement TailwindCSS v4 for utility-first styling
 - Ensure components support theme switching
 - Apply consistent color tokens from design system

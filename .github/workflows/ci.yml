@@ -1,0 +1,66 @@
+name: CI
+
+# Validates every pull request (including Dependabot's) and every push to main.
+# Nothing is published from here; the image workflows handle that on main.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    name: Backend (.NET)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+      - name: Restore
+        run: dotnet restore Contact.Api.sln
+      - name: Build
+        run: dotnet build Contact.Api.sln --configuration Release --no-restore
+
+  frontend:
+    name: Frontend (Angular)
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: frontend/.nvmrc
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Test
+        run: npm test -- --watch=false
+
+  docker:
+    name: Docker images (build only)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - name: API image
+        run: docker build --file Dockerfile.api --tag contact-api:ci .
+      - name: Frontend image
+        run: docker build --tag contact-frontend:ci frontend
+      - name: Load balancer image
+        run: docker build --tag contact-loadbalancer:ci loadbalancer
+      - name: Compose files are valid
+        run: |
+          cp .env.example .env
+          docker compose -f docker-compose.yml config --quiet
+          docker compose -f docker-compose.ghcr.yml config --quiet

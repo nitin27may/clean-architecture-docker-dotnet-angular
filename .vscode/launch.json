@@ -16,9 +16,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build-backend",
-            "program": "${workspaceFolder}/backend/src/Contact.Api/bin/Debug/net9.0/Contact.Api.dll",
+            "program": "${workspaceFolder}/backend/Contact.Api/bin/Debug/net11.0/Contact.Api.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/backend/src/Contact.Api",
+            "cwd": "${workspaceFolder}/backend/Contact.Api",
             "stopAtEntry": false,
             "env": {
               "ASPNETCORE_ENVIRONMENT": "Development",

@@ -1,16 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFramework>net11.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Riok.Mapperly" Version="4.3.1" PrivateAssets="all" />
-    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
-    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.15.0" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.15.0" />
+    <!-- IHttpContextAccessor and PasswordHasher<T> come from the shared framework
+         (previously pulled in transitively by the deprecated FluentValidation.AspNetCore). -->
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Riok.Mapperly" PrivateAssets="all" />
+    <PackageReference Include="FluentValidation" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
   </ItemGroup>
 
   <ItemGroup>

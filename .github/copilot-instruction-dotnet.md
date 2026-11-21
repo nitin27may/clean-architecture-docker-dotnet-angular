@@ -1,8 +1,8 @@
-# .NET 8+ Best Practices Instructions
+# .NET 11 Best Practices Instructions
 
-# GitHub Copilot Instructions for .NET 8+
+# GitHub Copilot Instructions for .NET 11
 
-Generate code following these modern .NET 8+ best practices:
+Generate code following these modern .NET 11 best practices:
 
 ## C# Language and Syntax
 - Always maintain semicolons after namespace declarations
@@ -70,7 +70,7 @@ Generate code following these modern .NET 8+ best practices:
 - Use minimal serialization options
 
 ## API Documentation
-- Include comprehensive Swagger/OpenAPI documentation
+- Include comprehensive OpenAPI documentation (Scalar)
 - Add proper XML comments for all public APIs
 - Provide examples for request/response models
 - Document all possible response codes
