@@ -83,7 +83,10 @@ public class UserService : IUserService
     {
         PasswordHasher<string> passwordHasher = PasswordHash();
 
-        var hashedPassword = passwordHasher.HashPassword(createUser.Email, "New Password");
+        // The user sets their own password through the emailed link. Until then the account must not
+        // be reachable with a guessable password; it used to be the literal "New Password" for everyone.
+        var initialPassword = Convert.ToBase64String(System.Security.Cryptography.RandomNumberGenerator.GetBytes(32));
+        var hashedPassword = passwordHasher.HashPassword(createUser.Email, initialPassword);
         var user = _mapper.Map<User>(createUser);
         user.Password = hashedPassword;
 

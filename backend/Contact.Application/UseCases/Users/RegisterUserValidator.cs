@@ -29,7 +29,7 @@ public partial class RegisterUserValidator : AbstractValidator<RegisterUser>
             .NotEmpty().WithMessage("Username is required")
             .MinimumLength(4).WithMessage("Username must be at least 4 characters")
             .MaximumLength(50).WithMessage("Username cannot exceed 50 characters")
-            .Matches(@"^[a-zA-Z0-9._-]+$").WithMessage("Username can only contain letters, numbers, dots, underscores, and dashes");
+            .Matches(UserNameRules.Pattern).WithMessage(UserNameRules.Message);
             
         RuleFor(x => x.Password)
             .NotEmpty().WithMessage("Password is required")

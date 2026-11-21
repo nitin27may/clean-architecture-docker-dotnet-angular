@@ -1,6 +1,9 @@
-﻿namespace Contact.Application.UseCases.Users;
+﻿using Contact.Application.Abstractions.Messaging;
 
-public class ChangePassword
+namespace Contact.Application.UseCases.Users;
+
+/// <summary>Changes the signed-in user's password (PUT /api/Users/change-password).</summary>
+public class ChangePassword : IRequest<bool>
 {
     public required string CurrentPassword { get; set; }
     public required string NewPassword { get; set; }
