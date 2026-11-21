@@ -55,8 +55,8 @@ if (app.Environment.IsDevelopment())
         options.WithTitle("Contact API")
                .WithTheme(ScalarTheme.BluePlanet)
                .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient)
-               .WithPreferredScheme("Bearer")
-               .WithHttpBearerAuthentication(bearer =>
+               .AddPreferredSecuritySchemes("Bearer")
+               .AddHttpAuthentication("Bearer", bearer =>
                {
                    bearer.Token = "";
                });
