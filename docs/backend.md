@@ -385,6 +385,44 @@ public class UnitOfWork : IUnitOfWork
 }
 ```
 
+### Mediator (`ISender`)
+
+Controllers are moving from calling application services directly to sending requests through a
+small in-repo mediator in `Contact.Application/Abstractions/Messaging`. It is about 100 lines with
+no MediatR dependency; [ADR 0002](adr/0002-mediator-abstraction.md) explains why.
+
+```csharp
+// The request type is the use case input, so the API contract does not change
+public class CreateContactPerson : IRequest<ContactPersonResponse> { /* ... */ }
+
+public sealed class CreateContactPersonHandler(IContactPersonService contactPersonService)
+    : IRequestHandler<CreateContactPerson, ContactPersonResponse>
+{
+    public Task<ContactPersonResponse> Handle(CreateContactPerson request, CancellationToken cancellationToken)
+        => contactPersonService.Add(request);
+}
+
+// Controller
+var created = await sender.Send(createContactPerson, cancellationToken);
+```
+
+`ISender.Send`:
+
+1. Runs every FluentValidation `IValidator<TRequest>` registered for the request. If any rule
+   fails it throws `ValidationException` with all the failures, and the handler is not called.
+2. Resolves the single `IRequestHandler<TRequest, TResponse>` from DI and invokes it.
+
+Handlers are registered by assembly scan (`AddRequestHandlers`, called from
+`AddApplicationServices`). `Contact.Application.Tests` fails the build if any request type has
+zero or more than one handler.
+
+**Adding an endpoint:** make the input type implement `IRequest<TResponse>`, add a handler next
+to it in `UseCases/<Feature>`, optionally add an `AbstractValidator<TRequest>`, and call
+`sender.Send(...)` from the controller. No registration code is needed.
+
+Converted so far: `POST /api/ContactPerson`. Every other action still calls its service directly
+and is being converted one controller at a time.
+
 ## Authentication System
 
 The application uses JWT-based authentication with role-based authorization:
@@ -548,78 +586,33 @@ public class PermissionHandler : AuthorizationHandler<PermissionRequirement>
 
 ### Global Error Handling
 
-Centralized error handling with middleware:
+`ExceptionMiddleware` (`Contact.Api/Core/Middleware`) turns exceptions into JSON responses:
 
-```csharp
-public class ExceptionMiddleware
+| Exception | Status |
+|---|---|
+| `ValidationException` (FluentValidation, thrown by `ISender`) | 400 |
+| `BusinessException` | 400 |
+| `NotAuthenticatedException` | 401 |
+| `ForbiddenException` | 403 |
+| `NotFoundException` | 404 |
+| anything else | 500 |
+
+Validation failures carry the errors per field:
+
+```json
 {
-    private readonly RequestDelegate _next;
-    private readonly ILogger<ExceptionMiddleware> _logger;
-
-    public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
-    {
-        _next = next;
-        _logger = logger;
-    }
-
-    public async Task InvokeAsync(HttpContext context)
-    {
-        try
-        {
-            await _next(context);
-        }
-        catch (ValidationException ex)
-        {
-            _logger.LogError($"Validation error: {ex}");
-            await HandleValidationExceptionAsync(context, ex);
-        }
-        catch (DomainException ex)
-        {
-            _logger.LogError($"Domain error: {ex}");
-            await HandleDomainExceptionAsync(context, ex);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError($"Unhandled error: {ex}");
-            await HandleExceptionAsync(context, ex);
-        }
-    }
-
-    private async Task HandleExceptionAsync(HttpContext context, Exception exception)
-    {
-        context.Response.ContentType = "application/json";
-        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-        
-        await context.Response.WriteAsync(new ErrorDetails
-        {
-            StatusCode = context.Response.StatusCode,
-            Message = "Internal Server Error. Please try again later."
-        }.ToString());
-    }
-
-    private async Task HandleValidationExceptionAsync(HttpContext context, ValidationException exception)
-    {
-        context.Response.ContentType = "application/json";
-        context.Response.StatusCode = StatusCodes.Status400BadRequest;
-        
-        var errors = exception.Errors
-            .GroupBy(e => e.PropertyName)
-            .ToDictionary(
-                g => g.Key,
-                g => g.Select(e => e.ErrorMessage).ToArray()
-            );
-        
-        await context.Response.WriteAsync(new ValidationErrorDetails
-        {
-            StatusCode = context.Response.StatusCode,
-            Message = "Validation failed",
-            Errors = errors
-        }.ToString());
-    }
-    
-    // Other exception handling methods...
+  "error": "One or more validation errors occurred.",
+  "message": "A valid email address is required; First name is required",
+  "errors": {
+    "Email": ["A valid email address is required"],
+    "FirstName": ["First name is required"]
+  }
 }
 ```
+
+Every other error has the shape `{ "error", "message", "technicalDetails" }`. The Angular error
+interceptor displays `message`. Validation failures are logged as warnings; everything else is
+logged as an error.
 
 ### Activity Logging
 
@@ -1046,7 +1039,7 @@ When working with the backend codebase, follow these guidelines:
 
 3. **Use proper exception handling**: Create domain-specific exceptions and handle them appropriately in the API layer.
 
-4. **Validate all incoming requests**: Use FluentValidation to validate all incoming DTO objects.
+4. **Validate all incoming requests**: Add an `AbstractValidator<TRequest>` for the request type. `ISender` runs it before the handler, so validation only applies to endpoints that go through the mediator.
 
 5. **Follow SOLID principles**:
    - Single Responsibility Principle
