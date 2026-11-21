@@ -1,3 +1,4 @@
+using Contact.Application.Abstractions.Messaging;
 using Contact.Application.Interfaces;
 using Contact.Application.Mapping;
 using Contact.Application.Services;
@@ -27,8 +28,11 @@ public static class ApplicationServiceCollectionExtensions
         services.AddScoped<IPermissionService, PermissionService>();
         services.AddScoped<IRolePermissionService, RolePermissionService>();
         services.AddScoped<IRoleService, RoleService>();
-        services.AddScoped<IUserService, UserService>();    
-        
+        services.AddScoped<IUserService, UserService>();
+
+        // Mediator boundary between controllers and the services above (ADR 0002).
+        services.AddRequestHandlers(typeof(ApplicationServiceCollectionExtensions).Assembly);
+
         return services;
     }
 }

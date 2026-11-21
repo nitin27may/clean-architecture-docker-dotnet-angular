@@ -1,6 +1,9 @@
-﻿namespace Contact.Application.UseCases.ContactPerson;
+﻿using Contact.Application.Abstractions.Messaging;
 
-public class CreateContactPerson
+namespace Contact.Application.UseCases.ContactPerson;
+
+/// <summary>Request body for POST /api/ContactPerson, and the command sent through <see cref="ISender"/>.</summary>
+public class CreateContactPerson : IRequest<ContactPersonResponse>
 {
     public required string FirstName { get; set; }
     public required string LastName { get; set; }

@@ -1,4 +1,5 @@
 ﻿using Contact.Api.Core.Attributes;
+using Contact.Application.Abstractions.Messaging;
 using Contact.Application.Interfaces;
 using Contact.Application.UseCases.ContactPerson;
 using Microsoft.AspNetCore.Authorization;
@@ -9,14 +10,14 @@ namespace Contact.Api.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class ContactPersonController(IContactPersonService contactPersonService) : ControllerBase
+public class ContactPersonController(IContactPersonService contactPersonService, ISender sender) : ControllerBase
 {
     [HttpPost]
     [ActivityLog("Creating new Contact")]
     [AuthorizePermission("Contacts.Create")]
-    public async Task<IActionResult> Add(CreateContactPerson createContactPerson)
+    public async Task<IActionResult> Add(CreateContactPerson createContactPerson, CancellationToken cancellationToken)
     {
-        var createdContactPerson = await contactPersonService.Add(createContactPerson);
+        var createdContactPerson = await sender.Send(createContactPerson, cancellationToken);
         return CreatedAtAction(nameof(GetById), new { id = createdContactPerson.Id }, createdContactPerson);
     }
 
