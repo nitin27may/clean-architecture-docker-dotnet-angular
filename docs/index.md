@@ -3,7 +3,7 @@ layout: default
 title: Home
 nav_order: 1
 permalink: /
-description: "A production-ready full-stack starter - Angular 22, .NET 10 and PostgreSQL 17 built on Clean Architecture, orchestrated with .NET Aspire and Docker."
+description: "A production-ready full-stack starter - Angular 22, .NET 11 and PostgreSQL 18 built on Clean Architecture, orchestrated with .NET Aspire and Docker."
 last_modified_at: 2026-08-21
 priority: "1.0"
 changefreq: weekly
@@ -12,7 +12,7 @@ changefreq: weekly
 # Clean Architecture Full-Stack Starter
 {: .fs-9 }
 
-A production-ready full-stack application with Angular 22, .NET 10, and PostgreSQL 17 using Clean Architecture principles, orchestrated with .NET Aspire
+A production-ready full-stack application with Angular 22, .NET 11, and PostgreSQL 18 using Clean Architecture principles, orchestrated with .NET Aspire
 {: .fs-6 .fw-300 }
 
 [Get Started](#quick-start){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
@@ -29,15 +29,15 @@ A production-ready full-stack application with Angular 22, .NET 10, and PostgreS
   </a>
 </p>
 
-A modern, full-stack contact management system built with **Angular 22**, **.NET 10**, and **PostgreSQL 17** following Clean Architecture principles. This project demonstrates how to structure enterprise applications for maintainability, testability, and scalability while providing a complete development workflow with **.NET Aspire** orchestration and Docker containerization.
+A modern, full-stack contact management system built with **Angular 22**, **.NET 11**, and **PostgreSQL 18** following Clean Architecture principles. This project demonstrates how to structure enterprise applications for maintainability, testability, and scalability while providing a complete development workflow with **.NET Aspire** orchestration and Docker containerization.
 
 ## What You'll Learn
 
 - **Clean Architecture** principles and implementation
 - **Angular 22** with signals, standalone components, and Fluent Design
-- **.NET 10** with dependency injection and repository pattern
-- **PostgreSQL 17** with Dapper for efficient data access
-- **.NET Aspire 9.5** for local development orchestration
+- **.NET 11** with dependency injection and repository pattern
+- **PostgreSQL 18** with Dapper for efficient data access
+- **.NET Aspire 17** for local development orchestration
 - **Scalar** for modern API documentation
 - **JWT Authentication** with role-based permissions
 - **Docker** containerization for development and production
@@ -49,8 +49,8 @@ A modern, full-stack contact management system built with **Angular 22**, **.NET
 ### Option 1: Using .NET Aspire (Recommended for Development)
 
 **Prerequisites:**
-- [.NET SDK 10.0](https://dotnet.microsoft.com/download/dotnet/10.0){:target="_blank"} or later
-- [Node.js 22 LTS](https://nodejs.org/){:target="_blank"} (not Node 23)
+- [.NET SDK 11.0](https://dotnet.microsoft.com/download/dotnet/11.0){:target="_blank"} or later
+- [Node.js 26 LTS](https://nodejs.org/){:target="_blank"} (Node.js 24 LTS also works; avoid odd-numbered, non-LTS releases)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop){:target="_blank"}
 
 ```bash
@@ -102,8 +102,8 @@ Visit [http://localhost](http://localhost) in your browser.
 The application is structured into multiple services that work together:
 
 - **Frontend**: Angular 22 with Material Design, TailwindCSS, and Fluent Design
-- **API**: .NET 10 RESTful API built with Clean Architecture and Scalar docs
-- **Database**: PostgreSQL 17 for data persistence
+- **API**: .NET 11 RESTful API built with Clean Architecture and Scalar docs
+- **Database**: PostgreSQL 18 for data persistence
 - **pgAdmin**: Database management interface
 - **NGINX**: Reverse proxy that routes requests to the appropriate service
 
@@ -145,7 +145,7 @@ Clean Architecture provides **significant benefits** for your application:
 
 ### Secure .NET Backend
 
-- **Clean Architecture implementation** with .NET 10
+- **Clean Architecture implementation** with .NET 11
 - **Generic Repository pattern** with Dapper
 - **JWT authentication** with role-based permissions
 - **Scalar API documentation** (replacing Swagger)
@@ -166,7 +166,7 @@ For more detailed information, explore these documentation pages:
 - [Development Guide](development-guide.md) - Setting up your environment
 - [Clean Architecture Series](architecture-series.md) - Architecture deep dives
 - [Frontend Documentation](frontend.md) - Angular 22 implementation
-- [Backend Documentation](backend.md) - .NET 10 API details
+- [Backend Documentation](backend.md) - .NET 11 API details
 - [Docker Guide](docker-guide.md) - Container configuration
 - [Feature List](visual-feature-guide.md) - Visual feature breakdown
 - [Roadmap](roadmap.md) - Upcoming features

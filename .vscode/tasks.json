@@ -7,7 +7,7 @@
       "type": "process",
       "args": [
         "build",
-        "${workspaceFolder}/backend/src/Contact.Api/Contact.Api.csproj",
+        "${workspaceFolder}/backend/Contact.Api/Contact.Api.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],

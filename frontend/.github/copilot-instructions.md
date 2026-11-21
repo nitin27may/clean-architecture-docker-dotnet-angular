@@ -1,17 +1,17 @@
-# GitHub Copilot Custom Instructions: Angular 21 + Material 3 + Tailwind 4 Enterprise Admin Dashboard
+# GitHub Copilot Custom Instructions: Angular 22 + Material 3 + Tailwind 4 Enterprise Admin Dashboard
 
 ## Project Overview
-This is an enterprise-grade admin dashboard built with Angular 21, Angular Material 3, and Tailwind CSS 4. The application follows modern Angular best practices with standalone components, signals-based state management, and a comprehensive design system that supports responsive layouts and light/dark theming.
+This is an enterprise-grade admin dashboard built with Angular 22, Angular Material 3, and Tailwind CSS 4. The application follows modern Angular best practices with standalone components, signals-based state management, and a comprehensive design system that supports responsive layouts and light/dark theming.
 
 ---
 
 ## CRITICAL RULES - READ FIRST
 
 ### 1. Technology Stack (Non-Negotiable)
-- **Angular 21**: Use latest features (signals, new control flow, standalone components)
-- **Angular Material 19+**: Material Design 3 components only
+- **Angular 22**: Use latest features (signals, new control flow, standalone components)
+- **Angular Material 22**: Material Design 3 components only
 - **Tailwind CSS 4**: CSS-first configuration (@theme syntax, NO tailwind.config.js)
-- **TypeScript 5.5+**: Strict mode enabled
+- **TypeScript 6.0**: Strict mode enabled
 
 ### 2. Framework Hierarchy
 ```
@@ -996,7 +996,7 @@ tableData = signal<Data[]>([]);
 
 ## SUMMARY: KEY PRINCIPLES
 
-1. **Angular 21 First**: Use latest features (signals, new control flow, standalone)
+1. **Angular 22 First**: Use latest features (signals, new control flow, standalone)
 2. **Material for Components**: Never recreate what Material provides
 3. **Tailwind for Layout**: Use tw- prefix, follow 8px grid
 4. **Mobile-First**: Design for mobile, enhance for desktop

@@ -3,7 +3,7 @@ layout: default
 title: Backend Guide
 nav_order: 8
 permalink: /backend
-description: "The .NET 10 backend of the Clean Architecture starter - layer boundaries, Dapper data access, PostgreSQL 17 and Scalar API documentation."
+description: "The .NET 11 backend of the Clean Architecture starter - layer boundaries, Dapper data access, PostgreSQL 18 and Scalar API documentation."
 last_modified_at: 2026-08-21
 priority: "0.8"
 changefreq: monthly
@@ -12,27 +12,27 @@ changefreq: monthly
 
 ## Overview
 
-The backend of this project is built with **.NET 10**, following Clean Architecture principles. It provides a robust API layer for the Angular frontend, using Dapper for efficient data access and PostgreSQL 17 as the database. API documentation is provided via **Scalar** (replacing Swagger/Swashbuckle).
+The backend of this project is built with **.NET 11**, following Clean Architecture principles. It provides a robust API layer for the Angular frontend, using Dapper for efficient data access and PostgreSQL 18 as the database. API documentation is provided via **Scalar** (replacing Swagger/Swashbuckle).
 
 <div style="text-align: center; margin: 30px 0;">
   <a href="screenshots/clean-architecture.png" target="_blank">
     <img src="screenshots/clean-architecture.png" alt="Clean Architecture Diagram" style="width: 90%; max-width: 600px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
   </a>
-  <p style="font-style: italic; margin-top: 10px;">Clean Architecture implementation in the .NET 9 backend</p>
+  <p style="font-style: italic; margin-top: 10px;">Clean Architecture implementation in the .NET 11 backend</p>
 </div>
 
 ## Technology Stack
 
-- **.NET 10**
+- **.NET 11**
   - ASP.NET Core Web API
   - Minimal API approach where applicable
   - Modern dependency injection system
   - Middleware pipeline
-  - .NET Aspire 9.5 for orchestration
+  - .NET Aspire 17 for orchestration
   
 - **Data Access**
   - Dapper for efficient data access
-  - PostgreSQL 17 database
+  - PostgreSQL 18 database
   - Generic Repository pattern
   - Unit of Work for transaction management
   
@@ -44,7 +44,7 @@ The backend of this project is built with **.NET 10**, following Clean Architect
 
 - **Validation & Mapping**
   - FluentValidation for request validation
-  - AutoMapper for object mapping
+  - Mapperly (source-generated) for object mapping
   - DTO pattern for data transfer
 
 ## Clean Architecture Layers
@@ -157,7 +157,7 @@ The entry point to the application:
 - API-specific mappings
 - Middleware configuration
 - Authentication setup
-- Swagger/OpenAPI documentation
+- OpenAPI documentation (Scalar UI)
 
 ```csharp
 // API Controller Example
@@ -824,7 +824,7 @@ The backend is containerized with Docker for both production and development env
 
 ```dockerfile
 # Production Dockerfile
-FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:11.0 AS base
 WORKDIR /app
 EXPOSE 8000
 ENV ASPNETCORE_URLS=http://+:8000
@@ -833,7 +833,7 @@ RUN groupadd -g 2000 dotnet \
 USER dotnet
 
 # Build stage
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:11.0 AS build
 ARG BUILD_CONFIGURATION=Release
 ARG DOTNET_SKIP_POLICY_LOADING=true
 WORKDIR /src
@@ -890,7 +890,7 @@ services:
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=contacts
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres18_data:/var/lib/postgresql
       - ./backend/scripts/seed-data.sql:/docker-entrypoint-initdb.d/seed-data.sql
     networks:
       - cleanarch-network
@@ -921,7 +921,7 @@ services:
 │   │   ├── IContactPersonService.cs
 │   │   ├── IUserService.cs
 │   │   └── ...
-│   ├── Mappings/              # AutoMapper profiles
+│   ├── Mappings/              # Mapperly mappers
 │   │   └── MappingProfile.cs
 │   ├── Services/              # Application services
 │   │   ├── ContactPersonService.cs
@@ -1067,4 +1067,4 @@ When working with the backend codebase, follow these guidelines:
 
 11. **Use the Generic Repository and Service patterns**: Leverage the built-in generic patterns for standard CRUD operations.
 
-12. **Document APIs with XML comments**: Ensure all public APIs are properly documented with XML comments for Swagger.
+12. **Document APIs with XML comments**: Ensure all public APIs are properly documented with XML comments so they appear in the OpenAPI document.

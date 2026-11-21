@@ -51,7 +51,7 @@ npm run build
 npm test
 ```
 
-CI runs `angular-build.yml` and `api-build.yml` on every push to `main`; a PR is expected to build cleanly before it's merged. There is currently no CI job for `dotnet test`/`npm test` — please run them locally.
+`ci.yml` runs on every pull request and on pushes to `main`: it builds the .NET solution, builds and unit-tests the Angular app (Vitest), and builds all three Docker images without publishing them. The image workflows (`api-build.yml`, `angular-build.yml`, `loadbalancer.build.yml`) publish to GHCR from `main` only.
 
 ## Code style
 

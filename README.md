@@ -21,9 +21,9 @@
   </a>
   <br>
   <img src="https://img.shields.io/badge/Angular-22-512BD4.svg" alt="Angular 22">
-  <img src="https://img.shields.io/badge/.NET-10-512BD4.svg" alt=".NET 10">
-  <img src="https://img.shields.io/badge/PostgreSQL-17-336791.svg" alt="PostgreSQL 17">
-  <img src="https://img.shields.io/badge/Aspire-13.4-6C3483.svg" alt=".NET Aspire 13.4">
+  <img src="https://img.shields.io/badge/.NET-11-512BD4.svg" alt=".NET 11">
+  <img src="https://img.shields.io/badge/PostgreSQL-18-336791.svg" alt="PostgreSQL 18">
+  <img src="https://img.shields.io/badge/Aspire-17-6C3483.svg" alt=".NET Aspire 17">
 </p>
 
 <p align="center">
@@ -38,9 +38,9 @@
 A production-ready **full-stack starter kit** built with modern technologies and best practices:
 
 - **Frontend**: Angular 22 with signals, Material Design, TailwindCSS v4, and Fluent Design
-- **Backend**: .NET 10 API with Clean Architecture and Scalar API documentation
-- **Database**: PostgreSQL 17 with pgAdmin and Dapper ORM
-- **Orchestration**: .NET Aspire 13.4 for local development with service discovery
+- **Backend**: .NET 11 API with Clean Architecture and Scalar API documentation
+- **Database**: PostgreSQL 18 with pgAdmin and Dapper ORM
+- **Orchestration**: .NET Aspire 17 for local development with service discovery
 - **DevOps**: Docker, GitHub Actions, NGINX
 
 Perfect for developers who want to **focus on business logic** instead of configuring infrastructure.
@@ -77,8 +77,8 @@ Clean Architecture provides **significant benefits** for your application:
 
 > **Important**: Make sure you have the correct versions installed before proceeding.
 
-- [.NET SDK 10.0](https://dotnet.microsoft.com/download/dotnet/10.0) or later
-- [Node.js 22 LTS](https://nodejs.org/) (**not** Node 23 - use LTS version only)
+- [.NET SDK 11.0](https://dotnet.microsoft.com/download/dotnet/11.0) or later
+- [Node.js 26 LTS](https://nodejs.org/) (Node.js 24 LTS also works; avoid odd-numbered, non-LTS releases)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop) (for PostgreSQL container)
 
 #### Steps
@@ -178,7 +178,7 @@ docker-compose up --build
         <li>User activity logging</li>
         <li>Global exception handling</li>
         <li>Scalar API documentation</li>
-        <li>PostgreSQL 17 with Dapper</li>
+        <li>PostgreSQL 18 with Dapper</li>
       </ul>
     </td>
     <td width="33%">
@@ -204,7 +204,7 @@ clean-architecture-docker-dotnet-angular/
 │   ├── AppHost/                 # Aspire host application
 │   │   └── AppHost.cs           # Service configuration
 │   └── ServiceDefaults/         # Shared Aspire defaults
-├── backend/                     # .NET 10 API (Clean Architecture)
+├── backend/                     # .NET 11 API (Clean Architecture)
 │   ├── Contact.Api/             # API Layer (Controllers, Middleware)
 │   ├── Contact.Application/     # Application Layer (Services, DTOs)
 │   ├── Contact.Domain/          # Domain Layer (Entities, Interfaces)
@@ -251,14 +251,14 @@ Comprehensive documentation is available:
 
 | Layer | Technology | Version |
 |-------|------------|---------|
-| Frontend | Angular | 22.1 |
-| UI Components | Angular Material | 22.1 |
-| CSS Framework | TailwindCSS | 4.1 |
-| Backend | .NET | 10.0 |
-| API Docs | Scalar | 2.1 |
-| Database | PostgreSQL | 17 |
+| Frontend | Angular | 22.3 |
+| UI Components | Angular Material | 22.3 |
+| CSS Framework | TailwindCSS | 4.3 |
+| Backend | .NET | 11.0 |
+| API Docs | Scalar | 3.1 |
+| Database | PostgreSQL | 18 |
 | ORM | Dapper | 2.1 |
-| Orchestration | .NET Aspire | 13.4 |
+| Orchestration | .NET Aspire | 17.0 |
 | Containerization | Docker | Latest |
 
 ## 🤝 Contributing
