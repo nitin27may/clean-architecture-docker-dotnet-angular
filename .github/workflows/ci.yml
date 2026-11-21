@@ -27,6 +27,8 @@ jobs:
         run: dotnet restore Contact.Api.sln
       - name: Build
         run: dotnet build Contact.Api.sln --configuration Release --no-restore
+      - name: Test
+        run: dotnet test --solution Contact.Api.sln --configuration Release --no-build
 
   frontend:
     name: Frontend (Angular)
