@@ -3,7 +3,7 @@
 namespace Contact.Application.UseCases.ContactPerson;
 
 /// <summary>Request body for POST /api/ContactPerson, and the command sent through <see cref="ISender"/>.</summary>
-public class CreateContactPerson : IRequest<ContactPersonResponse>
+public class CreateContactPerson : IRequest<ContactPersonResponse>, IContactPersonDetails
 {
     public required string FirstName { get; set; }
     public required string LastName { get; set; }

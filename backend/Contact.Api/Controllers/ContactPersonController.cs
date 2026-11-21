@@ -1,6 +1,5 @@
-﻿using Contact.Api.Core.Attributes;
+using Contact.Api.Core.Attributes;
 using Contact.Application.Abstractions.Messaging;
-using Contact.Application.Interfaces;
 using Contact.Application.UseCases.ContactPerson;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +9,7 @@ namespace Contact.Api.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class ContactPersonController(IContactPersonService contactPersonService, ISender sender) : ControllerBase
+public class ContactPersonController(ISender sender) : ControllerBase
 {
     [HttpPost]
     [ActivityLog("Creating new Contact")]
@@ -24,39 +23,40 @@ public class ContactPersonController(IContactPersonService contactPersonService,
     [HttpPut("{id}")]
     [ActivityLog("Updating Contact")]
     [AuthorizePermission("Contacts.Update")]
-    public async Task<IActionResult> Update(Guid id, UpdateContactPerson updateContactPerson)
+    public async Task<IActionResult> Update(Guid id, UpdateContactPerson updateContactPerson, CancellationToken cancellationToken)
     {
-        var contactPerson = await contactPersonService.FindByID(id);
-        if (contactPerson is null) return NotFound();
-        
-        var updatedContactPerson = await contactPersonService.Update(updateContactPerson);
-        return Ok(updatedContactPerson);
+        // The route decides which contact is updated. Previously the existence check used the
+        // route id while the update used the body's Id, so a mismatched body updated another record.
+        updateContactPerson.Id = id;
+
+        var updatedContactPerson = await sender.Send(updateContactPerson, cancellationToken);
+        return updatedContactPerson is null ? NotFound() : Ok(updatedContactPerson);
     }
 
     [HttpDelete("{id}")]
     [ActivityLog("Deleting Contact")]
     [AuthorizePermission("Contacts.Delete")]
-    public async Task<IActionResult> Delete(Guid id)
+    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
     {
-        var deleted = await contactPersonService.Delete(id);
+        var deleted = await sender.Send(new DeleteContactPerson(id), cancellationToken);
         return deleted ? NoContent() : NotFound();
     }
 
     [HttpGet("{id}")]
     [ActivityLog("Reading Contact By id")]
     [AuthorizePermission("Contacts.Read")]
-    public async Task<IActionResult> GetById(Guid id)
+    public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
     {
-        var contactPerson = await contactPersonService.FindByID(id);
+        var contactPerson = await sender.Send(new GetContactPersonById(id), cancellationToken);
         return contactPerson is null ? NotFound() : Ok(contactPerson);
     }
 
     [HttpGet]
     [ActivityLog("Reading All Contacts")]
     [AuthorizePermission("Contacts.Read")]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
-        var contactPersons = await contactPersonService.FindAll();
+        var contactPersons = await sender.Send(new GetAllContactPersons(), cancellationToken);
         return Ok(contactPersons);
     }
 }
