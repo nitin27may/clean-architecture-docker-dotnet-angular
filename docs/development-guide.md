@@ -20,11 +20,11 @@ Before you begin, ensure you have the following installed:
 - [Git](https://git-scm.com/downloads)
 - [Visual Studio Code](https://code.visualstudio.com/) (recommended) or another IDE
 - [.NET 11 SDK](https://dotnet.microsoft.com/download/dotnet/11.0) (for local development without Docker)
-- [Node.js 26 LTS](https://nodejs.org/) (Node.js 24 LTS also works; avoid odd-numbered, non-LTS releases)
+- [Node.js 26 LTS](https://nodejs.org/) (avoid odd-numbered, non-LTS releases) and [pnpm](https://pnpm.io/installation) 10 (the repo pins 10.33.0 via `packageManager`; with Corepack or pnpm 10+, it is selected automatically)
 
 > ⚠️ **Important**: When running with .NET Aspire, ensure you have the correct versions installed:
 > - .NET SDK 11.0 or later
-> - Node.js 26 LTS (or 24 LTS)
+> - Node.js 26 LTS and pnpm 10
 
 ## Getting the Code
 
@@ -52,7 +52,7 @@ You have three primary options for development:
 ```bash
 # Install frontend dependencies first
 cd frontend
-npm install
+pnpm install
 cd ..
 
 # Run with Aspire
@@ -285,7 +285,7 @@ Run Angular tests:
 
 ```bash
 cd frontend
-npm test
+pnpm test
 ```
 
 ## Debugging
@@ -474,7 +474,7 @@ dotnet publish -c Release
 
 ```bash
 cd frontend
-npm run build
+pnpm run build
 ```
 
 ### Using Docker

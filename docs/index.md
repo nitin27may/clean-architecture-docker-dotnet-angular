@@ -50,7 +50,7 @@ A modern, full-stack contact management system built with **Angular 22**, **.NET
 
 **Prerequisites:**
 - [.NET SDK 11.0](https://dotnet.microsoft.com/download/dotnet/11.0){:target="_blank"} or later
-- [Node.js 26 LTS](https://nodejs.org/){:target="_blank"} (Node.js 24 LTS also works; avoid odd-numbered, non-LTS releases)
+- [Node.js 26 LTS](https://nodejs.org/){:target="_blank"} (avoid odd-numbered, non-LTS releases) and [pnpm](https://pnpm.io/installation) 10
 - [Docker Desktop](https://www.docker.com/products/docker-desktop){:target="_blank"}
 
 ```bash
@@ -58,7 +58,7 @@ git clone https://github.com/nitin27may/clean-architecture-docker-dotnet-angular
 cd clean-app
 
 # Install frontend dependencies
-cd frontend && npm install && cd ..
+cd frontend && pnpm install && cd ..
 
 # Run with Aspire
 dotnet run --project aspire/AppHost

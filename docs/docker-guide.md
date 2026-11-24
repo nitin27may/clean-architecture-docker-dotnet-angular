@@ -49,10 +49,11 @@ Located at `frontend/Dockerfile`, this file builds the Angular application:
 # Build stage
 FROM node:26-alpine AS build
 WORKDIR /app
-COPY package*.json ./
-RUN npm ci
+RUN npm install -g pnpm@10.33.0
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
 COPY . .
-RUN npm run build
+RUN pnpm run build
 
 # Production stage
 FROM nginx:1.30-alpine
@@ -66,7 +67,7 @@ This is a multi-stage build that:
 
 1. Uses Node.js to build the Angular application
    - The `node:26-alpine` image provides a lightweight environment for building
-   - `npm ci` ensures exact dependency versions are installed
+   - `pnpm install --frozen-lockfile` ensures exact dependency versions are installed
    - Angular build process creates optimized production assets
 
 2. Copies the built files to an Nginx container

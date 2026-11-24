@@ -33,7 +33,7 @@ Before running the application with Aspire, ensure you have:
 | Node.js | 26 LTS (or 24 LTS) | [Download](https://nodejs.org/) |
 | Docker Desktop | Latest | [Download](https://www.docker.com/products/docker-desktop) |
 
-> ⚠️ **Important**: Use Node.js 26 LTS (or 24 LTS). Odd-numbered Node.js versions are not LTS and may have compatibility issues with Angular.
+> ⚠️ **Important**: Use Node.js 26 LTS. Odd-numbered Node.js versions are not LTS and may have compatibility issues with Angular.
 
 ### Verify Installations
 
@@ -44,11 +44,11 @@ dotnet --version
 
 # Check Node.js version
 node --version
-# Should output: v26.x.x (or v24.x.x)
+# Should output: v26.x.x
 
-# Check npm version
-npm --version
-# Should output: 11.x.x or higher
+# Check pnpm version
+pnpm --version
+# Should output: 10.x.x
 
 # Check Docker is running
 docker --version
@@ -75,7 +75,7 @@ Before starting Aspire, you must install the Angular dependencies:
 
 ```bash
 cd frontend
-npm install
+pnpm install
 cd ..
 ```
 
@@ -182,7 +182,7 @@ Aspire injects these automatically:
 **Solution**: Install frontend dependencies first:
 ```bash
 cd frontend
-npm install
+pnpm install
 cd ..
 ```
 
