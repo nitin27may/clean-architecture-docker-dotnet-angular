@@ -56,6 +56,9 @@
     "ignoredBuiltDependencies": [
       "lmdb",
       "msgpackr-extract"
-    ]
+    ],
+    "overrides": {
+      "postcss-selector-parser": "^6.1.5"
+    }
   }
 }
