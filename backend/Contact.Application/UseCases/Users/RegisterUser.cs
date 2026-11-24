@@ -1,6 +1,9 @@
-﻿namespace Contact.Application.UseCases.Users;
+﻿using Contact.Application.Abstractions.Messaging;
 
-public class RegisterUser
+namespace Contact.Application.UseCases.Users;
+
+/// <summary>Self-registration (POST /api/Users/register). Validated by <see cref="RegisterUserValidator"/>.</summary>
+public class RegisterUser : IRequest<UserResponse>
 {
     public required string FirstName { get; set; }
     public required string LastName { get; set; }

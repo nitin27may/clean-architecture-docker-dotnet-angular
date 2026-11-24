@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Contact.Application.Abstractions.Messaging;
+using System.ComponentModel.DataAnnotations;
 
 namespace Contact.Application.UseCases.Users;
 
-public class AuthenticateRequest
+/// <summary>Sign-in (POST /api/Users/authenticate).</summary>
+public class AuthenticateRequest : IRequest<AuthenticateResponse>
 {
     [Required]
     public required string Username { get; set; }

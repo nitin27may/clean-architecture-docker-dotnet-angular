@@ -420,8 +420,14 @@ zero or more than one handler.
 to it in `UseCases/<Feature>`, optionally add an `AbstractValidator<TRequest>`, and call
 `sender.Send(...)` from the controller. No registration code is needed.
 
-Converted so far: `POST /api/ContactPerson`. Every other action still calls its service directly
-and is being converted one controller at a time.
+Converted so far: `ContactPersonController` and `UsersController`. The other controllers still call
+their services directly and are being converted one controller at a time.
+
+`PUT /api/Users/{id}` lets users edit their own profile; editing another user requires the
+`Users.Update` permission. The controller enforces this before sending the request.
+
+Create and update share their field rules through `ContactPersonDetailsValidator<T>`, so the two
+endpoints cannot drift apart.
 
 ## Authentication System
 

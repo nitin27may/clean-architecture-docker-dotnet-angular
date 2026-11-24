@@ -1,6 +1,9 @@
-﻿namespace Contact.Application.UseCases.Users;
+﻿using Contact.Application.Abstractions.Messaging;
 
-public class CreateUser
+namespace Contact.Application.UseCases.Users;
+
+/// <summary>A user created by an administrator (POST /api/Users/create). The user sets a password via the emailed link.</summary>
+public class CreateUser : IRequest<UserResponse>
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }

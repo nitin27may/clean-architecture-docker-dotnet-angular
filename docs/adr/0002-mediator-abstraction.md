@@ -14,8 +14,8 @@ changefreq: yearly
 
 # ADR 0002: In-repo mediator abstraction (no MediatR dependency)
 
-- **Status:** Accepted. Implemented for `POST /api/ContactPerson`; other endpoints are being
-  converted one controller at a time ([#32](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/issues/32)).
+- **Status:** Accepted. Implemented for `ContactPersonController` and `UsersController`; other
+  controllers are being converted one at a time ([#32](https://github.com/nitin27may/clean-architecture-docker-dotnet-angular/issues/32)).
 - **Date:** 2026-08-19, revised 2026-11-21 (implementation)
 
 ## Context
@@ -88,5 +88,5 @@ public interface ISender
   that relied on the database to reject input see a different error.
 - The backend gained its first test project, `Contact.Application.Tests` (xUnit v3), which
   `ci.yml` runs.
-- Next steps: the rest of `ContactPersonController`, then `UsersController` (which brings
-  `RegisterUserValidator` into effect), then the remaining controllers, one per PR.
+- Next steps: the remaining controllers (Roles, Pages, Operations, Permissions, RolePermissions,
+  RolePermissionMapping, UserRoles), one per PR.
