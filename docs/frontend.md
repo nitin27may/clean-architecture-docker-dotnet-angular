@@ -599,14 +599,14 @@ docker-compose up frontend
 Locally:
 ```bash
 cd frontend
-npm install
-npm start
+pnpm install
+pnpm start
 ```
 
 ### Building for Production
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 Or using Docker:
@@ -619,6 +619,6 @@ docker build -f Dockerfile -t contact-frontend .
 Unit tests run on [Vitest](https://vitest.dev/) through the Angular CLI `unit-test` builder (jsdom, no browser required):
 
 ```bash
-npm test                    # watch mode
-npm test -- --watch=false   # single run, as CI does
+pnpm test                    # watch mode
+pnpm test --watch=false    # single run, as CI does
 ```

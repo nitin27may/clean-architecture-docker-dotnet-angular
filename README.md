@@ -78,7 +78,7 @@ Clean Architecture provides **significant benefits** for your application:
 > **Important**: Make sure you have the correct versions installed before proceeding.
 
 - [.NET SDK 11.0](https://dotnet.microsoft.com/download/dotnet/11.0) or later
-- [Node.js 26 LTS](https://nodejs.org/) (Node.js 24 LTS also works; avoid odd-numbered, non-LTS releases)
+- [Node.js 26 LTS](https://nodejs.org/) (avoid odd-numbered, non-LTS releases) and [pnpm](https://pnpm.io/installation) 10 (the repo pins 10.33.0 via `packageManager`; with Corepack or pnpm 10+, it is selected automatically)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop) (for PostgreSQL container)
 
 #### Steps
@@ -255,7 +255,7 @@ Comprehensive documentation is available:
 | UI Components | Angular Material | 22.3 |
 | CSS Framework | TailwindCSS | 4.3 |
 | Backend | .NET | 11.0 |
-| API Docs | Scalar | 3.1 |
+| API Docs | Scalar | 3.2 |
 | Database | PostgreSQL | 18 |
 | ORM | Dapper | 2.1 |
 | Orchestration | .NET Aspire | 17.0 |

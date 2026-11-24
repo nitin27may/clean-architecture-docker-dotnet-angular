@@ -15,7 +15,7 @@ See the [Development Guide](docs/development-guide.md) for full environment setu
 ```bash
 git clone https://github.com/nitin27may/clean-architecture-docker-dotnet-angular.git
 cd clean-architecture-docker-dotnet-angular
-cd frontend && npm install && cd ..
+cd frontend && pnpm install && cd ..
 dotnet run --project aspire/AppHost
 ```
 
@@ -47,8 +47,8 @@ dotnet test
 
 ```bash
 cd frontend
-npm run build
-npm test
+pnpm run build
+pnpm test
 ```
 
 `ci.yml` runs on every pull request and on pushes to `main`: it builds the .NET solution, builds and unit-tests the Angular app (Vitest), and builds all three Docker images without publishing them. The image workflows (`api-build.yml`, `angular-build.yml`, `loadbalancer.build.yml`) publish to GHCR from `main` only.
