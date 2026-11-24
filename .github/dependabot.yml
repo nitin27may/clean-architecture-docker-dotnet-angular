@@ -1,29 +1,30 @@
 version: 2
 updates:
-  # .NET — the solution and Directory.Packages.props (Central Package Management) live at the
+  # .NET: the solution and Directory.Packages.props (Central Package Management) live at the
   # repo root, so one entry covers backend/ and aspire/.
   - package-ecosystem: "nuget"
     directory: "/"
     schedule:
       interval: "weekly"
     groups:
+      # Aspire packages must move together, majors included. Listed first so it wins over the
+      # minor/patch group below.
+      aspire:
+        patterns:
+          - "Aspire.*"
       dotnet-minor-patch:
         update-types:
           - "minor"
           - "patch"
-      # Aspire packages must move together, majors included.
-      aspire:
-        patterns:
-          - "Aspire.*"
     open-pull-requests-limit: 10
 
-  # Frontend — Angular
+  # Frontend: Angular, managed with pnpm (frontend/pnpm-lock.yaml)
   - package-ecosystem: "npm"
     directory: "/frontend"
     schedule:
       interval: "weekly"
     groups:
-      angular-minor-patch:
+      npm-minor-patch:
         update-types:
           - "minor"
           - "patch"
@@ -49,9 +50,14 @@ updates:
       dotnet-images:
         patterns:
           - "dotnet/*"
+      docker-minor-patch:
+        update-types:
+          - "minor"
+          - "patch"
     open-pull-requests-limit: 5
 
-  # Images referenced from the compose files (postgres, pgadmin)
+  # Images referenced from the compose files (postgres, pgadmin). Stateful images such as
+  # postgres need a manual data-compatibility check, so they are not grouped.
   - package-ecosystem: "docker-compose"
     directory: "/"
     schedule:
@@ -64,7 +70,8 @@ updates:
     schedule:
       interval: "weekly"
     groups:
-      actions:
-        patterns:
-          - "*"
+      actions-minor-patch:
+        update-types:
+          - "minor"
+          - "patch"
     open-pull-requests-limit: 5

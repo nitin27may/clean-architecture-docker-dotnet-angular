@@ -1,11 +1,14 @@
 # Build stage: Node 26 LTS
 FROM node:26-alpine AS builder
 
-# Copy dependency definitions
-COPY package*.json ./
+# node:26 images ship without corepack, so install the pinned pnpm version directly
+RUN npm install -g pnpm@10.33.0
 
-## installing and Storing node modules on a separate layer will prevent unnecessary npm installs at each build
-RUN npm ci && mkdir /app && mv ./node_modules /app/node_modules
+# Copy dependency definitions
+COPY package.json pnpm-lock.yaml ./
+
+## installing and storing node modules on a separate layer will prevent unnecessary installs at each build
+RUN pnpm install --frozen-lockfile && mkdir /app && mv ./node_modules /app/node_modules
 
 # Change directory so that our commands run inside this new directory
 WORKDIR /app
@@ -14,7 +17,7 @@ WORKDIR /app
 COPY . .
 
 # Build server side bundles
-RUN npm run build
+RUN pnpm run build
 
 # Stage 2: Serve app with nginx server
 

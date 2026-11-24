@@ -38,17 +38,20 @@ jobs:
         working-directory: frontend
     steps:
       - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+        with:
+          package_json_file: frontend/package.json
       - uses: actions/setup-node@v7
         with:
           node-version-file: frontend/.nvmrc
-          cache: npm
-          cache-dependency-path: frontend/package-lock.json
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
       - name: Install
-        run: npm ci
+        run: pnpm install --frozen-lockfile
       - name: Build
-        run: npm run build
+        run: pnpm run build
       - name: Test
-        run: npm test -- --watch=false
+        run: pnpm test --watch=false
 
   docker:
     name: Docker images (build only)
