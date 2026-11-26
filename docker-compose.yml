@@ -33,7 +33,7 @@ services:
       - postgres_network
       
   postgres:
-    image: postgres:18-alpine
+    image: postgres:19-alpine
     container_name: postgres_db
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
